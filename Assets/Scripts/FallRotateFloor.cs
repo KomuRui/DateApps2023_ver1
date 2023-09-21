@@ -35,6 +35,7 @@ public class FallRotateFloor : MonoBehaviour
         //”CˆÓ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
         if(Input.GetButtonDown(buttonName))
         {
+           
             //‰ñ“]‚µ‚Ä‚¢‚é‚É•ÏX
             isRotate = true;
 
@@ -57,8 +58,8 @@ public class FallRotateFloor : MonoBehaviour
 
                     //‰ñ“]
                     var sequence = DOTween.Sequence();
-                    sequence.Append(this.transform.DORotate(new Vector3(sige * 80, 0, 90), rotateTime))
-                            .Append(this.transform.DORotate(new Vector3(0, 0, 90), rotateTime).SetDelay(waitTime))
+                    sequence.Append(this.transform.DORotate(rotationAxis * (sige * 80) + (Vector3.back * -90), rotateTime))
+                            .Append(this.transform.DORotate((Vector3.back * -90), rotateTime).SetDelay(waitTime))
                             .AppendCallback(() =>
                             {
                                 isRotate = false;
@@ -67,5 +68,6 @@ public class FallRotateFloor : MonoBehaviour
             );
            
         }
+
     }
 }
