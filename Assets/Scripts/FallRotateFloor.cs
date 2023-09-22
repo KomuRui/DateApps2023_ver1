@@ -11,11 +11,12 @@ public class FallRotateFloor : MonoBehaviour
     [SerializeField] private int sige = 1;
     List<Tweener> tweener = new List<Tweener>();
 
-    public Vector3 rotationAxis = Vector3.right; 
-    private float rotateTime = 1.0f;
-    private float waitTime = 1.0f;
+    public Vector3 rotationAxis = Vector3.right;
+    private Quaternion initialRotation;
+    private float rotateSpeed = 100.0f;
     private float flashingTime = 0.5f;
     private float warningTime = 2.0f;
+    private bool isPush = false;
     private bool isRotate = false;
 
     // Start is called before the first frame update
@@ -23,21 +24,23 @@ public class FallRotateFloor : MonoBehaviour
     {
         //ボタンの名前を設定しておく
         buttonName += playerNum;
+
+        //初期回転を設定
+        initialRotation = transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        //回転しているならこの先処理しない
-        if (isRotate) return;
-
         //任意のボタンが押されたら
-        if(Input.GetButtonDown(buttonName))
+        if(Input.GetButtonDown(buttonName) && !isPush)
         {
-           
-            //回転しているに変更
-            isRotate = true;
+            // 親オブジェクトの回転に追従するローカル回転軸を計算
+            Vector3 worldRotationAxis = this.transform.parent.TransformDirection(rotationAxis);
+
+            //押されたに変更
+            isPush = true;
 
             //メッシュレンダラーを取得
             MeshRenderer r = this.transform.GetChild(0).GetComponent<MeshRenderer>();
@@ -56,18 +59,67 @@ public class FallRotateFloor : MonoBehaviour
                         tweener[i].Pause();
                     }
 
-                    //回転
-                    var sequence = DOTween.Sequence();
-                    sequence.Append(this.transform.DORotate(rotationAxis * (sige * 80) + (Vector3.back * -90), rotateTime))
-                            .Append(this.transform.DORotate((Vector3.back * -90), rotateTime).SetDelay(waitTime))
-                            .AppendCallback(() =>
-                            {
-                                isRotate = false;
-                            });
+                    //回転開始
+                    isRotate = true;
+
+                    //コルーチン
+                    StartCoroutine(WaitRotate(1.0f));
                 }
             );
            
         }
 
+        //回転しているのなら
+        if(isRotate)
+        {
+            // 親オブジェクトの回転に追従するローカル回転軸を計算
+            Vector3 worldRotationAxis = this.transform.parent.TransformDirection(rotationAxis);
+
+            // 回転する
+            transform.RotateAround(this.transform.position, worldRotationAxis, sige * rotateSpeed * Time.deltaTime);
+        
+        }
+
+
+    }
+
+    IEnumerator WaitRotate(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //回転終了
+        isRotate = false;
+
+        //コルーチン
+        StartCoroutine(ReverseRotate(1.0f));
+    }
+
+    IEnumerator ReverseRotate(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //逆回転になるように
+        rotateSpeed *= -1;
+
+        //回転開始
+        isRotate = true;
+
+        //コルーチン
+        StartCoroutine(FinishRotate(1.0f));
+    }
+
+    IEnumerator FinishRotate(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //逆回転になるように
+        rotateSpeed *= -1;
+
+        //最初の状態に戻す
+        transform.rotation = transform.parent.rotation;
+
+        //回転終了
+        isRotate = false;
+        isPush = false;
     }
 }
