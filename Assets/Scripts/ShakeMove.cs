@@ -22,6 +22,17 @@ public class ShakeMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (agent.hasPath)
+        {
+            // パスの方向を計算し、Look At コンストレイントに適用します
+            Vector3 pathDirection = agent.steeringTarget - transform.position;
+            if (pathDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(pathDirection) * Quaternion.Euler(0, 90, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+                
+            }
+        }
     }
 
     IEnumerator MoveChange(float delay)
