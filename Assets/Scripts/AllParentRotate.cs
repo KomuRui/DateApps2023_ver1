@@ -6,7 +6,7 @@ using UnityEngine;
 public class AllParentRotate : MonoBehaviour
 {
     [SerializeField] private int playerNum = 1;
-    [SerializeField] private float speed = 1.0f;
+    [SerializeField] private float speed;
 
     private Vector3 power = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -27,12 +27,12 @@ public class AllParentRotate : MonoBehaviour
             power *= 0.997f;
         else if(isLB)
         {
-            power += new Vector3(0, speed * Time.deltaTime, 0);
+            power -= new Vector3(0, speed * Time.deltaTime, 0);
             power.y = Math.Min(0.03f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
         else
         {
-            power -= new Vector3(0, speed * Time.deltaTime, 0);
+            power += new Vector3(0, speed * Time.deltaTime, 0);
             power.y = Math.Min(0.03f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
 
