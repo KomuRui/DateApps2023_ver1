@@ -42,6 +42,9 @@ public class NormalPlayer : MonoBehaviour
         //動き
         Move();
 
+        //ジャンプ
+        Jump();
+
         //状態更新
         StateUpdata();
     }
@@ -78,6 +81,16 @@ public class NormalPlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    //ジャンプ
+    private void Jump()
+    {
+        //Aボタンが押されてないのならこの先処理しない
+        if (!Input.GetButtonDown("Abutton1")) return;
+        
+        //ジャンプ状態に変更    
+        ChangeStateTo(SlimeAnimationState.Jump);
     }
 
     //状態更新
