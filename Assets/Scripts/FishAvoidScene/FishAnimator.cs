@@ -20,8 +20,8 @@ public class FishAnimator : MonoBehaviour
     public void ChangeStateTo(SlimeAnimationState state)
     {
         if (this == null) return;
-        if (state == this.currentState) return;
+        //if (state == this.currentState) return;
 
-        this.currentState = state;
+        //this.currentState = state;
     }
 }
