@@ -16,8 +16,10 @@ public class NormalPlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    [SerializeField] private float moveSpeed = 5.0f;       // プレイヤーの移動速度
-    [SerializeField] private float rotationSpeed = 180.0f; // プレイヤーの回転速度
+    [SerializeField] private float moveSpeed = 5.0f;        // プレイヤーの移動速度
+    [SerializeField] private float rotationSpeed = 180.0f;  // プレイヤーの回転速度
+    [SerializeField] private bool isHorizontalInput = true; // 横の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;   // 縦の入力許可するか
 
 
     private Transform mainCameraTransform; // メインカメラのTransform
@@ -53,9 +55,13 @@ public class NormalPlayer : MonoBehaviour
     private void Move()
     {
 
+        // 入力を取得用
+        float horizontalInput = 0;
+        float verticalInput = 0;
+
         // 入力を取得
-        float horizontalInput = Input.GetAxis("L_Stick_H1");
-        float verticalInput = Input.GetAxis("L_Stick_V1");
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H1");
+        if (isVerticalInput)   verticalInput = Input.GetAxis("L_Stick_V1");
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)
