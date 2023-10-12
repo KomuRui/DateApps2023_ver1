@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,10 +17,15 @@ public class NormalPlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    [SerializeField] private float moveSpeed = 5.0f;        // プレイヤーの移動速度
-    [SerializeField] private float rotationSpeed = 180.0f;  // プレイヤーの回転速度
-    [SerializeField] private bool isHorizontalInput = true; // 横の入力許可するか
-    [SerializeField] private bool isVerticalInput = true;   // 縦の入力許可するか
+    [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
+    [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
+    [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
+    [SerializeField] private bool isAnimIdle = true;
+    [SerializeField] private bool isAnimWalk = true;
+    [SerializeField] private bool isAnimJump = true;
+    [SerializeField] private bool isAnimAttack = true;
+    [SerializeField] private bool isAnimDamage = true;
 
 
     private Transform mainCameraTransform; // メインカメラのTransform
@@ -106,7 +112,7 @@ public class NormalPlayer : MonoBehaviour
         {
             case SlimeAnimationState.Idle:
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) return;
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !isAnimIdle) return;
 
                 currentState = SlimeAnimationState.Idle;
                 animator.SetFloat("Speed", 0);
@@ -115,7 +121,7 @@ public class NormalPlayer : MonoBehaviour
 
             case SlimeAnimationState.Walk:
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) return;
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") || !isAnimWalk) return;
 
                 currentState = SlimeAnimationState.Walk;
                 animator.SetFloat("Speed", 1.0f);
@@ -124,7 +130,7 @@ public class NormalPlayer : MonoBehaviour
 
             case SlimeAnimationState.Jump:
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump")) return;
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || !isAnimJump) return;
 
                 SetFace(faces.jumpFace);
                 animator.SetTrigger("Jump");
@@ -132,7 +138,7 @@ public class NormalPlayer : MonoBehaviour
 
             case SlimeAnimationState.Attack:
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) return;
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") || !isAnimAttack) return;
                 SetFace(faces.attackFace);
                 animator.SetTrigger("Attack");
                 break;
@@ -141,7 +147,8 @@ public class NormalPlayer : MonoBehaviour
 
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("Damage0")
                  || animator.GetCurrentAnimatorStateInfo(0).IsName("Damage1")
-                 || animator.GetCurrentAnimatorStateInfo(0).IsName("Damage2")) return;
+                 || animator.GetCurrentAnimatorStateInfo(0).IsName("Damage2")
+                 || !isAnimDamage) return;
 
                 animator.SetTrigger("Damage");
                 animator.SetInteger("DamageType", damType);
