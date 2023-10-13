@@ -17,7 +17,7 @@ public class FallRotateFloor : MonoBehaviour
     private float flashingTime = 0.5f;
     private float warningTime = 2.0f;
     private bool isPush = false;
-    private bool isRotate = false;
+    public bool isRotate = false;
 
     // Start is called before the first frame update
     void Start()

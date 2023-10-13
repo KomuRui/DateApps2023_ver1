@@ -58,6 +58,9 @@ public class NotFallHolePlayer : MonoBehaviour
 
         //重力
         Gravity();
+
+        //地面に対してレイを発射
+        GroundToRayCast();
     }
 
     //移動
@@ -167,6 +170,22 @@ public class NotFallHolePlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    //地面に対してレイを発射
+    private void GroundToRayCast()
+    {
+        Vector3 origin = transform.position;
+        origin.y += 1.0f;
+        Vector3 direction = new Vector3(0, -1, 0);
+        Ray ray = new Ray(origin, direction); 
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) 
+        {
+            if (hit.distance > 1.1f ||  hit.transform.tag != "btnGround") return;
+            transform.position = new Vector3(transform.position.x, hit.collider.transform.position.y + 0.25f, transform.position.z); // 衝突した相手オブジェクトの名前を取得
+        }
     }
 
     //重力
