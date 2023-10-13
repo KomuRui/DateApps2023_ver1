@@ -18,7 +18,7 @@ public class NotFallHolePlayer : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
-    [SerializeField] private float gravitySpeed = 180.0f;     // 重力速度
+    [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
     [SerializeField] private bool isAnimIdle = true;
@@ -47,14 +47,17 @@ public class NotFallHolePlayer : MonoBehaviour
 
     void Update()
     {
+        //状態更新
+        StateUpdata();
+
         //動き
         Move();
 
         //ジャンプ
         Jump();
 
-        //状態更新
-        StateUpdata();
+        //重力
+        Gravity();
     }
 
     //移動
