@@ -57,10 +57,10 @@ public class NotFallHolePlayer : MonoBehaviour
         Jump();
 
         //d—Í
-        Gravity();
+        //Gravity();
 
         //’n–Ê‚É‘Î‚µ‚ÄƒŒƒC‚ğ”­Ë
-        GroundToRayCast();
+        //GroundToRayCast();
     }
 
     //ˆÚ“®
