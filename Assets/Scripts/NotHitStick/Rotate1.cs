@@ -20,7 +20,7 @@ public class Rotate1 : MonoBehaviour
     {
         //Œ»İ‚Ì—Í‚ğæ“¾
         power += -Input.GetAxis("L_Stick_H1") * speed * Time.deltaTime;
-        power = Math.Min(0.03f, Math.Abs(power)) * Math.Sign(power);
+        power = Math.Min(0.09f, Math.Abs(power)) * Math.Sign(power);
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
         if (Input.GetAxis("L_Stick_H1") == 0 && power != 0) power *= 0.997f;
