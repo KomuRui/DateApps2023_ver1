@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public class NotFallHolePlayer : MonoBehaviour
+public class NotHitStickPlayer : MonoBehaviour
 {
     //アニメーションに必要
     public enum SlimeAnimationState { Idle, Walk, Jump, Attack, Damage }
@@ -10,10 +12,8 @@ public class NotFallHolePlayer : MonoBehaviour
     public Face faces;
     public GameObject SmileBody;
     public SlimeAnimationState currentState;
-
     public Animator animator;
     public int damType;
-
     private Material faceMaterial;
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
@@ -21,14 +21,23 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
-    [SerializeField] private bool isAnimIdle = true;
-    [SerializeField] private bool isAnimWalk = true;
-    [SerializeField] private bool isAnimJump = true;
-    [SerializeField] private bool isAnimAttack = true;
-    [SerializeField] private bool isAnimDamage = true;
+    [SerializeField] private bool isAnimIdle = true;          // 通常時のアニメーション許可するか
+    [SerializeField] private bool isAnimWalk = true;          // 歩くアニメーション許可するか 
+    [SerializeField] private bool isAnimJump = true;          // ジャンプアニメーション許可するか
+    [SerializeField] private bool isAnimAttack = true;        // 攻撃アニメーション許可するか
+    [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
+    [SerializeField] private GameObject[] stage;              // 床のゲームオブジェクト
+    [SerializeField] private float jumpPower;                 // ジャンプ力
+    [SerializeField] private int nowStageNum;                 //乗っている床の番号
+    
+    //リジットボディ
+    private Rigidbody rb;
 
+    //ジャンプしているか
+    private bool isJump = false;
 
-    private Transform mainCameraTransform; // メインカメラのTransform
+    // メインカメラのTransform
+    private Transform mainCameraTransform;
 
     void Start()
     {
@@ -37,6 +46,9 @@ public class NotFallHolePlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        //リジットボディ取得
+        rb = GetComponent<Rigidbody>();
     }
 
     //顔のテクスチャ設定
@@ -60,6 +72,9 @@ public class NotFallHolePlayer : MonoBehaviour
     //移動
     private void Move()
     {
+
+        //ジャンプしているならこの先処理しない
+        if (isJump) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -98,11 +113,47 @@ public class NotFallHolePlayer : MonoBehaviour
     //ジャンプ
     private void Jump()
     {
-        //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton1")) return;
+        //ジャンプしているならこの先処理しない
+        if (isJump) return;
+
+        //通常
+        if (Input.GetButtonDown("Abutton1"))
+        {
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+
+            //上に力を加える
+            rb.AddForce(Vector3.up * jumpPower);
+            isJump = true;
+            return;
+        }
+
+        int beforeStage = nowStageNum;
+
+        //自動ジャンプ(別の足場に)
+        if (Input.GetAxis("L_Stick_V1") > 0.8f)
+        {
+            nowStageNum--;
+            nowStageNum = Math.Max(nowStageNum, 0);
+            if (beforeStage == nowStageNum) return;
+            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            ChangeStateTo(SlimeAnimationState.Idle);
+            rb.AddForce(Vector3.up * jumpPower);
+            isJump = true;
+        }
+        else if (Input.GetAxis("L_Stick_V1") < -0.8f)
+        {
+            nowStageNum++;
+            nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
+            if (beforeStage == nowStageNum) return;
+            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            ChangeStateTo(SlimeAnimationState.Idle);
+            rb.AddForce(Vector3.up * jumpPower);
+            isJump = true;
+        }
 
         //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
+        //ChangeStateTo(SlimeAnimationState.Jump);
     }
 
     //状態更新
@@ -165,5 +216,10 @@ public class NotFallHolePlayer : MonoBehaviour
 
         this.currentState = state;
     }
-
+        
+    void OnCollisionEnter(Collision collision)  
+    {
+        if (collision.transform.tag == "Stage")
+            isJump = false;
+    }
 }
