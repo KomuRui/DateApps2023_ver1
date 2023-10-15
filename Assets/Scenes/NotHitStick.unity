@@ -1354,6 +1354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime_01_Viking
       objectReference: {fileID: 0}
+    - target: {fileID: 6688149642241925542, guid: 11eed2dfd1329ab4db9e7f27b8e628b7, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2223,6 +2227,7 @@ GameObject:
   - component: {fileID: 1075516613}
   - component: {fileID: 1075516612}
   - component: {fileID: 1075516611}
+  - component: {fileID: 1075516614}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Stage
@@ -2316,6 +2321,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075516609}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1075516614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075516609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf96f389ffc3c2945af86a3f08c6b789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeTextMeshPro:
+  - {fileID: 2126262873}
+  - {fileID: 1771411910}
 --- !u!1001 &1128316102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2383,6 +2403,10 @@ PrefabInstance:
     - target: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
       propertyPath: m_Name
       value: Slime_01_MeltalHelmet
+      objectReference: {fileID: 0}
+    - target: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2851,6 +2875,7 @@ GameObject:
   - component: {fileID: 1306808369}
   - component: {fileID: 1306808368}
   - component: {fileID: 1306808367}
+  - component: {fileID: 1306808370}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Stage
@@ -2944,6 +2969,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306808365}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1306808370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306808365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf96f389ffc3c2945af86a3f08c6b789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeTextMeshPro:
+  - {fileID: 1214362862}
+  - {fileID: 685924518}
 --- !u!1 &1327103509
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,6 +3757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime_01_King
       objectReference: {fileID: 0}
+    - target: {fileID: 873531700701352353, guid: 28d0a30d6aed6fc4c8ca473413f70c24, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8955322500898459853, guid: 28d0a30d6aed6fc4c8ca473413f70c24, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -3912,6 +3956,7 @@ GameObject:
   - component: {fileID: 1994472509}
   - component: {fileID: 1994472508}
   - component: {fileID: 1994472507}
+  - component: {fileID: 1994472510}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Stage
@@ -4005,6 +4050,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994472505}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1994472510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994472505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf96f389ffc3c2945af86a3f08c6b789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeTextMeshPro:
+  - {fileID: 445695928}
+  - {fileID: 1388917883}
 --- !u!1 &2085287451
 GameObject:
   m_ObjectHideFlags: 0
