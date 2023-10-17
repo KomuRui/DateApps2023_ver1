@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Rotate1 : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 1.0f;
+
+    [SerializeField] private float speed = 1.0f;  // スピード
+    [SerializeField] private int playerNum;       // プレイヤー番号
+
     private float power = 0.0f;
 
     // Start is called before the first frame update
