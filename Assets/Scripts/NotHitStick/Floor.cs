@@ -98,8 +98,37 @@ public class Floor : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        //落とす
         transform.DOMove(new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z), 1f).SetEase(Ease.InOutQuart);
+
+        //元に戻す
+        StartCoroutine(Undo(4.0f));
+    }
+
+    //元に戻す
+    IEnumerator Undo(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //白色にしておく
+        GetComponent<MeshRenderer>().material.color = Color.white;
+        transform.DOMove(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), 1f).SetEase(Ease.InOutQuart);
+
+        //初期化
+        StartCoroutine(Initializ(1.0f));
+    }
+
+
+    //初期化
+    IEnumerator Initializ(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        time = 10.0f;
+        isShake = false;
+        isChangeRedColor = false;
+
+        for (int i = 0; i < timeTextMeshPro.Length; i++)
+            timeTextMeshPro[i].color = Color.white;
     }
 
     // コリジョンが発生したときに呼び出されるメソッド
