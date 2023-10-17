@@ -28,8 +28,9 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
     [SerializeField] private GameObject[] stage;              // 床のゲームオブジェクト
     [SerializeField] private float jumpPower;                 // ジャンプ力
-    [SerializeField] private int nowStageNum;                 //乗っている床の番号
-    
+    [SerializeField] private int nowStageNum;                 // 乗っている床の番号
+    [SerializeField] private int playerNum;                   // プレイヤー番号
+
     //リジットボディ
     private Rigidbody rb;
 
@@ -81,8 +82,8 @@ public class NotHitStickPlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H1");
-        if (isVerticalInput) verticalInput = Input.GetAxis("L_Stick_V1");
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
+        if (isVerticalInput) verticalInput = Input.GetAxis("L_Stick_V" + playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)
@@ -117,7 +118,7 @@ public class NotHitStickPlayer : MonoBehaviour
         if (isJump) return;
 
         //通常
-        if (Input.GetButtonDown("Abutton1"))
+        if (Input.GetButtonDown("Abutton" + playerNum))
         {
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
@@ -131,7 +132,7 @@ public class NotHitStickPlayer : MonoBehaviour
         int beforeStage = nowStageNum;
 
         //自動ジャンプ(別の足場に)
-        if (Input.GetAxis("L_Stick_V1") > 0.8f)
+        if (Input.GetAxis("L_Stick_V" + playerNum) < -0.8f)
         {
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
@@ -141,7 +142,7 @@ public class NotHitStickPlayer : MonoBehaviour
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
         }
-        else if (Input.GetAxis("L_Stick_V1") < -0.8f)
+        else if (Input.GetAxis("L_Stick_V" + playerNum) > 0.8f)
         {
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
