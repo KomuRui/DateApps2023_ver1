@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class ConsecutivePlayer : MonoBehaviour
 {
-
     //アニメーションに必要
     public enum SlimeAnimationState { Idle, Walk, Jump, Attack, Damage }
 
@@ -31,7 +30,7 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
-
+    [SerializeField] private int playerNum;                   // プレイヤー番号
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -69,7 +68,7 @@ public class ConsecutivePlayer : MonoBehaviour
     private void Move()
     {
         // 入力を取得
-        if (Input.GetButtonDown("Abutton1"))
+        if (Input.GetButtonDown("Abutton" + playerNum))
         {
             buttonCount += addSpeed;
         }
