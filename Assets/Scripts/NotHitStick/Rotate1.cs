@@ -21,12 +21,14 @@ public class Rotate1 : MonoBehaviour
     void Update()
     {
         //Œ»İ‚Ì—Í‚ğæ“¾
-        power += -Input.GetAxis("L_Stick_H1") * speed * Time.deltaTime;
+        power += -Input.GetAxis("L_Stick_V1") * speed * Time.deltaTime;
         power = Math.Min(0.09f, Math.Abs(power)) * Math.Sign(power);
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
-        if (Input.GetAxis("L_Stick_H1") == 0 && power != 0) power *= 0.997f;
+        if (Input.GetAxis("L_Stick_V1") == 0 && power != 0) power *= 0.997f;
 
+        //Šp“x‚ğ‰ÁZ‚µA”ÍˆÍ“à‚Éû‚ß‚é
         transform.eulerAngles += new Vector3(0, power, 0);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x,Math.Clamp(transform.eulerAngles.y, -35, 35), transform.eulerAngles.z);
     }
 }

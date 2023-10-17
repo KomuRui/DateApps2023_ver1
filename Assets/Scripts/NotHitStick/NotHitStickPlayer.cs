@@ -118,7 +118,7 @@ public class NotHitStickPlayer : MonoBehaviour
         if (isJump) return;
 
         //’Êí
-        if (Input.GetButtonDown("Abutton1"))
+        if (Input.GetButtonDown("Abutton" + playerNum))
         {
             //’Êíó‘Ô‚É•ÏX
             ChangeStateTo(SlimeAnimationState.Idle);
