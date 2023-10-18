@@ -630,6 +630,7 @@ MonoBehaviour:
   jumpPower: 240
   nowStageNum: 0
   playerNum: 4
+  forceMagnitude: 0
 --- !u!1 &384268136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6610034490362017182, guid: 28d0a30d6aed6fc4c8ca473413f70c24, type: 3}
@@ -909,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9647c55e0dc7ef84da7e453ceefe486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.15
+  speed: 0.1
   playerNum: 1
 --- !u!1 &542860420
 GameObject:
@@ -2111,6 +2112,7 @@ MonoBehaviour:
   jumpPower: 240
   nowStageNum: 1
   playerNum: 3
+  forceMagnitude: 0
 --- !u!1 &1035517244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,9 +2536,10 @@ MonoBehaviour:
   - {fileID: 1075516609}
   - {fileID: 1994472505}
   - {fileID: 1306808365}
-  jumpPower: 300
+  jumpPower: 200
   nowStageNum: 2
   playerNum: 2
+  forceMagnitude: 3155.5
 --- !u!1 &1205843368
 GameObject:
   m_ObjectHideFlags: 0
@@ -3333,7 +3336,7 @@ GameObject:
   - component: {fileID: 1711486653}
   m_Layer: 0
   m_Name: RotateStick2
-  m_TagString: Untagged
+  m_TagString: Stick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4062,7 +4065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68d6fa864c794b4498c612b5a0969ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.15
+  speed: 0.1
   playerNum: 1
 --- !u!1 &2090301346
 GameObject:
@@ -4078,7 +4081,7 @@ GameObject:
   - component: {fileID: 2090301348}
   m_Layer: 0
   m_Name: RotateStick1
-  m_TagString: Untagged
+  m_TagString: Stick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

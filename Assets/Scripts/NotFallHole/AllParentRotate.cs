@@ -19,13 +19,22 @@ public class AllParentRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool isLB = Input.GetButton("LBbutton" + playerNum);
-        bool isRB = Input.GetButton("RBbutton" + playerNum);
+        //‰ñ“]
+        Rotation();
+    }
+
+    //‰ñ“]
+    private void Rotation()
+    {
+        bool isLB = false;
+        bool isRB = false;
+        if (Input.GetAxis("L_Stick_H" + playerNum) < -0.8f) isLB = true;
+        if (Input.GetAxis("L_Stick_H" + playerNum) > 0.8f) isRB = true;
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
-        if (!Input.GetButton("LBbutton" + playerNum) && !Input.GetButton("RBbutton" + playerNum)) 
+        if (!isRB && !isLB)
             power *= 0.997f;
-        else if(isLB)
+        else if (isLB)
         {
             power -= new Vector3(0, speed * Time.deltaTime, 0);
             power.y = Math.Min(0.09f, Math.Abs(power.y)) * Math.Sign(power.y);
@@ -37,6 +46,5 @@ public class AllParentRotate : MonoBehaviour
         }
 
         transform.eulerAngles += power;
-        
     }
 }

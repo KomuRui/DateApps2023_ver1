@@ -1,9 +1,11 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ChasesPlayer : MonoBehaviour
 {
@@ -34,17 +36,21 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    [SerializeField] private List<Image> commandImageList = new List<Image>(); //コマンドの画像のリスト
+    [SerializeField] private List<COMMAND_TYPE> nextCommand = new List<COMMAND_TYPE>(); //次のコマンドのリスト
+    [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
+    [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
+
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
     //コマンドの種類
-    enum COMMAND_TYPE
+    public enum COMMAND_TYPE
     {
         CROSS_BUTTON_UP = 0,
         CROSS_BUTTON_DOWN,
         CROSS_BUTTON_LEFT,
-        CROSS_BUTTON_RIGHT,       
+        CROSS_BUTTON_RIGHT,
+        COMMAND_MAX,
     }
 
     void Start()
@@ -181,5 +187,33 @@ public class ChasesPlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    //ランダムで今あるコマンド選択
+    public COMMAND_TYPE RandCommand()
+    {
+        return (COMMAND_TYPE)Random.Range(0f, ((int)COMMAND_TYPE.COMMAND_MAX));
+    }
+
+    //次のコマンドのボタンが押されたかどうか調べる
+    public bool CheckOnCommandButton()
+    {
+        //switch (nextCommand[0])
+        //{
+        //    case COMMAND_TYPE.CROSS_BUTTON_UP:
+        //        nextCommandImageList[0] = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_UP];
+        //        break;
+        //    case COMMAND_TYPE.CROSS_BUTTON_DOWN:
+        //        break;
+        //    case COMMAND_TYPE.CROSS_BUTTON_LEFT:
+        //        break;
+        //    case COMMAND_TYPE.CROSS_BUTTON_RIGHT:
+        //        break;
+        //    case COMMAND_TYPE.COMMAND_MAX:
+        //        break;
+        //    default:
+        //        break;
+        //}
+        return true;
     }
 }

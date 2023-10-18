@@ -9,6 +9,7 @@ public class FallRotateFloor : MonoBehaviour
     [SerializeField] private int playerNum = 1;
     [SerializeField] private string buttonName = "Abutton";
     [SerializeField] private int sige = 1;
+    [SerializeField] private NotFallHoleGameManager mana;
     List<Tweener> tweener = new List<Tweener>();
 
     public Vector3 rotationAxis = Vector3.right;
@@ -36,6 +37,8 @@ public class FallRotateFloor : MonoBehaviour
         //任意のボタンが押されたら
         if(Input.GetButtonDown(buttonName) && !isPush)
         {
+            rotateSpeed = Mathf.Abs(rotateSpeed) * Mathf.Sign(mana.rotateSign);
+
             // 親オブジェクトの回転に追従するローカル回転軸を計算
             Vector3 worldRotationAxis = this.transform.parent.TransformDirection(rotationAxis);
 

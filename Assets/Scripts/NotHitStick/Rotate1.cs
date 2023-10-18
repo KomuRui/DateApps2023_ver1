@@ -22,7 +22,7 @@ public class Rotate1 : MonoBehaviour
     {
         //Œ»İ‚Ì—Í‚ğæ“¾
         power += -Input.GetAxis("L_Stick_V1") * speed * Time.deltaTime;
-        power = Math.Min(0.55f, Math.Abs(power)) * Math.Sign(power);
+        power = Math.Min(0.08f, Math.Abs(power)) * Math.Sign(power);
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
         if (Input.GetAxis("L_Stick_V1") == 0 && power != 0) power *= 0.99f;
