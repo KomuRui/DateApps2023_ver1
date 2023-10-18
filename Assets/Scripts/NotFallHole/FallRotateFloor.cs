@@ -80,6 +80,9 @@ public class FallRotateFloor : MonoBehaviour
         
         }
 
+        if (Input.GetButtonDown("LBbutton" + playerNum)) sige = 1;
+        if (Input.GetButtonDown("RBbutton" + playerNum)) sige = -1;
+
 
     }
 
