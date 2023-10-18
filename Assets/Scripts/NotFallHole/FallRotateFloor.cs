@@ -76,9 +76,12 @@ public class FallRotateFloor : MonoBehaviour
             Vector3 worldRotationAxis = this.transform.parent.TransformDirection(rotationAxis);
 
             // ‰ñ“]‚·‚é
-            transform.RotateAround(this.transform.position, worldRotationAxis, -sige * rotateSpeed * Time.deltaTime);
+            transform.RotateAround(this.transform.position, worldRotationAxis, sige * rotateSpeed * Time.deltaTime);
         
         }
+
+        if (Input.GetButtonDown("LBbutton" + playerNum)) sige = 1;
+        if (Input.GetButtonDown("RBbutton" + playerNum)) sige = -1;
 
 
     }
