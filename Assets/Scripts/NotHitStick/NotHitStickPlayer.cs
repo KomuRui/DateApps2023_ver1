@@ -221,6 +221,9 @@ public class NotHitStickPlayer : MonoBehaviour
     void OnCollisionEnter(Collision collision)  
     {
         if (collision.transform.tag == "Stage")
+        {
             isJump = false;
+            rb.velocity = Vector3.zero;
+        }
     }
 }
