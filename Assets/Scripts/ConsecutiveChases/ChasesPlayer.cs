@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class ChasesPlayer : MonoBehaviour
 {
@@ -12,33 +13,39 @@ public class ChasesPlayer : MonoBehaviour
     public Face faces;
     public GameObject SmileBody;
     public SlimeAnimationState currentState;
+
     public Animator animator;
     public int damType;
+
+    [SerializeField] private Vector3 moveDirection = new Vector3(0.0f, 0.0f, 1.0f); //プレイヤーの移動方向
+
     private Material faceMaterial;
 
-    [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
-    [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
-    [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
-    [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
-    [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
-    [SerializeField] private bool isAnimIdle = true;          // 通常時のアニメーション許可するか
-    [SerializeField] private bool isAnimWalk = true;          // 歩くアニメーション許可するか 
-    [SerializeField] private bool isAnimJump = true;          // ジャンプアニメーション許可するか
-    [SerializeField] private bool isAnimAttack = true;        // 攻撃アニメーション許可するか
-    [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
-    [SerializeField] private GameObject[] stage;              // 床のゲームオブジェクト
-    [SerializeField] private float jumpPower;                 // ジャンプ力
-    [SerializeField] private int nowStageNum;                 // 乗っている床の番号
+    [SerializeField] private float deceleration = 150.0f;       //減速率
+    [SerializeField] private float addSpeed = 1.1f;             // ボタンを押したときプレイヤーの移動速度の上昇値
+    [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
+    [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
+    [SerializeField] private bool isHorizontalInput = true;     // 横の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;       // 縦の入力許可するか
+    [SerializeField] private bool isAnimIdle = true;
+    [SerializeField] private bool isAnimWalk = true;
+    [SerializeField] private bool isAnimJump = true;
+    [SerializeField] private bool isAnimAttack = true;
+    [SerializeField] private bool isAnimDamage = true;
+    [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private List<Image> commandImageList = new List<Image>(); //コマンドの画像のリスト
 
-    //リジットボディ
-    private Rigidbody rb;
+    private Transform mainCameraTransform; // メインカメラのTransform
 
-    //ジャンプしているか
-    private bool isJump = false;
-
-    // メインカメラのTransform
-    private Transform mainCameraTransform;
+    //コマンドの種類
+    enum COMMAND_TYPE
+    {
+        CROSS_BUTTON_UP = 0,
+        CROSS_BUTTON_DOWN,
+        CROSS_BUTTON_LEFT,
+        CROSS_BUTTON_RIGHT,       
+    }
 
     void Start()
     {
@@ -48,8 +55,8 @@ public class ChasesPlayer : MonoBehaviour
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
 
-        //リジットボディ取得
-        rb = GetComponent<Rigidbody>();
+        //プレイヤーの移動方向の正規化
+        moveDirection.Normalize();
     }
 
     //顔のテクスチャ設定
@@ -60,53 +67,48 @@ public class ChasesPlayer : MonoBehaviour
 
     void Update()
     {
-        //状態更新
-        StateUpdata();
-
         //動き
         Move();
 
-        //ジャンプ
-        Jump();
+        //状態更新
+        StateUpdata();
     }
 
     //移動
     private void Move()
     {
-
-        //ジャンプしているならこの先処理しない
-        if (isJump) return;
-
-        // 入力を取得用
-        float horizontalInput = 0;
-        float verticalInput = 0;
-
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = Input.GetAxis("L_Stick_V" + playerNum);
+        if (Input.GetButtonDown("Abutton" + playerNum))
+        {
+            buttonCount += addSpeed;
+        }
 
-        //入力がないのなら
-        if (horizontalInput == 0 && verticalInput == 0)
+        //速度が0ならば
+        if (moveSpeed <= 0)
         {
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
-            return;
+        }
+        else
+        {
+            //歩き状態に変更
+            ChangeStateTo(SlimeAnimationState.Walk);
+
+            // 移動
+            //アニメーションの速度に合わせるために遅くする
+            Vector3 animationSpeed = new Vector3(0.0f, 0.0f, 0.002f);
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            transform.position -= animationSpeed;
         }
 
-        //歩き状態に変更
-        ChangeStateTo(SlimeAnimationState.Walk);
+        buttonCount -= addSpeed / deceleration;
+        //buttonCountが0なら
+        if (buttonCount <= 0)
+        {
+            buttonCount = 0.0f;
+        }
 
-        // カメラの向きを基準にプレイヤーを移動
-        Vector3 forwardDirection = mainCameraTransform.forward;
-        Vector3 rightDirection = mainCameraTransform.right;
-        forwardDirection.y = 0f; // Y軸成分を0にすることで水平方向に制限
-
-        // 移動方向を計算
-        Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
-
-        // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
+        moveSpeed = buttonCount;
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
@@ -114,47 +116,11 @@ public class ChasesPlayer : MonoBehaviour
     //ジャンプ
     private void Jump()
     {
-        //ジャンプしているならこの先処理しない
-        if (isJump) return;
-
-        //通常
-        if (Input.GetButtonDown("Abutton" + playerNum))
-        {
-            //通常状態に変更
-            ChangeStateTo(SlimeAnimationState.Idle);
-
-            //上に力を加える
-            rb.AddForce(Vector3.up * jumpPower);
-            isJump = true;
-            return;
-        }
-
-        int beforeStage = nowStageNum;
-
-        //自動ジャンプ(別の足場に)
-        if (Input.GetAxis("L_Stick_V" + playerNum) < -0.8f)
-        {
-            nowStageNum--;
-            nowStageNum = Math.Max(nowStageNum, 0);
-            if (beforeStage == nowStageNum) return;
-            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
-            ChangeStateTo(SlimeAnimationState.Idle);
-            rb.AddForce(Vector3.up * jumpPower);
-            isJump = true;
-        }
-        else if (Input.GetAxis("L_Stick_V" + playerNum) > 0.8f)
-        {
-            nowStageNum++;
-            nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
-            if (beforeStage == nowStageNum) return;
-            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
-            ChangeStateTo(SlimeAnimationState.Idle);
-            rb.AddForce(Vector3.up * jumpPower);
-            isJump = true;
-        }
+        //Aボタンが押されてないのならこの先処理しない
+        if (!Input.GetButtonDown("Abutton1")) return;
 
         //ジャンプ状態に変更    
-        //ChangeStateTo(SlimeAnimationState.Jump);
+        ChangeStateTo(SlimeAnimationState.Jump);
     }
 
     //状態更新
@@ -209,18 +175,11 @@ public class ChasesPlayer : MonoBehaviour
         }
     }
 
-    //状態変更
     public void ChangeStateTo(SlimeAnimationState state)
     {
         if (this == null) return;
         if (state == this.currentState) return;
 
         this.currentState = state;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Stage")
-            isJump = false;
     }
 }
