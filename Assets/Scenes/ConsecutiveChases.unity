@@ -991,7 +991,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583987787}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8044434f9eefa19418f833c498f6d82a, type: 3}
   m_Name: 
@@ -1001,9 +1001,11 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 1583987791}
   damType: 0
+  moveDirection: {x: 0, y: 0, z: 1}
+  deceleration: 150
+  addSpeed: 1.1
   moveSpeed: 0.01
   rotationSpeed: 180
-  gravitySpeed: 0.05
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -1011,9 +1013,7 @@ MonoBehaviour:
   isAnimJump: 1
   isAnimAttack: 1
   isAnimDamage: 1
-  stage: []
-  jumpPower: 0
-  nowStageNum: 0
+  buttonCount: 0
   playerNum: 1
 --- !u!54 &1583987789
 Rigidbody:
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583987787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83c93cdb99ad2c341a30e4c4c7b3006b, type: 3}
   m_Name: 
