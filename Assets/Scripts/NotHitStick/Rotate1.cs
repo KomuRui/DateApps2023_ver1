@@ -6,7 +6,7 @@ using UnityEngine;
 public class Rotate1 : MonoBehaviour
 {
 
-    [SerializeField] private float speed = 1.0f;  // スピード
+    [SerializeField] private float speed;         // スピード
     [SerializeField] private int playerNum;       // プレイヤー番号
 
     private float power = 0.0f;
@@ -22,17 +22,25 @@ public class Rotate1 : MonoBehaviour
     {
         //現在の力を取得
         power += -Input.GetAxis("L_Stick_V1") * speed * Time.deltaTime;
-        power = Math.Min(0.12f, Math.Abs(power)) * Math.Sign(power);
+        power = Math.Min(0.55f, Math.Abs(power)) * Math.Sign(power);
 
         //力が加えられてないのなら減速する
-        if (Input.GetAxis("L_Stick_V1") == 0 && power != 0) power *= 0.997f;
+        if (Input.GetAxis("L_Stick_V1") == 0 && power != 0) power *= 0.99f;
 
         //角度を加算し、範囲内に収める
         transform.eulerAngles += new Vector3(0, power, 0);
 
-        //範囲内におさめる
-        if (transform.eulerAngles.y > 35 && transform.eulerAngles.y < 300) transform.eulerAngles = new Vector3(0, 35, 0);
-        if (transform.eulerAngles.y < 305 && transform.eulerAngles.y > 40) transform.eulerAngles = new Vector3(0, 305, 0);
+        ///範囲内におさめる
+        if (transform.eulerAngles.y > 35 && transform.eulerAngles.y < 300)
+        {
+            transform.eulerAngles = new Vector3(0, 35, 0);
+            power = 0.0f;
+        }
+        if (transform.eulerAngles.y < 305 && transform.eulerAngles.y > 40)
+        {
+            transform.eulerAngles = new Vector3(0, 305, 0);
+            power = 0.0f;
+        }
 
     }
 }
