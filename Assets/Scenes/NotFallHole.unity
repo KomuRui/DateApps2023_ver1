@@ -411,6 +411,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Ybutton
   sige: 1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &223253564
@@ -931,6 +932,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Bbutton
   sige: -1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &346319299
@@ -1140,6 +1142,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Ybutton
   sige: -1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &369274208
@@ -1763,6 +1766,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.060537964, y: 0.006, z: 0.03012161}
   m_Center: {x: -0.000000008381903, y: 0, z: -0.0019053168}
+--- !u!1 &792454510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792454512}
+  - component: {fileID: 792454511}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &792454511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792454510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57d554863caf1d44a283b1df6f031d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNum: 1
+  rotateSign: 1
+--- !u!4 &792454512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792454510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &802885629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b5a8e7a0762fe048a3561d0d2808867, type: 3}
@@ -1951,6 +2000,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Bbutton
   sige: 1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &828991461
@@ -2296,6 +2346,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Abutton
   sige: -1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &999746564
@@ -2756,6 +2807,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Xbutton
   sige: 1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &1300478416
@@ -4206,6 +4258,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Abutton
   sige: 1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &1710679886
@@ -4498,6 +4551,7 @@ MonoBehaviour:
   playerNum: 1
   buttonName: Xbutton
   sige: -1
+  mana: {fileID: 792454511}
   rotationAxis: {x: 1, y: 0, z: 0}
   isRotate: 0
 --- !u!136 &1828744771
