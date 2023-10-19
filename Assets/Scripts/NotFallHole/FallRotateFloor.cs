@@ -94,7 +94,7 @@ public class FallRotateFloor : MonoBehaviour
         isRotate = false;
 
         //ƒRƒ‹[ƒ`ƒ“
-        StartCoroutine(ReverseRotate(1.0f));
+        StartCoroutine(ReverseRotate(2.0f));
     }
 
     IEnumerator ReverseRotate(float delay)
