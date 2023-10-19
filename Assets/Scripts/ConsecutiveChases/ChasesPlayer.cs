@@ -195,8 +195,12 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public bool CheckOnCommandButton()
     {
-        List<float> crossKeyAxisList = new List<float>();
-        crossKeyAxisList.Add(Input.GetAxis("D_Pad_V" + playerNum));
+
+        //十字キーの入力を受け取る
+        float crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
+        float crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
+
+        
 
         //コマンドチェック
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0 + crossKeyDeadzone)
