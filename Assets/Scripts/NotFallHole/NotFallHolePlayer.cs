@@ -27,7 +27,8 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
-
+    [SerializeField] private Vector3 localGravity;
+    private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
     void Start()
@@ -37,6 +38,8 @@ public class NotFallHolePlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        rBody = this.GetComponent<Rigidbody>();
     }
 
     //顔のテクスチャ設定
@@ -55,6 +58,16 @@ public class NotFallHolePlayer : MonoBehaviour
 
         //ジャンプ
         //Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        SetLocalGravity(); //重力をAddForceでかけるメソッドを呼ぶ。FixedUpdateが好ましい。
+    }
+
+    private void SetLocalGravity()
+    {
+        rBody.AddForce(localGravity, ForceMode.Acceleration);
     }
 
     //移動
