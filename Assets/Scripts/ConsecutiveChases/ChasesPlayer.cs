@@ -83,11 +83,7 @@ public class ChasesPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-        // 入力を取得
-        if (Input.GetButtonDown("Abutton" + playerNum))
-        {
-            buttonCount += addSpeed;
-        }
+        CheckOnCommandButton();
 
         //速度が0ならば
         if (moveSpeed <= 0)
@@ -198,22 +194,41 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public bool CheckOnCommandButton()
     {
-        //switch (nextCommand[0])
-        //{
-        //    case COMMAND_TYPE.CROSS_BUTTON_UP:
-        //        nextCommandImageList[0] = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_UP];
-        //        break;
-        //    case COMMAND_TYPE.CROSS_BUTTON_DOWN:
-        //        break;
-        //    case COMMAND_TYPE.CROSS_BUTTON_LEFT:
-        //        break;
-        //    case COMMAND_TYPE.CROSS_BUTTON_RIGHT:
-        //        break;
-        //    case COMMAND_TYPE.COMMAND_MAX:
-        //        break;
-        //    default:
-        //        break;
-        //}
-        return true;
+        float a = Input.GetAxis("D_Pad_V" + playerNum);
+        Debug.Log(a);
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
+        //コマンドチェック
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0)
+        {
+            Debug.Log("上");
+            return true;
+        }
+        nextCommand.RemoveAt(0);
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_DOWN);
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0)
+        {
+            Debug.Log("下");
+            return true;
+        }
+        nextCommand.RemoveAt(0);
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_LEFT);
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0)
+        {
+            Debug.Log("左");
+            return true;
+        }
+        nextCommand.RemoveAt(0);
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0)
+        {
+            Debug.Log("右");
+            return true;
+        }
+        nextCommand.RemoveAt(0);
+        return false;
     }
 }
