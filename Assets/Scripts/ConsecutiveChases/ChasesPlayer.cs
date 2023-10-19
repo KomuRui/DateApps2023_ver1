@@ -34,8 +34,9 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private bool isAnimJump = true;
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
-    [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
-    [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private float buttonCount = 0.0f;                // 入力を取得用
+    [SerializeField] private int playerNum;                           // プレイヤー番号
+    [SerializeField] private float crossKeyDeadzone = 0.5f;           // 十字キーのデッドゾーン
     [SerializeField] private List<COMMAND_TYPE> nextCommand = new List<COMMAND_TYPE>(); //次のコマンドのリスト
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
@@ -194,38 +195,32 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public bool CheckOnCommandButton()
     {
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
+        List<float> crossKeyAxisList = new List<float>();
+        crossKeyAxisList.Add(Input.GetAxis("D_Pad_V" + playerNum));
+
         //コマンドチェック
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0 + crossKeyDeadzone)
         {
             Debug.Log("上");
             return true;
         }
-        nextCommand.RemoveAt(0);
-
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_DOWN);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0 - crossKeyDeadzone)
         {
             Debug.Log("下");
             return true;
         }
-        nextCommand.RemoveAt(0);
-
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_LEFT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0 - crossKeyDeadzone)
         {
             Debug.Log("左");
             return true;
         }
-        nextCommand.RemoveAt(0);
-
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0 + crossKeyDeadzone)
         {
             Debug.Log("右");
             return true;
         }
-        nextCommand.RemoveAt(0);
         return false;
     }
 }
