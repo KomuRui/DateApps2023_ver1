@@ -165,7 +165,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272121584}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -254,7 +254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: brush.splatChannel
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: brush.splatRandomScaleMax
@@ -410,7 +410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.27
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -418,7 +418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.85
+      value: 16.49
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -441,12 +441,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 1354a61f6579d7244a474b3cc8b48a29, type: 2}
     - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatScale
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: brush.splatChannel
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatRandomScaleMax
@@ -848,7 +860,7 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  moveSpeed: 250
+  moveSpeed: 1500
   rotationSpeed: 180
   gravitySpeed: 0.05
   isHorizontalInput: 1
@@ -922,16 +934,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_Mass
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatScale
-      value: 20
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatChannel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatRandomScaleMax
@@ -970,7 +990,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433587891}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1006,7 +1026,7 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  moveSpeed: 250
+  moveSpeed: 500
   rotationSpeed: 180
   gravitySpeed: 0.05
   isHorizontalInput: 1
