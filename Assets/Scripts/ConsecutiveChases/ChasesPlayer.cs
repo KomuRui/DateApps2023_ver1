@@ -194,9 +194,6 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public bool CheckOnCommandButton()
     {
-        float a = Input.GetAxis("D_Pad_V" + playerNum);
-        Debug.Log(a);
-
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
         //コマンドチェック
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0)
