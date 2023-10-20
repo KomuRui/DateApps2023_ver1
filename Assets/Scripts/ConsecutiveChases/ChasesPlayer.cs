@@ -201,55 +201,37 @@ public class ChasesPlayer : MonoBehaviour
         float crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
         float crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
 
-        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;   //優先コマンド
-        float priorityLevel = 0.0f;     //優先度
+        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;
+        float priorityLevel;
 
-        //コマンドチェック
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && crossAxisV > 0)
+        //コマンドチェック
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0 + crossKeyDeadzone)
         {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_UP;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisV);  
-
             Debug.Log("上");
             return true;
         }
         nextCommand.RemoveAt(0);
+
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_DOWN);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && crossAxisV < 0 && priorityLevel < Mathf.Abs(crossAxisV))
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0 - crossKeyDeadzone)
         {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_DOWN;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisV);
-
             Debug.Log("下");
             return true;
         }
         nextCommand.RemoveAt(0);
+
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_LEFT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && crossAxisH < 0 && priorityLevel < Mathf.Abs(crossAxisH))
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0 - crossKeyDeadzone)
         {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_LEFT;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisH);
-
             Debug.Log("左");
             return true;
         }
         nextCommand.RemoveAt(0);
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && crossAxisH > 0 && priorityLevel < Mathf.Abs(crossAxisH))
-        {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_RIGHT;
 
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0 + crossKeyDeadzone)
+        {
             Debug.Log("右");
             return true;
         }
