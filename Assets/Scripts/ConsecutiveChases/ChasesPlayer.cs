@@ -51,6 +51,7 @@ public class ChasesPlayer : MonoBehaviour
         CROSS_BUTTON_DOWN,
         CROSS_BUTTON_LEFT,
         CROSS_BUTTON_RIGHT,
+        NONE,
         COMMAND_MAX,
     }
 
@@ -195,32 +196,46 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public bool CheckOnCommandButton()
     {
-        List<float> crossKeyAxisList = new List<float>();
-        crossKeyAxisList.Add(Input.GetAxis("D_Pad_V" + playerNum));
 
+        //十字キーの入力を受け取る
+        float crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
+        float crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
+
+        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;
+        float priorityLevel;
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
         //コマンドチェック
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0 + crossKeyDeadzone)
         {
             Debug.Log("上");
             return true;
         }
+        nextCommand.RemoveAt(0);
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_DOWN);
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0 - crossKeyDeadzone)
         {
             Debug.Log("下");
             return true;
         }
+        nextCommand.RemoveAt(0);
+
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_LEFT);
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0 - crossKeyDeadzone)
         {
             Debug.Log("左");
             return true;
         }
+        nextCommand.RemoveAt(0);
+
         nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
         if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0 + crossKeyDeadzone)
         {
             Debug.Log("右");
             return true;
         }
+        nextCommand.RemoveAt(0);
         return false;
     }
 }
