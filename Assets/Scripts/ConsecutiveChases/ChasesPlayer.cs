@@ -35,12 +35,13 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;                // 入力を取得用
+    [SerializeField] private float crossAxisV;                        //十字キーの縦の入力値
+    [SerializeField] private float crossAxisH;                        //十字キーの横の入力値
     [SerializeField] private int playerNum;                           // プレイヤー番号
-    [SerializeField] private float crossKeyDeadzone = 0.5f;           // 十字キーのデッドゾーン
-    [SerializeField] private List<COMMAND_TYPE> nextCommand = new List<COMMAND_TYPE>(); //次のコマンドのリスト
+    //[SerializeField] private float crossKeyDeadzone = 0.5f;           // 十字キーのデッドゾーン
+    private List<COMMAND_TYPE> nextCommand = new List<COMMAND_TYPE>(); //次のコマンドのリスト
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
-
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -55,6 +56,15 @@ public class ChasesPlayer : MonoBehaviour
         COMMAND_MAX,
     }
 
+    //コマンド入力の結果
+    public enum COMMAND_RESULT
+    {
+        SUCCESS = 0,
+        MISS,
+        NONE,
+        MAX,
+    }
+
     void Start()
     {
         //マテリアル設定
@@ -65,6 +75,8 @@ public class ChasesPlayer : MonoBehaviour
 
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
+
+        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
     }
 
     //顔のテクスチャ設定
@@ -85,7 +97,14 @@ public class ChasesPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-        CheckOnCommandButton();
+        if (CheckOnCommandButton() == COMMAND_RESULT.SUCCESS)
+        {
+            int a = 0;
+        }
+        if (CheckOnCommandButton() == COMMAND_RESULT.MISS)
+        {
+            int a = 0;
+        }
 
         //速度が0ならば
         if (moveSpeed <= 0)
@@ -194,48 +213,68 @@ public class ChasesPlayer : MonoBehaviour
     }
 
     //次のコマンドのボタンが押されたかどうか調べる
-    public bool CheckOnCommandButton()
+    public COMMAND_RESULT CheckOnCommandButton()
     {
 
         //十字キーの入力を受け取る
-        float crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
-        float crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
+        crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
+        crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
 
-        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;
-        float priorityLevel;
+        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;   //優先コマンド
+        float priorityLevel = 0.0f;     //優先度
 
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
-        //コマンドチェック
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && Input.GetAxis("D_Pad_V" + playerNum) > 0 + crossKeyDeadzone)
+        //コマンドチェック       
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && crossAxisV > 0)
         {
+            //優先コマンドを代入
+            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_UP;
+
+            //優先度を代入
+            priorityLevel = Mathf.Abs(crossAxisV);
+
             Debug.Log("上");
-            return true;
         }
-        nextCommand.RemoveAt(0);
-
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_DOWN);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && Input.GetAxis("D_Pad_V" + playerNum) < 0 - crossKeyDeadzone)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && crossAxisV < 0)
         {
+            //優先コマンドを代入
+            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_DOWN;
+
+            //優先度を代入
+            priorityLevel = Mathf.Abs(crossAxisV);
             Debug.Log("下");
-            return true;
         }
-        nextCommand.RemoveAt(0);
-
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_LEFT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && Input.GetAxis("D_Pad_H" + playerNum) < 0 - crossKeyDeadzone)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && crossAxisH < 0)
         {
+            //優先コマンドを代入
+            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_LEFT;
+
+            //優先度を代入
+            priorityLevel = Mathf.Abs(crossAxisH);
+
             Debug.Log("左");
-            return true;
         }
-        nextCommand.RemoveAt(0);
-
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_RIGHT);
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && Input.GetAxis("D_Pad_H" + playerNum) > 0 + crossKeyDeadzone)
+        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && crossAxisH > 0)
         {
+            //優先コマンドを代入
+            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_RIGHT;
+
             Debug.Log("右");
-            return true;
         }
-        nextCommand.RemoveAt(0);
-        return false;
+
+        //コマンド入力してなかったら
+        if (priorityCommand == COMMAND_TYPE.NONE)
+        {
+            return COMMAND_RESULT.NONE;
+        }
+        //コマンド入力に成功していたら
+        else if (nextCommand[0] == priorityCommand)
+        {
+            return COMMAND_RESULT.SUCCESS;
+        }
+        //コマンド入力に失敗したら
+        else
+        {
+            return COMMAND_RESULT.MISS;
+        }
     }
 }
