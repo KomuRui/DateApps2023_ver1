@@ -148,6 +148,7 @@ MonoBehaviour:
   moveSpeed: 250
   rotationSpeed: 180
   gravitySpeed: 0.05
+  flashingTime: 0.5
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -183,7 +184,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!4 &272121597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
@@ -199,7 +200,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1952199108122064, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_Name
-      value: Cyan Paint Sphere
+      value: Player2
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_RootOrder
@@ -219,19 +220,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.31
+      value: 21.6
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.49
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.79
+      value: 12.1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.x
@@ -239,11 +240,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 23510356464191788, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -251,6 +256,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1354a61f6579d7244a474b3cc8b48a29, type: 2}
     - target: {fileID: 54108042913420348, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
+      propertyPath: brush.name
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
@@ -302,7 +311,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1952199108122064, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_Name
-      value: Orange Paint Sphere (1)
+      value: Player3
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_RootOrder
@@ -322,19 +331,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.49
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.8
+      value: 12.1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.x
@@ -342,15 +351,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 54108042913420348, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
+      propertyPath: brush.name
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
       propertyPath: brush.splatScale
@@ -401,7 +418,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1952199108122064, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_Name
-      value: Red Paint Sphere (1)
+      value: Player4
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_RootOrder
@@ -421,19 +438,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.64
+      value: -21.1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.38
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.49
+      value: 12.1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -441,11 +458,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 23510356464191788, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -465,7 +486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: brush.name
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatScale
@@ -545,6 +570,7 @@ MonoBehaviour:
     splatRotation: 0
     splatRandomRotation: 180
     splatChannel: 0
+    name: 
   RandomChannel: 0
   SingleShotClick: 0
   ClearOnClick: 0
@@ -624,7 +650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841454967}
   m_LocalRotation: {x: 0.4799565, y: -0, z: -0, w: 0.8772923}
-  m_LocalPosition: {x: 0, y: 41.3, z: -34.6}
+  m_LocalPosition: {x: 0, y: 68.8, z: -52.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -828,6 +854,7 @@ MonoBehaviour:
   moveSpeed: 250
   rotationSpeed: 180
   gravitySpeed: 0.05
+  flashingTime: 0.5
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -1037,6 +1064,7 @@ MonoBehaviour:
   moveSpeed: 1500
   rotationSpeed: 180
   gravitySpeed: 0.05
+  flashingTime: 0.5
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -1066,7 +1094,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1952199108122064, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_Name
-      value: Red Paint Sphere (2)
+      value: Player1
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_RootOrder
@@ -1086,15 +1114,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.38
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.37
+      value: -24.3
       objectReference: {fileID: 0}
     - target: {fileID: 4726613352323916, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1126,7 +1154,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: brush.name
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatScale
@@ -1204,7 +1236,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!114 &1433587893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,6 +1257,7 @@ MonoBehaviour:
   moveSpeed: 500
   rotationSpeed: 180
   gravitySpeed: 0.05
+  flashingTime: 0.5
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -1239,6 +1272,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4726613352323916, guid: 544cc8808ca1b79459a7955fdf54ef55, type: 3}
   m_PrefabInstance: {fileID: 478742624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1647585093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1647585095}
+  - component: {fileID: 1647585094}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1647585094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647585093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a328c58bf12c98459c053830e8b9552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1684797614}
+--- !u!4 &1647585095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647585093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1409109, y: 0.8553543, z: -8.026293}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1684797612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,8 +1435,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684797612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0000019043, y: -0.52, z: 0.0000027803}
-  m_LocalScale: {x: 53.799255, y: 1.8144159, z: 53.799255}
+  m_LocalPosition: {x: -0.0000038242, y: -0.52, z: 0.0000072105}
+  m_LocalScale: {x: 89.9416, y: 3.0333407, z: 89.9416}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1383,7 +1461,7 @@ GameObject:
   - component: {fileID: 1867142033}
   m_Layer: 0
   m_Name: Water Surface Color
-  m_TagString: Untagged
+  m_TagString: Sea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1418,11 +1496,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1867142034
@@ -1499,8 +1577,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024522343}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.2584, z: 0}
-  m_LocalScale: {x: 0.66412, y: 0.66412, z: 0.66412}
+  m_LocalPosition: {x: 0, y: -17.887, z: 0}
+  m_LocalScale: {x: 2.0338051, y: 2.0338051, z: 2.0338051}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1359606761}

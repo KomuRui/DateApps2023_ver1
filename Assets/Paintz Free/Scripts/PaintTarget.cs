@@ -49,7 +49,7 @@ public class PaintTarget : MonoBehaviour
     private RenderTexture worldTangentTex;
     private RenderTexture worldBinormalTex;
 
-    private List<Paint> m_Splats = new List<Paint>();
+    public List<Paint> m_Splats = new List<Paint>();
     private bool evenFrame = false;
     private bool setupComplete = false;
 
@@ -248,6 +248,7 @@ public class PaintTarget : MonoBehaviour
         newPaint.channelMask = brush.getMask();
         newPaint.scaleBias = brush.getTile();
         newPaint.brush = brush;
+        newPaint.name = brush.name;
 
         target.PaintSplat(newPaint);
     }
