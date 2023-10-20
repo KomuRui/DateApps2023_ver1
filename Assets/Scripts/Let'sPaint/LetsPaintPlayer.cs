@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class LetsPaintPlayer : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
+    [SerializeField] private float flashingTime;              //点滅時間
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
     [SerializeField] private bool isAnimIdle = true;
@@ -32,11 +34,16 @@ public class LetsPaintPlayer : MonoBehaviour
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
+    private Vector3 initializPos;   //初期位置
+    private bool isRespawn = false; //現在リスポーン中かどうか
+    private Tweener tweener;        //Dotween用
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //マテリアル設定
-        //faceMaterial = SmileBody.GetComponent<Renderer>().materials[1];
+        //初期位置設定
+        initializPos = transform.position;
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
@@ -54,7 +61,6 @@ public class LetsPaintPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -84,9 +90,53 @@ public class LetsPaintPlayer : MonoBehaviour
 
         // 移動
         rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
-        //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    //リスポーンスタート
+    IEnumerator StartRespawn(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //初期位置決定
+        transform.position = initializPos;
+
+        //重力を停止させる
+        rBody.isKinematic = true;
+
+        //メッシュレンダラーを取得(点滅)
+        MeshRenderer r = GetComponent<MeshRenderer>();
+        tweener = r.material.DOFade(0.3f, flashingTime).SetLoops(-1, LoopType.Yoyo);
+
+        //コルーチン
+        StartCoroutine(ReStart(3.0f));
+    }
+
+    //スタート
+    IEnumerator ReStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //重力を復活
+        rBody.isKinematic = false;
+
+        //リスポート
+        isRespawn = false;
+
+        //点滅止める
+        tweener.Restart();
+        tweener.Pause();
+    }
+
+    //何かと当たった時に呼ばれる関数
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.transform.tag == "Sea" && !isRespawn)
+        {
+            isRespawn = true;
+            StartCoroutine(StartRespawn(2.0f));
+        }
     }
 }

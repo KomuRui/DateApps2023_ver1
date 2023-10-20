@@ -6,6 +6,7 @@ public class Paint
     public Vector4 channelMask;
     public Vector4 scaleBias;
     public Brush brush;
+    public string name;
 }
 
 [System.Serializable]
@@ -24,6 +25,12 @@ public class Brush
     public float splatRandomRotation = 180f;
 
     public int splatChannel = 0;
+    public string name = "";
+
+    public string getName()
+    {
+        return name;
+    }
 
     public Vector4 getMask()
     {
