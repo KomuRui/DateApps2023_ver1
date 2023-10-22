@@ -169,6 +169,76 @@ public class PaintTarget : MonoBehaviour
         return Color.black;
     }
 
+    public int GetRedPercent(PaintTarget target)
+    {
+        Renderer r = target.GetComponent<Renderer>();
+        if (!r) return 0;
+
+        RenderTexture rt = (RenderTexture)r.sharedMaterial.GetTexture("_SplatTex");
+        if (!rt) return 0;
+
+        UpdatePickColors(target, rt);
+
+        Texture2D tc = target.splatTexPick;
+        if (!tc) return 0;
+
+        Color[] pixels = tc.GetPixels();
+        int totalPixels = pixels.Length;
+        int paintedPixels = 0;
+
+        int radius = tc.width / 2;
+        float circleArea = Mathf.PI * radius * radius;
+        int pixelCount = Mathf.RoundToInt(circleArea);
+        totalPixels -= (totalPixels - pixelCount);
+
+        foreach (Color pixel in pixels)
+        {
+            if (pixel.g > .5)
+            {
+                paintedPixels++;
+            }
+        }
+
+        Debug.Log(r.sharedMaterial.GetColor("_SplatColor1"));
+        Debug.Log(r.sharedMaterial.GetColor("_SplatColor2"));
+
+        float percentPainted = (float)paintedPixels / totalPixels;
+        return (int)(percentPainted * 100);
+    }
+
+    public int GetOrengePercent(PaintTarget target)
+    {
+        Renderer r = target.GetComponent<Renderer>();
+        if (!r) return 0;
+
+        RenderTexture rt = (RenderTexture)r.sharedMaterial.GetTexture("_SplatTex");
+        if (!rt) return 0;
+
+        UpdatePickColors(target, rt);
+
+        Texture2D tc = target.splatTexPick;
+        if (!tc) return 0;
+
+        Color[] pixels = tc.GetPixels();
+        int totalPixels = pixels.Length;
+        int paintedPixels = 0;
+        Debug.Log(totalPixels);
+
+        foreach (Color pixel in pixels)
+        {
+            if (pixel.r > .5)
+            {
+                paintedPixels++;
+            }
+        }
+
+        Debug.Log(r.sharedMaterial.GetColor("_SplatColor1"));
+        Debug.Log(r.sharedMaterial.GetColor("_SplatColor2"));
+
+        float percentPainted = (float)paintedPixels / totalPixels;
+        return (int)(percentPainted * 100);
+    }
+
     public static void PaintLine(Vector3 start, Vector3 end, Brush brush)
     {
         Ray ray = new Ray(start, (end - start).normalized);
