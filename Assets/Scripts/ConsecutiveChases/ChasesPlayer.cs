@@ -100,10 +100,12 @@ public class ChasesPlayer : MonoBehaviour
         if (CheckOnCommandButton() == COMMAND_RESULT.SUCCESS)
         {
             int a = 0;
+            a += 1;
         }
         if (CheckOnCommandButton() == COMMAND_RESULT.MISS)
         {
             int a = 0;
+            a += 1;
         }
 
         //速度が0ならば
@@ -215,6 +217,10 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public COMMAND_RESULT CheckOnCommandButton()
     {
+        if(Input.GetButtonDown("Abutton" + playerNum))
+        {
+            return COMMAND_RESULT.MISS;
+        }
 
         //十字キーの入力を受け取る
         crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
@@ -224,7 +230,7 @@ public class ChasesPlayer : MonoBehaviour
         float priorityLevel = 0.0f;     //優先度
 
         //コマンドチェック       
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_UP && crossAxisV > 0)
+        if (crossAxisV > 0)
         {
             //優先コマンドを代入
             priorityCommand = COMMAND_TYPE.CROSS_BUTTON_UP;
@@ -234,7 +240,7 @@ public class ChasesPlayer : MonoBehaviour
 
             Debug.Log("上");
         }
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_DOWN && crossAxisV < 0)
+        if (crossAxisV < 0 && priorityLevel < Mathf.Abs(crossAxisV))
         {
             //優先コマンドを代入
             priorityCommand = COMMAND_TYPE.CROSS_BUTTON_DOWN;
@@ -243,7 +249,7 @@ public class ChasesPlayer : MonoBehaviour
             priorityLevel = Mathf.Abs(crossAxisV);
             Debug.Log("下");
         }
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_LEFT && crossAxisH < 0)
+        if (crossAxisH < 0 && priorityLevel < Mathf.Abs(crossAxisH))
         {
             //優先コマンドを代入
             priorityCommand = COMMAND_TYPE.CROSS_BUTTON_LEFT;
@@ -253,7 +259,7 @@ public class ChasesPlayer : MonoBehaviour
 
             Debug.Log("左");
         }
-        if (nextCommand[0] == COMMAND_TYPE.CROSS_BUTTON_RIGHT && crossAxisH > 0)
+        if (crossAxisH > 0 && priorityLevel < Mathf.Abs(crossAxisH))
         {
             //優先コマンドを代入
             priorityCommand = COMMAND_TYPE.CROSS_BUTTON_RIGHT;
