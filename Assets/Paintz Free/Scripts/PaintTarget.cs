@@ -218,11 +218,15 @@ public class PaintTarget : MonoBehaviour
 
         Texture2D tc = target.splatTexPick;
         if (!tc) return 0;
-
+        
         Color[] pixels = tc.GetPixels();
         int totalPixels = pixels.Length;
         int paintedPixels = 0;
-        Debug.Log(totalPixels);
+
+        int radius = tc.width / 2;
+        float circleArea = Mathf.PI * radius * radius;
+        int pixelCount = Mathf.RoundToInt(circleArea);
+        totalPixels -= (totalPixels - pixelCount);
 
         foreach (Color pixel in pixels)
         {

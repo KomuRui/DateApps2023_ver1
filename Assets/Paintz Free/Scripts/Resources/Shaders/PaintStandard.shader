@@ -5,18 +5,20 @@
 		_BumpTex("Normal", 2D) = "bump" {}
 		_BumpPower("Normal Scale", Range(.001,10)) = 1.0
 
-		_Glossiness("Smoothness", Range(0,1)) = 0.5
-		_Metallic("Metallic", Range(0,1)) = 0.0
+		_Glossiness("Smoothness", Range(0,3)) = 0.5
+		_Metallic("Metallic", Range(0,3)) = 0.0
 
 		_SplatColor1("Splat Color 1", Color) = (1,.5,0,1)
 		_SplatColor2("Splat Color 2", Color) = (1,0,0,1)
+		_SplatColor3("Splat Color 3", Color) = (1,0,0,1)
+		_SplatColor4("Splat Color 4", Color) = (1,0,0,1)
 
 		_SplatTex("Splat Texture", 2D) = "black" {}
 		_SplatTileNormalTex("Splat Normal", 2D) = "bump" {}
 		_SplatTileBump("Splat Normal Scale", Range(0.001,10)) = 1.0
 
-		_SplatGlossiness("Splat Smoothness", Range(0,1)) = 0.8
-		_SplatMetallic("Splat Metallic", Range(0,1)) = 0.0
+		_SplatGlossiness("Splat Smoothness", Range(0,3)) = 0.8
+		_SplatMetallic("Splat Metallic", Range(0,3)) = 0.0
 		_SplatEdgeBump("Splat Edge Scale", Range(0.001,10)) = 1.0
 		_SplatEdgeBumpWidth("Splat Edge Width", Range(0,10)) = 1.0
 	}
@@ -45,6 +47,8 @@
 		fixed4 _Color;
 		fixed4 _SplatColor1;
 		fixed4 _SplatColor2;
+		fixed4 _SplatColor3;
+		fixed4 _SplatColor4;
 
 		half _BumpPower;
 		half _Glossiness;
@@ -178,6 +182,8 @@
 		// Lerp the color with the splat colors based on the splat mask channels
 		c.xyz = lerp(c.xyz, _SplatColor1.xyz, splatMask.x);
 		c.xyz = lerp(c.xyz, _SplatColor2.xyz, splatMask.y);
+		c.xyz = lerp(c.xyz, _SplatColor3.xyz, splatMask.z);
+		c.xyz = lerp(c.xyz, _SplatColor4.xyz, splatMask.a);
 
 		o.Albedo = c.rgb;
 		o.Normal = tanNormal;
