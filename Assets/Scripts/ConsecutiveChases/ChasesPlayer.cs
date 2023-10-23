@@ -37,9 +37,10 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float buttonCount = 0.0f;                // 入力を取得用
     [SerializeField] private float crossAxisV;                        //十字キーの縦の入力値
     [SerializeField] private float crossAxisH;                        //十字キーの横の入力値
+    [SerializeField] private float COMMAND_SIZE_MAX = 3;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
     //[SerializeField] private float crossKeyDeadzone = 0.5f;           // 十字キーのデッドゾーン
-    private List<COMMAND_TYPE> nextCommand = new List<COMMAND_TYPE>(); //次のコマンドのリスト
+    [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
 
@@ -76,7 +77,9 @@ public class ChasesPlayer : MonoBehaviour
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
 
-        nextCommand.Add(COMMAND_TYPE.CROSS_BUTTON_UP);
+        KeepCommand();
+
+        //nextCommand.Enqueue(COMMAND_TYPE.CROSS_BUTTON_UP);
     }
 
     //顔のテクスチャ設定
@@ -99,8 +102,7 @@ public class ChasesPlayer : MonoBehaviour
     {
         if (CheckOnCommandButton() == COMMAND_RESULT.SUCCESS)
         {
-            int a = 0;
-            a += 1;
+            buttonCount += addSpeed;
         }
         if (CheckOnCommandButton() == COMMAND_RESULT.MISS)
         {
@@ -214,6 +216,23 @@ public class ChasesPlayer : MonoBehaviour
         return (COMMAND_TYPE)Random.Range(0f, ((int)COMMAND_TYPE.COMMAND_MAX));
     }
 
+    //コマンドが成功した場合の処理
+    public void SuccessCommand()
+    {
+
+    }
+
+    //コマンドを一定数に保つ処理
+    public void KeepCommand()
+    {
+        //コマンドの数が減っている時
+        for (int i = nextCommand.Count; i < COMMAND_SIZE_MAX; i++)
+        {
+            //ランダムにコマンドを入れる
+            nextCommand.Enqueue(RandCommand());
+        }
+    }
+
     //次のコマンドのボタンが押されたかどうか調べる
     public COMMAND_RESULT CheckOnCommandButton()
     {
@@ -273,7 +292,7 @@ public class ChasesPlayer : MonoBehaviour
             return COMMAND_RESULT.NONE;
         }
         //コマンド入力に成功していたら
-        else if (nextCommand[0] == priorityCommand)
+        else if (nextCommand.Peek() == priorityCommand)
         {
             return COMMAND_RESULT.SUCCESS;
         }
