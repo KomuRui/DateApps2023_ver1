@@ -213,7 +213,8 @@ public class ChasesPlayer : MonoBehaviour
     //ランダムで今あるコマンド選択
     public COMMAND_TYPE RandCommand()
     {
-        return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP), ((int)COMMAND_TYPE.CROSS_BUTTON_RIGHT));
+        return COMMAND_TYPE.CROSS_BUTTON_UP;
+       // return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP), ((int)COMMAND_TYPE.CROSS_BUTTON_RIGHT));
     }
 
     //コマンドが成功した場合の処理
