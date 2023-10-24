@@ -25,7 +25,7 @@ public class ChasesPlayer : MonoBehaviour
     private Material faceMaterial;
 
     [SerializeField] private float deceleration = 150.0f;       //減速率
-    [SerializeField] private float addSpeed = 1.1f;             // ボタンを押したときプレイヤーの移動速度の上昇値
+    [SerializeField] private float addSpeed = 1.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;     // 横の入力許可するか
@@ -134,9 +134,10 @@ public class ChasesPlayer : MonoBehaviour
             //ChangeStateTo(SlimeAnimationState.Jump);
 
             // 移動
-            Rigidbody rb = this.GetComponent<Rigidbody>();
-            Vector3 force = moveDirection * moveSpeed;
-            rb.AddForce(force);  // 力を加える
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+            //ジャンプ
+            Jump();
         }
 
         buttonCount -= addSpeed / deceleration;
@@ -146,7 +147,7 @@ public class ChasesPlayer : MonoBehaviour
             buttonCount = 0.0f;
         }
 
-        moveSpeed = buttonCount * 200;
+        moveSpeed = buttonCount;
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
@@ -356,4 +357,16 @@ public class ChasesPlayer : MonoBehaviour
         }
     }
 
+    // 当たった時に呼ばれる関数
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit"); // ログを表示する
+
+            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
+            Vector3 force = new Vector3(0.0f, 800.0f, 1.0f);  // 力を設定
+            rb.AddForce(force, ForceMode.Force);          // 力を加える
+        }      
+    }
 }
