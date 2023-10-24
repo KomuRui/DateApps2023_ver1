@@ -25,7 +25,7 @@ public class ChasesPlayer : MonoBehaviour
     private Material faceMaterial;
 
     [SerializeField] private float deceleration = 150.0f;       //減速率
-    [SerializeField] private float addSpeed = 1.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
+    [SerializeField] private float addSpeed = 1000.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;     // 横の入力許可するか
@@ -134,13 +134,14 @@ public class ChasesPlayer : MonoBehaviour
             //ChangeStateTo(SlimeAnimationState.Jump);
 
             // 移動
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+            rb.AddForce(moveDirection * moveSpeed, ForceMode.Force);    // 力を加える
+            //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             //ジャンプ
             Jump();
         }
 
-        buttonCount -= addSpeed / deceleration;
         //buttonCountが0なら
         if (buttonCount <= 0)
         {
