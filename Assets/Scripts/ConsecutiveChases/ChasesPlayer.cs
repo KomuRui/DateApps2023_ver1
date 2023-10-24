@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -39,10 +40,10 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float crossAxisH;                        //十字キーの横の入力値
     [SerializeField] private float COMMAND_SIZE_MAX = 3;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
-    //[SerializeField] private float crossKeyDeadzone = 0.5f;           // 十字キーのデッドゾーン
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
+    private bool crossKeyContinuous = false;    //十字キー
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -77,7 +78,11 @@ public class ChasesPlayer : MonoBehaviour
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
 
+        //コマンドの初期化
         KeepCommand();
+
+        //コマンド画像を入れる
+        SetCommandImage();
 
         //nextCommand.Enqueue(COMMAND_TYPE.CROSS_BUTTON_UP);
     }
@@ -100,9 +105,13 @@ public class ChasesPlayer : MonoBehaviour
     //移動
     private void Move()
     {
+        //コマンド入力が成功していたら
         if (CheckOnCommandButton() == COMMAND_RESULT.SUCCESS)
         {
             buttonCount += addSpeed;
+
+            //コマンドが成功した場合の処理
+            SuccessCommand();
         }
         if (CheckOnCommandButton() == COMMAND_RESULT.MISS)
         {
@@ -213,14 +222,20 @@ public class ChasesPlayer : MonoBehaviour
     //ランダムで今あるコマンド選択
     public COMMAND_TYPE RandCommand()
     {
-        return COMMAND_TYPE.CROSS_BUTTON_UP;
-       // return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP), ((int)COMMAND_TYPE.CROSS_BUTTON_RIGHT));
+       return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP, 4);
     }
 
     //コマンドが成功した場合の処理
     public void SuccessCommand()
     {
+        //コマンドの削除
+        nextCommand.Dequeue();
 
+        //コマンドを一定数に保つ処理
+        KeepCommand();
+
+        //コマンド画像を入れる
+        SetCommandImage();
     }
 
     //コマンドを一定数に保つ処理
@@ -237,70 +252,106 @@ public class ChasesPlayer : MonoBehaviour
     //次のコマンドのボタンが押されたかどうか調べる
     public COMMAND_RESULT CheckOnCommandButton()
     {
-        if(Input.GetButtonDown("Abutton" + playerNum))
-        {
-            return COMMAND_RESULT.MISS;
-        }
-
         //十字キーの入力を受け取る
         crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
         crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
 
-        COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;   //優先コマンド
-        float priorityLevel = 0.0f;     //優先度
-
-        //コマンドチェック       
-        if (crossAxisV > 0)
+        //十字キーが離されたらもう一回押せるようになる
+        if (crossAxisV == 0 && crossAxisH == 0)
         {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_UP;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisV);
-
-            Debug.Log("上");
-        }
-        if (crossAxisV < 0 && priorityLevel < Mathf.Abs(crossAxisV))
-        {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_DOWN;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisV);
-            Debug.Log("下");
-        }
-        if (crossAxisH < 0 && priorityLevel < Mathf.Abs(crossAxisH))
-        {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_LEFT;
-
-            //優先度を代入
-            priorityLevel = Mathf.Abs(crossAxisH);
-
-            Debug.Log("左");
-        }
-        if (crossAxisH > 0 && priorityLevel < Mathf.Abs(crossAxisH))
-        {
-            //優先コマンドを代入
-            priorityCommand = COMMAND_TYPE.CROSS_BUTTON_RIGHT;
-
-            Debug.Log("右");
+            crossKeyContinuous = false;
         }
 
-        //コマンド入力してなかったら
-        if (priorityCommand == COMMAND_TYPE.NONE)
+        if (!crossKeyContinuous)
         {
-            return COMMAND_RESULT.NONE;
+            COMMAND_TYPE priorityCommand = COMMAND_TYPE.NONE;   //優先コマンド
+            float priorityLevel = 0.0f;     //優先度
+
+            //コマンドチェック       
+            if (crossAxisV > 0)
+            {
+                //優先コマンドを代入
+                priorityCommand = COMMAND_TYPE.CROSS_BUTTON_UP;
+
+                //優先度を代入
+                priorityLevel = Mathf.Abs(crossAxisV);
+
+                Debug.Log("上");
+            }
+            if (crossAxisV < 0 && priorityLevel < Mathf.Abs(crossAxisV))
+            {
+                //優先コマンドを代入
+                priorityCommand = COMMAND_TYPE.CROSS_BUTTON_DOWN;
+
+                //優先度を代入
+                priorityLevel = Mathf.Abs(crossAxisV);
+                Debug.Log("下");
+            }
+            if (crossAxisH < 0 && priorityLevel < Mathf.Abs(crossAxisH))
+            {
+                //優先コマンドを代入
+                priorityCommand = COMMAND_TYPE.CROSS_BUTTON_LEFT;
+
+                //優先度を代入
+                priorityLevel = Mathf.Abs(crossAxisH);
+
+                Debug.Log("左");
+            }
+            if (crossAxisH > 0 && priorityLevel < Mathf.Abs(crossAxisH))
+            {
+                //優先コマンドを代入
+                priorityCommand = COMMAND_TYPE.CROSS_BUTTON_RIGHT;
+
+                Debug.Log("右");
+            }
+
+            //コマンド入力してなかったら
+            if (priorityCommand == COMMAND_TYPE.NONE)
+            {
+                crossKeyContinuous = false;
+                return COMMAND_RESULT.NONE;
+            }
+            //コマンド入力に成功していたら
+            else if (nextCommand.Peek() == priorityCommand)
+            {
+                crossKeyContinuous = true;
+                return COMMAND_RESULT.SUCCESS;
+            }
+            //コマンド入力に失敗したら
+            else
+            {
+                crossKeyContinuous = true;
+                return COMMAND_RESULT.MISS;
+            }
         }
-        //コマンド入力に成功していたら
-        else if (nextCommand.Peek() == priorityCommand)
+        return COMMAND_RESULT.NONE;
+    }
+
+
+    //コマンド画像を入れる
+    public void SetCommandImage()
+    {
+        int num = 0;
+        foreach (COMMAND_TYPE item in nextCommand)
         {
-            return COMMAND_RESULT.SUCCESS;
-        }
-        //コマンド入力に失敗したら
-        else
-        {
-            return COMMAND_RESULT.MISS;
+            if (item == COMMAND_TYPE.CROSS_BUTTON_UP)
+            {
+                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_UP];
+            }
+            if (item == COMMAND_TYPE.CROSS_BUTTON_DOWN)
+            {
+                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_DOWN];
+            }
+            if (item == COMMAND_TYPE.CROSS_BUTTON_LEFT)
+            {
+                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_LEFT];
+            }
+            if (item == COMMAND_TYPE.CROSS_BUTTON_RIGHT)
+            {
+                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_RIGHT];
+            }
+            num++;
         }
     }
+
 }
