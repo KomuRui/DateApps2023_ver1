@@ -81,8 +81,11 @@ public class ConsecutivePlayer : MonoBehaviour
         }
         else
         {
-            //歩き状態に変更
-            ChangeStateTo(SlimeAnimationState.Walk);
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+
+            //ジャンプ状態に変更
+            //ChangeStateTo(SlimeAnimationState.Walk);
 
             // 移動
             //アニメーションの速度に合わせるために遅くする

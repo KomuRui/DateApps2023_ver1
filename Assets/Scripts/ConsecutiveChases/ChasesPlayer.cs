@@ -127,14 +127,16 @@ public class ChasesPlayer : MonoBehaviour
         }
         else
         {
-            //歩き状態に変更
-            ChangeStateTo(SlimeAnimationState.Walk);
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+
+            //ジャンプ状態に変更
+            //ChangeStateTo(SlimeAnimationState.Jump);
 
             // 移動
-            //アニメーションの速度に合わせるために遅くする
-            Vector3 animationSpeed = new Vector3(0.0f, 0.0f, 0.002f);
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-            transform.position -= animationSpeed;
+            Rigidbody rb = this.GetComponent<Rigidbody>();
+            Vector3 force = moveDirection * moveSpeed;
+            rb.AddForce(force);  // 力を加える
         }
 
         buttonCount -= addSpeed / deceleration;
@@ -144,7 +146,7 @@ public class ChasesPlayer : MonoBehaviour
             buttonCount = 0.0f;
         }
 
-        moveSpeed = buttonCount;
+        moveSpeed = buttonCount * 200;
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
