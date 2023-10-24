@@ -169,78 +169,50 @@ public class PaintTarget : MonoBehaviour
         return Color.black;
     }
 
-    public int GetRedPercent(PaintTarget target)
+    public int[] GetPercent(PaintTarget target)
     {
+        int[] percent = { 0,0,0,0 };
+
         Renderer r = target.GetComponent<Renderer>();
-        if (!r) return 0;
+        if (!r) return percent;
 
         RenderTexture rt = (RenderTexture)r.sharedMaterial.GetTexture("_SplatTex");
-        if (!rt) return 0;
+        if (!rt) return percent;
 
         UpdatePickColors(target, rt);
 
         Texture2D tc = target.splatTexPick;
-        if (!tc) return 0;
+        if (!tc) return percent;
 
         Color[] pixels = tc.GetPixels();
         int totalPixels = pixels.Length;
-        int paintedPixels = 0;
 
         int radius = tc.width / 2;
         float circleArea = Mathf.PI * radius * radius;
         int pixelCount = Mathf.RoundToInt(circleArea);
         totalPixels -= (totalPixels - pixelCount);
-
-        foreach (Color pixel in pixels)
-        {
-            if (pixel.g > .5)
-            {
-                paintedPixels++;
-            }
-        }
-
-        Debug.Log(r.sharedMaterial.GetColor("_SplatColor1"));
-        Debug.Log(r.sharedMaterial.GetColor("_SplatColor2"));
-
-        float percentPainted = (float)paintedPixels / totalPixels;
-        return (int)(percentPainted * 100);
-    }
-
-    public int GetOrengePercent(PaintTarget target)
-    {
-        Renderer r = target.GetComponent<Renderer>();
-        if (!r) return 0;
-
-        RenderTexture rt = (RenderTexture)r.sharedMaterial.GetTexture("_SplatTex");
-        if (!rt) return 0;
-
-        UpdatePickColors(target, rt);
-
-        Texture2D tc = target.splatTexPick;
-        if (!tc) return 0;
         
-        Color[] pixels = tc.GetPixels();
-        int totalPixels = pixels.Length;
-        int paintedPixels = 0;
-
-        int radius = tc.width / 2;
-        float circleArea = Mathf.PI * radius * radius;
-        int pixelCount = Mathf.RoundToInt(circleArea);
-        totalPixels -= (totalPixels - pixelCount);
-
         foreach (Color pixel in pixels)
         {
-            if (pixel.r > .5)
-            {
-                paintedPixels++;
-            }
+            if (pixel.r > .5) { percent[1]++; continue; }
+            if (pixel.g > .5) { percent[0]++; continue; }
+            if (pixel.b > .5) { percent[2]++; continue; }
+            if (pixel.a > .5) { percent[3]++; continue; }
         }
 
-        Debug.Log(r.sharedMaterial.GetColor("_SplatColor1"));
-        Debug.Log(r.sharedMaterial.GetColor("_SplatColor2"));
+        percent[0] = (int)(((float)percent[0] / totalPixels) * 100);
+        percent[1] = (int)(((float)percent[1] / totalPixels) * 100);
+        percent[2] = (int)(((float)percent[2] / totalPixels) * 100);
+        percent[3] = (int)(((float)percent[3] / totalPixels) * 100);
 
-        float percentPainted = (float)paintedPixels / totalPixels;
-        return (int)(percentPainted * 100);
+        int sum = percent[0] + percent[1] + percent[2] + percent[3];
+        if (sum > 100)
+        {
+            sum = sum - 100;
+            percent[0] -= sum;
+        }
+
+        return percent;
     }
 
     public static void PaintLine(Vector3 start, Vector3 end, Brush brush)
