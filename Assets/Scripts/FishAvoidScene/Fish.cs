@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using DG.Tweening;
 using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting;
 
 public class Fish : MonoBehaviour
 {
     bool isCurve;
     float curve;
     const float WIDTH = 0.004f;
-    //const float HEIGHT = 0.02f;
     float height = 0.02f;
-
-    //public NotHitStickPlayer onePlayer;
+    float a = 0.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,19 +41,24 @@ public class Fish : MonoBehaviour
             default:
                 break;
         }
+
+        if (transform.position.z < -15)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     //ペンギン
     public void Penguin()
     {
-        transform.position += new Vector3(0, 0, -0.01f);
+        transform.position += new Vector3(0, 0, -0.02f);
     }
 
     //イルカ
     public void Dolphin()
     {
         //this.transform.DOJump(new Vector3(transform.position.x, -3, -15.0f), jumpPower: 1.5f, numJumps: 5, duration: 7f);
-        transform.position += new Vector3(0, height, -0.006f);
+        transform.position += new Vector3(0, height, -0.01f);
         //2.25;
         transform.Rotate(new Vector3(0.25f, 0, 0));
         if (transform.position.y > 1.5f)
@@ -81,27 +86,30 @@ public class Fish : MonoBehaviour
         {
             transform.position += new Vector3(-WIDTH, 0,0);
             curve -= WIDTH;
-            if(curve <= -0.4f)
+            if (curve <= -a)
             {
                 isCurve =false;
+                transform.eulerAngles = (new Vector3(0, 150, 0));
             }
         }
         else
         {
             transform.position += new Vector3(WIDTH, 0, 0);
             curve += WIDTH;
-            if (curve >= 0.4f)
+            if (curve >= a)
             {
                 isCurve = true;
+                transform.eulerAngles = (new Vector3(0, 210, 0));
             }
         }
 
         transform.position += new Vector3(0, 0, -0.01f);
+        
     }
 
     //サメ
     public void Shark()
     {
-        transform.position += new Vector3(0, 0, -0.02f);
+        transform.position += new Vector3(0, 0, -0.006f);
     }
 }
