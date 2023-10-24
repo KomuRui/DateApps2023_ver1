@@ -51,7 +51,7 @@ public class OnePlayer : MonoBehaviour
         }
     }
 
-
+    //
     ////ƒWƒƒƒ“ƒv
     //private void Jump()
     //{
