@@ -11,6 +11,7 @@ public class OnePlayer : MonoBehaviour
     public GameObject sharkP;
     public GameObject fishesP;
     public GameObject dolphinP;
+    public float playerSpeed;
 
     Quaternion penguinRotate = Quaternion.Euler(0, -90, 90);
     Quaternion sharkRotate = Quaternion.Euler(0, 270, 0);
@@ -43,11 +44,11 @@ public class OnePlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 3.5)
         {
-            transform.position += new Vector3(0.1f, 0, 0);
+            transform.position += new Vector3(playerSpeed, 0, 0);
         }
         if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -3.5)
         {
-            transform.position += new Vector3(-0.1f, 0, 0);
+            transform.position += new Vector3(-playerSpeed, 0, 0);
         }
     }
 
