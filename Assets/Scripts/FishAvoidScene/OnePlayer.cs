@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class OnePlayer : MonoBehaviour
 {
@@ -17,18 +18,23 @@ public class OnePlayer : MonoBehaviour
     Quaternion sharkRotate = Quaternion.Euler(0, 270, 0);
     Quaternion fishesRotate = Quaternion.Euler(0, 180, 0);
     Quaternion dolphinRotate = Quaternion.Euler(250, 180, 0);
+    bool isPenguin;
+    
     // Start is called before the first frame update
     void Start()
     {
         Instantiate(penguinP, this.transform.position, penguinRotate);
+        isPenguin = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && isPenguin)
         {
+            isPenguin = false;
             Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
+            CoolCorou();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -52,7 +58,24 @@ public class OnePlayer : MonoBehaviour
         }
     }
 
-    //
+
+    //コルーチン関数を定義
+    private IEnumerator CoolCorou() //コルーチン関数の名前
+    {
+        //オブジェクト表示（斜線）（禁止マーク）
+        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;
+        //クリックできなくする
+        //click = false;
+        //駒ごとの待ち時間
+        yield return new WaitForSeconds(1.5f);
+        isPenguin = true;
+        //戻す
+        //click = true;
+        //オブジェクト非表示
+        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = false;
+    }
+
+
     ////ジャンプ
     //private void Jump()
     //{
