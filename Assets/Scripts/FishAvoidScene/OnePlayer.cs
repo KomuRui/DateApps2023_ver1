@@ -90,7 +90,7 @@ public class OnePlayer : MonoBehaviour
     private IEnumerator AllCoolCorou() //コルーチン関数の名前
     {
         //オブジェクト表示（斜線）（禁止マーク）
-        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;
+        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;//
         //クリックできなくする
         //click = false;
         //駒ごとの待ち時間
