@@ -19,35 +19,59 @@ public class OnePlayer : MonoBehaviour
     Quaternion fishesRotate = Quaternion.Euler(0, 180, 0);
     Quaternion dolphinRotate = Quaternion.Euler(250, 180, 0);
     bool isPenguin;
-    
+    bool isShark;
+    bool isFishes;
+    bool isDolphin;
+    bool isStop;
+    bool isCoroutineStart;
+
     // Start is called before the first frame update
     void Start()
     {
         Instantiate(penguinP, this.transform.position, penguinRotate);
         isPenguin = true;
+        isShark = true;
+        isFishes = true;
+        isDolphin = true;
+        isStop = false;
+        isCoroutineStart = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && isPenguin)
+        if (isStop)
         {
-            isPenguin = false;
-            Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
-            CoolCorou();
+            if (!isCoroutineStart) 
+            {
+                StartCoroutine(AllCoolCorou());
+            }           
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.P) && isPenguin)
+        {
+            Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
+            StartCoroutine(PenguinCoolCorou());
+            isStop = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
+
+            isStop = true;
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F))
         {
             Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
+
+            isStop = true;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
+
+            isStop = true;
         }
+
         if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 3.5)
         {
             transform.position += new Vector3(playerSpeed, 0, 0);
@@ -56,18 +80,39 @@ public class OnePlayer : MonoBehaviour
         {
             transform.position += new Vector3(-playerSpeed, 0, 0);
         }
+
+
+        
     }
 
 
     //コルーチン関数を定義
-    private IEnumerator CoolCorou() //コルーチン関数の名前
+    private IEnumerator AllCoolCorou() //コルーチン関数の名前
     {
         //オブジェクト表示（斜線）（禁止マーク）
         //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;
         //クリックできなくする
         //click = false;
         //駒ごとの待ち時間
-        yield return new WaitForSeconds(1.5f);
+        isCoroutineStart = true;
+        yield return new WaitForSeconds(0.2f);
+        isStop = false;
+        isCoroutineStart = false;
+        //戻す
+        //click = true;
+        //オブジェクト非表示
+        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    private IEnumerator PenguinCoolCorou() //コルーチン関数の名前
+    {
+        //オブジェクト表示（斜線）（禁止マーク）
+        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;
+        //クリックできなくする
+        //click = false;
+        //駒ごとの待ち時間
+        isPenguin = false;
+        yield return new WaitForSeconds(1.0f);
         isPenguin = true;
         //戻す
         //click = true;
