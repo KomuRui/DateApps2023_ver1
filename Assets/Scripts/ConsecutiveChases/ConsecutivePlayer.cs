@@ -30,7 +30,9 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
+    [SerializeField] private bool isDead = false;                   // プレイヤー番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -94,7 +96,9 @@ public class ConsecutivePlayer : MonoBehaviour
             Jump();
         }
 
-        //buttonCount -= addSpeed / deceleration;
+        //毎フレーム減速する
+        buttonCount -= deceleration;
+
         //buttonCountが0なら
         if (buttonCount <= 0 )
         {
@@ -109,11 +113,6 @@ public class ConsecutivePlayer : MonoBehaviour
     //ジャンプ
     private void Jump()
     {
-        //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton1")) return;
-        
-        //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
     }
 
     //状態更新
@@ -177,9 +176,9 @@ public class ConsecutivePlayer : MonoBehaviour
     }
 
     // 当たった時に呼ばれる関数
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Goal")
+        if (other.gameObject.tag == "Goal")
         {
             Debug.Log(playerNum + "P Goal"); // ログを表示する
         }

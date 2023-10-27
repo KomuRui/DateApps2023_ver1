@@ -142,6 +142,8 @@ public class ChasesPlayer : MonoBehaviour
             Jump();
         }
 
+        buttonCount -= deceleration;
+
         //buttonCountが0なら
         if (buttonCount <= 0)
         {
@@ -156,11 +158,6 @@ public class ChasesPlayer : MonoBehaviour
     //ジャンプ
     private void Jump()
     {
-        //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton1")) return;
-
-        //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
     }
 
     //状態更新
@@ -359,13 +356,13 @@ public class ChasesPlayer : MonoBehaviour
     }
 
     // 当たった時に呼ばれる関数
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("Hit"); // ログを表示する
 
-            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
             Vector3 force = new Vector3(0.0f, 800.0f, 1.0f);  // 力を設定
             rb.AddForce(force, ForceMode.Force);          // 力を加える
         }      
