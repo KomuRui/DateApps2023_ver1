@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+
+using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 public class OnePlayer : MonoBehaviour
@@ -13,6 +15,14 @@ public class OnePlayer : MonoBehaviour
     public GameObject fishesP;
     public GameObject dolphinP;
     public float playerSpeed;
+    public float pinguinCoolTime;
+    public float dolphinCoolTime;
+    public float sharkCoolTime;
+    public float fishesCoolTime;
+    public float AllCoolTime;
+    float a = 2;
+    float b = 1;
+
 
     Quaternion penguinRotate = Quaternion.Euler(0, -90, 90);
     Quaternion sharkRotate = Quaternion.Euler(0, 270, 0);
@@ -24,6 +34,11 @@ public class OnePlayer : MonoBehaviour
     bool isDolphin;
     bool isStop;
     bool isCoroutineStart;
+    public GameObject PenguinImage;
+    GameObject SharkImage;
+    GameObject FishesImage;
+    GameObject DolphinImage;
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +50,20 @@ public class OnePlayer : MonoBehaviour
         isDolphin = true;
         isStop = false;
         isCoroutineStart = false;
+        //PenguinImage = GameObject.Find("PenguinCoolTimeImage");
+        SharkImage = GameObject.Find("SharkCoolTimeImage");
+        FishesImage = GameObject.Find("FishesCoolTimeImage");
+        DolphinImage = GameObject.Find("DolphinCoolTimeImage");
     }
 
     // Update is called once per frame
     void Update()
     {
+        b -=(1 / (60 * a));
+        //PenguinImage.GetComponent<Image>().fillAmount = 1 / (360 / (60 * a));
+        PenguinImage.GetComponent<Image>().fillAmount = b;
+        //a -= 0.01f;
+
         if (isStop)
         {
             if (!isCoroutineStart) 
@@ -47,28 +71,28 @@ public class OnePlayer : MonoBehaviour
                 StartCoroutine(AllCoolCorou());
             }           
         }
-        else if (Input.GetKeyDown(KeyCode.P) && isPenguin)
+        else if (Input.GetKeyDown(KeyCode.A) && isPenguin)
         {
             Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
             StartCoroutine(PenguinCoolCorou());
             isStop = true;
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.S) && isShark)
         {
             Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
-
+            StartCoroutine(SharkCoolCorou());
             isStop = true;
         }
-        else if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F) && isFishes)
         {
             Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
-
+            StartCoroutine(FishesCoolCorou());
             isStop = true;
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D) && isDolphin)
         {
             Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
-
+            StartCoroutine(DolphinCoolCorou());
             isStop = true;
         }
 
@@ -89,35 +113,42 @@ public class OnePlayer : MonoBehaviour
     //コルーチン関数を定義
     private IEnumerator AllCoolCorou() //コルーチン関数の名前
     {
-        //オブジェクト表示（斜線）（禁止マーク）
-        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;//
-        //クリックできなくする
-        //click = false;
-        //駒ごとの待ち時間
         isCoroutineStart = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(AllCoolTime);
         isStop = false;
         isCoroutineStart = false;
-        //戻す
-        //click = true;
-        //オブジェクト非表示
-        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = false;
     }
 
+    //ぺんぎん
     private IEnumerator PenguinCoolCorou() //コルーチン関数の名前
     {
-        //オブジェクト表示（斜線）（禁止マーク）
-        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = true;
-        //クリックできなくする
-        //click = false;
-        //駒ごとの待ち時間
         isPenguin = false;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(pinguinCoolTime);
         isPenguin = true;
-        //戻す
-        //click = true;
-        //オブジェクト非表示
-        //objHu[transform.childCount - 1].GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    //さめ
+    private IEnumerator SharkCoolCorou() //コルーチン関数の名前
+    {
+        isShark = false;
+        yield return new WaitForSeconds(sharkCoolTime);
+        isShark = true;
+    }
+
+    //魚群
+    private IEnumerator FishesCoolCorou() //コルーチン関数の名前
+    {
+        isFishes = false;
+        yield return new WaitForSeconds(fishesCoolTime);
+        isFishes = true;
+    }
+
+    //いるか
+    private IEnumerator DolphinCoolCorou() //コルーチン関数の名前
+    {
+        isDolphin = false;
+        yield return new WaitForSeconds(dolphinCoolTime);
+        isDolphin = true;
     }
 
 
