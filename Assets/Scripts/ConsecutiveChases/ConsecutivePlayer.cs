@@ -32,6 +32,7 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
     [SerializeField] private bool isDead = false;                   // プレイヤー番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    bool buttonFlag = false;
     
 
     private Transform mainCameraTransform; // メインカメラのTransform
