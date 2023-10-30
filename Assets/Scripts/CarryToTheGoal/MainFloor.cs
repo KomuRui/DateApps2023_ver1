@@ -18,11 +18,12 @@ public class MainFloor : MonoBehaviour
     void Update()
     {
         ///”ÍˆÍ“à‚É‚¨‚³‚ß‚é
-        if (transform.eulerAngles.x > 20 && transform.eulerAngles.x < 335)
-            transform.eulerAngles = new Vector3(20, 90, 0);
-        if (transform.eulerAngles.x < 340 && transform.eulerAngles.x > 25)
-            transform.eulerAngles = new Vector3(340, 90, 0);
+        if (transform.eulerAngles.z > 10 && transform.eulerAngles.z < 335)
+            transform.eulerAngles = new Vector3(0, 0, 10);
+        if (transform.eulerAngles.z < 350 && transform.eulerAngles.z > 25)
+            transform.eulerAngles = new Vector3(0, 0, 350);
 
+        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
         transform.position = pos;
     }
 }
