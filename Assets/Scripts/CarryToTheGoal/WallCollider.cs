@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubFloor : MonoBehaviour
+public class WallCollider : MonoBehaviour
 {
-    [SerializeField] private MainFloor mainFloor;
+
+    public Transform wallT;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,6 @@ public class SubFloor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.rotation = mainFloor.transform.rotation;
+        this.transform.rotation = this.wallT.rotation;
     }
 }
