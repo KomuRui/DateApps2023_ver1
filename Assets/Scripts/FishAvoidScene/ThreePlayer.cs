@@ -51,7 +51,7 @@ public class ThreePlayer : MonoBehaviour
         Move();
 
         //ジャンプ
-        Jump();
+        //Jump();
 
         //状態更新
         StateUpdata();
@@ -90,7 +90,7 @@ public class ThreePlayer : MonoBehaviour
         
         // 移動
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), transform.position.y, Mathf.Clamp(transform.position.z, -10.5f, -5.5f));
         
     //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
@@ -98,15 +98,15 @@ public class ThreePlayer : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
 
-    //ジャンプ
-    private void Jump()
-    {
-        //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton" + +playerNum)) return;
+    ////ジャンプ
+    //private void Jump()
+    //{
+    //    //Aボタンが押されてないのならこの先処理しない
+    //    if (!Input.GetButtonDown("Abutton" + +playerNum)) return;
 
-        //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
-    }
+    //    //ジャンプ状態に変更    
+    //    ChangeStateTo(SlimeAnimationState.Jump);
+    //}
 
     //状態更新
     private void StateUpdata()
