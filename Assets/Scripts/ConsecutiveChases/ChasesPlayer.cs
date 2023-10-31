@@ -25,6 +25,7 @@ public class ChasesPlayer : MonoBehaviour
     private Material faceMaterial;
 
     [SerializeField] private float deceleration = 150.0f;       //減速率
+    [SerializeField] private float SPEED_MAX = 15.0f;       //スピードの最大
     [SerializeField] private float addSpeed = 1000.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
@@ -105,18 +106,20 @@ public class ChasesPlayer : MonoBehaviour
     //移動
     private void Move()
     {
+        //入力を受け付ける
+        COMMAND_RESULT command = CheckOnCommandButton();
+
         //コマンド入力が成功していたら
-        if (CheckOnCommandButton() == COMMAND_RESULT.SUCCESS)
+        if (command == COMMAND_RESULT.SUCCESS)
         {
             buttonCount += addSpeed;
 
             //コマンドが成功した場合の処理
             SuccessCommand();
         }
-        if (CheckOnCommandButton() == COMMAND_RESULT.MISS)
+        if (command == COMMAND_RESULT.MISS)
         {
-            int a = 0;
-            a += 1;
+            buttonCount = 0.0f;
         }
 
         //速度が0ならば
@@ -358,13 +361,6 @@ public class ChasesPlayer : MonoBehaviour
     // 当たった時に呼ばれる関数
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log("Hit"); // ログを表示する
-
-            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
-            Vector3 force = new Vector3(0.0f, 800.0f, 1.0f);  // 力を設定
-            rb.AddForce(force, ForceMode.Force);          // 力を加える
-        }      
+        
     }
 }
