@@ -58,7 +58,7 @@ public class Fish : MonoBehaviour
     public void Dolphin()
     {
         //this.transform.DOJump(new Vector3(transform.position.x, -3, -15.0f), jumpPower: 1.5f, numJumps: 5, duration: 7f);
-        transform.position += new Vector3(0, height, -0.01f);
+        transform.position += new Vector3(0, height, -0.007f);
         //2.25;
         transform.Rotate(new Vector3(0.25f, 0, 0));
         if (transform.position.y > 1.5f)
@@ -89,7 +89,7 @@ public class Fish : MonoBehaviour
             if (curve <= -a)
             {
                 isCurve =false;
-                transform.eulerAngles = (new Vector3(0, 150, 0));
+                transform.eulerAngles = (new Vector3(0, 135, 0));
             }
         }
         else
@@ -99,7 +99,7 @@ public class Fish : MonoBehaviour
             if (curve >= a)
             {
                 isCurve = true;
-                transform.eulerAngles = (new Vector3(0, 210, 0));
+                transform.eulerAngles = (new Vector3(0, 225, 0));
             }
         }
 
@@ -110,6 +110,6 @@ public class Fish : MonoBehaviour
     //ÉTÉÅ
     public void Shark()
     {
-        transform.position += new Vector3(0, 0, -0.007f);
+        transform.position += new Vector3(0, 0, -0.01f);
     }
 }

@@ -4,22 +4,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.AI;
 
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 public class OnePlayer : MonoBehaviour
 {
+    //アニメーションに必要
+    public enum SlimeAnimationState { Idle, Walk, Jump, Attack, Damage }
+
+    public Face faces;
+    public GameObject SmileBody;
+    public SlimeAnimationState currentState;
+
+    public Animator animator;
+    public int damType;
+
+    private Material faceMaterial;
+
+    [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
+    [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
+    [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
+    [SerializeField] private bool isAnimIdle = true;
+    [SerializeField] private bool isAnimWalk = true;
+    [SerializeField] private bool isAnimJump = true;
+    [SerializeField] private bool isAnimAttack = true;
+    [SerializeField] private bool isAnimDamage = true;
+    [SerializeField] private int playerNum;                   // プレイヤー番号
+
+    private Transform mainCameraTransform; // メインカメラのTransform
+
+
+
     public GameObject penguinP;
     public GameObject sharkP;
     public GameObject fishesP;
     public GameObject dolphinP;
-    public float playerSpeed;
     public float pinguinCoolTime;
     public float dolphinCoolTime;
     public float sharkCoolTime;
     public float fishesCoolTime;
     public float AllCoolTime;
+    float penguinLeftTime = 1;
+    float sharkLeftTime = 1;
+    float fishesLeftTime = 1;
+    float dolphinLeftTime = 1;
     float a = 2;
     float b = 1;
 
@@ -43,6 +74,12 @@ public class OnePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //マテリアル設定
+        faceMaterial = SmileBody.GetComponent<Renderer>().materials[1];
+
+        // メインカメラを取得
+        mainCameraTransform = Camera.main.transform;
+
         Instantiate(penguinP, this.transform.position, penguinRotate);
         isPenguin = true;
         isShark = true;
@@ -50,19 +87,51 @@ public class OnePlayer : MonoBehaviour
         isDolphin = true;
         isStop = false;
         isCoroutineStart = false;
-        //PenguinImage = GameObject.Find("PenguinCoolTimeImage");
         SharkImage = GameObject.Find("SharkCoolTimeImage");
         FishesImage = GameObject.Find("FishesCoolTimeImage");
         DolphinImage = GameObject.Find("DolphinCoolTimeImage");
     }
 
+    //顔のテクスチャ設定
+    void SetFace(Texture tex)
+    {
+        faceMaterial.SetTexture("_MainTex", tex);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        b -=(1 / (60 * a));
-        //PenguinImage.GetComponent<Image>().fillAmount = 1 / (360 / (60 * a));
-        PenguinImage.GetComponent<Image>().fillAmount = b;
-        //a -= 0.01f;
+
+
+        //動き
+        Move();
+
+        //状態更新
+        StateUpdata();
+
+        //クールタイム
+            if (isPenguin == false)
+            {
+                penguinLeftTime -= Time.deltaTime / pinguinCoolTime;
+                PenguinImage.GetComponent<Image>().fillAmount = penguinLeftTime;
+            }
+            if (isShark == false)
+            {
+                sharkLeftTime -= Time.deltaTime / sharkCoolTime;
+                SharkImage.GetComponent<Image>().fillAmount = sharkLeftTime;
+            }
+            if (isFishes == false)
+            {
+                fishesLeftTime -= Time.deltaTime / fishesCoolTime;
+                FishesImage.GetComponent<Image>().fillAmount = fishesLeftTime;
+            }
+            if (isDolphin == false)
+            {
+                dolphinLeftTime -= Time.deltaTime / dolphinCoolTime;
+                DolphinImage.GetComponent<Image>().fillAmount = dolphinLeftTime;
+            }
+        
+
 
         if (isStop)
         {
@@ -70,43 +139,132 @@ public class OnePlayer : MonoBehaviour
             {
                 StartCoroutine(AllCoolCorou());
             }           
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && isPenguin)
+        }//ペンギン
+        else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + playerNum) )&& isPenguin)
         {
             Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
             StartCoroutine(PenguinCoolCorou());
             isStop = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) && isShark)
+            //クールタイム出現
+            
+        }//サメ
+        else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + playerNum))&& isShark)
         {
             Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
             StartCoroutine(SharkCoolCorou());
             isStop = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.F) && isFishes)
+        }//魚群
+        else if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Xbutton" + playerNum))&& isFishes)
         {
             Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
             StartCoroutine(FishesCoolCorou());
             isStop = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && isDolphin)
+        }//イルカ
+        else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + playerNum))&& isDolphin)
         {
             Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
             StartCoroutine(DolphinCoolCorou());
             isStop = true;
         }
+    }
 
-        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 3.5)
+
+    //移動
+    private void Move()
+    {
+        // 入力を取得用
+        float horizontalInput = 0;
+        float verticalInput = 0;
+
+        // 入力を取得
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+
+        //入力がないのなら
+        if (horizontalInput == 0 && verticalInput == 0)
         {
-            transform.position += new Vector3(playerSpeed, 0, 0);
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+            return;
         }
-        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -3.5)
+
+        //歩き状態に変更
+        ChangeStateTo(SlimeAnimationState.Walk);
+
+        // カメラの向きを基準にプレイヤーを移動
+        Vector3 forwardDirection = mainCameraTransform.forward;
+        Vector3 rightDirection = mainCameraTransform.right;
+        forwardDirection.y = 0f; // Y軸成分を0にすることで水平方向に制限
+
+        // 移動方向を計算
+        Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
+
+        // 移動
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), transform.position.y, transform.position.z);
+
+        Quaternion newRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    //状態更新
+    private void StateUpdata()
+    {
+        switch (currentState)
         {
-            transform.position += new Vector3(-playerSpeed, 0, 0);
+            case SlimeAnimationState.Idle:
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !isAnimIdle) return;
+
+                currentState = SlimeAnimationState.Idle;
+                animator.SetFloat("Speed", 0);
+                SetFace(faces.Idleface);
+                break;
+
+            case SlimeAnimationState.Walk:
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") || !isAnimWalk) return;
+
+                currentState = SlimeAnimationState.Walk;
+                animator.SetFloat("Speed", 1.0f);
+                SetFace(faces.WalkFace);
+                break;
+
+            case SlimeAnimationState.Jump:
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || !isAnimJump) return;
+
+                SetFace(faces.jumpFace);
+                animator.SetTrigger("Jump");
+                break;
+
+            case SlimeAnimationState.Attack:
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") || !isAnimAttack) return;
+                SetFace(faces.attackFace);
+                animator.SetTrigger("Attack");
+                break;
+
+            case SlimeAnimationState.Damage:
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Damage0")
+                 || animator.GetCurrentAnimatorStateInfo(0).IsName("Damage1")
+                 || animator.GetCurrentAnimatorStateInfo(0).IsName("Damage2")
+                 || !isAnimDamage) return;
+
+                animator.SetTrigger("Damage");
+                animator.SetInteger("DamageType", damType);
+                SetFace(faces.damageFace);
+                break;
         }
+    }
 
+    public void ChangeStateTo(SlimeAnimationState state)
+    {
+        if (this == null) return;
+        if (state == this.currentState) return;
 
-        
+        this.currentState = state;
     }
 
 
@@ -150,67 +308,4 @@ public class OnePlayer : MonoBehaviour
         yield return new WaitForSeconds(dolphinCoolTime);
         isDolphin = true;
     }
-
-
-    ////ジャンプ
-    //private void Jump()
-    //{
-    //    //ジャンプしているならこの先処理しない
-    //    if (isButton) return;
-
-    //    //ペンギン発射
-    //    if (Input.GetButtonDown("Abutton" + playerNum) && lockA <= 0)
-    //    {
-    //        lockA = 60;
-
-
-    //        //通常状態に変更
-    //        ChangeStateTo(SlimeAnimationState.Idle);
-
-    //        //上に力を加える
-    //        rb.AddForce(Vector3.up * jumpPower);
-    //        isJump = true;
-    //        return;
-    //    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //    int beforeStage = nowStageNum;
-
-    //    //自動ジャンプ(別の足場に)
-    //    if (Input.GetAxis("L_Stick_V" + playerNum) < -0.8f)
-    //    {
-    //        nowStageNum--;
-    //        nowStageNum = Math.Max(nowStageNum, 0);
-    //        if (beforeStage == nowStageNum) return;
-    //        transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
-    //        ChangeStateTo(SlimeAnimationState.Idle);
-    //        rb.AddForce(Vector3.up * jumpPower);
-    //        isJump = true;
-    //    }
-    //    else if (Input.GetAxis("L_Stick_V" + playerNum) > 0.8f)
-    //    {
-    //        nowStageNum++;
-    //        nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
-    //        if (beforeStage == nowStageNum) return;
-    //        transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
-    //        ChangeStateTo(SlimeAnimationState.Idle);
-    //        rb.AddForce(Vector3.up * jumpPower);
-    //        isJump = true;
-    //    }
-
-    //    //ジャンプ状態に変更    
-    //    //ChangeStateTo(SlimeAnimationState.Jump);
-    //}
 }
