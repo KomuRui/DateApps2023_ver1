@@ -110,6 +110,6 @@ public class Fish : MonoBehaviour
     //ÉTÉÅ
     public void Shark()
     {
-        transform.position += new Vector3(0, 0, -0.006f);
+        transform.position += new Vector3(0, 0, -0.007f);
     }
 }
