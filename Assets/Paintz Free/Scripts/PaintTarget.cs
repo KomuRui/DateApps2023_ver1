@@ -66,6 +66,9 @@ public class PaintTarget : MonoBehaviour
 
     private static GameObject splatObject;
 
+    public bool isOnePaint = false;
+
+
     public static Color CursorColor()
     {
         if (Camera.main == null)
@@ -587,6 +590,9 @@ public class PaintTarget : MonoBehaviour
 
     private void Update()
     {
+        if(isOnePaint)
+            ClearAllPaint();
+
         if (PaintAllSplats)
         {
             while(m_Splats.Count > 0)
