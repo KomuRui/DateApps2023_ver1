@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class ConsecutivePlayer : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class ConsecutivePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
+    [SerializeField] private Image nextCommandImage; //次のコマンドの画像を表示する場所のリスト
+    [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
+    [SerializeField] private float SPEED_MAX = 14.0f;       //スピードの最大
     [SerializeField] private float deceleration = 150.0f;       //減速率
     [SerializeField] private float addSpeed = 100.0f;          // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.0f;           // プレイヤーの移動速度
@@ -30,10 +34,11 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
-    [SerializeField] private bool isDead = false;                   // プレイヤー番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    bool buttonFlag = false;
     
+    public bool buttonFlag = true;
+    public bool goolFlag = false;
+    public bool isDead = false;
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -47,6 +52,8 @@ public class ConsecutivePlayer : MonoBehaviour
 
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
+
+        buttonFlag = true;
     }
 
     //顔のテクスチャ設定
@@ -68,10 +75,42 @@ public class ConsecutivePlayer : MonoBehaviour
     private void Move()
     {
         // 入力を取得
-        if (Input.GetButtonDown("Abutton" + playerNum))
+        bool isAbuttonClick = Input.GetButtonDown("Abutton" + playerNum);
+        bool isBbuttonClick = Input.GetButtonDown("Bbutton" + playerNum);
+
+        if (buttonFlag)
         {
-            buttonCount += addSpeed;
+            // Aボタンを押していたら
+            if (isAbuttonClick)
+            {
+                buttonCount += addSpeed;
+                buttonFlag = !buttonFlag;
+                nextCommandImage.sprite = commandImageList[1];
+            }
+
+            // Bボタンを押していたら
+            if (isBbuttonClick)
+            {
+                buttonCount = 0.0f;
+            }
         }
+        else
+        {
+            // Aボタンを押していたら
+            if (isAbuttonClick)
+            {
+                buttonCount = 0.0f;
+            }
+
+            // Bボタンを押していたら
+            if (isBbuttonClick)
+            {
+                buttonCount += addSpeed;
+                buttonFlag = !buttonFlag;
+                nextCommandImage.sprite = commandImageList[0];
+            }
+        }
+       
             
         //速度が0ならば
         if (moveSpeed <= 0)
@@ -104,6 +143,12 @@ public class ConsecutivePlayer : MonoBehaviour
         if (buttonCount <= 0 )
         {
             buttonCount = 0.0f;
+        }
+
+        //もしスピードが最大になったら
+        if(SPEED_MAX <= buttonCount)
+        {
+            buttonCount = SPEED_MAX;
         }
 
         moveSpeed = buttonCount;
@@ -182,6 +227,19 @@ public class ConsecutivePlayer : MonoBehaviour
         if (other.gameObject.tag == "Goal")
         {
             Debug.Log(playerNum + "P Goal"); // ログを表示する
+            goolFlag = true;
         }
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit"); // ログを表示する
+
+            Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
+            Vector3 force = new Vector3(0.0f, 800.0f, 1.0f);  // 力を設定
+            rb.AddForce(force, ForceMode.Force);          // 力を加える
+
+            isDead = true;
+        }
+
+       
     }
 }
