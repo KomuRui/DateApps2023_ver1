@@ -8,7 +8,7 @@ public class LookOnTexture : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private GameObject Object;
-    [SerializeField] private CarryBullet bullet;
+    [SerializeField] private GameObject bullet;
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
     [SerializeField] private int playerNum;                   // プレイヤー番号
@@ -37,8 +37,11 @@ public class LookOnTexture : MonoBehaviour
     //発射
     private void Shoot()
     {
-        if(Input.GetButtonDown("Abutton" + playerNum))
-            Instantiate(bullet, transform.position, Quaternion.identity);
+        if (Input.GetButtonDown("Abutton" + playerNum) && !bullet.gameObject.activeSelf)
+        {
+            bullet.SetActive(true);
+            bullet.gameObject.transform.position = this.transform.position;
+        }
     }
 
     //レイキャスト
@@ -49,10 +52,11 @@ public class LookOnTexture : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 10000))
         {
-            if (hit.collider.gameObject.tag == "CarryStage")
-                Object.transform.position = hit.point + new Vector3(0,1,0);
-            else if (hit.collider.gameObject.tag == "Sea")
+            Debug.Log(Vector3.Angle(Vector3.up, hit.normal));
+            if (Vector3.Angle(Vector3.up, hit.normal) >= 30 || hit.collider.gameObject.tag == "Sea")
                 transform.position = beforePos;
+            else if(hit.collider.gameObject.tag == "CarryStage")
+                Object.transform.position = hit.point + new Vector3(0, 1, 0);
         }
 
     }
