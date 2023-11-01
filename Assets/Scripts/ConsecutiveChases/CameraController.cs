@@ -11,13 +11,19 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //一番進んでいるプレイヤー
-        float priorityDistance = 9999.0f;
+        float priorityDistance = -9999.0f;
 
         //プレイヤーの一番早いやつの位置
         for (int i = 0; i < playerList.Count; i++)
         {
-            if (playerList[i].transform.position.z <= priorityDistance)
+            if (playerList[i].transform.position.z >= priorityDistance)
             {
                 priorityDistance = playerList[i].transform.position.z;
             }
@@ -25,11 +31,5 @@ public class CameraController : MonoBehaviour
 
         //カメラとの距離を保つ
         transform.position = new Vector3(transform.position.x, transform.position.y, priorityDistance + CAMERA_DISTANCE);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

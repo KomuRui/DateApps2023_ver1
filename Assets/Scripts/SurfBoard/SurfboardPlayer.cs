@@ -11,7 +11,10 @@ public class SurfboardPlayer : MonoBehaviour
     private Rigidbody rb;
     private Vector3 pos;
     Quaternion rot;
-    
+
+    public float rotationSpeed = 10.0f;
+    public float maxRotationAngle = 90.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +34,19 @@ public class SurfboardPlayer : MonoBehaviour
         horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
         verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
 
-        //スティックによって回転
-        transform.Rotate(new Vector3(0, horizontalInput, 0));
-        transform.Rotate(new Vector3(verticalInput , 0, 0));
+        // 現在の回転角度を取得
+        Vector3 currentRotation = transform.localEulerAngles;
 
-        if (transform.localEulerAngles.x >= 0)        
-        {
-            int a = 0;
-        }
+        // 回転に制限をかける
+        currentRotation.x += horizontalInput * rotationSpeed;
+        currentRotation.x = Mathf.Clamp(currentRotation.x, -maxRotationAngle, maxRotationAngle);
+
+        // オブジェクトを回転
+        transform.localEulerAngles = currentRotation;
+
+        //スティックによって回転
+        //transform.Rotate(new Vector3(0, horizontalInput, 0));
+        //transform.Rotate(new Vector3(verticalInput , 0, 0));
+
     }
 }
