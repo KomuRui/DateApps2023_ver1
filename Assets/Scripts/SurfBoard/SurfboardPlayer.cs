@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,14 +6,14 @@ using static UnityEditor.PlayerSettings;
 
 public class SurfboardPlayer : MonoBehaviour
 {
-    [SerializeField] private int playerNum;                   // ƒvƒŒƒCƒ„[”Ô†
-    [SerializeField] private float LIMIT_ROTATE = 90.0f;      //‰ñ“]‚ÌŒÀŠE
+    [SerializeField] private int playerNum;                   // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·
+    [SerializeField] private float LIMIT_ROTATE = 90.0f;      //å›è»¢ã®é™ç•Œ
     private Rigidbody rb;
     private Vector3 pos;
+    private Vector3 startRotate;    //åˆæœŸã®å‘ã
     Quaternion rot;
 
     public float rotationSpeed = 10.0f;
-    public float maxRotationAngle = 90.0f;
 
 
     // Start is called before the first frame update
@@ -21,30 +21,38 @@ public class SurfboardPlayer : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         rot = this.transform.rotation;
+
+        startRotate = transform.localEulerAngles;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // “ü—Í‚ğæ“¾—p
+        // å…¥åŠ›ã‚’å–å¾—ç”¨
         float horizontalInput = 0;
         float verticalInput = 0;
 
-        // “ü—Í‚ğæ“¾
+        // å…¥åŠ›ã‚’å–å¾—
         horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
         verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
 
-        // Œ»İ‚Ì‰ñ“]Šp“x‚ğæ“¾
+        // ç¾åœ¨ã®å›è»¢è§’åº¦ã‚’å–å¾—
         Vector3 currentRotation = transform.localEulerAngles;
 
-        // ‰ñ“]‚É§ŒÀ‚ğ‚©‚¯‚é
+        // è§’åº¦ãŒ-180ã€œ180ã®ç¯„å›²å†…ã«ãªã‚‹ã‚ˆã†ã«è£œæ­£
+        if (currentRotation.x > 180)
+        {
+            currentRotation.x = currentRotation.x - 360;
+        }
+
+        // å›è»¢ã«åˆ¶é™ã‚’ã‹ã‘ã‚‹
         currentRotation.x += horizontalInput * rotationSpeed;
-        currentRotation.x = Mathf.Clamp(currentRotation.x, -maxRotationAngle, maxRotationAngle);
+        currentRotation.x = Mathf.Clamp(currentRotation.x, -LIMIT_ROTATE, LIMIT_ROTATE);
 
-        // ƒIƒuƒWƒFƒNƒg‚ğ‰ñ“]
-        transform.localEulerAngles = currentRotation;
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å›è»¢
+        transform.localEulerAngles = new Vector3( currentRotation.x, -90, 0);
 
-        //ƒXƒeƒBƒbƒN‚É‚æ‚Á‚Ä‰ñ“]
+        //ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã«ã‚ˆã£ã¦å›è»¢
         //transform.Rotate(new Vector3(0, horizontalInput, 0));
         //transform.Rotate(new Vector3(verticalInput , 0, 0));
 
