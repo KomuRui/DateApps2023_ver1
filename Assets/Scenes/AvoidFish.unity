@@ -10501,6 +10501,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6173172085731050060, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1723150332}
+    - targetCorrespondingSourceObject: {fileID: 6173172085731050060, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1723150334}
   m_SourcePrefab: {fileID: 100100000, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}
 --- !u!1 &891246995
 GameObject:
@@ -12772,6 +12775,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 478754, guid: dd5c47f5f6c733b48bc426ce5fbf35ef, type: 3}
   m_PrefabInstance: {fileID: 1440167628}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1086689666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 410155430891272545, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}
+  m_PrefabInstance: {fileID: 889738575}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088165096
 GameObject:
@@ -17380,7 +17388,7 @@ GameObject:
   - component: {fileID: 1426379111}
   - component: {fileID: 1426379110}
   m_Layer: 5
-  m_Name: FishCoolTimeImage
+  m_Name: FishesCoolTimeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17427,13 +17435,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 2d612c8edf366354f84693376c81e589, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1426379111
@@ -19154,13 +19162,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 2d612c8edf366354f84693376c81e589, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1589001409
@@ -20399,15 +20407,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce1f13a3cbd7354c9024f31d92d756d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
+  SmileBody: {fileID: 1086689666}
+  currentState: 0
+  animator: {fileID: 1723150334}
+  damType: 0
+  moveSpeed: 5
+  rotationSpeed: 180
+  isHorizontalInput: 1
+  isVerticalInput: 0
+  isAnimIdle: 1
+  isAnimWalk: 1
+  isAnimJump: 1
+  isAnimAttack: 1
+  isAnimDamage: 1
+  playerNum: 1
   penguinP: {fileID: 5408140393051864022, guid: ae0729e20ba5cbd459d7fba5a715dd50, type: 3}
   sharkP: {fileID: 7288572653083661907, guid: 02ba2a59d36371f4db242a5a842269c7, type: 3}
   fishesP: {fileID: 157907652861232348, guid: 601651c57d0fcda41b95473e6974e37f, type: 3}
   dolphinP: {fileID: 5065908650798298967, guid: 36ab83b0c1c99ea44828bc0ae0524940, type: 3}
-  playerSpeed: 0.025
-  pinguinCoolTime: 2
+  pinguinCoolTime: 3
   dolphinCoolTime: 2
-  sharkCoolTime: 2
-  fishesCoolTime: 2
+  sharkCoolTime: 4
+  fishesCoolTime: 3
   AllCoolTime: 0.5
   PenguinImage: {fileID: 1257890694}
 --- !u!4 &1723150333 stripped
@@ -20415,6 +20437,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6836556466655795446, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}
   m_PrefabInstance: {fileID: 889738575}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1723150334
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723150330}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
+  m_Controller: {fileID: 9100000, guid: 707b944f06051734793367fc0c69bc07, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1730272375
 GameObject:
   m_ObjectHideFlags: 0
@@ -26016,7 +26059,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 157907652861232348, guid: 601651c57d0fcda41b95473e6974e37f, type: 3}
       propertyPath: m_Name
-      value: Fish
+      value: Fishes
       objectReference: {fileID: 0}
     - target: {fileID: 683087545678716518, guid: 601651c57d0fcda41b95473e6974e37f, type: 3}
       propertyPath: m_RootOrder
