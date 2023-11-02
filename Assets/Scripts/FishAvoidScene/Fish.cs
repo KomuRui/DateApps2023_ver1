@@ -13,6 +13,7 @@ public class Fish : MonoBehaviour
     const float WIDTH = 0.004f;
     float height = 0.02f;
     float a = 0.6f;
+    float fishAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -82,29 +83,9 @@ public class Fish : MonoBehaviour
     //ãõåQ
     public void Fishes()
     {
-        if(isCurve)
-        {
-            transform.position += new Vector3(-WIDTH, 0,0);
-            curve -= WIDTH;
-            if (curve <= -a)
-            {
-                isCurve =false;
-                transform.eulerAngles = (new Vector3(0, 135, 0));
-            }
-        }
-        else
-        {
-            transform.position += new Vector3(WIDTH, 0, 0);
-            curve += WIDTH;
-            if (curve >= a)
-            {
-                isCurve = true;
-                transform.eulerAngles = (new Vector3(0, 225, 0));
-            }
-        }
-
-        transform.position += new Vector3(0, 0, -0.01f);
-        
+        transform.position += transform.forward * 0.01f;
+        fishAngle = (Mathf.Sin(Time.time) * 45) + 180;
+        transform.eulerAngles = (new Vector3(0, fishAngle, 0));
     }
 
     //ÉTÉÅ
