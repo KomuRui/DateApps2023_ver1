@@ -23,6 +23,7 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     [SerializeField] private float SPEED_MAX = 14.0f;       //スピードの最大
     [SerializeField] private float deceleration = 150.0f;       //減速率
+    [SerializeField] private float missDeceleration = 50.0f;       //減速率
     [SerializeField] private float addSpeed = 100.0f;          // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.0f;           // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
@@ -78,6 +79,10 @@ public class ConsecutivePlayer : MonoBehaviour
         bool isAbuttonClick = Input.GetButtonDown("Abutton" + playerNum);
         bool isBbuttonClick = Input.GetButtonDown("Bbutton" + playerNum);
 
+        //入力が成功しているかどうか
+        bool isInputSuccess = true;
+
+
         if (buttonFlag)
         {
             // Aボタンを押していたら
@@ -91,7 +96,7 @@ public class ConsecutivePlayer : MonoBehaviour
             // Bボタンを押していたら
             if (isBbuttonClick)
             {
-                buttonCount = 0.0f;
+                isInputSuccess = false;
             }
         }
         else
@@ -99,7 +104,7 @@ public class ConsecutivePlayer : MonoBehaviour
             // Aボタンを押していたら
             if (isAbuttonClick)
             {
-                buttonCount = 0.0f;
+                isInputSuccess = false;
             }
 
             // Bボタンを押していたら
@@ -111,6 +116,11 @@ public class ConsecutivePlayer : MonoBehaviour
             }
         }
        
+        //もし入力に失敗していたら
+        if (!isInputSuccess)
+        {
+            buttonCount -= missDeceleration;
+        }
             
         //速度が0ならば
         if (moveSpeed <= 0)

@@ -25,6 +25,7 @@ public class ChasesPlayer : MonoBehaviour
     private Material faceMaterial;
 
     [SerializeField] private float deceleration = 150.0f;       //減速率
+    [SerializeField] private float missDeceleration = 50.0f;       //減速率
     [SerializeField] private float SPEED_MAX = 15.0f;       //スピードの最大
     [SerializeField] private float addSpeed = 1000.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
@@ -119,7 +120,9 @@ public class ChasesPlayer : MonoBehaviour
         }
         if (command == COMMAND_RESULT.MISS)
         {
-            buttonCount = 0.0f;
+            //コマンドが失敗した場合の処理
+            //一定量減速する
+            buttonCount -= missDeceleration;
         }
 
         //速度が0ならば
