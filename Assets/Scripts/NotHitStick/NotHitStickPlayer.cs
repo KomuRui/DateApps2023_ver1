@@ -40,6 +40,8 @@ public class NotHitStickPlayer : MonoBehaviour
     // メインカメラのTransform
     private Transform mainCameraTransform;
 
+    private Tweener tweener;
+
     void Start()
     {
         //マテリアル設定
@@ -114,8 +116,31 @@ public class NotHitStickPlayer : MonoBehaviour
     //ジャンプ
     private void Jump()
     {
-        //ジャンプしているならこの先処理しない
-        if (isJump) return;
+        //ジャンプしているなら上にレイを飛ばす
+        if (isJump)
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(transform.position, Vector3.up); // Rayを生成
+
+            if (Physics.Raycast(ray, out hit, 10000))
+            {
+              
+                if (Vector3.Angle(Vector3.down, hit.normal) <= 20 && hit.collider.gameObject.tag == "Stick")
+                {
+                    //力を止める
+                    isJump = false;
+                    rb.velocity = Vector3.zero;
+                    Debug.Log("a");
+
+                    //点滅止める
+                    tweener.Restart();
+                    tweener.Pause();
+                }
+              
+            }
+
+            return;
+        }
 
         //通常
         if (Input.GetButtonDown("Abutton" + playerNum))
@@ -137,7 +162,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
             if (beforeStage == nowStageNum) return;
-            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
@@ -147,7 +172,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
             if (beforeStage == nowStageNum) return;
-            transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
