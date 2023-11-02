@@ -42,6 +42,12 @@ public class OnePlayer : MonoBehaviour
     public GameObject sharkP;
     public GameObject fishesP;
     public GameObject dolphinP;
+    public GameObject penguinImage;
+    public GameObject sharkImage;
+    public GameObject dolphinImage;
+    public GameObject fishesImage;
+    GameObject penguinPre;
+
     public float pinguinCoolTime;
     public float dolphinCoolTime;
     public float sharkCoolTime;
@@ -81,6 +87,7 @@ public class OnePlayer : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
 
         Instantiate(penguinP, this.transform.position, penguinRotate);
+        //penguinPre = Instantiate(penguinImage, new Vector3(557, 441, 0), Quaternion.Euler(0, 0, 0));
         isPenguin = true;
         isShark = true;
         isFishes = true;
@@ -110,27 +117,43 @@ public class OnePlayer : MonoBehaviour
         StateUpdata();
 
         //クールタイム
-            if (isPenguin == false)
+        if (isPenguin == false)
+        {
+            penguinLeftTime -= Time.deltaTime / pinguinCoolTime;
+            penguinPre.GetComponent<Image>().fillAmount = penguinLeftTime;
+            if (penguinLeftTime < 0)
             {
-                penguinLeftTime -= Time.deltaTime / pinguinCoolTime;
-                PenguinImage.GetComponent<Image>().fillAmount = penguinLeftTime;
+                Destroy(penguinPre.GetComponent<Image>());
             }
-            if (isShark == false)
+        }
+        if (isShark == false)
+        {
+            sharkLeftTime -= Time.deltaTime / sharkCoolTime;
+            SharkImage.GetComponent<Image>().fillAmount = sharkLeftTime;
+            if (sharkLeftTime < 0)
             {
-                sharkLeftTime -= Time.deltaTime / sharkCoolTime;
-                SharkImage.GetComponent<Image>().fillAmount = sharkLeftTime;
+                Destroy(SharkImage.GetComponent<Image>());
             }
-            if (isFishes == false)
+        }
+        if (isFishes == false)
+        {
+            fishesLeftTime -= Time.deltaTime / fishesCoolTime;
+            FishesImage.GetComponent<Image>().fillAmount = fishesLeftTime;
+            if (fishesLeftTime < 0)
             {
-                fishesLeftTime -= Time.deltaTime / fishesCoolTime;
-                FishesImage.GetComponent<Image>().fillAmount = fishesLeftTime;
+                Destroy(FishesImage.GetComponent<Image>());
             }
-            if (isDolphin == false)
+        }
+        if (isDolphin == false)
+        {
+            dolphinLeftTime -= Time.deltaTime / dolphinCoolTime;
+            DolphinImage.GetComponent<Image>().fillAmount = dolphinLeftTime;
+            if (dolphinLeftTime < 0)
             {
-                dolphinLeftTime -= Time.deltaTime / dolphinCoolTime;
-                DolphinImage.GetComponent<Image>().fillAmount = dolphinLeftTime;
+                Destroy(DolphinImage.GetComponent<Image>());
             }
-        
+        }
+
 
 
         if (isStop)
@@ -143,6 +166,8 @@ public class OnePlayer : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + playerNum) )&& isPenguin)
         {
             Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
+            penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+
             StartCoroutine(PenguinCoolCorou());
             isStop = true;
             //クールタイム出現
