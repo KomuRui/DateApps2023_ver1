@@ -17,7 +17,7 @@ public class SurfboardPlayer : MonoBehaviour
     private float sumRotateX = 0.0f;
     private float sumRotateY = 0.0f;
 
-    private float hp = 0.0f;
+    private float hp = 10.0f;
 
 
     // Start is called before the first frame update
