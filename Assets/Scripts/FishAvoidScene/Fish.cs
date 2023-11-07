@@ -14,12 +14,16 @@ public class Fish : MonoBehaviour
     float height = 0.02f;
     float a = 0.6f;
     float fishAngle;
+    int rnd;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         isCurve = true;
         curve = 0;
+        rnd = Random.Range(1, 4);//1Å`3
+        player = GameObject.Find("Player" + rnd);
     }
 
     // Update is called once per frame
@@ -92,5 +96,15 @@ public class Fish : MonoBehaviour
     public void Shark()
     {
         transform.position += new Vector3(0, 0, -0.01f);
+        if(player.transform.position.x < this.transform.position.x)
+        {
+            transform.position += new Vector3(-0.002f, 0, 0);
+        }
+        else
+        {
+            transform.position += new Vector3(0.002f, 0, 0);
+        }
+        this.transform.LookAt(player.transform.position);
+        transform.eulerAngles = (new Vector3(0, 270, 0));
     }
 }

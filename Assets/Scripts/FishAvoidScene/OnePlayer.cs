@@ -47,6 +47,9 @@ public class OnePlayer : MonoBehaviour
     public GameObject dolphinImage;
     public GameObject fishesImage;
     GameObject penguinPre;
+    GameObject sharkPre;
+    GameObject fishesPre;
+    GameObject dolphinPre;
 
     public float pinguinCoolTime;
     public float dolphinCoolTime;
@@ -120,7 +123,10 @@ public class OnePlayer : MonoBehaviour
         if (isPenguin == false)
         {
             penguinLeftTime -= Time.deltaTime / pinguinCoolTime;
-            penguinPre.GetComponent<Image>().fillAmount = penguinLeftTime;
+            //penguinPre.GetComponent<Image>().fillAmount = penguinLeftTime;
+            //GameObject UI_Text = penguinPre.transform.Find("name").gameObject;
+            penguinPre.transform.Find("PenguinCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = penguinLeftTime;
+            Debug.Log("a");
             if (penguinLeftTime < 0)
             {
                 Destroy(penguinPre.GetComponent<Image>());
@@ -129,28 +135,28 @@ public class OnePlayer : MonoBehaviour
         if (isShark == false)
         {
             sharkLeftTime -= Time.deltaTime / sharkCoolTime;
-            SharkImage.GetComponent<Image>().fillAmount = sharkLeftTime;
+            sharkPre.transform.Find("SharkCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = sharkLeftTime;
             if (sharkLeftTime < 0)
             {
-                Destroy(SharkImage.GetComponent<Image>());
+                Destroy(sharkPre.GetComponent<Image>());
             }
         }
         if (isFishes == false)
         {
             fishesLeftTime -= Time.deltaTime / fishesCoolTime;
-            FishesImage.GetComponent<Image>().fillAmount = fishesLeftTime;
+            fishesPre.transform.Find("FishesCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = fishesLeftTime;
             if (fishesLeftTime < 0)
             {
-                Destroy(FishesImage.GetComponent<Image>());
+                Destroy(fishesPre.GetComponent<Image>());
             }
         }
         if (isDolphin == false)
         {
             dolphinLeftTime -= Time.deltaTime / dolphinCoolTime;
-            DolphinImage.GetComponent<Image>().fillAmount = dolphinLeftTime;
+            dolphinPre.transform.Find("DolphinCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = dolphinLeftTime;
             if (dolphinLeftTime < 0)
             {
-                Destroy(DolphinImage.GetComponent<Image>());
+                Destroy(dolphinPre.GetComponent<Image>());
             }
         }
 
@@ -166,7 +172,8 @@ public class OnePlayer : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + playerNum) )&& isPenguin)
         {
             Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
-            penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+            penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.identity);
+            penguinLeftTime = 1;
 
             StartCoroutine(PenguinCoolCorou());
             isStop = true;
@@ -176,18 +183,27 @@ public class OnePlayer : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + playerNum))&& isShark)
         {
             Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
+            sharkPre = Instantiate(sharkImage, new Vector3(0, 0, 0), Quaternion.identity);
+            sharkLeftTime = 1;
+
             StartCoroutine(SharkCoolCorou());
             isStop = true;
         }//‹›ŒQ
         else if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Xbutton" + playerNum))&& isFishes)
         {
             Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
+            fishesPre = Instantiate(fishesImage, new Vector3(0, 0, 0), Quaternion.identity);
+            fishesLeftTime = 1;
+
             StartCoroutine(FishesCoolCorou());
             isStop = true;
         }//ƒCƒ‹ƒJ
         else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + playerNum))&& isDolphin)
         {
             Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
+            dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);
+            dolphinLeftTime = 1;
+
             StartCoroutine(DolphinCoolCorou());
             isStop = true;
         }
