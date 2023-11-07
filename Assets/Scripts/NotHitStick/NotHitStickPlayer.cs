@@ -19,6 +19,7 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
+    [SerializeField] private float beforeInput = 0;           // 前回の入力値
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
     [SerializeField] private bool isAnimIdle = true;          // 通常時のアニメーション許可するか
@@ -121,22 +122,17 @@ public class NotHitStickPlayer : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = new Ray(transform.position, Vector3.up); // Rayを生成
+            RaycastHit hit2;
+            Ray ray2 = new Ray(new Vector3(transform.position.x + 0.35f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
+            RaycastHit hit3;
+            Ray ray3 = new Ray(new Vector3(transform.position.x - 0.35f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
 
-            if (Physics.Raycast(ray, out hit, 10000))
+            if (Physics.Raycast(ray, out hit, 10000) || Physics.Raycast(ray2, out hit2, 10000) || Physics.Raycast(ray3, out hit3, 10000))
             {
-              
-                if (Vector3.Angle(Vector3.down, hit.normal) <= 20 && hit.collider.gameObject.tag == "Stick")
-                {
-                    //力を止める
-                    isJump = false;
-                    rb.velocity = Vector3.zero;
-                    Debug.Log("a");
+                isJump = false;
 
-                    //点滅止める
-                    tweener.Restart();
-                    tweener.Pause();
-                }
-              
+                //元に戻す
+                StartCoroutine(Drop(0.3f));
             }
 
             return;
@@ -155,31 +151,34 @@ public class NotHitStickPlayer : MonoBehaviour
         }
 
         int beforeStage = nowStageNum;
+        float nowInput = Input.GetAxis("L_Stick_V" + playerNum);
+        Debug.Log(Math.Abs(beforeInput));
 
         //自動ジャンプ(別の足場に)
-        if (Input.GetAxis("L_Stick_V" + playerNum) < -0.8f)
+        if (nowInput <= -0.8f && beforeInput > -0.8f)
         {
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
             if (beforeStage == nowStageNum) return;
             tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
         }
-        else if (Input.GetAxis("L_Stick_V" + playerNum) > 0.8f)
+        else if (nowInput >= 0.8f && beforeInput < 0.8f)
         {
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
             if (beforeStage == nowStageNum) return;
             tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
         }
 
-        //ジャンプ状態に変更    
-        //ChangeStateTo(SlimeAnimationState.Jump);
+        beforeInput = nowInput;
     }
 
     //状態更新
@@ -250,5 +249,19 @@ public class NotHitStickPlayer : MonoBehaviour
             isJump = false;
             rb.velocity = Vector3.zero;
         }
+    }
+
+    //落とす
+    IEnumerator Drop(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //力を止める
+        rb.velocity = Vector3.zero;
+        Debug.Log("a");
+
+        //点滅止める
+        tweener.Pause();
+      
     }
 }
