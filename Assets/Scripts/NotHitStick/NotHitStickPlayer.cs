@@ -37,6 +37,7 @@ public class NotHitStickPlayer : MonoBehaviour
 
     //ジャンプしているか
     private bool isJump = false;
+    private bool isJump2 = false;
 
     // メインカメラのTransform
     private Transform mainCameraTransform;
@@ -78,7 +79,7 @@ public class NotHitStickPlayer : MonoBehaviour
     {
 
         //ジャンプしているならこの先処理しない
-        if (isJump) return;
+        if (isJump  || isJump2) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -123,20 +124,20 @@ public class NotHitStickPlayer : MonoBehaviour
             RaycastHit hit;
             Ray ray = new Ray(transform.position, Vector3.up); // Rayを生成
             RaycastHit hit2;
-            Ray ray2 = new Ray(new Vector3(transform.position.x + 0.35f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
+            Ray ray2 = new Ray(new Vector3(transform.position.x + 0.30f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
             RaycastHit hit3;
-            Ray ray3 = new Ray(new Vector3(transform.position.x - 0.35f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
+            Ray ray3 = new Ray(new Vector3(transform.position.x - 0.30f, transform.position.y, transform.position.z), Vector3.up); // Rayを生成
 
             if (Physics.Raycast(ray, out hit, 10000) || Physics.Raycast(ray2, out hit2, 10000) || Physics.Raycast(ray3, out hit3, 10000))
             {
-                isJump = false;
-
                 //元に戻す
                 StartCoroutine(Drop(0.3f));
             }
 
             return;
         }
+
+        if (isJump2) return;
 
         //通常
         if (Input.GetButtonDown("Abutton" + playerNum))
@@ -146,7 +147,7 @@ public class NotHitStickPlayer : MonoBehaviour
 
             //上に力を加える
             rb.AddForce(Vector3.up * jumpPower);
-            isJump = true;
+            isJump2 = true;
             return;
         }
 
@@ -160,22 +161,24 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
+            isJump2 = true;
         }
         else if (nowInput >= 0.8f && beforeInput < 0.8f)
         {
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
+            isJump2 = true;
         }
 
         beforeInput = nowInput;
@@ -246,7 +249,7 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Stage")
         {
-            isJump = false;
+            isJump2 = false;
             rb.velocity = Vector3.zero;
         }
     }
@@ -258,10 +261,9 @@ public class NotHitStickPlayer : MonoBehaviour
 
         //力を止める
         rb.velocity = Vector3.zero;
-        Debug.Log("a");
 
         //点滅止める
         tweener.Pause();
-      
+
     }
 }
