@@ -89,7 +89,7 @@ public class OnePlayer : MonoBehaviour
         // ƒƒCƒ“ƒJƒƒ‰‚ğæ“¾
         mainCameraTransform = Camera.main.transform;
 
-        Instantiate(penguinP, this.transform.position, penguinRotate);
+        //Instantiate(penguinP, this.transform.position, penguinRotate);
         //penguinPre = Instantiate(penguinImage, new Vector3(557, 441, 0), Quaternion.Euler(0, 0, 0));
         isPenguin = true;
         isShark = true;
@@ -348,5 +348,13 @@ public class OnePlayer : MonoBehaviour
         isDolphin = false;
         yield return new WaitForSeconds(dolphinCoolTime);
         isDolphin = true;
+    }
+
+
+
+    private IEnumerator DolphinCoolCoroua()
+    {
+        
+        yield return new WaitForSeconds(1.0f);
     }
 }

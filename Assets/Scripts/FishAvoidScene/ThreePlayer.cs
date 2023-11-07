@@ -7,7 +7,7 @@ public class ThreePlayer : MonoBehaviour
 
     //アニメーションに必要
     public enum SlimeAnimationState { Idle, Walk, Jump, Attack, Damage }
-
+    Rigidbody rb;
     public Face faces;
     public GameObject SmileBody;
     public SlimeAnimationState currentState;
@@ -28,6 +28,7 @@ public class ThreePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
 
+    bool isDestroy;
     private Transform mainCameraTransform; // メインカメラのTransform
 
     void Start()
@@ -37,6 +38,9 @@ public class ThreePlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        isDestroy = false;
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -53,6 +57,8 @@ public class ThreePlayer : MonoBehaviour
         //ジャンプ
         //Jump();
 
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), Mathf.Clamp(transform.position.y, -13.5f, -0.8f), Mathf.Clamp(transform.position.z, -10.5f, -5.5f));
+        
         //状態更新
         StateUpdata();
     }
@@ -90,7 +96,7 @@ public class ThreePlayer : MonoBehaviour
         
         // 移動
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), transform.position.y, Mathf.Clamp(transform.position.z, -10.5f, -5.5f));
+        
         
     //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
@@ -166,5 +172,31 @@ public class ThreePlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag != "Player")
+        {
+            Debug.Log("当たった!");
+            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+            rb.useGravity = true;
+            Invoke("DestroyPlayer",2.0f);
+        }
+
+        
+    }
+
+
+    void DestroyPlayer()
+    {
+        Destroy(this.gameObject);
+    }
+
+
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(new Vector3(0, -30, 0),ForceMode.Acceleration);
     }
 }

@@ -96,15 +96,18 @@ public class Fish : MonoBehaviour
     public void Shark()
     {
         transform.position += new Vector3(0, 0, -0.01f);
-        if(player.transform.position.x < this.transform.position.x)
+        if (player != null)
         {
-            transform.position += new Vector3(-0.002f, 0, 0);
+            if (player.transform.position.x < this.transform.position.x)
+            {
+                transform.position += new Vector3(-0.002f, 0, 0);
+            }
+            else
+            {
+                transform.position += new Vector3(0.002f, 0, 0);
+            }
+            this.transform.LookAt(player.transform.position);
+            transform.eulerAngles = (new Vector3(0, 270, 0));
         }
-        else
-        {
-            transform.position += new Vector3(0.002f, 0, 0);
-        }
-        this.transform.LookAt(player.transform.position);
-        transform.eulerAngles = (new Vector3(0, 270, 0));
     }
 }
