@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,7 +8,12 @@ using static UnityEditor.PlayerSettings;
 public class SurfboardPlayer : MonoBehaviour
 {
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    [SerializeField] private float LIMIT_ROTATE = 45.0f;      //回転の限界
+    [SerializeField] private float LIMIT_ROTATE = 25.0f;      //回転の限界
+    [SerializeField] private float LIFE_LIMIT = 10.0f;        //HPの最大量
+    [SerializeField] private float HP_ANGLE = 10.0f;          //HPが減るようになる角度
+    [SerializeField] private float HP_REDUCTIONE = 1.0f;     //HPの減少量
+    [SerializeField] private float HP_INCREASE = 1.0f;       //HPの増加量
+
     private Rigidbody rb;
     private Vector3 pos;
     private Vector3 startRotate;    //初期の向き
@@ -18,6 +24,7 @@ public class SurfboardPlayer : MonoBehaviour
     private float sumRotateY = 0.0f;
 
     private float hp = 10.0f;
+    
 
 
     // Start is called before the first frame update
@@ -27,6 +34,8 @@ public class SurfboardPlayer : MonoBehaviour
         rot = this.transform.rotation;
 
         startRotate = transform.localEulerAngles;
+
+        InvokeRepeating(nameof(LifeControll), 1.0f, 0.1f);
     }
 
     // Update is called once per frame
@@ -56,4 +65,25 @@ public class SurfboardPlayer : MonoBehaviour
         //    transform.Rotate(new Vector3(verticalInput, 0, 0));
         //}
     }
+
+    //体力制御
+    private  void LifeControll()
+    {
+        if (Math.Abs(sumRotateX) <= HP_ANGLE) 
+        {
+            //HPを回復
+            hp += HP_INCREASE;
+
+            //HPがMAXを超えないようにする
+            Mathf.Min(sumRotateX, LIFE_LIMIT);
+        }
+        else
+        {
+            //HPを減少
+            hp -= HP_REDUCTIONE;
+        }
+
+        Debug.Log(hp);
+    }
+
 }
