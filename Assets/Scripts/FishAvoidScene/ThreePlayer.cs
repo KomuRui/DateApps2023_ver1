@@ -181,7 +181,7 @@ public class ThreePlayer : MonoBehaviour
             Debug.Log("“–‚½‚Á‚½!");
             rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
             rb.useGravity = true;
-            Invoke("DestroyPlayer",2.0f);
+            Invoke("DestroyPlayer",1.0f);
         }
 
         
