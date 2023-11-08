@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 
 public class CarryBullet : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2.0f; //移動速度
-    [SerializeField] private GameObject cannon;      //大砲オブジェクト
+    [SerializeField] private float moveSpeed = 2.0f; 　　　　　　　　//移動速度
+    [SerializeField] private GameObject cannon;      　　　　　　　　//大砲オブジェクト
+    [SerializeField] private CarryToTheGoalGameManager manager;      //マネジャー
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +25,16 @@ public class CarryBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "CarryStage" || other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "CarryStage")
         {
             this.gameObject.SetActive(false);
             transform.position = cannon.gameObject.transform.position;
+        }
+        if(other.gameObject.tag == "Player")
+        {
+            this.gameObject.SetActive(false);
+            transform.position = cannon.gameObject.transform.position;
+            manager.Damege(other.gameObject);
         }
     }
 }

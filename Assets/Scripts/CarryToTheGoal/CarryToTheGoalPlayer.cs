@@ -177,6 +177,9 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         this.currentState = state;
     }
 
-
-
+    //Ž€–S
+    public void Dead()
+    {
+        Destroy(this.gameObject);
+    }
 }
