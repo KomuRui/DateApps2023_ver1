@@ -86,4 +86,9 @@ public class SurfboardPlayer : MonoBehaviour
         Debug.Log(hp);
     }
 
+    //落下処理
+    private void Fall()
+    {
+
+    }
 }
