@@ -15,6 +15,7 @@ public class SubFloor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.rotation = mainFloor.transform.rotation;
+        //transform.eulerAngles += new Vector3(0, 0, 0.001f);
+        this.transform.localEulerAngles = mainFloor.transform.localEulerAngles;
     }
 }
