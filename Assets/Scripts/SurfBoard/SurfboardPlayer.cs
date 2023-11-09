@@ -83,12 +83,23 @@ public class SurfboardPlayer : MonoBehaviour
             hp -= HP_REDUCTIONE;
         }
 
+        //HPがなくなったら
+        if (hp <= 0)
+        {
+            Fall();
+        }
+
         Debug.Log(hp);
     }
 
     //落下処理
     private void Fall()
     {
+        Rigidbody childRb = this.transform.GetChild(0).GetComponent<Rigidbody>();
+        childRb.useGravity = true;
 
+        this.transform.GetChild(0).transform.parent = null;
     }
+
+    
 }
