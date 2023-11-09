@@ -19,10 +19,15 @@ public class MainFloor : MonoBehaviour
     {
         ///”ÍˆÍ“à‚É‚¨‚³‚ß‚é
         if (transform.eulerAngles.z > 10 && transform.eulerAngles.z < 335)
+        {
             transform.eulerAngles = new Vector3(0, 0, 10);
+            rb.velocity = Vector3.zero;
+        }
         if (transform.eulerAngles.z < 350 && transform.eulerAngles.z > 25)
+        {
             transform.eulerAngles = new Vector3(0, 0, 350);
-
+            rb.velocity = Vector3.zero;
+        }
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
         transform.position = pos;
     }

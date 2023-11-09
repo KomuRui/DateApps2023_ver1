@@ -17,5 +17,11 @@ public class SubFloor : MonoBehaviour
     {
         //transform.eulerAngles += new Vector3(0, 0, 0.001f);
         this.transform.localEulerAngles = mainFloor.transform.localEulerAngles;
+
+        ///”ÍˆÍ“à‚É‚¨‚³‚ß‚é
+        if (transform.eulerAngles.z > 10 && transform.eulerAngles.z < 335)
+            transform.eulerAngles = new Vector3(0, 0, 10);
+        if (transform.eulerAngles.z < 350 && transform.eulerAngles.z > 25)
+            transform.eulerAngles = new Vector3(0, 0, 350);
     }
 }
