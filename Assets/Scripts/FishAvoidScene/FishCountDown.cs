@@ -45,21 +45,27 @@ public class FishCountDown : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        nowCountDownTime--;
-        if (nowCountDownTime > 0)
+        //if(countDownText != null)
         {
-            countDownText.SetText(nowCountDownTime.ToString());
-            countDownText.transform.localScale = beforeScale;
-            countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
-            StartCoroutine(CountDownText(1.0f));
+            nowCountDownTime--;
+            if (nowCountDownTime > 0)
+            {
+                countDownText.SetText(nowCountDownTime.ToString());
+                countDownText.transform.localScale = beforeScale;
+                countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
+                StartCoroutine(CountDownText(1.0f));
+            }
+            else
+            {
+                countDownText.SetText("Start");
+                countDownText.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
+                countDownText.DOFade(0, 0.5f).SetEase(Ease.InCubic);
+                isStop = false;
+                //ここまで止める
+                //Destroy(countDownText);
+                //GameObject obj = GameObject.Find("Player"); //Playerっていうオブジェクトを探す
+                //playerscript = obj.GetComponent<PlayerScript>(); //付いているスクリプトを取得
+            }
         }
-        else
-        {
-            countDownText.SetText("Start");
-            countDownText.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
-            countDownText.DOFade(0, 0.5f).SetEase(Ease.InCubic);
-            isStop = false;
-        }
-
     }
 }
