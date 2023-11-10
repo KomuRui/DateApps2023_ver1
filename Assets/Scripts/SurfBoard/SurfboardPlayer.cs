@@ -24,6 +24,7 @@ public class SurfboardPlayer : MonoBehaviour
     private float sumRotateY = 0.0f;
 
     private float hp = 10.0f;
+    private bool isDead = false;
     
 
 
@@ -41,29 +42,24 @@ public class SurfboardPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 入力を取得用
-        float horizontalInput = 0;
-        float verticalInput = 0;
-
-        // 入力を取得
-        horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
-
-        if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
+        if (!isDead)
         {
-            sumRotateX += horizontalInput;
+            // 入力を取得用
+            float horizontalInput = 0;
+            float verticalInput = 0;
 
-            //スティックによって回転
-            transform.Rotate(new Vector3(0, horizontalInput, 0));
+            // 入力を取得
+            horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
+            verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+
+            if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
+            {
+                sumRotateX += horizontalInput;
+
+                //スティックによって回転
+                transform.Rotate(new Vector3(0, horizontalInput, 0));
+            }
         }
-
-        //if (sumRotateY + verticalInput <= LIMIT_ROTATE && sumRotateY + verticalInput >= -LIMIT_ROTATE)
-        //{
-        //    sumRotateY += verticalInput;
-
-        //    //スティックによって回転
-        //    transform.Rotate(new Vector3(verticalInput, 0, 0));
-        //}
     }
 
     //体力制御
@@ -95,11 +91,17 @@ public class SurfboardPlayer : MonoBehaviour
     //落下処理
     private void Fall()
     {
-        Rigidbody childRb = this.transform.GetChild(0).GetComponent<Rigidbody>();
-        childRb.useGravity = true;
+        //子供がいたら
+        if (this.transform.childCount > 0)
+        {
+            isDead = true;
 
-        this.transform.GetChild(0).transform.parent = null;
+            Rigidbody childRb = this.transform.GetChild(0).GetComponent<Rigidbody>();
+
+            //重力を使用する
+            childRb.useGravity = true;
+
+            this.transform.GetChild(0).transform.parent = null;
+        }
     }
-
-    
 }
