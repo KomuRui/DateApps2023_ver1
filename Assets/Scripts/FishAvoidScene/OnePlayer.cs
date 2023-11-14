@@ -177,7 +177,6 @@ public class OnePlayer : MonoBehaviour
 
             StartCoroutine(PenguinCoolCorou());
             isStop = true;
-            //クールタイム出現
             
         }//サメ
         else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + playerNum))&& isShark)

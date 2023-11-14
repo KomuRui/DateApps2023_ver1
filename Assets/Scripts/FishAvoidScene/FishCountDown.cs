@@ -13,7 +13,7 @@ public class FishCountDown : MonoBehaviour
     private Vector3 beforeScale;
     private float time = 45.0f;
     private bool isStop = true;
-    public bool isfinish = false;
+    public bool isFinish = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +33,11 @@ public class FishCountDown : MonoBehaviour
     //ŽžŠÔŒvŽZ
     private void TimeCalc()
     {
-        if (isStop || isfinish) return;
+        if (isStop || isFinish) return;
         time -= Time.deltaTime;
         time = Mathf.Max(time, 0);
         timeText.text = ((int)time).ToString() + ":00";
-        if (time <= 0) isfinish = true;
+        if (time <= 0) isFinish = true;
     }
 
     //—Ž‚Æ‚·
