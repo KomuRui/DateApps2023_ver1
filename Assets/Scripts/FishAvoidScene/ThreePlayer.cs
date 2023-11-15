@@ -17,7 +17,6 @@ public class ThreePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    Judge judge;
     GameObject obj;
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
@@ -46,7 +45,6 @@ public class ThreePlayer : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
 
         obj = GameObject.Find("GameManager");
-        judge = obj.GetComponent<Judge>();
     }
 
     //顔のテクスチャ設定
@@ -191,7 +189,6 @@ public class ThreePlayer : MonoBehaviour
 
             this.enabled = false;
 
-            judge.temRanking.Add(this.playerNum);
 
 
         }

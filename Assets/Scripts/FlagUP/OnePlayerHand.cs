@@ -9,16 +9,23 @@ public class OnePlayerHand : MonoBehaviour
     public GameObject leftOb;
     public GameObject rightOb;
 
-    public bool isStop;//“®‚¯‚È‚¢
     public bool isMyTurn;
-    public bool isFirst;//1‰ñ
+    public bool isInput;//1‰ñ
+
+    private int flagUpNum;
+    private int flagMax;
+    private int roundNum;
 
     // Start is called before the first frame update
     void Start()
     {
-        isStop = false;
         isMyTurn = true;
-        isFirst = true;
+        isInput = false;
+        flagUpNum = 0;
+        roundNum = 0;
+        flagMax = 3;
+        //ŠJŽn‚Ü‚Å
+        Invoke("StopPlayer",10.0f);
     }
 
     // Update is called once per frame
@@ -26,7 +33,7 @@ public class OnePlayerHand : MonoBehaviour
     {
         if (isMyTurn)
         {
-            if (isStop == false)
+            if(isInput)
             {
                 if (Input.GetButtonDown("LBbutton" + playerNum))
                 {
@@ -36,19 +43,42 @@ public class OnePlayerHand : MonoBehaviour
                 {
                     rightOb.transform.DORotate(Vector3.forward * 90f, 0.1f);
                 }
-                
-                if(isFirst)
+                else if (Input.GetButtonDown("Abutton" + playerNum))
                 {
-                    isFirst = false;
+                    leftOb.transform.DORotate(Vector3.forward * 90f, 0.1f);
+                    rightOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
+                }
+
+                if (isInput)
+                {
+                    //“J–Â‚ç‚·
+
+                    //ã‚°‚ê‚éŽžŠÔ
                     Invoke("StopPlayer", 5.0f);
                 }
             }
+            else
+            {
+                if(flagMax >= flagUpNum)
+                {
+                    //‚ ‚°‚ê‚È‚¢ŽžŠÔ
+                    Invoke("PlayPlayer", 5.0f);
+                }
+            }
+
         }
         
     }
 
     void StopPlayer()
     {
-        isStop = true;
+        isInput = false;
+
+        flagUpNum++;
+    }
+
+    void PlayPlayer()
+    {
+        isInput = true;
     }
 }
