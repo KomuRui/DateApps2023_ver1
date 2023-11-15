@@ -234,6 +234,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 17b463269e5b5684eb67402ce44d21cc, type: 3}
   SPEED_MAX: 14
   deceleration: 0.003
+  missDeceleration: 50
   addSpeed: 0.3
   moveSpeed: 0
   rotationSpeed: 180
@@ -1266,6 +1267,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 17b463269e5b5684eb67402ce44d21cc, type: 3}
   SPEED_MAX: 14
   deceleration: 0.003
+  missDeceleration: 50
   addSpeed: 0.3
   moveSpeed: 0
   rotationSpeed: 180
@@ -2662,6 +2664,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 17b463269e5b5684eb67402ce44d21cc, type: 3}
   SPEED_MAX: 14
   deceleration: 0.003
+  missDeceleration: 50
   addSpeed: 0.3
   moveSpeed: 0
   rotationSpeed: 180
@@ -3307,6 +3310,7 @@ MonoBehaviour:
   damType: 0
   moveDirection: {x: 0, y: 0, z: 1}
   deceleration: 0.003
+  missDeceleration: 50
   SPEED_MAX: 15
   addSpeed: 10
   moveSpeed: 0
@@ -3593,6 +3597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765824675}
   - component: {fileID: 1765824674}
+  - component: {fileID: 1765824676}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3632,6 +3637,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1765824676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765824673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda8d22c1d4cc304fa7959311e7c9d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerList:
+  - {fileID: 571926871}
+  - {fileID: 1344319757}
+  - {fileID: 50094214}
+  endText: {fileID: 3637908381456664616, guid: 12f001fe9542ace4f8ac49750f08cae1, type: 3}
+  ranking: []
+  temRanking: 
 --- !u!1 &1861000986
 GameObject:
   m_ObjectHideFlags: 0

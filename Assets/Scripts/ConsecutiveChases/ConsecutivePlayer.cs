@@ -166,6 +166,12 @@ public class ConsecutivePlayer : MonoBehaviour
         moveSpeed = buttonCount;
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+
+        //‚‚­‚Ü‚Ås‚­‚ÆÁ‚¦‚é
+        if(this.transform.position.y > 100)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     //ƒWƒƒƒ“ƒv
