@@ -54,7 +54,9 @@ public class ConsecutivePlayer : MonoBehaviour
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
 
-        buttonFlag = true;
+        buttonFlag = false;
+
+        nextCommandImage.sprite = commandImageList[1];
     }
 
     //顔のテクスチャ設定
@@ -164,6 +166,12 @@ public class ConsecutivePlayer : MonoBehaviour
         moveSpeed = buttonCount;
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+
+        //高くまで行くと消える
+        if(this.transform.position.y > 100)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     //ジャンプ
