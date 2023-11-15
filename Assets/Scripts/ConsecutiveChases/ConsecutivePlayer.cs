@@ -54,7 +54,9 @@ public class ConsecutivePlayer : MonoBehaviour
         //プレイヤーの移動方向の正規化
         moveDirection.Normalize();
 
-        buttonFlag = true;
+        buttonFlag = false;
+
+        nextCommandImage.sprite = commandImageList[1];
     }
 
     //顔のテクスチャ設定
