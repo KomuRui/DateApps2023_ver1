@@ -40,7 +40,7 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float buttonCount = 0.0f;                // 入力を取得用
     [SerializeField] private float crossAxisV;                        //十字キーの縦の入力値
     [SerializeField] private float crossAxisH;                        //十字キーの横の入力値
-    [SerializeField] private float COMMAND_SIZE_MAX = 3;              //次のコマンドのリストの最大数
+    [SerializeField] private float COMMAND_SIZE_MAX = 4;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
