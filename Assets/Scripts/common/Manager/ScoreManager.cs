@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public static class ScoreManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //プレイヤースコア(key : プレイヤー番号)
+    private static Dictionary<byte, int> score;
 
-    // Update is called once per frame
-    void Update()
+    //初期化
+    public static void Initializ()
     {
-        
+        Dictionary<byte, int> player = new Dictionary<byte, int>();
     }
 }

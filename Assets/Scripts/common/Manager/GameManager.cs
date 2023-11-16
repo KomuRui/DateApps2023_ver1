@@ -2,21 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public static class GameManager
 {
-    [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private MiniGameManager miniGameManager;
-    [SerializeField] private ScoreManager scoreManager;
-
-    // Start is called before the first frame update
-    void Start()
+    public static MiniGameManager nowMiniGameManager; //Œ»İ‚Ìƒ~ƒjƒQ[ƒ€ŠÇ—
+  
+    //‰Šú‰»
+    public static void Initializ()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
