@@ -8,9 +8,10 @@ public class OnePlayerHand : MonoBehaviour
     [SerializeField] private int playerNum;                   // プレイヤー番号
     public GameObject leftOb;
     public GameObject rightOb;
+    public GameObject GMOb;
 
-    public bool isMyTurn;
     public bool isInput;//1回
+    public bool isFirst;//1回
 
     private int flagUpNum;
     private int flagMax;
@@ -19,20 +20,18 @@ public class OnePlayerHand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isMyTurn = true;
         isInput = false;
+        isFirst = true;
         flagUpNum = 0;
         roundNum = 0;
         flagMax = 3;
         //開始まで
-        Invoke("StopPlayer",10.0f);
+        Invoke("PlayPlayer",5.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isMyTurn)
-        {
             if(isInput)
             {
                 if (Input.GetButtonDown("LBbutton" + playerNum))
@@ -49,36 +48,43 @@ public class OnePlayerHand : MonoBehaviour
                     rightOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
                 }
 
-                if (isInput)
+                //if (isInput)
                 {
-                    //笛鳴らす
-
-                    //上げれる時間
-                    Invoke("StopPlayer", 5.0f);
+                    if(isFirst)
+                    {
+                        isFirst = false;
+                        //上げれる時間
+                        Invoke("StopPlayer", 5.0f);
+                    }
+                    
                 }
             }
             else
             {
-                if(flagMax >= flagUpNum)
+                if(flagMax > flagUpNum && isFirst)
                 {
+                    isFirst = false;
                     //あげれない時間
                     Invoke("PlayPlayer", 5.0f);
                 }
             }
-
-        }
-        
     }
 
+    //上げれない
     void StopPlayer()
     {
         isInput = false;
-
+        isFirst = true;
         flagUpNum++;
     }
 
+    //上げれる
     void PlayPlayer()
     {
+        //笛鳴らす
+
+
         isInput = true;
+        isFirst = true;
     }
 }
