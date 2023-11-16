@@ -40,12 +40,13 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float buttonCount = 0.0f;                // 入力を取得用
     [SerializeField] private float crossAxisV;                        //十字キーの縦の入力値
     [SerializeField] private float crossAxisH;                        //十字キーの横の入力値
-    [SerializeField] private float COMMAND_SIZE_MAX = 3;              //次のコマンドのリストの最大数
+    [SerializeField] private float COMMAND_SIZE_MAX = 4;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     private bool crossKeyContinuous = false;    //十字キー
+    private bool isControll = false;            //操作しているかどうか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -111,18 +112,28 @@ public class ChasesPlayer : MonoBehaviour
         COMMAND_RESULT command = CheckOnCommandButton();
 
         //コマンド入力が成功していたら
-        if (command == COMMAND_RESULT.SUCCESS)
+        switch (command)
         {
-            buttonCount += addSpeed;
+            case COMMAND_RESULT.SUCCESS:
 
-            //コマンドが成功した場合の処理
-            SuccessCommand();
-        }
-        if (command == COMMAND_RESULT.MISS)
-        {
-            //コマンドが失敗した場合の処理
-            //一定量減速する
-            buttonCount -= missDeceleration;
+                //スピードを上げる
+                buttonCount += addSpeed;
+                //コマンドが成功した場合の処理
+                SuccessCommand();
+
+                break;
+            case COMMAND_RESULT.MISS:
+
+                //コマンドが失敗した場合の処理
+                //一定量減速する
+                buttonCount -= missDeceleration;
+
+                break;
+            case COMMAND_RESULT.NONE:
+
+                break;
+            default:
+                break;
         }
 
         //速度が0ならば
