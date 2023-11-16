@@ -46,6 +46,7 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     private bool crossKeyContinuous = false;    //十字キー
+    private bool isControll = false;            //操作しているかどうか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -111,18 +112,28 @@ public class ChasesPlayer : MonoBehaviour
         COMMAND_RESULT command = CheckOnCommandButton();
 
         //コマンド入力が成功していたら
-        if (command == COMMAND_RESULT.SUCCESS)
+        switch (command)
         {
-            buttonCount += addSpeed;
+            case COMMAND_RESULT.SUCCESS:
 
-            //コマンドが成功した場合の処理
-            SuccessCommand();
-        }
-        if (command == COMMAND_RESULT.MISS)
-        {
-            //コマンドが失敗した場合の処理
-            //一定量減速する
-            buttonCount -= missDeceleration;
+                //スピードを上げる
+                buttonCount += addSpeed;
+                //コマンドが成功した場合の処理
+                SuccessCommand();
+
+                break;
+            case COMMAND_RESULT.MISS:
+
+                //コマンドが失敗した場合の処理
+                //一定量減速する
+                buttonCount -= missDeceleration;
+
+                break;
+            case COMMAND_RESULT.NONE:
+
+                break;
+            default:
+                break;
         }
 
         //速度が0ならば
