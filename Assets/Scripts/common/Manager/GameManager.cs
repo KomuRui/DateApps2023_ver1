@@ -9,6 +9,7 @@ public static class GameManager
     //‰Šú‰»
     public static void Initializ()
     {
-
+        PlayerManager.Initializ();
+        ScoreManager.Initializ();
     }
 }
