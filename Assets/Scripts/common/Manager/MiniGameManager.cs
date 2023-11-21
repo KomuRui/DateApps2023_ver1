@@ -31,6 +31,7 @@ public class MiniGameManager : MonoBehaviour
         PlayerManager.Initializ();
 
         /////初期化
+        SceneStart();
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
@@ -99,6 +100,9 @@ public class MiniGameManager : MonoBehaviour
 
     //ミニゲーム終了にセット
     public void SetMiniGameFinish() { isFinish = true; isStart = false; MiniGameFinish(); }
+
+    //シーン開始
+    public virtual void SceneStart() { }
 
     //ゲーム終了時に呼ばれる
     public virtual void MiniGameFinish(){}
