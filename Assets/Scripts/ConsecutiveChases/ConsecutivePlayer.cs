@@ -170,7 +170,7 @@ public class ConsecutivePlayer : MonoBehaviour
         //‚‚­‚Ü‚Ås‚­‚ÆÁ‚¦‚é
         if(this.transform.position.y > 100)
         {
-            Destroy(this.gameObject);
+           // Destroy(this.gameObject);
         }
     }
 
