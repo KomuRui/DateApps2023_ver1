@@ -52,8 +52,8 @@ public class MiniGameManager : MonoBehaviour
         obj.transform.localEulerAngles = onePlayerRotate;
         obj.transform.parent = onePlayerParent.transform;
         
-
-        onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
+        if(onePlayerImage != null)
+             onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
         int i = 0;
         foreach (byte num in threePlayer.Keys)
@@ -65,8 +65,8 @@ public class MiniGameManager : MonoBehaviour
             obj.transform.localEulerAngles = threePlayerRotate[i];
             obj.transform.parent = threePlayerParent[i].transform;
 
-
-            threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
+            if (threePlayerImage[i] != null)
+                threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
             i++;
         }
 
