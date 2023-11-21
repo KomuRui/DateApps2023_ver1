@@ -15,24 +15,28 @@ public class OnePlayerHand : MonoBehaviour
 
     private int flagUpNum;
     private int flagMax;
-    private int roundNum;
+
+    FlagUpGameManager flagUpGameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        isInput = false;
+        isInput = true;
         isFirst = true;
         flagUpNum = 0;
-        roundNum = 0;
         flagMax = 3;
         //開始まで
         Invoke("PlayPlayer",5.0f);
+        flagUpGameManager = GMOb.GetComponent<FlagUpGameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-            if(isInput)
+        //ストップしてない&自分のターン
+        if(flagUpGameManager.isStop == false && flagUpGameManager.isAloneTurn == true)
+        {
+            if (isInput)
             {
                 if (Input.GetButtonDown("LBbutton" + playerNum))
                 {
@@ -48,26 +52,40 @@ public class OnePlayerHand : MonoBehaviour
                     rightOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
                 }
 
-                //if (isInput)
+                if (isFirst)
                 {
-                    if(isFirst)
-                    {
-                        isFirst = false;
-                        //上げれる時間
-                        Invoke("StopPlayer", 5.0f);
-                    }
-                    
+                    isFirst = false;
+                    //上げれる時間
+                    Invoke("StopPlayer", 5.0f);
                 }
             }
             else
             {
-                if(flagMax > flagUpNum && isFirst)
+                if (flagMax > flagUpNum && isFirst)
                 {
                     isFirst = false;
+
+                    //3人側ターンにする
+                    flagUpGameManager.isAloneTurn = false;
+
+                    if (flagMax == flagUpNum)
+                    {
+                        //旗上げ回数0に戻す
+                        flagUpNum = 0;
+                        //ラウンド3以上だったら旗上げ回数5
+                        if (flagUpGameManager.roundNum >= 2)
+                        {
+                            flagMax = 5;
+                        }
+                    }
+
                     //あげれない時間
                     Invoke("PlayPlayer", 5.0f);
                 }
             }
+        }
+
+        
     }
 
     //上げれない
@@ -76,6 +94,8 @@ public class OnePlayerHand : MonoBehaviour
         isInput = false;
         isFirst = true;
         flagUpNum++;
+
+        
     }
 
     //上げれる
