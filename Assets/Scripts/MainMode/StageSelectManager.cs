@@ -38,9 +38,11 @@ public class StageSelectManager : MonoBehaviour
     }
 
     //シーン遷移開始
-    private void StartSceneChange()
+    IEnumerator StartSceneChange(float delay)
     {
+        yield return new WaitForSeconds(delay);
 
+        fade.FadeIn(fadeTime);
     }
 
     IEnumerator RandomMiniGameSelectStart(float delay)
@@ -83,7 +85,7 @@ public class StageSelectManager : MonoBehaviour
 
         //終わりなら
         if(isFinish && lookMiniGameNum == finishImage)
-            StartSceneChange();
+            StartCoroutine(StartSceneChange(2.0f));
         else
             //0.3秒後に開始
             StartCoroutine(RandomMiniGameSelectStart(changeTime));
