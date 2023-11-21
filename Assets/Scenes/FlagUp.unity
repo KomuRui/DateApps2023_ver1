@@ -1065,7 +1065,7 @@ MonoBehaviour:
   playerNum: 3
   leftOb: {fileID: 1218730055}
   rightOb: {fileID: 232239471}
-  GMOb: {fileID: 1831453146}
+  GMOb: {fileID: 0}
   isInput: 0
   isFirst: 0
 --- !u!95 &445316569
@@ -1606,7 +1606,7 @@ MonoBehaviour:
   playerNum: 2
   leftOb: {fileID: 2018298788}
   rightOb: {fileID: 500113693}
-  GMOb: {fileID: 1831453146}
+  GMOb: {fileID: 0}
   isInput: 0
   isFirst: 0
 --- !u!95 &1158498896
@@ -2376,7 +2376,7 @@ MonoBehaviour:
   playerNum: 1
   leftOb: {fileID: 1772744275}
   rightOb: {fileID: 393280815}
-  GMOb: {fileID: 1831453146}
+  GMOb: {fileID: 0}
   isInput: 0
   isFirst: 0
 --- !u!95 &1776382118
@@ -2447,6 +2447,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92a395d8727972419bf93b6957d490d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onePlayerParent: {fileID: 0}
+  onePlayerPos: {x: 0, y: 0, z: 0}
+  onePlayerScale: {x: 0, y: 0, z: 0}
+  onePlayerRotate: {x: 0, y: 0, z: 0}
+  threePlayerParent:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  threePlayerPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  threePlayerScale:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  threePlayerRotate:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  onePlayerImage: {fileID: 0}
+  threePlayerImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isAloneTurn: 1
   isStop: 0
   roundNum: 0

@@ -10,7 +10,7 @@ public class Fish : MonoBehaviour
 {
     bool isCurve;
     float curve;
-    const float WIDTH = 0.004f;
+    float width = 0.004f;
     float height = 0.02f;
     float a = 0.6f;
     float fishAngle;
@@ -62,34 +62,49 @@ public class Fish : MonoBehaviour
     //ƒCƒ‹ƒJ
     public void Dolphin()
     {
+        transform.position += new Vector3(0, 0, -0.007f);
         //this.transform.DOJump(new Vector3(transform.position.x, -3, -15.0f), jumpPower: 1.5f, numJumps: 5, duration: 7f);
-        transform.position += new Vector3(0, height, -0.007f);
-        //2.25;
-        transform.Rotate(new Vector3(0.25f, 0, 0));
-        if (transform.position.y > 1.5f)
-        {
-            height = -height;
-            //transform.Rotate(new Vector3(300, 0, 0));
-            //transform.LookAt(new Vector3(300, 180, 0)); // (300, 0, 0)‚Ì•ûŒü‚ðŒü‚­
-            //transform.eulerAngles = (new Vector3(300, 180, 0));
-        }
+        //transform.position += new Vector3(0, height, -0.007f);
+        ////2.25;
+        //transform.Rotate(new Vector3(0.25f, 0, 0));
+        //if (transform.position.y > 1.5f)
+        //{
+        //    height = -height;
+        //    //transform.Rotate(new Vector3(300, 0, 0));
+        //    //transform.LookAt(new Vector3(300, 180, 0)); // (300, 0, 0)‚Ì•ûŒü‚ðŒü‚­
+        //    //transform.eulerAngles = (new Vector3(300, 180, 0));
+        //}
 
 
-        //250 350;
+        ////250 350;
 
-        if (transform.position.y < -5.0f)
-        {
-            height = -height;
-            transform.eulerAngles = (new Vector3(220, 180, 0));
-        }
+        //if (transform.position.y < -5.0f)
+        //{
+        //    height = -height;
+        //    transform.eulerAngles = (new Vector3(220, 180, 0));
+        //}
     }
 
     //‹›ŒQ
     public void Fishes()
     {
-        transform.position += transform.forward * 0.01f;
-        fishAngle = (Mathf.Sin(Time.time) * 45) + 180;
-        transform.eulerAngles = (new Vector3(0, fishAngle, 0));
+        if (Mathf.Abs(this.transform.position.x) >= 4.3f)
+        {
+            width = -width;
+        }
+
+        if (width < 0)
+        {
+            transform.eulerAngles = (new Vector3(0, 150, 0));
+        }
+        else
+        {
+            transform.eulerAngles = (new Vector3(0, 210, 0));
+        }
+
+        this.transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.3f, 4.3f), this.transform.position.y, this.transform.position.z);
+
+        this.transform.position += this.transform.forward * 0.01f;
     }
 
     //ƒTƒ
