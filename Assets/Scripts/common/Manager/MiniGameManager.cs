@@ -47,7 +47,7 @@ public class MiniGameManager : MonoBehaviour
         obj = Instantiate(obj, onePlayerPos, Quaternion.identity);
         obj.transform.position = onePlayerPos;
         obj.transform.localScale = onePlayerScale;
-        obj.transform.localEulerAngles = onePlayerScale;
+        obj.transform.localEulerAngles = onePlayerRotate;
         obj.transform.parent = onePlayerParent.transform;
         
 
@@ -60,6 +60,7 @@ public class MiniGameManager : MonoBehaviour
             obj = Instantiate(obj, this.transform.position, Quaternion.identity);
             obj.transform.position = threePlayerPos[i];
             obj.transform.localScale = threePlayerScale[i];
+            obj.transform.localEulerAngles = threePlayerRotate[i];
             obj.transform.parent = threePlayerParent[i].transform;
 
 
