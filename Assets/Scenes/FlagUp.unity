@@ -1065,7 +1065,9 @@ MonoBehaviour:
   playerNum: 3
   leftOb: {fileID: 1218730055}
   rightOb: {fileID: 232239471}
-  isStop: 0
+  GMOb: {fileID: 1831453146}
+  isInput: 0
+  isFirst: 0
 --- !u!95 &445316569
 Animator:
   serializedVersion: 5
@@ -1443,7 +1445,7 @@ MonoBehaviour:
   playerNum: 1
   leftOb: {fileID: 1838592699}
   rightOb: {fileID: 2007437520}
-  GMOb: {fileID: 0}
+  GMOb: {fileID: 1831453146}
   isInput: 0
   isFirst: 0
 --- !u!95 &543451900
@@ -1604,7 +1606,9 @@ MonoBehaviour:
   playerNum: 2
   leftOb: {fileID: 2018298788}
   rightOb: {fileID: 500113693}
-  isStop: 0
+  GMOb: {fileID: 1831453146}
+  isInput: 0
+  isFirst: 0
 --- !u!95 &1158498896
 Animator:
   serializedVersion: 5
@@ -2372,7 +2376,9 @@ MonoBehaviour:
   playerNum: 1
   leftOb: {fileID: 1772744275}
   rightOb: {fileID: 393280815}
-  isStop: 0
+  GMOb: {fileID: 1831453146}
+  isInput: 0
+  isFirst: 0
 --- !u!95 &1776382118
 Animator:
   serializedVersion: 5
@@ -2423,7 +2429,7 @@ GameObject:
   - component: {fileID: 1831453148}
   - component: {fileID: 1831453147}
   m_Layer: 0
-  m_Name: GameManagerGameObject
+  m_Name: FlagUpGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2442,6 +2448,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAloneTurn: 1
+  isStop: 0
+  roundNum: 0
 --- !u!4 &1831453148
 Transform:
   m_ObjectHideFlags: 0
