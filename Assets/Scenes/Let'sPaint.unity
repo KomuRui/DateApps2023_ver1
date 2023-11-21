@@ -1125,6 +1125,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime_03 Leaf
       objectReference: {fileID: 0}
+    - target: {fileID: 6891580169314388076, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1571,6 +1575,10 @@ PrefabInstance:
     - target: {fileID: 6688149642241925542, guid: 11eed2dfd1329ab4db9e7f27b8e628b7, type: 3}
       propertyPath: m_Name
       value: Slime_01_Viking
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688149642241925542, guid: 11eed2dfd1329ab4db9e7f27b8e628b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2291,6 +2299,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a328c58bf12c98459c053830e8b9552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onePlayerParent: {fileID: 1259744882}
+  onePlayerPos: {x: 0, y: 19, z: -24.5}
+  onePlayerScale: {x: 13.68186, y: 13.68186, z: 13.68186}
+  onePlayerRotate: {x: 0, y: 0, z: 0}
+  threePlayerParent:
+  - {fileID: 1433587891}
+  - {fileID: 272121584}
+  - {fileID: 1196562636}
+  threePlayerPos:
+  - {x: 21.5, y: 17, z: 12.5}
+  - {x: 0, y: 17, z: 12.5}
+  - {x: -21.5, y: 17, z: 12.5}
+  threePlayerScale:
+  - {x: 6.5, y: 6.5, z: 6.5}
+  - {x: 6.5, y: 6.5, z: 6.5}
+  - {x: 6.5, y: 6.5, z: 6.5}
+  threePlayerRotate: []
+  onePlayerImage: {fileID: 297506022}
+  threePlayerImage:
+  - {fileID: 152748529}
+  - {fileID: 215825392}
+  - {fileID: 212611915}
   target: {fileID: 1443552529}
   playerPercentText:
   - {fileID: 1802811917}
@@ -2618,6 +2648,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime_01_King
       objectReference: {fileID: 0}
+    - target: {fileID: 873531700701352353, guid: 28d0a30d6aed6fc4c8ca473413f70c24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8955322500898459853, guid: 28d0a30d6aed6fc4c8ca473413f70c24, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2746,6 +2780,10 @@ PrefabInstance:
     - target: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
       propertyPath: m_Name
       value: Slime_01_MeltalHelmet
+      objectReference: {fileID: 0}
+    - target: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,11 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト(Player1,PLayer2....みたいなやつ)
+    [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
+    [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
+    [SerializeField] protected Vector3 onePlayerRotate;                                      //1人側プレイヤーの角度
     [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト(Player1,PLayer2....みたいなやつ)
+    [SerializeField] protected List<Vector3> threePlayerPos = new List<Vector3>();           //3人側プレイヤーの初期位置
+    [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
+    [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
+
+    [SerializeField] protected Image onePlayerImage;                                    //1人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();        //3人側プレイヤーの画像
 
     protected byte onePlayer;                                                           //1人側プレイヤー
     protected Dictionary<byte,bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
@@ -16,6 +26,10 @@ public class MiniGameManager : MonoBehaviour
 
     void Start()
     {
+        /////////////////////////////////α版だけ
+
+        PlayerManager.Initializ();
+
         /////初期化
         isPlayerAllDead = false;
         isStart = false;
@@ -28,16 +42,29 @@ public class MiniGameManager : MonoBehaviour
         foreach(byte num in threeP)
             threePlayer[num] = false;
 
-        //プレイヤー生成
-        GameObject obj = Instantiate(PlayerManager.GetPlayerVisual(onePlayer), this.transform.position, Quaternion.identity);
+        //プレイヤーと画像生成
+        GameObject obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
+        obj = Instantiate(obj, onePlayerPos, Quaternion.identity);
+        obj.transform.position = onePlayerPos;
+        obj.transform.localScale = onePlayerScale;
+        obj.transform.localEulerAngles = onePlayerScale;
         obj.transform.parent = onePlayerParent.transform;
+        
+
+        onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
         int i = 0;
         foreach (byte num in threePlayer.Keys)
         {
-           obj = Instantiate(PlayerManager.GetPlayerVisual(num), this.transform.position, Quaternion.identity);
-           obj.transform.parent = threePlayerParent[i].transform;
-           i++;
+            obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(num));
+            obj = Instantiate(obj, this.transform.position, Quaternion.identity);
+            obj.transform.position = threePlayerPos[i];
+            obj.transform.localScale = threePlayerScale[i];
+            obj.transform.parent = threePlayerParent[i].transform;
+
+
+            threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
+            i++;
         }
 
     }
