@@ -29,6 +29,7 @@ public class MiniGameManager : MonoBehaviour
         /////////////////////////////////ƒ¿”Å‚¾‚¯
 
         PlayerManager.Initializ();
+        GameManager.nowMiniGameManager = this;
 
         /////‰Šú‰»
         SceneStart();
