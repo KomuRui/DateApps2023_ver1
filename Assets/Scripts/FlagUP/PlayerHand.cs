@@ -40,7 +40,7 @@ public class PlayerHand : MonoBehaviour
             {
                 if (Input.GetButtonDown("LBbutton" + playerNum))
                 {
-                    leftOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
+                    leftOb.transform.DORotate(Vector3.forward * -90f, 0.1f);
                 }
                 else if (Input.GetButtonDown("RBbutton" + playerNum))
                 {
@@ -48,8 +48,8 @@ public class PlayerHand : MonoBehaviour
                 }
                 else if (Input.GetButtonDown("Abutton" + playerNum))
                 {
-                    leftOb.transform.DORotate(Vector3.forward * 90f, 0.1f);
-                    rightOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
+                    leftOb.transform.DORotate(Vector3.forward * 0, 0.1f);
+                    rightOb.transform.DORotate(Vector3.forward * 0, 0.1f);
                 }
 
                 if (isFirst)
@@ -86,14 +86,12 @@ public class PlayerHand : MonoBehaviour
                     Invoke("PlayPlayer", 5.0f);
                 }
 
-                if(flagUpGameManager.roundNum >= 4)
+                if(flagUpGameManager.roundNum >= 3)
                 {
                     flagUpGameManager.isStop = true;
                 }
             }
         }
-
-
     }
 
     //è„Ç∞ÇÍÇ»Ç¢

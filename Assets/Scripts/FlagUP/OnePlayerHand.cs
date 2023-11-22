@@ -40,7 +40,7 @@ public class OnePlayerHand : MonoBehaviour
             {
                 if (Input.GetButtonDown("LBbutton" + playerNum))
                 {
-                    leftOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
+                    leftOb.transform.DORotate(Vector3.forward * -90f, 0.1f);
                 }
                 else if (Input.GetButtonDown("RBbutton" + playerNum))
                 {
@@ -48,7 +48,7 @@ public class OnePlayerHand : MonoBehaviour
                 }
                 else if (Input.GetButtonDown("Abutton" + playerNum))
                 {
-                    leftOb.transform.DORotate(Vector3.forward * 90f, 0.1f);
+                    leftOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
                     rightOb.transform.DORotate(Vector3.forward * 0f, 0.1f);
                 }
 
@@ -67,6 +67,7 @@ public class OnePlayerHand : MonoBehaviour
 
                     //3人側ターンにする
                     flagUpGameManager.isAloneTurn = false;
+                    Debug.Log("3人だよ");
 
                     if (flagMax == flagUpNum)
                     {
