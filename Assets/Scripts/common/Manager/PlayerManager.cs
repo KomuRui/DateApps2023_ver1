@@ -5,8 +5,9 @@ using UnityEngine;
 //プレイヤー情報
 public class PlayerInfo
 {
-    public GameObject visual;  //プレイヤーの見た目
-    public bool isThreePlayer; //3人側プレイヤーかどうか
+    public string visualPath;       //プレイヤーの見た目
+    public string vitualImagePath;  //プレイヤーの見た目画像パス
+    public bool isThreePlayer;      //3人側プレイヤーかどうか
 }
 
 public static class PlayerManager
@@ -26,14 +27,36 @@ public static class PlayerManager
         for (byte i = 1; i < PLAYER_MAX + 1; i++)
         {
             PlayerInfo info = new PlayerInfo();
-            info.visual = null;
+            info.visualPath = "";
             info.isThreePlayer = false;
+            info.vitualImagePath = "";
             player[i] = info;
         }
+
+        player[1].isThreePlayer = false;
+        player[2].isThreePlayer = true;
+        player[3].isThreePlayer = true;
+        player[4].isThreePlayer = true;
+
+        ///////////////////見た目と画像を手動で設定するので汚くなります(α版のみ)//////////////////////////
+        player[1].visualPath = "Prefabs/Slime_01";
+        player[2].visualPath = "Prefabs/Slime_01_King";
+        player[3].visualPath = "Prefabs/Slime_01_MeltalHelmet";
+        player[4].visualPath = "Prefabs/Slime_01_Viking";
+
+        player[1].vitualImagePath = "image_010";
+        player[2].vitualImagePath = "image_002";
+        player[3].vitualImagePath = "image_003";
+        player[4].vitualImagePath = "image_004";
+
+
     }
 
     //プレイヤーの見た目を設定
-    public static void SetPlayerVisual(byte num, GameObject playerVisual) { player[num].visual = playerVisual; }
+    public static void SetPlayerVisual(byte num, string playerVisual) { player[num].visualPath = playerVisual; }
+
+    //プレイヤーの見た目画像を設定
+    public static void SetPlayerVisualImage(byte num, string playerVisual) { player[num].vitualImagePath = playerVisual; }
 
     //1人側プレイヤーの設定
     public static void SetOnePlayer(byte num) 
@@ -48,7 +71,10 @@ public static class PlayerManager
     public static PlayerInfo GetPlayerInfo(byte num) { return player[num]; }
 
     //プレイヤーの見た目を取得
-    public static GameObject GetPlayerVisual(byte num) { return player[num].visual; }
+    public static string GetPlayerVisual(byte num) { return player[num].visualPath; }
+
+    //プレイヤーの見た目画像を取得
+    public static string GetPlayerVisualImage(byte num) { return player[num].vitualImagePath; }
 
     //3人側プレイヤー番号取得
     public static List<byte> GetThreePlayer() 

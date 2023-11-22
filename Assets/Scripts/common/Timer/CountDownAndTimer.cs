@@ -37,7 +37,11 @@ public class CountDownAndTimer : MonoBehaviour
         time -= Time.deltaTime;
         time = Mathf.Max(time, 0);
         timeText.text = ((int)time).ToString() + ":00";
-        if (time <= 0) isfinish = true;
+        if (time <= 0)
+        {
+            isfinish = true;
+            GameManager.nowMiniGameManager.SetMiniGameFinish();
+        }
     }
 
     //—Ž‚Æ‚·
@@ -59,6 +63,7 @@ public class CountDownAndTimer : MonoBehaviour
             countDownText.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
             countDownText.DOFade(0, 0.5f).SetEase(Ease.InCubic);
             isStop = false;
+            GameManager.nowMiniGameManager.SetMiniGameStart();
         }
 
     }
