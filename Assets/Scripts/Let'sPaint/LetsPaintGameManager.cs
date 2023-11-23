@@ -31,8 +31,8 @@ public class LetsPaintGameManager : MiniGameManager
     //ゲーム終了時に呼ばれる
     public override void MiniGameFinish()
     {
-        int threePlayer = playerPercent[0] + playerPercent[1] + playerPercent[2];
-        int onePlayer = playerPercent[3];
+        int threePlayer = playerPercent[1] + playerPercent[2] + playerPercent[3];
+        int onePlayer = playerPercent[0];
 
         bool isWinOnePLayer = false;
 
@@ -47,18 +47,19 @@ public class LetsPaintGameManager : MiniGameManager
 
         //3人側の得点をソートで並び変える
         var dict = new Dictionary<int, int>();
-        for (int i = 0; i < playerPercent.Length; i++)
+        for (int i = 1; i < playerPercent.Length; i++)
             dict.Add(i, playerPercent[i]);
 
-        IOrderedEnumerable<KeyValuePair<int, int>> sorted = dict.OrderByDescending(pair => pair.Key);
+        var sortedDictionary = dict.OrderByDescending(pair => pair.Value);
 
         //順位を確認
         byte nowRank = (isWinOnePLayer ? (byte)1 : (byte)0);
         byte sameRank = 1;
+        byte lookNum = 1;
         float beforeValue = -1;
-        for (int i = 0; i < dict.Count; i++)
+        foreach (var item in sortedDictionary)
         {
-            if (beforeValue != dict[i])
+            if (beforeValue != item.Value)
             {
                 nowRank += sameRank;
                 sameRank = 1;
@@ -66,8 +67,9 @@ public class LetsPaintGameManager : MiniGameManager
             else 
                 sameRank++;
 
-            beforeValue = dict[i];
-            ScoreManager.AddScore(onePlayerParent.GetComponent<PlayerNum>().playerNum, nowRank);
+            beforeValue = item.Value;
+            ScoreManager.AddScore(threePlayerParent[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
+            lookNum++;
         }
     }
 }

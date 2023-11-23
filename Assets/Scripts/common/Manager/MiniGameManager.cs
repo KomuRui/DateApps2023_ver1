@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,13 +22,24 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected Image onePlayerImage;                                     //1人側プレイヤーの画像
     [SerializeField] protected List<Image> threePlayerImage = new List<Image>();         //3人側プレイヤーの画像
 
+    [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
+    [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
+    [SerializeField] protected List<Vector3> rankAnnouncementRotate = new List<Vector3>();  //ランク発表時のプレイヤー角度
+
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
     protected byte onePlayer;                                                            //1人側プレイヤー
     protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
 
+    ////////////////////////////////////カメラ////////////////////////////////////////////
+
+    [SerializeField] protected Vector3 rankCameraPos;
+    [SerializeField] protected Vector3 rankCameraRotate;
+
     ////////////////////////////////////必要UI////////////////////////////////////////////
 
-    public GameObject endText; //終了テキスト
+    public GameObject endText;      //終了テキスト
+    public GameObject rankText;     //順位テキスト
+    public GameObject normalCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
@@ -39,10 +52,11 @@ public class MiniGameManager : MonoBehaviour
         /////////////////////////////////α版だけ
 
         PlayerManager.Initializ();
-        GameManager.nowMiniGameManager = this;
+        ScoreManager.Initializ();
 
         /////初期化
         SceneStart();
+        GameManager.nowMiniGameManager = this;
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
@@ -88,7 +102,7 @@ public class MiniGameManager : MonoBehaviour
 
     public void SetOnePlayer(byte player) { onePlayer = player; }
     public void SetThreePlayer(byte player) { threePlayer[player] = false; }
-    public void playerDead(byte player) 
+    public void PlayerDead(byte player) 
     { 
         //死んでいないのなら
         if(!threePlayer[player]) threePlayer[player] = true; 
@@ -101,6 +115,14 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = true;
         PlayerAllDead();
         SetMiniGameFinish();
+    }
+
+    //プレイヤーすべて削除
+    public void PlayerAllDelete()
+    {
+        Destroy(onePlayerParent.gameObject);
+        for(int i = 0; i < threePlayerParent.Count; i++)
+            Destroy(threePlayerParent[i].gameObject);
     }
 
     /////////////////////////////////ミニゲーム情報//////////////////////////////////////
@@ -117,8 +139,42 @@ public class MiniGameManager : MonoBehaviour
     { 
         isFinish = true; 
         isStart = false;
-        Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
-        MiniGameFinish(); 
+        endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
+        MiniGameFinish();
+
+        //4秒後に順位発表に移行
+        Invoke("ChangeRankAnnouncement", 4.0f);
+    }
+
+    //順位発表に変更
+    public void ChangeRankAnnouncement()
+    {
+
+        //順位テキスト表示
+        for (byte i = 0; i < nowMiniGameRank.Count; i++)
+        {
+            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = nowMiniGameRank.Values.ElementAt(i).ToString();
+        }
+        Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
+
+        //新たにプレイヤー召喚
+        for (byte i = 0; i < nowMiniGameRank.Count; i++)
+        {
+            GameObject obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(nowMiniGameRank.Keys.ElementAt(i)));
+            obj = Instantiate(obj, rankAnnouncementPos[i], Quaternion.identity);
+            obj.transform.position = rankAnnouncementPos[i];
+            obj.transform.localScale = rankAnnouncementScale[i];
+            obj.transform.localEulerAngles = rankAnnouncementRotate[i];
+        }
+
+        //カメラのもろもろ変更
+        Camera.main.transform.position = rankCameraPos;
+        Camera.main.transform.localEulerAngles = rankCameraRotate;
+
+        //プレイヤーとテキスト削除
+        PlayerAllDelete();
+        endText.SetActive(false);
+        normalCanvas.SetActive(false);
     }
 
     //シーン開始

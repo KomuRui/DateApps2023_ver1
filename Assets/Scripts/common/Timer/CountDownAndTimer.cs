@@ -11,7 +11,7 @@ public class CountDownAndTimer : MonoBehaviour
 
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
-    private float time = 30.0f;
+    private float time =6.0f;
     private bool isStop = true;
     public bool isfinish = false;
 
@@ -37,7 +37,7 @@ public class CountDownAndTimer : MonoBehaviour
         time -= Time.deltaTime;
         time = Mathf.Max(time, 0);
         timeText.text = ((int)time).ToString() + ":00";
-        if (time <= 0)
+        if (time <= 1)
         {
             isfinish = true;
             timeText.text = "";

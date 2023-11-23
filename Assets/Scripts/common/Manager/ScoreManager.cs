@@ -31,7 +31,7 @@ public static class ScoreManager
 
     //スコア加算
     public static void AddScore(byte numPlayer,byte rank) 
-    { 
+    {
         score[numPlayer] += scoreTable[rank];
 
         //1人側が1位の場合は2点加算する
