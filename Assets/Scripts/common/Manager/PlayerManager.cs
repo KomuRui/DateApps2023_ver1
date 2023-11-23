@@ -95,4 +95,13 @@ public static class PlayerManager
 
         return 0;
     }
+
+    //ƒvƒŒƒCƒ„[”Ô†æ“¾
+    public static byte GetPlayerNum(string vitualPath)
+    {
+        for (byte i = 1; i < PLAYER_MAX + 1; i++)
+            if (player[i].visualPath == vitualPath) return i;
+
+        return 0;
+    }
 }

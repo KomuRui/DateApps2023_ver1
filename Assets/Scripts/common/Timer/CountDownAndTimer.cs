@@ -11,7 +11,7 @@ public class CountDownAndTimer : MonoBehaviour
 
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
-    private float time = 45.0f;
+    private float time = 30.0f;
     private bool isStop = true;
     public bool isfinish = false;
 
@@ -40,6 +40,7 @@ public class CountDownAndTimer : MonoBehaviour
         if (time <= 0)
         {
             isfinish = true;
+            timeText.text = "";
             GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
     }

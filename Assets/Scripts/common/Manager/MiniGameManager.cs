@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MiniGameManager : MonoBehaviour
 {
+
+    ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
+
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト(Player1,PLayer2....みたいなやつ)
     [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
     [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
@@ -14,13 +17,20 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
 
-    [SerializeField] protected Image onePlayerImage;                                    //1人側プレイヤーの画像
-    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();        //3人側プレイヤーの画像
+    [SerializeField] protected Image onePlayerImage;                                     //1人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();         //3人側プレイヤーの画像
 
-    protected byte onePlayer;                                                           //1人側プレイヤー
-    protected Dictionary<byte,bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
+    protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
+    protected byte onePlayer;                                                            //1人側プレイヤー
+    protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
 
-    protected bool isPlayerAllDead;   //プレイヤーが全員死んでいるかどうか
+    ////////////////////////////////////必要UI////////////////////////////////////////////
+
+    public GameObject endText; //終了テキスト
+
+    ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
+
+    public Dictionary<byte, byte> nowMiniGameRank = new Dictionary<byte, byte>(); //現在のミニゲームのランク表(key : プレイヤー番号)
     protected bool isStart;           //ミニゲーム開始しているか
     protected bool isFinish;          //ミニゲームが終了しているか
 
@@ -51,8 +61,9 @@ public class MiniGameManager : MonoBehaviour
         obj.transform.localScale = onePlayerScale;
         obj.transform.localEulerAngles = onePlayerRotate;
         obj.transform.parent = onePlayerParent.transform;
-        
-        if(onePlayerImage != null)
+        obj.transform.parent.GetComponent<PlayerNum>().playerNum = onePlayer;
+
+        if (onePlayerImage != null)
              onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
         int i = 0;
@@ -64,6 +75,7 @@ public class MiniGameManager : MonoBehaviour
             obj.transform.localScale = threePlayerScale[i];
             obj.transform.localEulerAngles = threePlayerRotate[i];
             obj.transform.parent = threePlayerParent[i].transform;
+            obj.transform.parent.GetComponent<PlayerNum>().playerNum = num;
 
             if (threePlayerImage[i] != null)
                 threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
@@ -88,6 +100,7 @@ public class MiniGameManager : MonoBehaviour
         //プレイヤー全員死んだに設定
         isPlayerAllDead = true;
         PlayerAllDead();
+        SetMiniGameFinish();
     }
 
     /////////////////////////////////ミニゲーム情報//////////////////////////////////////
@@ -100,7 +113,13 @@ public class MiniGameManager : MonoBehaviour
     public void SetMiniGameStart() { isStart = true; MiniGameStart(); }
 
     //ミニゲーム終了にセット
-    public void SetMiniGameFinish() { isFinish = true; isStart = false; MiniGameFinish(); }
+    public void SetMiniGameFinish() 
+    { 
+        isFinish = true; 
+        isStart = false;
+        Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
+        MiniGameFinish(); 
+    }
 
     //シーン開始
     public virtual void SceneStart() { }

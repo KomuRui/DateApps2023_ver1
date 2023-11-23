@@ -36,5 +36,9 @@ public static class ScoreManager
 
         //1l‘¤‚ª1ˆÊ‚Ìê‡‚Í2“_‰ÁZ‚·‚é
         if (PlayerManager.GetOnePlayer() == numPlayer && rank == 1) score[numPlayer] += 2;
+
+        //‡ˆÊ‚ğİ’è
+        GameManager.nowMiniGameManager.nowMiniGameRank[numPlayer] = rank;
     }
+
 }

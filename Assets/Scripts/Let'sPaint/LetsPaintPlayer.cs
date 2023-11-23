@@ -55,6 +55,9 @@ public class LetsPaintPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ŠJn‚µ‚Ä‚¢‚È‚¢‚©I—¹‚µ‚Ä‚¢‚é‚Ì‚È‚ç‚±‚Ìæˆ—‚µ‚È‚¢
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         Move();
     }
 
