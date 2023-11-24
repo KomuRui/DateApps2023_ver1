@@ -15,12 +15,10 @@ public class MiniGameManager : MonoBehaviour
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト
-    [SerializeField] protected GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
     [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
     [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
     [SerializeField] protected Vector3 onePlayerRotate;                                      //1人側プレイヤーの角度
     [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト
-    [SerializeField] protected List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     [SerializeField] protected List<Vector3> threePlayerPos = new List<Vector3>();           //3人側プレイヤーの初期位置
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
@@ -32,6 +30,8 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
     [SerializeField] protected List<Vector3> rankAnnouncementRotate = new List<Vector3>();  //ランク発表時のプレイヤー角度
 
+    protected GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
+    protected List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
     protected byte onePlayer;                                                            //1人側プレイヤー
     protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
@@ -76,15 +76,15 @@ public class MiniGameManager : MonoBehaviour
             threePlayer[num] = false;
 
         //プレイヤーと画像生成
-        GameObject obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
-        obj = Instantiate(obj, onePlayerPos, Quaternion.identity);
-        obj.transform.position = onePlayerPos;
-        obj.transform.localScale = onePlayerScale;
-        obj.transform.localEulerAngles = onePlayerRotate;
-        obj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
+        onePlayerObj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
+        onePlayerObj = Instantiate(onePlayerObj, onePlayerPos, Quaternion.identity);
+        onePlayerObj.transform.position = onePlayerPos;
+        onePlayerObj.transform.localScale = onePlayerScale;
+        onePlayerObj.transform.localEulerAngles = onePlayerRotate;
+        onePlayerObj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
 
-        if (obj.transform.parent != null)
-            obj.transform.parent = onePlayerParent.transform;
+        if (onePlayerParent != null)
+            onePlayerObj.transform.parent = onePlayerParent.transform;
            
 
         if (onePlayerImage != null)
@@ -93,15 +93,15 @@ public class MiniGameManager : MonoBehaviour
         int i = 0;
         foreach (byte num in threePlayer.Keys)
         {
-            obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(num));
-            obj = Instantiate(obj, this.transform.position, Quaternion.identity);
-            obj.transform.position = threePlayerPos[i];
-            obj.transform.localScale = threePlayerScale[i];
-            obj.transform.localEulerAngles = threePlayerRotate[i];
-            obj.transform.GetComponent<PlayerNum>().playerNum = num;
+            threePlayerObj[i] = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(num));
+            threePlayerObj[i] = Instantiate(threePlayerObj[i], this.transform.position, Quaternion.identity);
+            threePlayerObj[i].transform.position = threePlayerPos[i];
+            threePlayerObj[i].transform.localScale = threePlayerScale[i];
+            threePlayerObj[i].transform.localEulerAngles = threePlayerRotate[i];
+            threePlayerObj[i].transform.GetComponent<PlayerNum>().playerNum = num;
 
-            if (obj.transform.parent != null)
-                obj.transform.parent = threePlayerParent[i].transform;
+            if (threePlayerParent[i] != null)
+                threePlayerObj[i].transform.parent = threePlayerParent[i].transform;
                 
 
             if (threePlayerImage[i] != null)

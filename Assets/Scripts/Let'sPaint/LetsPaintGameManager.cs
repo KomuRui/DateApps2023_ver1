@@ -38,11 +38,11 @@ public class LetsPaintGameManager : MiniGameManager
         //1人側が勝ったのなら
         if (threePlayer <= onePlayer)
         {
-            ScoreManager.AddScore(onePlayerParent.GetComponent<PlayerNum>().playerNum, 1);
+            ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 1);
             isWinOnePLayer = true;
         }
         else
-            ScoreManager.AddScore(onePlayerParent.GetComponent<PlayerNum>().playerNum, 4);
+            ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
 
         //3人側の得点をソートで並び変える
         var dict = new Dictionary<int, int>();
@@ -67,7 +67,7 @@ public class LetsPaintGameManager : MiniGameManager
                 sameRank++;
 
             beforeValue = item.Value;
-            ScoreManager.AddScore(threePlayerParent[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
+            ScoreManager.AddScore(threePlayerObj[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
             lookNum++;
         }
     }
