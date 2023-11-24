@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageSelect : MonoBehaviour
 {
@@ -11,9 +12,9 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private Vector3 notSelectScale = new Vector3(2.4f, 1.8f, 1.0f);
     [SerializeField] private  List<GameObject> stageImageObj;
     [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private GameObject rankText;   
 
-    //GameObject : 各ステージの画像 bool : ステージが遊ばれたかどうか
-    private Dictionary<GameObject, bool> stage = new Dictionary<GameObject, bool>();
+    
     private float changeTime = 0.1f;
     private int finishImage = 0;
     private int count = 0;
@@ -27,11 +28,19 @@ public class StageSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fade.FadeOut(fadeTime);
+        PlayerManager.Initializ();
+        ScoreManager.Initializ();
+
+        //fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
 
-        for (int i = 0; i < stageImageObj.Count; i++)
-            stage[stageImageObj[i]] = false;
+        //順位テキスト表示
+        for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
+        {
+            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text
+                = ScoreManager.GetRank((byte)(i + 1)).ToString() + "位 " + ScoreManager.GetScore((byte)(i + 1)).ToString() + "P";
+        }
+        Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
         //2秒後に開始
         StartCoroutine(RandomMiniGameSelectStart(2.0f));
@@ -47,7 +56,8 @@ public class StageSelect : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        fade.FadeIn(fadeTime);
+        SceneManager.LoadScene("Let'sPaint");
+        //fade.FadeIn(fadeTime);
     }
 
     IEnumerator RandomMiniGameSelectStart(float delay)

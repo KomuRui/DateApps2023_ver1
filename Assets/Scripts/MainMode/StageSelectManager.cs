@@ -6,9 +6,10 @@ using UnityEngine;
 public static class StageSelectManager
 {
 
+    private static Dictionary<GameObject, bool> stage = new Dictionary<GameObject, bool>(); //GameObject : 各ステージの画像 bool : ステージが遊ばれたかどうか
     private static int nowRound = 1; //現在のラウンド
     private const int MAX_ROUND = 4; //最大ラウンド数
-
+    
     //初期化
     public static void Initializ()
     {

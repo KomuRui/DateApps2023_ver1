@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MiniGameManager : MonoBehaviour
@@ -44,8 +46,9 @@ public class MiniGameManager : MonoBehaviour
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
     public Dictionary<byte, byte> nowMiniGameRank = new Dictionary<byte, byte>(); //現在のミニゲームのランク表(key : プレイヤー番号)
-    protected bool isStart;           //ミニゲーム開始しているか
-    protected bool isFinish;          //ミニゲームが終了しているか
+    protected bool isStart;             //ミニゲーム開始しているか
+    protected bool isFinish;            //ミニゲームが終了しているか
+    protected bool nowRankAnnouncement; //順位発表しているかどうか
 
     void Start()
     {
@@ -57,6 +60,7 @@ public class MiniGameManager : MonoBehaviour
         /////初期化
         SceneStart();
         GameManager.nowMiniGameManager = this;
+        nowRankAnnouncement = false;　
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
@@ -96,6 +100,21 @@ public class MiniGameManager : MonoBehaviour
             i++;
         }
 
+    }
+
+    //更新
+    void Update()
+    {
+        //順位発表しているかつBボタンが押されたのなら
+        if (nowRankAnnouncement && Input.GetButtonDown("Bbutton1"))
+        {
+            StageSelectManager.NextRound();
+            ScoreManager.ReCalcRank();
+            SceneManager.LoadScene("MainMode");
+        }
+
+        //継承先の更新
+        MiniGameUpdate();
     }
 
     /////////////////////////////////プレイヤー//////////////////////////////////////
@@ -149,11 +168,13 @@ public class MiniGameManager : MonoBehaviour
     //順位発表に変更
     public void ChangeRankAnnouncement()
     {
+        nowRankAnnouncement = true; 
 
         //順位テキスト表示
         for (byte i = 0; i < nowMiniGameRank.Count; i++)
         {
-            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = nowMiniGameRank.Values.ElementAt(i).ToString();
+            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = nowMiniGameRank.Values.ElementAt(i).ToString() + "位 " 
+            + ScoreManager.GetRankScore(nowMiniGameRank.Keys.ElementAt(i),nowMiniGameRank.Values.ElementAt(i)) + "P";
         }
         Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -178,7 +199,10 @@ public class MiniGameManager : MonoBehaviour
     }
 
     //シーン開始
-    public virtual void SceneStart() { }
+    public virtual void SceneStart() {}
+
+    //更新
+    public virtual void MiniGameUpdate() {}
 
     //ゲーム終了時に呼ばれる
     public virtual void MiniGameFinish(){}

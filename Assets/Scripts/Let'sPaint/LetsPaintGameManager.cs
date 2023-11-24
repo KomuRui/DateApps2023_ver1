@@ -12,9 +12,8 @@ public class LetsPaintGameManager : MiniGameManager
 
     private int[] playerPercent;
 
-
-    // Update is called once per frame
-    void Update()
+    //更新
+    public override void MiniGameUpdate() 
     {
         //各プレイヤーのパーセント計算
         playerPercentCalc();
