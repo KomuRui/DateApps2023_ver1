@@ -8523,6 +8523,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 408419653578216334, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2821659471103554755, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -8586,6 +8590,10 @@ PrefabInstance:
     - target: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080307935716506405, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13015,7 +13023,14 @@ MonoBehaviour:
   - {fileID: 1914340738}
   - {fileID: 828167335}
   - {fileID: 544186843}
+  rankAnnouncementPos: []
+  rankAnnouncementScale: []
+  rankAnnouncementRotate: []
+  rankCameraPos: {x: 0, y: 0, z: 0}
+  rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
+  rankText: {fileID: 0}
+  normalCanvas: {fileID: 0}
 --- !u!1 &1032628655
 GameObject:
   m_ObjectHideFlags: 0

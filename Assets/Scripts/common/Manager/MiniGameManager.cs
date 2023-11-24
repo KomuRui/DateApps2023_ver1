@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,11 +14,13 @@ public class MiniGameManager : MonoBehaviour
 
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
-    [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト(Player1,PLayer2....みたいなやつ)
+    [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト
+    [SerializeField] protected GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
     [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
     [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
     [SerializeField] protected Vector3 onePlayerRotate;                                      //1人側プレイヤーの角度
-    [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト(Player1,PLayer2....みたいなやつ)
+    [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト
+    [SerializeField] protected List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     [SerializeField] protected List<Vector3> threePlayerPos = new List<Vector3>();           //3人側プレイヤーの初期位置
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
@@ -53,7 +57,6 @@ public class MiniGameManager : MonoBehaviour
     void Start()
     {
         /////////////////////////////////α版だけ
-
         PlayerManager.Initializ();
         ScoreManager.Initializ();
 
@@ -78,8 +81,11 @@ public class MiniGameManager : MonoBehaviour
         obj.transform.position = onePlayerPos;
         obj.transform.localScale = onePlayerScale;
         obj.transform.localEulerAngles = onePlayerRotate;
-        obj.transform.parent = onePlayerParent.transform;
-        obj.transform.parent.GetComponent<PlayerNum>().playerNum = onePlayer;
+        obj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
+
+        if (obj.transform.parent != null)
+            obj.transform.parent = onePlayerParent.transform;
+           
 
         if (onePlayerImage != null)
              onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
@@ -92,8 +98,11 @@ public class MiniGameManager : MonoBehaviour
             obj.transform.position = threePlayerPos[i];
             obj.transform.localScale = threePlayerScale[i];
             obj.transform.localEulerAngles = threePlayerRotate[i];
-            obj.transform.parent = threePlayerParent[i].transform;
-            obj.transform.parent.GetComponent<PlayerNum>().playerNum = num;
+            obj.transform.GetComponent<PlayerNum>().playerNum = num;
+
+            if (obj.transform.parent != null)
+                obj.transform.parent = threePlayerParent[i].transform;
+                
 
             if (threePlayerImage[i] != null)
                 threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
