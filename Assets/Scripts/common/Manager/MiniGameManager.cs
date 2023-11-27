@@ -150,9 +150,9 @@ public class MiniGameManager : MonoBehaviour
     //プレイヤーすべて削除
     public void PlayerAllDelete()
     {
-        Destroy(onePlayerParent.gameObject);
-        for(int i = 0; i < threePlayerParent.Count; i++)
-            Destroy(threePlayerParent[i].gameObject);
+        //Destroy(onePlayerParent.gameObject);
+        //for(int i = 0; i < threePlayerParent.Count; i++)
+        //    Destroy(threePlayerParent[i].gameObject);
     }
 
     /////////////////////////////////ミニゲーム情報//////////////////////////////////////

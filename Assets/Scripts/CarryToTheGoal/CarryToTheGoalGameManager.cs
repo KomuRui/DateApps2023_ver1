@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 
 public class CarryToTheGoalGameManager : MiniGameManager
 {
+
     //プレイヤーライフ
+    [SerializeField] private List<TextMeshProUGUI> lifeText;
+    public Dictionary<GameObject, TextMeshProUGUI> playerLifeText = new Dictionary<GameObject, TextMeshProUGUI>();
     public Dictionary<GameObject, int> playerLife = new Dictionary<GameObject, int>();
     public GameObject[] player;
 
@@ -12,7 +17,16 @@ public class CarryToTheGoalGameManager : MiniGameManager
     public override void SceneStart()
     {
         for (int i = 0; i < player.Length; i++)
-            playerLife[player[i]] = 3;
+        {
+            playerLifeText[player[i]] = lifeText[i];
+            playerLife[player[i]] = 2;
+        }
+    }
+
+    public override void MiniGameUpdate()
+    {
+        for (int i = 0; i < player.Length; i++)
+            playerLifeText[player[i]].text = playerLife[player[i]].ToString();
     }
 
 
