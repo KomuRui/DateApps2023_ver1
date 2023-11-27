@@ -63,7 +63,6 @@ public class MiniGameManager : MonoBehaviour
         ScoreManager.Initializ();
 
         /////‰Šú‰»
-        SceneStart();
         GameManager.nowMiniGameManager = this;
         nowRankAnnouncement = false;@
         isPlayerAllDead = false;
@@ -111,6 +110,7 @@ public class MiniGameManager : MonoBehaviour
             i++;
         }
 
+        SceneStart();
     }
 
     //XV

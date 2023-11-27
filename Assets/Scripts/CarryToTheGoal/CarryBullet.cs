@@ -34,7 +34,7 @@ public class CarryBullet : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             transform.position = cannon.gameObject.transform.position;
-            manager.Damege(other.gameObject);
+            manager.Damege(other.gameObject.GetComponent<PlayerNum>().playerNum);
         }
     }
 }
