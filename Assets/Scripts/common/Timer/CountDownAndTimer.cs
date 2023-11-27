@@ -33,7 +33,7 @@ public class CountDownAndTimer : MonoBehaviour
     //ŽžŠÔŒvŽZ
     private void TimeCalc()
     {
-        if (isStop || isfinish || GameManager.nowMiniGameManager.IsFinish()) return;
+        if (isStop || isfinish || GameManager.nowMiniGameManager.IsFinish() || timeText == null) return;
         time -= Time.deltaTime;
         time = Mathf.Max(time, 0);
         timeText.text = ((int)time).ToString() + ":00";

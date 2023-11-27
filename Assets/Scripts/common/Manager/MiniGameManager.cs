@@ -12,6 +12,8 @@ using UnityEngine.UI;
 public class MiniGameManager : MonoBehaviour
 {
 
+    [SerializeField] private string miniGameName;  //ミニゲームシーンの名前
+
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト

@@ -9,17 +9,12 @@ public class CarryToTheGoalGameManager : MiniGameManager
     public GameObject[] player;
 
     // Start is called before the first frame update
-    void Start()
+    public override void SceneStart()
     {
         for (int i = 0; i < player.Length; i++)
             playerLife[player[i]] = 3;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Damege(GameObject player)
     {
