@@ -30,7 +30,7 @@ public class CarrtBall : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Goal")
+        if(collision.gameObject.tag == "Goal" && !GameManager.nowMiniGameManager.IsFinish())
         {
             GameManager.nowMiniGameManager.SetMiniGameFinish();
         }

@@ -52,7 +52,7 @@ public class LookOnTexture : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 10000))
         {
-            Debug.Log(Vector3.Angle(Vector3.up, hit.normal));
+            
             if (Vector3.Angle(Vector3.up, hit.normal) >= 30 || hit.collider.gameObject.tag == "Sea")
                 transform.position = beforePos;
             else if(hit.collider.gameObject.tag == "CarryStage")
