@@ -98,11 +98,18 @@ public class ChasesPlayer : MonoBehaviour
 
     void Update()
     {
-        //動き
-        Move();
+        //もしもゲームが始まっていて、終わっていなかったら
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
+        {
+            //動き
+            Move();
+        }
+
 
         //状態更新
         StateUpdata();
+
+
     }
 
     //移動
@@ -240,7 +247,7 @@ public class ChasesPlayer : MonoBehaviour
     //ランダムで今あるコマンド選択
     public COMMAND_TYPE RandCommand()
     {
-       return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP, 4);
+        return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP, 4);
     }
 
     //コマンドが成功した場合の処理
@@ -375,6 +382,6 @@ public class ChasesPlayer : MonoBehaviour
     // 当たった時に呼ばれる関数
     void OnTriggerEnter(Collider other)
     {
-        
+
     }
 }

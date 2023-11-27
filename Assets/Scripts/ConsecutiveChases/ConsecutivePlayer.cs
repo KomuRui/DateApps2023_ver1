@@ -36,10 +36,11 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    
+    [SerializeField] private ChasesManager chasesManager;     //マネージャー
+
     public bool buttonFlag = true;
-    public bool goolFlag = false;
-    public bool isDead = false;
+    public bool isGoal = false; //ゴールしたか
+    public bool isDead = false; //死んでいるか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -67,8 +68,12 @@ public class ConsecutivePlayer : MonoBehaviour
 
     void Update()
     {
-        //動き
-        Move();       
+        //もしもゲームが始まっていて、終わっていなかったら
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
+        {
+            //動き
+            Move();
+        }
 
         //状態更新
         StateUpdata();
@@ -117,13 +122,13 @@ public class ConsecutivePlayer : MonoBehaviour
                 nextCommandImage.sprite = commandImageList[0];
             }
         }
-       
+
         //もし入力に失敗していたら
         if (!isInputSuccess)
         {
             buttonCount -= missDeceleration;
         }
-            
+
         //速度が0ならば
         if (moveSpeed <= 0)
         {
@@ -152,13 +157,13 @@ public class ConsecutivePlayer : MonoBehaviour
         buttonCount -= deceleration;
 
         //buttonCountが0なら
-        if (buttonCount <= 0 )
+        if (buttonCount <= 0)
         {
             buttonCount = 0.0f;
         }
 
         //もしスピードが最大になったら
-        if(SPEED_MAX <= buttonCount)
+        if (SPEED_MAX <= buttonCount)
         {
             buttonCount = SPEED_MAX;
         }
@@ -167,11 +172,6 @@ public class ConsecutivePlayer : MonoBehaviour
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
 
-        //高くまで行くと消える
-        if(this.transform.position.y > 100)
-        {
-           // Destroy(this.gameObject);
-        }
     }
 
     //ジャンプ
@@ -245,7 +245,11 @@ public class ConsecutivePlayer : MonoBehaviour
         if (other.gameObject.tag == "Goal")
         {
             Debug.Log(playerNum + "P Goal"); // ログを表示する
-            goolFlag = true;
+            isGoal = true;
+
+            //ゲームマネージャーに終わったことを伝える
+            chasesManager.PlayerGoal(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
         if (other.gameObject.tag == "Player")
         {
@@ -256,8 +260,9 @@ public class ConsecutivePlayer : MonoBehaviour
             rb.AddForce(force, ForceMode.Force);          // 力を加える
 
             isDead = true;
+            //ゲームマネージャーに終わったことを伝える
+            GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
 
-       
     }
 }
