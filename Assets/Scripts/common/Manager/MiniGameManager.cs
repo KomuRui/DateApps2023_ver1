@@ -132,7 +132,7 @@ public class MiniGameManager : MonoBehaviour
 
     public void SetOnePlayer(byte player) { onePlayer = player; }
     public void SetThreePlayer(byte player) { threePlayer[player] = false; }
-    public void PlayerDead(byte player) 
+    public void PlayerFinish(byte player) 
     { 
         //Ž€‚ñ‚Å‚¢‚È‚¢‚Ì‚È‚ç
         if(!threePlayer[player]) threePlayer[player] = true; 
