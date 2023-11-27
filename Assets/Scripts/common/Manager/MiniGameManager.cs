@@ -43,9 +43,9 @@ public class MiniGameManager : MonoBehaviour
 
     ////////////////////////////////////必要UI////////////////////////////////////////////
 
-    public GameObject endText;      //終了テキスト
-    public GameObject rankText;     //順位テキスト
-    public GameObject normalCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
+    public GameObject endText;          //終了テキスト
+    public GameObject rankText;         //順位テキスト
+    public List<GameObject> killCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
@@ -204,7 +204,8 @@ public class MiniGameManager : MonoBehaviour
         //プレイヤーとテキスト削除
         PlayerAllDelete();
         endText.SetActive(false);
-        normalCanvas.SetActive(false);
+        foreach(var obj in killCanvas)
+            obj.SetActive(false);
     }
 
     //シーン開始
