@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarryToTheGoalGameManager : MonoBehaviour
+public class CarryToTheGoalGameManager : MiniGameManager
 {
     //プレイヤーライフ
     public Dictionary<GameObject, int> playerLife = new Dictionary<GameObject, int>();
@@ -26,8 +26,6 @@ public class CarryToTheGoalGameManager : MonoBehaviour
         //すでに死んでいるのならこの先処理しない
         if (playerLife[player] <= 0) return;
 
-        Debug.Log("dame-ji");
-        Debug.Log(playerLife[player]);
         //ライフを減らす
         playerLife[player]--;
         playerLife[player] = Mathf.Max(playerLife[player], 0);

@@ -27,4 +27,12 @@ public class CarrtBall : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Goal")
+        {
+            GameManager.nowMiniGameManager.SetMiniGameFinish();
+        }
+    }
 }
