@@ -14,10 +14,12 @@ Shader "UnityChan/Eye"
 	{
 		Tags
 		{
-			"RenderType"="Opaque"
-			"Queue"="Geometry"
+			"RenderType" = "Transparent"
+			//"Queue" = "Transparent"
 			"LightMode"="ForwardBase"
 		}
+
+		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass
 		{

@@ -188,7 +188,26 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         rBody.velocity = Vector3.zero;
         ChangeStateTo(SlimeAnimationState.Idle);
         StateUpdata();
+
+
+        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            Color r = children[i].material.color;
+            r.a = 0.6f;
+            children[i].material.color = r;
+        }
+
+        var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < children2.Length; i++)
+        {
+            Color r = children2[i].material.color;
+            r.a = 0.6f;
+            children2[i].material.color = r;
+        }
+
         StartCoroutine(UnLook(2.0f));
+        StartCoroutine(UnLookMuteki(4.0f));
     }
 
     IEnumerator UnLook(float delay)
@@ -196,6 +215,27 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         isDamege = false;
+    }
+
+    IEnumerator UnLookMuteki(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            Color r = children[i].material.color;
+            r.a = 1.0f;
+            children[i].material.color = r;
+        }
+
+        var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < children2.Length; i++)
+        {
+            Color r = children2[i].material.color;
+            r.a = 1.0f;
+            children2[i].material.color = r;
+        }
     }
 
     //Ž€–S
