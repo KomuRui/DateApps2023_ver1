@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -9,6 +10,8 @@ public class ChasesManager : MiniGameManager
 {
     //ゴールした順番、（番号が若い順で早い）
     private List<byte> goalPlayer;
+
+    [SerializeField] List<ConsecutivePlayer> threePlayerList;
 
     //Startと同じ
     public override void SceneStart()
@@ -19,13 +22,31 @@ public class ChasesManager : MiniGameManager
     //Updateと同じ
     public override void MiniGameUpdate()
     {
+        ///////////a版のみ////////////////
+
+        bool flag = true;
+        foreach (var item in threePlayerList)
+        {
+            if (!item.isGoal && !item.isDead)
+            {
+                flag = false;
+            }
+        }
+
+        if (flag)
+        {
+            GameManager.nowMiniGameManager.SetMiniGameFinish();
+        }
+        //////////////////////////////////
     }
 
     //ミニゲームが終わったら呼ばれる
     public override void MiniGameFinish()
     {
+
+        
         //ランキングをつける
-        //ScoreManager.AddScore();
+        //Ranking();
     }
 
     //プレイヤーにランクをつける
@@ -91,69 +112,6 @@ public class ChasesManager : MiniGameManager
         {
             ScoreManager.AddScore(threeRankResult[i], (byte)(i + oneWin));
         }
-
-        ////死んだ人に順位をつける
-        //byte nowRank = (onePlayerWin ? (byte)1 : (byte)0);
-        //byte sameRank = 1;
-        //byte lookNum = 1;
-        //float beforeValue = -1;
-        //foreach (var item in threeRankResult)
-        //{
-        //    if (beforeValue != item.Value)
-        //    {
-        //        nowRank += sameRank;
-        //        sameRank = 1;
-        //    }
-        //    else
-        //        sameRank++;
-
-            //    beforeValue = item.Value;
-            //    ScoreManager.AddScore(threePlayerObj[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
-            //    lookNum++;
-            //}
-
-
-            //    int threePlayer = playerPercent[1] + playerPercent[2] + playerPercent[3];
-            //    int onePlayer = playerPercent[0];
-
-            //    bool isWinOnePLayer = false;
-
-            //    //1人側が勝ったのなら
-            //    if (threePlayer <= onePlayer)
-            //    {
-            //        ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 1);
-            //        isWinOnePLayer = true;
-            //    }
-            //    else
-            //        ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
-
-            //    //3人側の得点をソートで並び変える
-            //    var dict = new Dictionary<int, int>();
-            //    for (int i = 1; i < playerPercent.Length; i++)
-            //        dict.Add(i, playerPercent[i]);
-
-            //    var sortedDictionary = dict.OrderByDescending(pair => pair.Value);
-
-            //    //順位を確認
-            //    byte nowRank = (isWinOnePLayer ? (byte)1 : (byte)0);
-            //    byte sameRank = 1;
-            //    byte lookNum = 1;
-            //    float beforeValue = -1;
-            //    foreach (var item in sortedDictionary)
-            //    {
-            //        if (beforeValue != item.Value)
-            //        {
-            //            nowRank += sameRank;
-            //            sameRank = 1;
-            //        }
-            //        else
-            //            sameRank++;
-
-            //        beforeValue = item.Value;
-            //        ScoreManager.AddScore(threePlayerObj[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
-            //        lookNum++;
-            //    }
-            //}
     }
 
     //プレイヤーがゴールした時に呼ぶ関数

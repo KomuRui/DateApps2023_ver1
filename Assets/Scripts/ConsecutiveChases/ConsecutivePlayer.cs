@@ -248,8 +248,8 @@ public class ConsecutivePlayer : MonoBehaviour
             isGoal = true;
 
             //ゲームマネージャーに終わったことを伝える
-            chasesManager.PlayerGoal(this.GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
+            //chasesManager.PlayerGoal(this.GetComponent<PlayerNum>().playerNum);
+            //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
         if (other.gameObject.tag == "Player")
         {
@@ -261,7 +261,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
             isDead = true;
             //ゲームマネージャーに終わったことを伝える
-            GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
+            //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
 
     }

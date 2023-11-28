@@ -105,7 +105,6 @@ public class ChasesPlayer : MonoBehaviour
             Move();
         }
 
-
         //ó‘ÔXV
         StateUpdata();
 
