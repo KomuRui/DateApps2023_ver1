@@ -180,7 +180,10 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     //Ž€–S
     public void Dead()
     {
-        GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
+        //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
+        ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).kill++;
         Destroy(this.gameObject);
+
+        if (((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
     }
 }

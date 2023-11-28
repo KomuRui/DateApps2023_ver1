@@ -68,49 +68,48 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
+        SceneStart();
 
         //各プレイヤー番号設定
-        onePlayer = PlayerManager.GetOnePlayer();
+        //onePlayer = PlayerManager.GetOnePlayer();
 
-        List<byte> threeP = PlayerManager.GetThreePlayer();
-        foreach(byte num in threeP)
-            threePlayer[num] = false;
+        //List<byte> threeP = PlayerManager.GetThreePlayer();
+        //foreach(byte num in threeP)
+        //    threePlayer[num] = false;
 
-        //プレイヤーと画像生成
-        onePlayerObj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
-        onePlayerObj = Instantiate(onePlayerObj, onePlayerPos, Quaternion.identity);
-        onePlayerObj.transform.position = onePlayerPos;
-        onePlayerObj.transform.localScale = onePlayerScale;
-        onePlayerObj.transform.localEulerAngles = onePlayerRotate;
-        onePlayerObj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
+        ////プレイヤーと画像生成
+        //onePlayerObj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
+        //onePlayerObj = Instantiate(onePlayerObj, onePlayerPos, Quaternion.identity);
+        //onePlayerObj.transform.position = onePlayerPos;
+        //onePlayerObj.transform.localScale = onePlayerScale;
+        //onePlayerObj.transform.localEulerAngles = onePlayerRotate;
+        //onePlayerObj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
 
-        if (onePlayerParent != null)
-            onePlayerObj.transform.parent = onePlayerParent.transform;
+        //if (onePlayerParent != null)
+        //    onePlayerObj.transform.parent = onePlayerParent.transform;
            
 
-        if (onePlayerImage != null)
-             onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
+        //if (onePlayerImage != null)
+        //     onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
-        int i = 0;
-        foreach (byte num in threePlayer.Keys)
-        {
-            threePlayerObj[i] = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(num));
-            threePlayerObj[i] = Instantiate(threePlayerObj[i], this.transform.position, Quaternion.identity);
-            threePlayerObj[i].transform.position = threePlayerPos[i];
-            threePlayerObj[i].transform.localScale = threePlayerScale[i];
-            threePlayerObj[i].transform.localEulerAngles = threePlayerRotate[i];
-            threePlayerObj[i].transform.GetComponent<PlayerNum>().playerNum = num;
+        //int i = 0;
+        //foreach (byte num in threePlayer.Keys)
+        //{
+        //    threePlayerObj[i] = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(num));
+        //    threePlayerObj[i] = Instantiate(threePlayerObj[i], this.transform.position, Quaternion.identity);
+        //    threePlayerObj[i].transform.position = threePlayerPos[i];
+        //    threePlayerObj[i].transform.localScale = threePlayerScale[i];
+        //    threePlayerObj[i].transform.localEulerAngles = threePlayerRotate[i];
+        //    threePlayerObj[i].transform.GetComponent<PlayerNum>().playerNum = num;
 
-            if (threePlayerParent[i] != null)
-                threePlayerObj[i].transform.parent = threePlayerParent[i].transform;
+        //    if (threePlayerParent[i] != null)
+        //        threePlayerObj[i].transform.parent = threePlayerParent[i].transform;
                 
 
-            if (threePlayerImage[i] != null)
-                threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
-            i++;
-        }
-
-        SceneStart();
+        //    if (threePlayerImage[i] != null)
+        //        threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
+        //    i++;
+        //}
     }
 
     //更新
