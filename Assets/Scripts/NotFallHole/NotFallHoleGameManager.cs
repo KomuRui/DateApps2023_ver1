@@ -1,26 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotFallHoleGameManager : MonoBehaviour
+public class NotFallHoleGameManager : MiniGameManager
 {
+    //床の開いてる数
+    public int openCount;
 
-    //プレイヤー番号
-    [SerializeField] private int playerNum = 1;
-
-    //回転に使う符号
-    public int rotateSign;
-
-    // Start is called before the first frame update
-    void Start()
+    public override void SceneStart()
     {
-        rotateSign = 1;
+        openCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void MiniGameUpdate()
     {
-        if (Input.GetButtonDown("LBbutton" + playerNum)) rotateSign *= -1;
-        if (Input.GetButtonDown("RBbutton" + playerNum)) rotateSign *= -1;
     }
+
+    public int GetCount() { return openCount; }
+
+    public bool AddCount() 
+    {
+        if (openCount < 6)
+        {
+            openCount++;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void MinusCount() { openCount--; openCount = Math.Max(0, openCount); }
 }

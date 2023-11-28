@@ -165,7 +165,10 @@ public class MiniGameManager : MonoBehaviour
 
     //ミニゲーム終了にセット
     public void SetMiniGameFinish() 
-    { 
+    {
+        //すでに終わっているならこの先処理しない
+        if (isFinish) return;
+
         isFinish = true; 
         isStart = false;
         endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);

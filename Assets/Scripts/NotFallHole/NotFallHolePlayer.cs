@@ -179,6 +179,12 @@ public class NotFallHolePlayer : MonoBehaviour
         this.currentState = state;
     }
 
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.transform.tag == "Sea" )
+        {
 
+        }
+    }
 
 }

@@ -10,6 +10,7 @@ public class FallRotateFloor : MonoBehaviour
     [SerializeField] private string buttonName = "Abutton";
     [SerializeField] private int sige = 1;
     [SerializeField] private NotFallHoleGameManager mana;
+
     List<Tweener> tweener = new List<Tweener>();
 
     public Vector3 rotationAxis = Vector3.right;
@@ -20,9 +21,14 @@ public class FallRotateFloor : MonoBehaviour
     private bool isPush = false;
     public bool isRotate = false;
 
+    //回転に使う符号
+    public int rotateSign;
+
     // Start is called before the first frame update
     void Start()
     {
+        rotateSign = 1;
+
         //ボタンの名前を設定しておく
         buttonName += playerNum;
 
@@ -35,9 +41,15 @@ public class FallRotateFloor : MonoBehaviour
     {
         
         //任意のボタンが押されたら
-        if(Input.GetButtonDown(buttonName) && !isPush)
+        if(Input.GetButtonDown(buttonName) && !isPush && mana.AddCount())
         {
-            rotateSpeed = Mathf.Abs(rotateSpeed) * Mathf.Sign(mana.rotateSign);
+
+            if (Input.GetButton("RBbutton" + playerNum))
+                rotateSign = -1;
+            else
+                rotateSign = 1;
+
+            rotateSpeed = Mathf.Abs(rotateSpeed) * Mathf.Sign(rotateSign);
 
             // 親オブジェクトの回転に追従するローカル回転軸を計算
             Vector3 worldRotationAxis = this.transform.parent.TransformDirection(rotationAxis);
@@ -80,7 +92,7 @@ public class FallRotateFloor : MonoBehaviour
 
             // 回転する
             transform.RotateAround(this.transform.position, worldRotationAxis, sige * rotateSpeed * Time.deltaTime);
-        
+     
         }
 
 
@@ -109,6 +121,7 @@ public class FallRotateFloor : MonoBehaviour
 
         //コルーチン
         StartCoroutine(FinishRotate(1.0f));
+        StartCoroutine(AddOpenFloor(0.5f));
     }
 
     IEnumerator FinishRotate(float delay)
@@ -124,5 +137,12 @@ public class FallRotateFloor : MonoBehaviour
         //回転終了
         isRotate = false;
         isPush = false;
+    }
+
+    IEnumerator AddOpenFloor(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        mana.MinusCount();
     }
 }
