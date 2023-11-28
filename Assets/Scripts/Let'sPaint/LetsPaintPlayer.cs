@@ -37,6 +37,7 @@ public class LetsPaintPlayer : MonoBehaviour
     private Vector3 initializPos;   //初期位置
     private bool isRespawn = false; //現在リスポーン中かどうか
     private Tweener tweener;        //Dotween用
+    [SerializeField]  private ChildCol col;
 
 
     // Start is called before the first frame update
@@ -106,15 +107,47 @@ public class LetsPaintPlayer : MonoBehaviour
         //初期位置決定
         transform.position = initializPos;
 
-        //重力を停止させる
-        rBody.isKinematic = true;
+        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            Color r = children[i].material.color;
+            r.a = 0.6f;
+            children[i].material.color = r;
+        }
 
-        //メッシュレンダラーを取得(点滅)
-        MeshRenderer r = GetComponent<MeshRenderer>();
-        tweener = r.material.DOFade(0.3f, flashingTime).SetLoops(-1, LoopType.Yoyo);
+        var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < children2.Length; i++)
+        {
+            Color r = children2[i].material.color;
+            r.a = 0.6f;
+            children2[i].material.color = r;
+        }
+
+        //レンダリングモード変える
+        Material material = this.GetComponent<MeshRenderer>().material;
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 3000;
+      
+        //色変える
+        Color r2 = material.color;
+        r2.a = 0.6f;
+        material.color = r2;
+
+        //力オフ
+        rBody.velocity = Vector3.zero;
+
+        //無効か
+        this.gameObject.layer = 7;
+        col.isMuteki = true;
 
         //コルーチン
-        StartCoroutine(ReStart(3.0f));
+        StartCoroutine(ReStart(1.0f));
     }
 
     //スタート
@@ -122,15 +155,50 @@ public class LetsPaintPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        //重力を復活
-        rBody.isKinematic = false;
-
         //リスポート
         isRespawn = false;
 
-        //点滅止める
-        tweener.Restart();
-        tweener.Pause();
+        if (col.hitObj == null)
+            ReturnAlpha();
+    }
+
+    public void ReturnAlpha()
+    {
+        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            Color r = children[i].material.color;
+            r.a = 1.0f;
+            children[i].material.color = r;
+        }
+
+        var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < children2.Length; i++)
+        {
+            Color r = children2[i].material.color;
+            r.a = 1.0f;
+            children2[i].material.color = r;
+        }
+
+        //レンダリングモード変える
+        Material material = this.GetComponent<MeshRenderer>().material;
+        material.SetOverrideTag("RenderType", "");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 2000;
+
+        //元に戻す
+        Color r2 = material.color;
+        r2.a = 1.0f;
+        material.color = r2;
+
+        col.isMuteki = false;
+        this.gameObject.layer = 6;
+        col.hitObj = null;
     }
 
     //何かと当たった時に呼ばれる関数
@@ -142,4 +210,5 @@ public class LetsPaintPlayer : MonoBehaviour
             StartCoroutine(StartRespawn(2.0f));
         }
     }
+
 }
