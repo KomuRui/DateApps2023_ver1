@@ -26,7 +26,7 @@ public class ChasesPlayer : MonoBehaviour
 
     [SerializeField] private float deceleration = 150.0f;       //減速率
     [SerializeField] private float missDeceleration = 50.0f;       //減速率
-    [SerializeField] private float SPEED_MAX = 15.0f;       //スピードの最大
+    [SerializeField] private float SPEED_MAX = 15.0f;           //スピードの最大
     [SerializeField] private float addSpeed = 1000.0f;             // ボタンを押したときプレイヤーの移動速度の上昇値
     [SerializeField] private float moveSpeed = 0.01f;           // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;      // プレイヤーの回転速度
@@ -43,11 +43,12 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float COMMAND_SIZE_MAX = 4;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
-    [SerializeField] private Queue<Tuple<COMMAND_TYPE, COMMAND_STATE>> commandQueue = new();                    //次のコマンドのキュー
+    [SerializeField] private List<Tuple<COMMAND_TYPE, COMMAND_STATE>> commandList = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     private bool crossKeyContinuous = false;    //十字キー
     private bool isControll = false;            //操作しているかどうか
+    bool isMiss = false;//直前にミスしたかどうか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -95,6 +96,7 @@ public class ChasesPlayer : MonoBehaviour
         KeepCommand();
 
         //コマンドの状態の初期化
+
 
 
         ///////////改悪前/////////////
@@ -377,11 +379,11 @@ public class ChasesPlayer : MonoBehaviour
     public void KeepCommand()
     {
         //コマンドを入れる処理
-        for (int i = commandQueue.Count; i < COMMAND_SIZE_MAX; i++)
+        for (int i = commandList.Count; i < COMMAND_SIZE_MAX; i++)
         {
             //ランダムにコマンドを入れる
             Tuple<COMMAND_TYPE, COMMAND_STATE> tmp = new(RandCommand(), COMMAND_STATE.DEFAULT);
-            commandQueue.Enqueue(tmp);
+            commandList.Add(tmp);
         }
 
         ////////////////改悪前////////////////////////////////
@@ -423,6 +425,27 @@ public class ChasesPlayer : MonoBehaviour
     // 当たった時に呼ばれる関数
     void OnTriggerEnter(Collider other)
     {
+
+    }
+
+    //コマンドの状態を一定数に保つ処理
+    public void KeepStateCommand(COMMAND_RESULT input)
+    {
+        //コマンドの状態を変更
+        for (int i = commandList.Count; i < COMMAND_SIZE_MAX; i++)
+        {
+            //すでに成功したコマンドではないなら
+            if (commandList[i].Item2 != COMMAND_STATE.SUCCESS && isMiss)
+            {
+                //commandList[i] = (commandList[i].Item1, COMMAND_STATE.NEXT) ;
+            }
+        }
+        //ミスしていたら
+        if (input == COMMAND_RESULT.MISS)
+        {
+
+            isMiss = true;
+        }
 
     }
 }
