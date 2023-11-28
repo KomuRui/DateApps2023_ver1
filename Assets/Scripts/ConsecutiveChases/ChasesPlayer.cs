@@ -43,6 +43,7 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private float COMMAND_SIZE_MAX = 4;              //次のコマンドのリストの最大数
     [SerializeField] private int playerNum;                           // プレイヤー番号
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
+    [SerializeField] private Queue<Tuple<COMMAND_TYPE, COMMAND_STATE>> commandQueue = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     private bool crossKeyContinuous = false;    //十字キー
@@ -70,6 +71,15 @@ public class ChasesPlayer : MonoBehaviour
         MAX,
     }
 
+    public enum COMMAND_STATE
+    {
+        DEFAULT = 0,
+        NEXT,
+        SUCCESS,
+        MISS,
+        MAX,
+    }
+
     void Start()
     {
         //マテリアル設定
@@ -84,10 +94,12 @@ public class ChasesPlayer : MonoBehaviour
         //コマンドの初期化
         KeepCommand();
 
-        //コマンド画像を入れる
-        SetCommandImage();
+        ///////////改悪前/////////////
+        //KeepCommand();
 
-        //nextCommand.Enqueue(COMMAND_TYPE.CROSS_BUTTON_UP);
+        //コマンド画像を入れる
+        //SetCommandImage();
+        ///////////////////////////////
     }
 
     //顔のテクスチャ設定
@@ -124,8 +136,10 @@ public class ChasesPlayer : MonoBehaviour
 
                 //スピードを上げる
                 buttonCount += addSpeed;
+                /////////////////////改悪前/////////////////
                 //コマンドが成功した場合の処理
-                SuccessCommand();
+                //SuccessCommand();
+                ////////////////////////////////////////////
 
                 break;
             case COMMAND_RESULT.MISS:
@@ -243,36 +257,6 @@ public class ChasesPlayer : MonoBehaviour
         this.currentState = state;
     }
 
-    //ランダムで今あるコマンド選択
-    public COMMAND_TYPE RandCommand()
-    {
-        return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP, 4);
-    }
-
-    //コマンドが成功した場合の処理
-    public void SuccessCommand()
-    {
-        //コマンドの削除
-        nextCommand.Dequeue();
-
-        //コマンドを一定数に保つ処理
-        KeepCommand();
-
-        //コマンド画像を入れる
-        SetCommandImage();
-    }
-
-    //コマンドを一定数に保つ処理
-    public void KeepCommand()
-    {
-        //コマンドの数が減っている時
-        for (int i = nextCommand.Count; i < COMMAND_SIZE_MAX; i++)
-        {
-            //ランダムにコマンドを入れる
-            nextCommand.Enqueue(RandCommand());
-        }
-    }
-
     //次のコマンドのボタンが押されたかどうか調べる
     public COMMAND_RESULT CheckOnCommandButton()
     {
@@ -351,31 +335,85 @@ public class ChasesPlayer : MonoBehaviour
         return COMMAND_RESULT.NONE;
     }
 
+    //ランダムで今あるコマンド選択
+    public COMMAND_TYPE RandCommand()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0 :
+                return COMMAND_TYPE.CROSS_BUTTON_UP;
+            case 1:
+                return COMMAND_TYPE.CROSS_BUTTON_DOWN;
+            case 2:
+                return COMMAND_TYPE.CROSS_BUTTON_LEFT;
+            case 3:
+                return COMMAND_TYPE.CROSS_BUTTON_RIGHT;
+            default:
+                break;
+        }
+        return COMMAND_TYPE.CROSS_BUTTON_UP;
+        ////////////////改悪前////////////////////////////////
+        //return (COMMAND_TYPE)Random.Range((int)COMMAND_TYPE.CROSS_BUTTON_UP, 4);
+    }
+
+    //コマンドが成功した場合の処理
+    public void SuccessCommand()
+    {
+        ////////////////改悪前////////////////////////////////
+        ////コマンドの削除
+        //nextCommand.Dequeue();
+
+        ////コマンドを一定数に保つ処理
+        //KeepCommand();
+
+        ////コマンド画像を入れる
+        //SetCommandImage();
+    }
+
+    //コマンドを一定数に保つ処理
+    public void KeepCommand()
+    {
+        //コマンドを入れる処理
+        for (int i = nextCommand.Count; i < COMMAND_SIZE_MAX; i++)
+        {
+            //ランダムにコマンドを入れる
+            nextCommand.Enqueue(RandCommand());
+        }
+
+        ////////////////改悪前////////////////////////////////
+        ////コマンドの数が減っている時
+        //for (int i = nextCommand.Count; i < COMMAND_SIZE_MAX; i++)
+        //{
+        //    //ランダムにコマンドを入れる
+        //    nextCommand.Enqueue(RandCommand());
+        //}
+    }
 
     //コマンド画像を入れる
     public void SetCommandImage()
     {
-        int num = 0;
-        foreach (COMMAND_TYPE item in nextCommand)
-        {
-            if (item == COMMAND_TYPE.CROSS_BUTTON_UP)
-            {
-                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_UP];
-            }
-            if (item == COMMAND_TYPE.CROSS_BUTTON_DOWN)
-            {
-                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_DOWN];
-            }
-            if (item == COMMAND_TYPE.CROSS_BUTTON_LEFT)
-            {
-                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_LEFT];
-            }
-            if (item == COMMAND_TYPE.CROSS_BUTTON_RIGHT)
-            {
-                nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_RIGHT];
-            }
-            num++;
-        }
+        ////////////////改悪前////////////////////////////////
+        //int num = 0;
+        //foreach (COMMAND_TYPE item in nextCommand)
+        //{
+        //    if (item == COMMAND_TYPE.CROSS_BUTTON_UP)
+        //    {
+        //        nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_UP];
+        //    }
+        //    if (item == COMMAND_TYPE.CROSS_BUTTON_DOWN)
+        //    {
+        //        nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_DOWN];
+        //    }
+        //    if (item == COMMAND_TYPE.CROSS_BUTTON_LEFT)
+        //    {
+        //        nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_LEFT];
+        //    }
+        //    if (item == COMMAND_TYPE.CROSS_BUTTON_RIGHT)
+        //    {
+        //        nextCommandImageList[num].sprite = commandImageList[(int)COMMAND_TYPE.CROSS_BUTTON_RIGHT];
+        //    }
+        //    num++;
+        //}
     }
 
     // 当たった時に呼ばれる関数
