@@ -2,10 +2,13 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 using Random = UnityEngine.Random;
 
 public class ChasesPlayer : MonoBehaviour
@@ -46,9 +49,11 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private List<Tuple<COMMAND_TYPE, COMMAND_STATE>> commandList = new();                    //次のコマンドのキュー
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
+    [SerializeField] private List<Sprite> newCommandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     private bool crossKeyContinuous = false;    //十字キー
     private bool isControll = false;            //操作しているかどうか
     bool isMiss = false;//直前にミスしたかどうか
+    COMMAND_TYPE nextCommandButton = COMMAND_TYPE.COMMAND_MAX;                    //次のコマンド
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -96,8 +101,10 @@ public class ChasesPlayer : MonoBehaviour
         KeepCommand();
 
         //コマンドの状態の初期化
+        KeepStateCommand(COMMAND_RESULT.NONE);
 
-
+        //コマンドの画像を入れ替える
+        SetCommandImage();
 
         ///////////改悪前/////////////
         //KeepCommand();
@@ -118,14 +125,15 @@ public class ChasesPlayer : MonoBehaviour
         //もしもゲームが始まっていて、終わっていなかったら
         if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
         {
+            //コマンドの画像を入れ替える
+            SetCommandImage();
+
             //動き
             Move();
         }
 
         //状態更新
         StateUpdata();
-
-
     }
 
     //移動
@@ -183,6 +191,9 @@ public class ChasesPlayer : MonoBehaviour
             //ジャンプ
             Jump();
         }
+
+        //コマンドの状態を変える
+        KeepStateCommand(command);
 
         buttonCount -= deceleration;
 
@@ -266,8 +277,8 @@ public class ChasesPlayer : MonoBehaviour
     public COMMAND_RESULT CheckOnCommandButton()
     {
         //十字キーの入力を受け取る
-        crossAxisV = Input.GetAxis("D_Pad_V" + playerNum);
-        crossAxisH = Input.GetAxis("D_Pad_H" + playerNum);
+        crossAxisV = UnityEngine.Input.GetAxis("D_Pad_V" + playerNum);
+        crossAxisH = UnityEngine.Input.GetAxis("D_Pad_H" + playerNum);
 
         //十字キーが離されたらもう一回押せるようになる
         if (crossAxisV == 0 && crossAxisH == 0)
@@ -325,7 +336,7 @@ public class ChasesPlayer : MonoBehaviour
                 return COMMAND_RESULT.NONE;
             }
             //コマンド入力に成功していたら
-            else if (nextCommand.Peek() == priorityCommand)
+            else if (nextCommandButton == priorityCommand)
             {
                 crossKeyContinuous = true;
                 return COMMAND_RESULT.SUCCESS;
@@ -398,6 +409,37 @@ public class ChasesPlayer : MonoBehaviour
     //コマンド画像を入れる
     public void SetCommandImage()
     {
+        int num = 0;
+        foreach (var item in commandList)
+        {
+            //ボタンの状態がデフォルトなら
+            if(item.Item2 == COMMAND_STATE.DEFAULT)
+            {
+                //画像を入れ替える
+                nextCommandImageList[num].sprite = newCommandImageList[((int)COMMAND_STATE.DEFAULT * 4) + (int)item.Item1];
+            }
+            //ボタンの状態がネクストなら
+            if (item.Item2 == COMMAND_STATE.NEXT)
+            {
+                //画像を入れ替える
+                nextCommandImageList[num].sprite =newCommandImageList[((int)COMMAND_STATE.NEXT * 4) + (int)item.Item1];
+            }
+            //ボタンの状態がサクセスなら
+            if (item.Item2 == COMMAND_STATE.SUCCESS)
+            {
+                //画像を入れ替える
+                nextCommandImageList[num].sprite = newCommandImageList[((int)COMMAND_STATE.SUCCESS * 4) + (int)item.Item1];
+            }
+            //ボタンの状態がミスなら
+            if (item.Item2 == COMMAND_STATE.MISS)
+            {
+                //画像を入れ替える
+                nextCommandImageList[num].sprite = newCommandImageList[((int)COMMAND_STATE.MISS * 4) + (int)item.Item1];
+            }
+
+            num++;
+        }
+
         ////////////////改悪前////////////////////////////////
         //int num = 0;
         //foreach (COMMAND_TYPE item in nextCommand)
@@ -431,21 +473,70 @@ public class ChasesPlayer : MonoBehaviour
     //コマンドの状態を一定数に保つ処理
     public void KeepStateCommand(COMMAND_RESULT input)
     {
-        //コマンドの状態を変更
-        for (int i = commandList.Count; i < COMMAND_SIZE_MAX; i++)
+        bool isFirst = true;
+        bool isAllSuccess = true;
+
+        //直前にコマンド入力に成功していたら
+        for (int i = 0; i < commandList.Count; i++)
         {
-            //すでに成功したコマンドではないなら
-            if (commandList[i].Item2 != COMMAND_STATE.SUCCESS && isMiss)
+            if (input == COMMAND_RESULT.SUCCESS && commandList[i].Item2 != COMMAND_STATE.SUCCESS)
             {
-                //commandList[i] = (commandList[i].Item1, COMMAND_STATE.NEXT) ;
+                commandList[i] = new(commandList[i].Item1, COMMAND_STATE.SUCCESS);
+                break;
             }
         }
-        //ミスしていたら
-        if (input == COMMAND_RESULT.MISS)
-        {
 
-            isMiss = true;
+        //コマンドの状態を変更
+        for (int i = 0; i < commandList.Count; i++)
+        {  
+            if(commandList[i].Item2 == COMMAND_STATE.SUCCESS)
+            {
+            }
+            else if(isMiss && isFirst)
+            {
+                //isMissを0.1秒後に解除する関数
+                Invoke(nameof(SetFalseMiss), 100.0f);
+            }
+            else if(input == COMMAND_RESULT.MISS && isFirst)
+            {
+                commandList[i] = new(commandList[i].Item1, COMMAND_STATE.MISS);
+                isMiss = true;
+                isFirst = false;
+                isAllSuccess = false;
+            }
+            else if(isFirst)
+            {
+                commandList[i] = new(commandList[i].Item1, COMMAND_STATE.NEXT);
+                isAllSuccess = false;
+                isFirst = false;
+
+                nextCommandButton = commandList[i].Item1;
+            }
+            else
+            {
+                commandList[i] = new(commandList[i].Item1, COMMAND_STATE.DEFAULT);
+                isAllSuccess = false;
+                isFirst = false;
+            }
         }
 
+        //コマンドが全部SUCCESSなら
+        if (isAllSuccess)
+        {
+            //リストの中身を消す
+            commandList.Clear();
+
+            //コマンドを追加
+            KeepCommand();
+
+            //コマンドの状態を追加
+            KeepStateCommand(COMMAND_RESULT.NONE);
+        }
+    }
+
+    //セッター
+    public void SetFalseMiss()
+    {
+        isMiss = false;
     }
 }
