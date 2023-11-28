@@ -39,9 +39,11 @@ public class FallRotateFloor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         //任意のボタンが押されたら
-        if(Input.GetButtonDown(buttonName) && !isPush && mana.AddCount())
+        if (Input.GetButtonDown(buttonName) && !isPush && mana.AddCount())
         {
 
             if (Input.GetButton("RBbutton" + playerNum))

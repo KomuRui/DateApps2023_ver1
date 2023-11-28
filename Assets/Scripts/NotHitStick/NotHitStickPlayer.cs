@@ -64,6 +64,9 @@ public class NotHitStickPlayer : MonoBehaviour
 
     void Update()
     {
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         //状態更新
         StateUpdata();
 
@@ -252,6 +255,24 @@ public class NotHitStickPlayer : MonoBehaviour
             isJump2 = false;
             rb.velocity = Vector3.zero;
         }
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.transform.tag == "Sea")
+        {
+            StartCoroutine(Kill(1.0f));
+        }
+    }
+
+    //死亡
+    IEnumerator Kill(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Destroy(this.gameObject);
+        ((NotHitStickGameManager)GameManager.nowMiniGameManager).kill++;
+        if (((NotHitStickGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
     }
 
     //落とす

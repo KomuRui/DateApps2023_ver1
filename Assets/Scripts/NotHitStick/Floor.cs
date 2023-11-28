@@ -38,6 +38,9 @@ public class Floor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         //時間計算・表示
         TimeCalcPrint();
 

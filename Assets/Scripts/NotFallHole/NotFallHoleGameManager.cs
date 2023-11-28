@@ -7,6 +7,7 @@ public class NotFallHoleGameManager : MiniGameManager
 {
     //°‚ÌŠJ‚¢‚Ä‚é”
     public int openCount;
+    public int kill = 0;
 
     public override void SceneStart()
     {

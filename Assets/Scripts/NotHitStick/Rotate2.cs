@@ -19,6 +19,9 @@ public class Rotate2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ŠJn‚µ‚Ä‚¢‚È‚¢‚©I‚í‚Á‚Ä‚¢‚é‚Ì‚È‚ç
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         //Œ»İ‚Ì—Í‚ğæ“¾
         float nowPower = Input.GetAxis("L_Stick_V1") * speed * Time.deltaTime;
         power += nowPower;

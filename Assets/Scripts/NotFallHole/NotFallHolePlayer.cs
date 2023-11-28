@@ -73,6 +73,8 @@ public class NotFallHolePlayer : MonoBehaviour
     //移動
     private void Move()
     {
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -183,7 +185,8 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Sea" )
         {
-
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).kill++;
+            if (((NotFallHoleGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
     }
 

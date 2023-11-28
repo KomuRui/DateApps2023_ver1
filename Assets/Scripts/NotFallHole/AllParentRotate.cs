@@ -26,6 +26,10 @@ public class AllParentRotate : MonoBehaviour
     //‰ñ“]
     private void Rotation()
     {
+        //ŠJn‚µ‚Ä‚¢‚È‚¢‚©I‚í‚Á‚Ä‚¢‚é‚Ì‚È‚ç
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
+
         bool isLB = false;
         bool isRB = false;
         if (Input.GetAxis("L_Stick_H" + playerNum) < -0.8f) isLB = true;

@@ -30,6 +30,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     [SerializeField] private Vector3 localGravity;
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
+    private bool isDamege = false;
 
     void Start()
     {
@@ -50,6 +51,9 @@ public class CarryToTheGoalPlayer : MonoBehaviour
 
     void Update()
     {
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isDamege) return;
+
         //状態更新
         StateUpdata();
 
@@ -81,7 +85,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
 
         //入力がないのなら
-        if (horizontalInput == 0 && verticalInput == 0)
+        if ((horizontalInput == 0 && verticalInput == 0) || isDamege)
         {
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
@@ -175,6 +179,23 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    //ダメージ
+    public void Damege()
+    {
+        isDamege = true;
+        rBody.velocity = Vector3.zero;
+        ChangeStateTo(SlimeAnimationState.Idle);
+        StateUpdata();
+        StartCoroutine(UnLook(2.0f));
+    }
+
+    IEnumerator UnLook(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        isDamege = false;
     }
 
     //死亡

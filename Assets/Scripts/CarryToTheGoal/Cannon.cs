@@ -24,6 +24,9 @@ public class LookOnTexture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ŠJn‚µ‚Ä‚¢‚È‚¢‚©I‚í‚Á‚Ä‚¢‚é‚Ì‚È‚ç
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+
         //”­Ë
         Shoot();
 
