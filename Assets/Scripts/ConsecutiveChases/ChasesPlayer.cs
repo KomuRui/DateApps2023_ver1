@@ -94,6 +94,9 @@ public class ChasesPlayer : MonoBehaviour
         //コマンドの初期化
         KeepCommand();
 
+        //コマンドの状態の初期化
+
+
         ///////////改悪前/////////////
         //KeepCommand();
 
@@ -374,10 +377,11 @@ public class ChasesPlayer : MonoBehaviour
     public void KeepCommand()
     {
         //コマンドを入れる処理
-        for (int i = nextCommand.Count; i < COMMAND_SIZE_MAX; i++)
+        for (int i = commandQueue.Count; i < COMMAND_SIZE_MAX; i++)
         {
             //ランダムにコマンドを入れる
-            nextCommand.Enqueue(RandCommand());
+            Tuple<COMMAND_TYPE, COMMAND_STATE> tmp = new(RandCommand(), COMMAND_STATE.DEFAULT);
+            commandQueue.Enqueue(tmp);
         }
 
         ////////////////改悪前////////////////////////////////
