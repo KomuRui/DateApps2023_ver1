@@ -31,6 +31,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     private Rigidbody rBody;
     private Transform mainCameraTransform; // ƒƒCƒ“ƒJƒƒ‰‚ÌTransform
     private bool isDamege = false;
+    public bool isMuteki = false;
 
     void Start()
     {
@@ -185,6 +186,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     public void Damege()
     {
         isDamege = true;
+        isMuteki = true;
         rBody.velocity = Vector3.zero;
         ChangeStateTo(SlimeAnimationState.Idle);
         StateUpdata();
@@ -236,6 +238,8 @@ public class CarryToTheGoalPlayer : MonoBehaviour
             r.a = 1.0f;
             children2[i].material.color = r;
         }
+
+        isMuteki = false;
     }
 
     //€–S

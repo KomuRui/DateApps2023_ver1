@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -34,8 +35,12 @@ public class CarryBullet : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             transform.position = cannon.gameObject.transform.position;
-            other.GetComponent<CarryToTheGoalPlayer>().Damege();
-            manager.Damege(other.gameObject);
+
+            if (!other.gameObject.GetComponent<CarryToTheGoalPlayer>().isMuteki)
+            {
+                other.GetComponent<CarryToTheGoalPlayer>().Damege();
+                manager.Damege(other.gameObject);
+            }
         }
     }
 }

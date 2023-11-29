@@ -21,6 +21,8 @@ public class CollisionPainter : MonoBehaviour
 
     private void HandleCollision(Collision collision)
     {
+        if (this.GetComponent<LetsPaintPlayer>().col.isMuteki) return;
+
         foreach (ContactPoint contact in collision.contacts)
         {
             PaintTarget paintTarget = contact.otherCollider.GetComponent<PaintTarget>();
