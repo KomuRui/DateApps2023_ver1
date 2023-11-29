@@ -249,14 +249,8 @@ public class ConsecutivePlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "Goal")
         {
-            Debug.Log(playerNum + "P Goal"); // ログを表示する
-            isGoal = true;
-
-            // 移動
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
-            Vector3 force = new Vector3(0.0f, 0.0f, 700.0f);  // 力を設定
-            rb.AddForce(force, ForceMode.Force);          // 力を加える
-
+            //Debug.Log(playerNum + "P Goal"); // ログを表示する
+            //isGoal = true;
 
             //ゲームマネージャーに終わったことを伝える
             //chasesManager.PlayerGoal(this.GetComponent<PlayerNum>().playerNum);
@@ -275,7 +269,15 @@ public class ConsecutivePlayer : MonoBehaviour
             //ゲームマネージャーに終わったことを伝える
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
+    }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Goal")
+        {
+            Debug.Log(playerNum + "P Goal"); // ログを表示する
+            isGoal = true;
+        }
     }
 
     /// <summary>
