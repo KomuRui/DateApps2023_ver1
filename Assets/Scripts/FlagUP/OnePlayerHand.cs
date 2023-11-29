@@ -6,9 +6,8 @@ using UnityEngine;
 public class OnePlayerHand : MonoBehaviour
 {
     [SerializeField] private int playerNum;                   // ƒvƒŒƒCƒ„[”Ô†
-    public GameObject leftOb;
-    public GameObject rightOb;
-    public GameObject GMOb;
+    [SerializeField] private GameObject leftOb;
+    [SerializeField] private GameObject rightOb;
 
     public bool isInput;//1‰ñ
     public bool isFirst;//1‰ñ

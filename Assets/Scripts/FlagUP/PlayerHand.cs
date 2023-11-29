@@ -5,9 +5,10 @@ using DG.Tweening;
 
 public class PlayerHand : MonoBehaviour
 {
-    [SerializeField] private int playerNum;      // プレイヤー番号
-    [SerializeField] public GameObject leftOb;   // 左の旗
-    [SerializeField] public GameObject rightOb;  // 右の旗
+    [SerializeField] private int playerNum;       // プレイヤー番号
+    [SerializeField] private GameObject leftOb;   // 左の旗
+    [SerializeField] private GameObject rightOb;  // 右の旗
+    [SerializeField] private bool isOnePlayer;    // 1人プレイヤーかどうか
 
     // Start is called before the first frame update
     void Start()
