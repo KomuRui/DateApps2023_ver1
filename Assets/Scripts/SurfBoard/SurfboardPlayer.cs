@@ -8,7 +8,7 @@ using static UnityEditor.PlayerSettings;
 public class SurfboardPlayer : MonoBehaviour
 {
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    [SerializeField] private float LIMIT_ROTATE = 25.0f;      //回転の限界
+    [SerializeField] public float LIMIT_ROTATE = 25.0f;      //回転の限界
     [SerializeField] private float LIFE_LIMIT = 10.0f;        //HPの最大量
     [SerializeField] private float HP_ANGLE = 10.0f;          //HPが減るようになる角度
     [SerializeField] private float HP_REDUCTIONE = 1.0f;     //HPの減少量
@@ -20,11 +20,11 @@ public class SurfboardPlayer : MonoBehaviour
     Quaternion rot;
 
     public float rotationSpeed = 10.0f;
-    private float sumRotateX = 0.0f;
-    private float sumRotateY = 0.0f;
+    public float sumRotateX = 0.0f;
+    public float sumRotateZ = 0.0f;
 
     private float hp = 10.0f;
-    private bool isDead = false;
+    public bool isDead = false;
     
 
 
@@ -37,28 +37,16 @@ public class SurfboardPlayer : MonoBehaviour
         startRotate = transform.localEulerAngles;
 
         InvokeRepeating(nameof(LifeControll), 1.0f, 0.1f);
+
+        hp = 10.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        if (!isDead && GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
         {
-            // 入力を取得用
-            float horizontalInput = 0;
-            float verticalInput = 0;
-
-            // 入力を取得
-            horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-            verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
-
-            if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
-            {
-                sumRotateX += horizontalInput;
-
-                //スティックによって回転
-                transform.Rotate(new Vector3(0, horizontalInput, 0));
-            }
+            Move();
         }
     }
 
@@ -71,7 +59,7 @@ public class SurfboardPlayer : MonoBehaviour
             hp += HP_INCREASE;
 
             //HPがMAXを超えないようにする
-            Mathf.Min(sumRotateX, LIFE_LIMIT);
+            hp = Mathf.Min(hp, LIFE_LIMIT);
         }
         else
         {
@@ -102,6 +90,37 @@ public class SurfboardPlayer : MonoBehaviour
             childRb.useGravity = true;
 
             this.transform.GetChild(0).transform.parent = null;
+
+            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
+        }
+    }
+
+    //プレイヤーの動き
+
+    public void Move()
+    {
+        // 入力を取得用
+        float horizontalInput = 0;
+        float verticalInput = 0;
+
+        // 入力を取得
+        horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
+        verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+
+        //if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
+        //{
+        //    sumRotateX += horizontalInput;
+
+        //    スティックによって回転
+        //    transform.Rotate(new Vector3(0, horizontalInput, 0));
+        //}
+
+        if (sumRotateZ + verticalInput <= LIMIT_ROTATE && sumRotateZ + verticalInput >= -LIMIT_ROTATE)
+        {
+            sumRotateZ += verticalInput;
+
+            //スティックによって回転
+            transform.Rotate(new Vector3(verticalInput, 0, 0));
         }
     }
 }

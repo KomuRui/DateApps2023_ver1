@@ -43,8 +43,6 @@ public class ChasesManager : MiniGameManager
     //ミニゲームが終わったら呼ばれる
     public override void MiniGameFinish()
     {
-
-        
         //ランキングをつける
         //Ranking();
     }
