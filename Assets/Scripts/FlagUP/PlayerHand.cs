@@ -5,20 +5,52 @@ using DG.Tweening;
 
 public class PlayerHand : MonoBehaviour
 {
+
+    private enum Flag
+    {
+        LEFT, //左旗
+        RIGHT //右旗
+    }
+
+    //旗上げ情報
+    private class FlagUpInfo
+    {
+        public GameObject flag; //旗
+        public int flagSign;    //旗の符号
+        public bool isUp;       //上がっているか
+    }
+
     [SerializeField] private int playerNum;       // プレイヤー番号
     [SerializeField] private GameObject leftOb;   // 左の旗
     [SerializeField] private GameObject rightOb;  // 右の旗
     [SerializeField] private bool isOnePlayer;    // 1人プレイヤーかどうか
 
+    private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
+    private int leftFlagSign;  //左の旗の符号 
+    private int rightFlagSign; //右の旗の符号
+
     // Start is called before the first frame update
     void Start()
     {
+        //旗情報設定
+        FlagUpInfo leftFlagIngo = new FlagUpInfo();
+        FlagUpInfo RightFlagIngo = new FlagUpInfo();
+        leftFlagIngo.flagSign = (isOnePlayer) ? -1 : 1;
+        RightFlagIngo.flagSign = (isOnePlayer) ? 1 : -1;
+        leftFlagIngo.isUp = false;
+        RightFlagIngo.isUp = false;
+        leftFlagIngo.flag = leftOb;
+        RightFlagIngo.flag = rightOb;
 
+        flagInfo[Flag.LEFT] = leftFlagIngo;
+        flagInfo[Flag.RIGHT] = RightFlagIngo;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //旗上げ
+        FlagUp();
         ////ストップしてない&自分のターン
         //if (flagUpGameManager.isStop == false && flagUpGameManager.isAloneTurn == false)
         //{
@@ -78,6 +110,33 @@ public class PlayerHand : MonoBehaviour
         //        }
         //    }
         //}
+    }
+
+    private void FlagUp()
+    {
+        //旗上げ許可しないならこの先処理しない
+        if (!((FlagUpGameManager)GameManager.nowMiniGameManager).isFlagUpPermit) return;
+
+        //ターンとプレイヤーが合っていないのならこの先処理しない
+        if (((FlagUpGameManager)GameManager.nowMiniGameManager).turn == FlagUpGameManager.Turn.ONE_PLAYER && !isOnePlayer) return;
+        if (((FlagUpGameManager)GameManager.nowMiniGameManager).turn == FlagUpGameManager.Turn.THREE_PLAYER && isOnePlayer) return;
+
+        //旗上げ処理
+        if (Input.GetButtonDown("LBbutton" + playerNum))
+            FlagUp(Flag.LEFT);
+        else if (Input.GetButtonDown("RBbutton" + playerNum))
+            FlagUp(Flag.RIGHT);
+    }
+
+    private void FlagUp(Flag f)
+    {
+        //旗が上がっているのなら
+        if (flagInfo[f].isUp)
+            flagInfo[f].flag.transform.DORotate(Vector3.zero, 0.1f);
+        else
+            flagInfo[f].flag.transform.DORotate(Vector3.forward * 90 * flagInfo[f].flagSign, 0.1f);
+
+        flagInfo[f].isUp = !(flagInfo[f].isUp);
     }
 
     //上げれない

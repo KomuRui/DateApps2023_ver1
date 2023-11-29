@@ -2452,8 +2452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
-  leftOb: {fileID: 828709258}
-  rightOb: {fileID: 1873893916}
+  leftOb: {fileID: 1873893916}
+  rightOb: {fileID: 828709258}
   isOnePlayer: 1
 --- !u!1001 &579569062
 PrefabInstance:
@@ -4737,7 +4737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120a5a37048a6964baf671f9865a439f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 1
+  playerNum: 4
   leftOb: {fileID: 90489638}
   rightOb: {fileID: 1633168456}
   isOnePlayer: 0
@@ -4849,9 +4849,13 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   onePlayerTurnCameraPos: {x: 0, y: 0, z: 0}
   threePlayerTurnCameraPos: {x: 0, y: 0, z: 0}
+  firstHalfFlagUpTime: 1
+  secondHalfFlagUpTime: 0.5
+  firstHalfFlagUpMax: 3
+  secondHalfFlagUpMax: 5
   se: {fileID: 834899572}
   turn: 0
-  nowRound: 0
+  isFlagUpPermit: 0
 --- !u!4 &1831453148
 Transform:
   m_ObjectHideFlags: 0
