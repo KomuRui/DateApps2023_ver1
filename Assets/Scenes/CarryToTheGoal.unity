@@ -538,6 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 2014499279}
   countDownText: {fileID: 1463038698}
+  time: 45
   isfinish: 0
 --- !u!1 &221261727
 GameObject:
@@ -2068,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48dd13a93a772b4887608e37fce82cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 4
   Object: {fileID: 1262047366}
   bullet: {fileID: 378638444}
   isHorizontalInput: 1
@@ -4095,6 +4096,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 337392706}
     m_Modifications:
+    - target: {fileID: 888114470357975534, guid: ce9d3a870da533143a434af9f0ebd8ce, type: 3}
+      propertyPath: m_text
+      value: 45:00
+      objectReference: {fileID: 0}
     - target: {fileID: 4705180478109071600, guid: ce9d3a870da533143a434af9f0ebd8ce, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4394,7 +4399,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 59338864261919882, guid: 93ffa7481a9580f4d9b881d2c30883a1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808685861921213331, guid: 93ffa7481a9580f4d9b881d2c30883a1, type: 3}
+      propertyPath: moveSpeed
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1808685861921213331, guid: 93ffa7481a9580f4d9b881d2c30883a1, type: 3}
       propertyPath: playerNum
@@ -4509,13 +4518,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7522452163580536958, guid: 5863c26dbdc17b3489ede3c8eafa5365, type: 3}
+      propertyPath: moveSpeed
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 7713246993875212359, guid: 5863c26dbdc17b3489ede3c8eafa5365, type: 3}
       propertyPath: m_Name
       value: Slime_02
       objectReference: {fileID: 0}
     - target: {fileID: 7713246993875212359, guid: 5863c26dbdc17b3489ede3c8eafa5365, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8918692162286408454, guid: 5863c26dbdc17b3489ede3c8eafa5365, type: 3}
       propertyPath: m_Mass
@@ -4545,6 +4558,10 @@ PrefabInstance:
     - target: {fileID: 5911705232282001568, guid: 44d64e7e226e2bd43a0e47d45af6d3c6, type: 3}
       propertyPath: m_Name
       value: Slime_01_Viking
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755907099007947174, guid: 44d64e7e226e2bd43a0e47d45af6d3c6, type: 3}
+      propertyPath: moveSpeed
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7701239772603632464, guid: 44d64e7e226e2bd43a0e47d45af6d3c6, type: 3}
       propertyPath: m_RootOrder
