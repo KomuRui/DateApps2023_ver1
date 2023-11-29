@@ -55,12 +55,11 @@ public class ThreePlayer : MonoBehaviour
 
     void Update()
     {
-        //動き
-        Move();
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
+            //動き
+            Move();
 
-        //ジャンプ
-        //Jump();
-
+        //移動制限？
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), Mathf.Clamp(transform.position.y, -13.5f, -0.8f), Mathf.Clamp(transform.position.z, -10.5f, -5.5f));
         
         //状態更新
@@ -188,9 +187,6 @@ public class ThreePlayer : MonoBehaviour
             Invoke("DestroyPlayer",1.0f);
 
             this.enabled = false;
-
-
-
         }
     }
 
