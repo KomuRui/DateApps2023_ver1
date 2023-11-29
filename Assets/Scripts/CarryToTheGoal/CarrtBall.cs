@@ -35,14 +35,17 @@ public class CarrtBall : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collision)
+    void OnCollisionEnter(Collision other)
     {
-        if(collision.gameObject.tag == "Goal" && !GameManager.nowMiniGameManager.IsFinish())
+        if (other.gameObject.tag == "Goal" && !GameManager.nowMiniGameManager.IsFinish())
         {
             ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).isGoal = true;
             GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
+    }
 
+    void OnTriggerEnter(Collider collision)
+    {
         if (collision.gameObject.tag == "TyekkuPoint" && nextTyekkuPointPos.position.y > collision.gameObject.transform.position.y)
         {
             tyekkuPointPos = nextTyekkuPointPos;
