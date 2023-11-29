@@ -107,20 +107,20 @@ public class SurfboardPlayer : MonoBehaviour
         horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
         verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
 
-        //if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
-        //{
-        //    sumRotateX += horizontalInput;
-
-        //    スティックによって回転
-        //    transform.Rotate(new Vector3(0, horizontalInput, 0));
-        //}
-
-        if (sumRotateZ + verticalInput <= LIMIT_ROTATE && sumRotateZ + verticalInput >= -LIMIT_ROTATE)
+        if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
         {
-            sumRotateZ += verticalInput;
+            sumRotateX += horizontalInput;
 
             //スティックによって回転
-            transform.Rotate(new Vector3(verticalInput, 0, 0));
+            transform.Rotate(new Vector3(0, horizontalInput, 0));
         }
+
+        //if (sumRotateZ + verticalInput <= LIMIT_ROTATE && sumRotateZ + verticalInput >= -LIMIT_ROTATE)
+        //{
+        //    sumRotateZ += verticalInput;
+
+        //    //スティックによって回転
+        //    transform.Rotate(new Vector3(verticalInput, 0, 0));
+        //}
     }
 }
