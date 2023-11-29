@@ -495,7 +495,9 @@ public class ChasesPlayer : MonoBehaviour
             else if(isMiss && isFirst)
             {
                 //isMiss‚ğ0.1•bŒã‚É‰ğœ‚·‚éŠÖ”
-                Invoke(nameof(SetFalseMiss), 100.0f);
+                Invoke(nameof(SetFalseMiss), 0.1f);
+                isFirst = false;
+                isAllSuccess = false;
             }
             else if(input == COMMAND_RESULT.MISS && isFirst)
             {

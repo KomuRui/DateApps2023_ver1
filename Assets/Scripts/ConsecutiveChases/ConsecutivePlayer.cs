@@ -41,6 +41,7 @@ public class ConsecutivePlayer : MonoBehaviour
     public bool buttonFlag = true;
     public bool isGoal = false; //ゴールしたか
     public bool isDead = false; //死んでいるか
+    public bool isMiss = false; //直線に入力を間違えたかどうか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -97,7 +98,6 @@ public class ConsecutivePlayer : MonoBehaviour
             {
                 buttonCount += addSpeed;
                 buttonFlag = !buttonFlag;
-                nextCommandImage.sprite = commandImageList[1];
             }
 
             // Bボタンを押していたら
@@ -119,15 +119,20 @@ public class ConsecutivePlayer : MonoBehaviour
             {
                 buttonCount += addSpeed;
                 buttonFlag = !buttonFlag;
-                nextCommandImage.sprite = commandImageList[0];
             }
         }
 
         //もし入力に失敗していたら
         if (!isInputSuccess)
         {
+            //減速する
             buttonCount -= missDeceleration;
+
+            isMiss = true;
+            Invoke(nameof(SetFalseMiss), 0.1f);
         }
+
+        ImageChange();
 
         //速度が0ならば
         if (moveSpeed <= 0)
@@ -264,5 +269,42 @@ public class ConsecutivePlayer : MonoBehaviour
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
 
+    }
+
+    /// <summary>
+    /// 画像を変える関数
+    /// </summary>
+    public void ImageChange()
+    {
+        //直前に入力を間違っていたら
+        if(isMiss)
+        {
+            if (buttonFlag) 
+            {
+                nextCommandImage.sprite = commandImageList[2];
+            }
+            else
+            {
+                nextCommandImage.sprite = commandImageList[3];
+            }
+        }
+        else
+        {
+            if (buttonFlag)
+            {
+                nextCommandImage.sprite = commandImageList[0];
+            }
+            else
+            {
+                nextCommandImage.sprite = commandImageList[1];
+            }
+        }
+        
+    }
+
+    //セッター
+    public void SetFalseMiss()
+    {
+        isMiss = false;
     }
 }
