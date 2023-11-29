@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.ParticleSystem;
 
 public class OnePlayer : MonoBehaviour
@@ -36,7 +37,23 @@ public class OnePlayer : MonoBehaviour
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
+    ///////////////オブジェクトプールで使う///////////////
+    //[SerializeField] private List<Transform> seeFriendP;
+    Transform penguinPTrans; //オブジェクトを保存する空オブジェクトのtransform
+    Transform sharkPTrans; //オブジェクトを保存する空オブジェクトのtransform
+    Transform fishesPTrans; //オブジェクトを保存する空オブジェクトのtransform
+    Transform dolphinPTrans; //オブジェクトを保存する空オブジェクトのtransform
 
+    private enum SeeFriend
+    {
+        PENGUIN = 0,
+        SHARK,
+        FISH,
+        DOLPHI,
+        MAX,
+    }
+
+    //////////////////////////////////////////////////////
 
     public GameObject penguinP;
     public GameObject sharkP;
@@ -100,6 +117,14 @@ public class OnePlayer : MonoBehaviour
         SharkImage = GameObject.Find("SharkCoolTimeImage");
         FishesImage = GameObject.Find("FishesCoolTimeImage");
         DolphinImage = GameObject.Find("DolphinCoolTimeImage");
+
+        ///////////////オブジェクトプールで使う///////////////
+        //海の生き物たち保持する空のオブジェクトを生成
+        penguinPTrans = new GameObject("Penguin").transform;
+        sharkPTrans = new GameObject("Shark").transform;
+        fishesPTrans = new GameObject("Fish").transform;
+        dolphinPTrans = new GameObject("Dolphin").transform;
+
     }
 
     //顔のテクスチャ設定
@@ -171,40 +196,51 @@ public class OnePlayer : MonoBehaviour
         }//ペンギン
         else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + playerNum) )&& isPenguin)
         {
-            Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
-            penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.identity);
-            penguinLeftTime = 1;
+            //ぺんぎんを生成
+            InitPenguin(new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
 
-            StartCoroutine(PenguinCoolCorou());
-            isStop = true;
-            
+            //Instantiate(penguinP, new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
+            //penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.identity);
+            //penguinLeftTime = 1;
+            //StartCoroutine(PenguinCoolCorou());
+            //isStop = true;
+
         }//サメ
         else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + playerNum))&& isShark)
         {
-            Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
-            sharkPre = Instantiate(sharkImage, new Vector3(0, 0, 0), Quaternion.identity);
-            sharkLeftTime = 1;
+            //さめを生成
+            InitShark(new Vector3(this.transform.position.x, -1, 10), sharkRotate);
 
-            StartCoroutine(SharkCoolCorou());
-            isStop = true;
+            //Instantiate(sharkP, new Vector3(this.transform.position.x, -1, 10), sharkRotate);
+            //sharkPre = Instantiate(sharkImage, new Vector3(0, 0, 0), Quaternion.identity);
+            //sharkLeftTime = 1;
+
+            //StartCoroutine(SharkCoolCorou());
+            //isStop = true;
         }//魚群
         else if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Xbutton" + playerNum))&& isFishes)
         {
-            Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
-            fishesPre = Instantiate(fishesImage, new Vector3(0, 0, 0), Quaternion.identity);
-            fishesLeftTime = 1;
+            //さかなを生成
+            InitFish(new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
 
-            StartCoroutine(FishesCoolCorou());
-            isStop = true;
+            //Instantiate(fishesP, new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
+            //fishesPre = Instantiate(fishesImage, new Vector3(0, 0, 0), Quaternion.identity);
+            //fishesLeftTime = 1;
+
+            //StartCoroutine(FishesCoolCorou());
+            //isStop = true;
         }//イルカ
         else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + playerNum))&& isDolphin)
         {
-            Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
-            dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);
-            dolphinLeftTime = 1;
+            //いるかを生成
+            InitDolphin(new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
 
-            StartCoroutine(DolphinCoolCorou());
-            isStop = true;
+            //Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
+            //dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);
+            //dolphinLeftTime = 1;
+
+            //StartCoroutine(DolphinCoolCorou());
+            //isStop = true;
         }
     }
 
@@ -356,4 +392,102 @@ public class OnePlayer : MonoBehaviour
         
         yield return new WaitForSeconds(1.0f);
     }
+
+    //ぺんぎん生成関数
+    public void InitPenguin(Vector3 pos, Quaternion rotation)
+    {
+        //アクティブでないオブジェクトをbulletsの中から探索
+        foreach (Transform t in penguinPTrans)
+        {
+            if (!t.gameObject.activeSelf)
+            {
+                //非アクティブなオブジェクトの位置と回転を設定
+                t.SetPositionAndRotation(pos, rotation);
+                //アクティブにする
+                t.gameObject.SetActive(true);
+                return;
+            }
+        }
+        //非アクティブなオブジェクトがない場合新規生成
+        Instantiate(penguinP, pos, rotation);
+        penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.identity);
+        penguinLeftTime = 1;
+
+        StartCoroutine(PenguinCoolCorou());
+        isStop = true;
+    }
+
+    //さめ生成関数
+    public void InitShark(Vector3 pos, Quaternion rotation)
+    {
+        //アクティブでないオブジェクトをbulletsの中から探索
+        foreach (Transform t in sharkPTrans)
+        {
+            if (!t.gameObject.activeSelf)
+            {
+                //非アクティブなオブジェクトの位置と回転を設定
+                t.SetPositionAndRotation(pos, rotation);
+                //アクティブにする
+                t.gameObject.SetActive(true);
+                return;
+            }
+        }
+
+        //非アクティブなオブジェクトがない場合新規生成
+        Instantiate(sharkP, pos, rotation);
+        sharkPre = Instantiate(sharkImage, new Vector3(0, 0, 0), Quaternion.identity);
+        sharkLeftTime = 1;
+
+        StartCoroutine(SharkCoolCorou());
+        isStop = true;
+    }
+
+    //さかな生成関数
+    public void InitFish(Vector3 pos, Quaternion rotation)
+    {
+        //アクティブでないオブジェクトをbulletsの中から探索
+        foreach (Transform t in fishesPTrans)
+        {
+            if (!t.gameObject.activeSelf)
+            {
+                //非アクティブなオブジェクトの位置と回転を設定
+                t.SetPositionAndRotation(pos, rotation);
+                //アクティブにする
+                t.gameObject.SetActive(true);
+                return;
+            }
+        }
+        //非アクティブなオブジェクトがない場合新規生成
+        Instantiate(fishesP, pos, rotation);
+        fishesPre = Instantiate(fishesImage, new Vector3(0, 0, 0), Quaternion.identity);
+        fishesLeftTime = 1;
+
+        StartCoroutine(FishesCoolCorou());
+        isStop = true;
+    }
+
+    //いるか生成関数
+    public void InitDolphin(Vector3 pos, Quaternion rotation)
+    {
+        //アクティブでないオブジェクトをbulletsの中から探索
+        foreach (Transform t in dolphinPTrans)
+        {
+            if (!t.gameObject.activeSelf)
+            {
+                //非アクティブなオブジェクトの位置と回転を設定
+                t.SetPositionAndRotation(pos, rotation);
+                //アクティブにする
+                t.gameObject.SetActive(true);
+                return;
+            }
+        }
+        //非アクティブなオブジェクトがない場合新規生成
+        Instantiate(dolphinP, pos, rotation);
+        dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);
+        dolphinLeftTime = 1;
+
+        StartCoroutine(DolphinCoolCorou());
+        isStop = true;
+    }
+
 }

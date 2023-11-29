@@ -55,7 +55,7 @@ public class ThreePlayer : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
+        if (!GameManager.nowMiniGameManager.IsFinish())
             //動き
             Move();
 
@@ -193,7 +193,11 @@ public class ThreePlayer : MonoBehaviour
 
     void DestroyPlayer()
     {
-        Destroy(this.gameObject);
+        // ミニゲームに死んだことを伝える
+        GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
+
+        //オブジェクトを削除
+        //Destroy(this.gameObject);
     }
 
 

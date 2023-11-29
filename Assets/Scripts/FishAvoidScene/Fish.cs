@@ -48,9 +48,12 @@ public class Fish : MonoBehaviour
                 break;
         }
 
+        //画面外に行ったら
         if (transform.position.z < -15)
         {
-            Destroy(this.gameObject);
+        //    Destroy(this.gameObject);
+            //画面外に行ったら非アクティブにする
+            this.gameObject.SetActive(false);
         }
     }
 
