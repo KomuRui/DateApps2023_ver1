@@ -270,6 +270,7 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
         Destroy(this.gameObject);
         ((NotHitStickGameManager)GameManager.nowMiniGameManager).kill++;
         if (((NotHitStickGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();

@@ -37,7 +37,7 @@ public class LetsPaintPlayer : MonoBehaviour
     private Vector3 initializPos;   //初期位置
     private bool isRespawn = false; //現在リスポーン中かどうか
     private Tweener tweener;        //Dotween用
-    [SerializeField]  private ChildCol col;
+    [SerializeField]  public ChildCol col;
 
 
     // Start is called before the first frame update

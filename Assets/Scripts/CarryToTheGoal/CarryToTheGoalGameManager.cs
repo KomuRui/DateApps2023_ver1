@@ -71,8 +71,11 @@ public class CarryToTheGoalGameManager : MiniGameManager
         //ƒ‰ƒCƒt‚ğŒ¸‚ç‚·
         playerLife[player]--;
         playerLife[player] = Mathf.Max(playerLife[player], 0);
-        if (playerLife[player] <= 0) player.GetComponent<CarryToTheGoalPlayer>().Dead();
-
+        if (playerLife[player] <= 0)
+        {
+            GameManager.nowMiniGameManager.PlayerDead(player);
+            player.GetComponent<CarryToTheGoalPlayer>().Dead();
+        }
         ////‚·‚Å‚É€‚ñ‚Å‚¢‚é‚Ì‚È‚ç‚±‚Ìæˆ—‚µ‚È‚¢
         //if (playerLife[player] <= 0) return;
 
