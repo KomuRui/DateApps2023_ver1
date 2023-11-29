@@ -69,8 +69,8 @@ public class ConsecutivePlayer : MonoBehaviour
 
     void Update()
     {
-        //もしもゲームが始まっていて、終わっていなかったら
-        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
+        //もしもゲームが始まっていて、終わっていく、ゴールしていなかったら
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal)
         {
             //動き
             Move();
@@ -252,6 +252,12 @@ public class ConsecutivePlayer : MonoBehaviour
             Debug.Log(playerNum + "P Goal"); // ログを表示する
             isGoal = true;
 
+            // 移動
+            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+            Vector3 force = new Vector3(0.0f, 0.0f, 700.0f);  // 力を設定
+            rb.AddForce(force, ForceMode.Force);          // 力を加える
+
+
             //ゲームマネージャーに終わったことを伝える
             //chasesManager.PlayerGoal(this.GetComponent<PlayerNum>().playerNum);
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
@@ -261,10 +267,11 @@ public class ConsecutivePlayer : MonoBehaviour
             Debug.Log("Hit"); // ログを表示する
 
             Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
-            Vector3 force = new Vector3(0.0f, 800.0f, 1.0f);  // 力を設定
+            Vector3 force = new Vector3(0.0f, 800.0f, 0.0f);  // 力を設定
             rb.AddForce(force, ForceMode.Force);          // 力を加える
 
             isDead = true;
+            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
             //ゲームマネージャーに終わったことを伝える
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }

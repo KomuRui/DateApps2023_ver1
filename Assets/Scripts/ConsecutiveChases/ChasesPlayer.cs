@@ -467,7 +467,10 @@ public class ChasesPlayer : MonoBehaviour
     // “–‚½‚Á‚½‚ÉŒÄ‚Î‚ê‚éŠÖ”
     void OnTriggerEnter(Collider other)
     {
-
+        if (other.gameObject.tag == "Goal")
+        {
+            buttonCount = 0;
+        }
     }
 
     //ƒRƒ}ƒ“ƒh‚Ìó‘Ô‚ğˆê’è”‚É•Û‚Âˆ—
