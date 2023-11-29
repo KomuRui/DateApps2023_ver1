@@ -12998,6 +12998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cba909f7caf3ea4e9f16ef41f10445f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameName: 
   onePlayerParent: {fileID: 1723150330}
   onePlayerPos: {x: 0, y: 0, z: 0}
   onePlayerScale: {x: 0, y: 0, z: 0}
@@ -13030,7 +13031,9 @@ MonoBehaviour:
   rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
   rankText: {fileID: 0}
-  normalCanvas: {fileID: 0}
+  killCanvas: []
+  testPlayer: []
+  testImage: []
 --- !u!1 &1032628655
 GameObject:
   m_ObjectHideFlags: 0
@@ -15468,7 +15471,7 @@ MonoBehaviour:
   isAnimJump: 1
   isAnimAttack: 1
   isAnimDamage: 1
-  playerNum: 1
+  playerNum: 4
 --- !u!136 &1187191304
 CapsuleCollider:
   m_ObjectHideFlags: 0

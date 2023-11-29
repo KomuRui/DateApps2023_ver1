@@ -2189,7 +2189,7 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  moveSpeed: 1500
+  moveSpeed: 2300
   rotationSpeed: 180
   gravitySpeed: 0.05
   flashingTime: 0.5
@@ -2312,6 +2312,10 @@ PrefabInstance:
       value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54108042913420348, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
@@ -2324,8 +2328,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: brush.splatsX
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
+      propertyPath: brush.splatsY
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatScale
-      value: 35
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 114350803071541958, guid: 1f0e50697767c6b449dcffd7c77981b6, type: 3}
       propertyPath: brush.splatChannel
