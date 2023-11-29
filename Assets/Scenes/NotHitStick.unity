@@ -301,7 +301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108329222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4610641, y: 6.68, z: -5.073877}
+  m_LocalPosition: {x: -1.4610641, y: 7.66, z: -5.073877}
   m_LocalScale: {x: 0.66411996, y: 0.66411996, z: 0.66411996}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -862,6 +862,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.1
   playerNum: 1
+--- !u!1 &452544768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3790887987170854231, guid: 319e24e0edb76e1478f0131dae510c2f, type: 3}
+  m_PrefabInstance: {fileID: 970243750575313717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &542860420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,6 +2699,14 @@ MonoBehaviour:
   killCanvas:
   - {fileID: 1866828846}
   - {fileID: 1035517244}
+  testPlayer:
+  - {fileID: 452544768}
+  - {fileID: 1868377105}
+  - {fileID: 1929880303}
+  testImage:
+  - {fileID: 70804867}
+  - {fileID: 1205843370}
+  - {fileID: 633056562}
   kill: 0
 --- !u!4 &1398284750
 Transform:
@@ -3478,6 +3491,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1868377105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2725972396946560732, guid: c58e2ff3629fc4d40a30c6fadf9fa932, type: 3}
+  m_PrefabInstance: {fileID: 1481518399233018563}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1929880303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1177684107000556424, guid: 10642a2214df279438ba1ff76a713303, type: 3}
+  m_PrefabInstance: {fileID: 1378306533201284202}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1994472505
 GameObject:
   m_ObjectHideFlags: 0
