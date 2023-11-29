@@ -146,6 +146,9 @@ public class LetsPaintPlayer : MonoBehaviour
         this.gameObject.layer = 7;
         col.isMuteki = true;
 
+        //‰ñ•œ
+        GameManager.nowMiniGameManager.PlayerHeal(this.gameObject);
+
         //ƒRƒ‹[ƒ`ƒ“
         StartCoroutine(ReStart(1.0f));
     }
@@ -207,6 +210,7 @@ public class LetsPaintPlayer : MonoBehaviour
         if (collision.transform.tag == "Sea" && !isRespawn)
         {
             isRespawn = true;
+            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
             StartCoroutine(StartRespawn(2.0f));
         }
     }

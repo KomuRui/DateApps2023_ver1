@@ -56,6 +56,12 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
 
+
+    //アルファ版
+    [SerializeField] protected List<GameObject> testPlayer = new List<GameObject>(); 
+    [SerializeField] protected List<Image> testImage = new List<Image>(); 
+    protected Dictionary<GameObject,Image> testImageTable = new Dictionary<GameObject, Image>();
+
     void Start()
     {
         /////////////////////////////////α版だけ
@@ -70,6 +76,10 @@ public class MiniGameManager : MonoBehaviour
         isFinish = false;
         SceneStart();
 
+        for(int i = 0; i < testPlayer.Count; i++)
+        {
+            testImageTable[testPlayer[i]] = testImage[i];
+        }
         //各プレイヤー番号設定
         //onePlayer = PlayerManager.GetOnePlayer();
 
@@ -145,6 +155,25 @@ public class MiniGameManager : MonoBehaviour
         PlayerAllDead();
         SetMiniGameFinish();
     }
+
+    public void PlayerDead(GameObject player)
+    {
+        Color c = testImageTable[player].color;
+        c.r = 0.2f;
+        c.g = 0.2f;
+        c.b = 0.2f;
+        testImageTable[player].color = c;
+    }
+
+    public void PlayerHeal(GameObject player)
+    {
+        Color c = testImageTable[player].color;
+        c.r = 1.0f;
+        c.g = 1.0f;
+        c.b = 1.0f;
+        testImageTable[player].color = c;
+    }
+
 
     //プレイヤーすべて削除
     public void PlayerAllDelete()
