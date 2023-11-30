@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static FlagUpGameManager;
 
@@ -32,14 +33,17 @@ public class FlagUpGameManager : MiniGameManager
         public int flagUpMaxCount;  //旗上げ何回行うか
     }
 
-    [SerializeField] private Transform mainCamera;             //メインカメラのトランスフォーム
-    [SerializeField] private Vector3 onePlayerTurnCameraPos;   //1人側ターンの時のカメラ位置
-    [SerializeField] private Vector3 threePlayerTurnCameraPos; //3人側ターンの時のカメラ位置
-    [SerializeField] private float firstHalfFlagUpTime;        //前半の旗上げ時間
-    [SerializeField] private float secondHalfFlagUpTime;       //後半の旗上げ時間
-    [SerializeField] private int firstHalfFlagUpMax;           //前半の旗上げ回数
-    [SerializeField] private int secondHalfFlagUpMax;          //後半の旗上げ回数
-    [SerializeField] private SETable se;                       //SE
+    [SerializeField] private List<GameObject> player;             //プレイヤー
+    [SerializeField] private Transform mainCamera;                //メインカメラのトランスフォーム
+    [SerializeField] private Vector3 onePlayerTurnCameraPos;      //1人側ターンの時のカメラ位置
+    [SerializeField] private Vector3 onePlayerTurnCameraRotate;   //1人側ターンの時のカメラ位置
+    [SerializeField] private Vector3 threePlayerTurnCameraPos;    //3人側ターンの時のカメラ位置
+    [SerializeField] private Vector3 threePlayerTurnCameraRotate; //3人側ターンの時のカメラ位置
+    [SerializeField] private float firstHalfFlagUpTime;           //前半の旗上げ時間
+    [SerializeField] private float secondHalfFlagUpTime;          //後半の旗上げ時間
+    [SerializeField] private int firstHalfFlagUpMax;              //前半の旗上げ回数
+    [SerializeField] private int secondHalfFlagUpMax;             //後半の旗上げ回数
+    [SerializeField] private SETable se;                          //SE
 
     public Turn turn;                                          //どっちのターンか
     private Round nowRound;                                    //現在のラウンド数
@@ -82,6 +86,9 @@ public class FlagUpGameManager : MiniGameManager
     {
         yield return new WaitForSeconds(delay);
 
+        //全て下げる
+        AllFlagDown();
+
         //長い笛
         se.PlayLongFlute();
         StartCoroutine(FlagUpStart(2.0f));
@@ -95,6 +102,9 @@ public class FlagUpGameManager : MiniGameManager
         //旗上げ回数プラス
         nowFlagUpCount++;
 
+        //全て下げる
+        AllFlagDown();
+
         //短い笛
         se.PlayShortFlute();
         isFlagUpPermit = true;
@@ -107,12 +117,22 @@ public class FlagUpGameManager : MiniGameManager
         yield return new WaitForSeconds(delay);
 
         //1人側か3人側プレイヤーの旗上げが終了したならターン変更
-        if(roundInfo[nowRound].flagUpMaxCount <= nowFlagUpCount)
+        if (roundInfo[nowRound].flagUpMaxCount <= nowFlagUpCount)
+        {
             ChangeTurn();
+            StartCoroutine(RoundStart(1.0f));
+        }
         else
             StartCoroutine(FlagUpStart(0.5f));
 
         isFlagUpPermit = false;
+    }
+
+    //全てのプレイヤーの旗を下げる
+    private void AllFlagDown()
+    {
+        for(int i = 0; i < player.Count; i++)
+            player[i].GetComponent<PlayerHand>().AllFlagDown();
     }
 
     //ターン変更
@@ -125,11 +145,13 @@ public class FlagUpGameManager : MiniGameManager
         {
             turn = Turn.THREE_PLAYER;
             mainCamera.position = threePlayerTurnCameraPos;
+            mainCamera.localEulerAngles = threePlayerTurnCameraRotate;
         }
         else
         {
             turn = Turn.ONE_PLAYER;
             mainCamera.position = onePlayerTurnCameraPos;
+            mainCamera.localEulerAngles = onePlayerTurnCameraRotate;
         }
 
     }
