@@ -147,7 +147,7 @@ public class LetsPaintPlayer : MonoBehaviour
         col.isMuteki = true;
 
         //‰ñ•œ
-        GameManager.nowMiniGameManager.PlayerHeal(this.GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerHeal(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
 
         //ƒRƒ‹[ƒ`ƒ“
         StartCoroutine(ReStart(1.0f));
@@ -210,7 +210,7 @@ public class LetsPaintPlayer : MonoBehaviour
         if (collision.transform.tag == "Sea" && !isRespawn)
         {
             isRespawn = true;
-            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
             StartCoroutine(StartRespawn(2.0f));
         }
     }

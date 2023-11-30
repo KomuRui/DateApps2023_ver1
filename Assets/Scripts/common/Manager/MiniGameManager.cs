@@ -17,17 +17,19 @@ public class MiniGameManager : MonoBehaviour
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト
+    [SerializeField] protected bool onePlayerParentDelete;                                   //1人側プレイヤーの親削除するか
     [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
     [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
     [SerializeField] protected Vector3 onePlayerRotate;                                      //1人側プレイヤーの角度
     [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト
+    [SerializeField] protected bool threePlayerParentDelete;                                 //3人側プレイヤーの親削除するか
     [SerializeField] protected List<Vector3> threePlayerPos = new List<Vector3>();           //3人側プレイヤーの初期位置
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
 
-    [SerializeField] protected Image onePlayerImage;                                                            //1人側プレイヤーの画像
-    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                                //3人側プレイヤーの画像
-    [SerializeField] protected Dictionary<byte,Image> threePlayerImageTable = new Dictionary<byte, Image>();    //3人側プレイヤーの画像
+    [SerializeField] protected Image onePlayerImage;                                                       //1人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                           //3人側プレイヤーの画像
+    [SerializeField] protected Dictionary<byte,Image> playerImageTable = new Dictionary<byte, Image>();    //プレイヤーの画像
 
     [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
     [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
@@ -38,6 +40,7 @@ public class MiniGameManager : MonoBehaviour
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
     protected byte onePlayer;                                                            //1人側プレイヤー
     protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
+    public Dictionary<byte, float> lifeTime = new Dictionary<byte, float>();          //3人側プレイヤーの生きてる時間
 
     ////////////////////////////////////カメラ////////////////////////////////////////////
 
@@ -57,12 +60,6 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
 
-
-    //アルファ版
-    [SerializeField] protected List<GameObject> testPlayer = new List<GameObject>(); 
-    [SerializeField] protected List<Image> testImage = new List<Image>(); 
-    protected Dictionary<GameObject,Image> testImageTable = new Dictionary<GameObject, Image>();
-
     void Start()
     {
        /////////////////////////////////α版だけ
@@ -77,15 +74,15 @@ public class MiniGameManager : MonoBehaviour
         isFinish = false;
         SceneStart();
 
-        for(int i = 0; i < testPlayer.Count; i++)
-            testImageTable[testPlayer[i]] = testImage[i];
-
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
 
         List<byte> threeP = PlayerManager.GetThreePlayer();
         foreach (byte num in threeP)
+        {
             threePlayer[num] = false;
+            lifeTime[num] = 0;
+        }
 
         //プレイヤーと画像生成
         onePlayerObj = (GameObject)Resources.Load("Prefabs/" + miniGameName + "/One/" + PlayerManager.GetPlayerVisual(onePlayer));
@@ -99,7 +96,10 @@ public class MiniGameManager : MonoBehaviour
             onePlayerObj.transform.parent = onePlayerParent.transform;
 
         if (onePlayerImage != null)
+        {
             onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
+            playerImageTable[onePlayer] = onePlayerImage;
+        }
 
         int lookNum = 0;
         foreach (byte num in threePlayer.Keys)
@@ -118,7 +118,7 @@ public class MiniGameManager : MonoBehaviour
             if (threePlayerImage[lookNum] != null)
             {
                 threePlayerImage[lookNum].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
-                threePlayerImageTable[num] = threePlayerImage[lookNum];
+                playerImageTable[num] = threePlayerImage[lookNum];
             }
             lookNum++;
         }
@@ -135,6 +135,10 @@ public class MiniGameManager : MonoBehaviour
             SceneManager.LoadScene("MainMode");
         }
 
+        //生きている3人側の時間記録
+        foreach(byte num in threePlayer.Keys)
+            if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+
         //継承先の更新
         MiniGameUpdate();
     }
@@ -150,7 +154,7 @@ public class MiniGameManager : MonoBehaviour
 
         //1人でも死んでいなかったらこの先処理しない
         foreach(var item in threePlayer.Values)
-            if(!threePlayer[player]) return;
+            if(!item) return;
 
         //プレイヤー全員死んだに設定
         isPlayerAllDead = true;
@@ -160,20 +164,20 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerDead(byte player)
     {
-        Color c = threePlayerImageTable[player].color;
+        Color c = playerImageTable[player].color;
         c.r = 0.2f;
         c.g = 0.2f;
         c.b = 0.2f;
-        threePlayerImageTable[player].color = c;
+        playerImageTable[player].color = c;
     }
 
     public void PlayerHeal(byte player)
     {
-        Color c = threePlayerImageTable[player].color;
+        Color c = playerImageTable[player].color;
         c.r = 1.0f;
         c.g = 1.0f;
         c.b = 1.0f;
-        threePlayerImageTable[player].color = c;
+        playerImageTable[player].color = c;
     }
 
 
@@ -181,14 +185,14 @@ public class MiniGameManager : MonoBehaviour
     public void PlayerAllDelete()
     {
         //親がいるのなら
-        if (onePlayerParent != null)
+        if (onePlayerParent != null && onePlayerParentDelete)
             Destroy(onePlayerParent.gameObject);
         else
             Destroy(onePlayerObj.gameObject);
 
         //親がいるやつは消す
         for (int i = 0; i < threePlayerParent.Count; i++)
-            Destroy(threePlayerParent[i].gameObject);
+             if(threePlayerParentDelete) Destroy(threePlayerParent[i].gameObject);
 
         //親がいないやつを消す
         for (int i = 0; i < threePlayerObj.Count; i++)
@@ -222,20 +226,26 @@ public class MiniGameManager : MonoBehaviour
     //順位発表に変更
     public void ChangeRankAnnouncement()
     {
-        nowRankAnnouncement = true; 
+        nowRankAnnouncement = true;
+
+        var sortedDictionary = nowMiniGameRank.OrderBy((pair) => pair.Value);
+        Dictionary<byte,byte> rankTable = new Dictionary<byte,byte>();
+
+        foreach (var rank in sortedDictionary)
+            rankTable[rank.Key] = rank.Value;
 
         //順位テキスト表示
-        for (byte i = 0; i < nowMiniGameRank.Count; i++)
+        for (byte i = 0; i < rankTable.Count; i++)
         {
-            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = nowMiniGameRank.Values.ElementAt(i).ToString() + "位 " 
-            + ScoreManager.GetRankScore(nowMiniGameRank.Keys.ElementAt(i),nowMiniGameRank.Values.ElementAt(i)) + "P";
+            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = rankTable.Values.ElementAt(i).ToString() + "位 " 
+            + ScoreManager.GetRankScore(rankTable.Keys.ElementAt(i), rankTable.Values.ElementAt(i)) + "P";
         }
         Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
         //新たにプレイヤー召喚
-        for (byte i = 0; i < nowMiniGameRank.Count; i++)
+        for (byte i = 0; i < rankTable.Count; i++)
         {
-            GameObject obj = (GameObject)Resources.Load("Prefabs/" + PlayerManager.GetPlayerVisual(nowMiniGameRank.Keys.ElementAt(i)));
+            GameObject obj = (GameObject)Resources.Load("Prefabs/" + PlayerManager.GetPlayerVisual(rankTable.Keys.ElementAt(i)));
             obj = Instantiate(obj, rankAnnouncementPos[i], Quaternion.identity);
             obj.transform.position = rankAnnouncementPos[i];
             obj.transform.localScale = rankAnnouncementScale[i];
