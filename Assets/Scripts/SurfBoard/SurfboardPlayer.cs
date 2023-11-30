@@ -7,6 +7,18 @@ using static UnityEditor.PlayerSettings;
 
 public class SurfboardPlayer : MonoBehaviour
 {
+    public enum SlimeAnimationState { Idle, Walk, Jump, Attack, Damage }
+
+    public Face faces;
+    public GameObject SmileBody;
+    public SlimeAnimationState currentState;
+
+    public Animator animator;
+    public int damType;
+
+
+    private Material faceMaterial;
+
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] public float LIMIT_ROTATE = 25.0f;      //回転の限界
     [SerializeField] private float LIFE_LIMIT = 10.0f;        //HPの最大量

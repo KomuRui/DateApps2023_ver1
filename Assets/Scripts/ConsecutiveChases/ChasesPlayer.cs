@@ -23,10 +23,10 @@ public class ChasesPlayer : MonoBehaviour
     public Animator animator;
     public int damType;
 
-    [SerializeField] private Vector3 moveDirection = new Vector3(0.0f, 0.0f, 1.0f); //プレイヤーの移動方向
-
+    
     private Material faceMaterial;
 
+    [SerializeField] private Vector3 moveDirection = new Vector3(0.0f, 0.0f, 1.0f); //プレイヤーの移動方向
     [SerializeField] private float deceleration = 150.0f;       //減速率
     [SerializeField] private float missDeceleration = 50.0f;       //減速率
     [SerializeField] private float SPEED_MAX = 15.0f;           //スピードの最大
