@@ -46,10 +46,12 @@ public class FlagUpGameManager : MiniGameManager
     [SerializeField] private int secondHalfFlagUpMax;             //後半の旗上げ回数
     [SerializeField] private SETable se;                          //SE
     [SerializeField] private TextMeshProUGUI roundText;       //ラウンドテキスト
+    [SerializeField] private TextMeshProUGUI finishText;       //ラウンドテキスト
+    [SerializeField] public int[] oneFlagState = new int[5];    // 旗状態
 
     public Turn turn;                                          //どっちのターンか
     private Round nowRound;                                    //現在のラウンド数
-    private int  nowFlagUpCount;                               //現在の旗上げ回数
+    private int nowFlagUpCount;                               //現在の旗上げ回数
     public bool isFlagUpPermit;                                //旗上げ許可するか
     private Dictionary<Round, RoundInfo> roundInfo = new Dictionary<Round, RoundInfo>(); //ラウンド情報
 
@@ -77,7 +79,7 @@ public class FlagUpGameManager : MiniGameManager
     }
 
     //ゲーム開始時に呼ばれる
-    public override void MiniGameStart() 
+    public override void MiniGameStart()
     {
         //コルーチン
         StartCoroutine(RoundStart(2.0f));
@@ -112,7 +114,7 @@ public class FlagUpGameManager : MiniGameManager
         isFlagUpPermit = true;
         StartCoroutine(NextFlagUp(roundInfo[nowRound].flagUpTime));
     }
-    
+
     //次の旗上げへ
     IEnumerator NextFlagUp(float delay)
     {
@@ -137,7 +139,7 @@ public class FlagUpGameManager : MiniGameManager
     //全てのプレイヤーの旗を下げる
     private void AllFlagDown()
     {
-        for(int i = 0; i < player.Count; i++)
+        for (int i = 0; i < player.Count; i++)
             player[i].GetComponent<PlayerHand>().AllFlagDown();
     }
 
@@ -155,17 +157,29 @@ public class FlagUpGameManager : MiniGameManager
         }
         else
         {
-            if(nowRound <= Round.FIVE)
+            if (nowRound < Round.FIVE)
             {
                 nowRound++;
                 turn = Turn.ONE_PLAYER;
                 mainCamera.position = onePlayerTurnCameraPos;
                 mainCamera.localEulerAngles = onePlayerTurnCameraRotate;
             }
+            else
+            {
+                SetMiniGameFinish();
+            }
 
             roundText.text = ((int)nowRound).ToString();
 
         }
 
+    }
+
+    public void SetFlagState(int[] FlagState)
+    {
+        for(int i = 0;i < 5;i++)
+        {
+            oneFlagState[i] = FlagState[i];
+        }
     }
 }
