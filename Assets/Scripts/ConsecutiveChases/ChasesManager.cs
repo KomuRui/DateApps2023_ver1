@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class ChasesManager : MiniGameManager
@@ -13,12 +14,31 @@ public class ChasesManager : MiniGameManager
 
     [SerializeField] private GameObject canvas;
 
-    [SerializeField] List<ConsecutivePlayer> threePlayerList;
+    public List<Image> onePlayerNextCommandImageList = new List<Image>();
+    public List<Image> threePlayerNextCommandImageList = new List<Image>();
+    [SerializeField] private GameObject camera;
 
     //StartÇ∆ìØÇ∂
     public override void SceneStart()
     {
         canvas.SetActive(true);
+    }
+
+    //ÉQÅ[ÉÄäJénéûÇ…åƒÇŒÇÍÇÈ
+    public override void MiniGameStart()
+    {
+        onePlayerObj.GetComponent<ChasesPlayer>().nextCommandImageList = onePlayerNextCommandImageList;
+
+        foreach (var player in threePlayerObj)
+        {
+            player.GetComponent<ConsecutivePlayer>().nextCommandImage = threePlayerNextCommandImageList;
+        }
+
+        camera.GetComponent<CameraController>().playerList.Add(onePlayerObj);
+        foreach (var player in threePlayerObj)
+        {
+            camera.GetComponent<CameraController>().playerList.Add(player);
+        }
     }
 
     //UpdateÇ∆ìØÇ∂
@@ -27,9 +47,9 @@ public class ChasesManager : MiniGameManager
         ///////////aî≈ÇÃÇ›////////////////
 
         bool flag = true;
-        foreach (var item in threePlayerList)
+        foreach (var item in threePlayerObj)
         {
-            if (!item.isGoal && !item.isDead)
+            if (!item.GetComponent<ConsecutivePlayer>().isGoal && !item.GetComponent<ConsecutivePlayer>().isDead)
             {
                 flag = false;
             }

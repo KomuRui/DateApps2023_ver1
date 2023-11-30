@@ -34,8 +34,12 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private GameObject leftOb;   // 左の旗
     [SerializeField] private GameObject rightOb;  // 右の旗
     [SerializeField] private bool isOnePlayer;    // 1人プレイヤーかどうか
-    [SerializeField] public int oneFlagState;    // 1人プレイヤー旗状態
-    [SerializeField] public int threeFlagState;    // 3人プレイヤー旗状態
+    [SerializeField] private int flagCount = 3;    // 
+    [SerializeField] private int flagTurn;    // 
+    [SerializeField] private int turnMax;    // 
+    [SerializeField] public int[] flagState = new int[5];    // 旗状態
+    [SerializeField] private GameObject GMOb;  // 1
+
 
     private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
     private Vector3 initializeRotate; 
@@ -56,6 +60,8 @@ public class PlayerHand : MonoBehaviour
 
         flagInfo[Flag.LEFT] = leftFlagIngo;
         flagInfo[Flag.RIGHT] = RightFlagIngo;
+        flagTurn = 0;
+        turnMax = 3;
 
         //初期
         initializeRotate = new Vector3(0,180,0);
@@ -158,16 +164,37 @@ public class PlayerHand : MonoBehaviour
 
     public void AllFlagDown()
     {
-        //if(flagInfo[Flag.LEFT].isUp)
+        if (isOnePlayer)
+        {
+            if (flagTurn < turnMax)
+            {
+                flagState[flagTurn] = 0;
 
-            //if(flagInfo[Flag.RIGHT].isUp)
+                if (flagInfo[Flag.RIGHT].isUp)
+                    flagState[flagTurn] += 1;
+
+                if (flagInfo[Flag.LEFT].isUp)
+                    flagState[flagTurn] += 2;
+            }
+            else
+            {
+                // GMOb.instance.SetFlagState
+            }
 
 
+        }
+        //else
+        //{
+        //oneOb.GetComponent<PlayerHand>().flagState[flagTurn];
+        //}
 
-       flagInfo[Flag.LEFT].flag.transform.DORotate(initializeRotate, 0.1f);
-       flagInfo[Flag.RIGHT].flag.transform.DORotate(initializeRotate, 0.1f);
-       flagInfo[Flag.LEFT].isUp = false;
-       flagInfo[Flag.RIGHT].isUp = false;
+        flagTurn++;
+        flagInfo[Flag.LEFT].flag.transform.DORotate(initializeRotate, 0.1f);
+        flagInfo[Flag.RIGHT].flag.transform.DORotate(initializeRotate, 0.1f);
+        flagInfo[Flag.LEFT].isUp = false;
+        flagInfo[Flag.RIGHT].isUp = false;
+
+
     }
 
     //上げれない

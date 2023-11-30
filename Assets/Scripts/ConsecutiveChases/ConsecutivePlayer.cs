@@ -19,7 +19,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    [SerializeField] private List<Image> nextCommandImage; //次のコマンドの画像を表示する場所のリスト
+    [SerializeField] public List<Image> nextCommandImage; //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     [SerializeField] private float SPEED_MAX = 14.0f;       //スピードの最大
     [SerializeField] private float deceleration = 150.0f;       //減速率
@@ -84,8 +84,8 @@ public class ConsecutivePlayer : MonoBehaviour
     private void Move()
     {
         // 入力を取得
-        bool isAbuttonClick = Input.GetButtonDown("Abutton" + playerNum);
-        bool isBbuttonClick = Input.GetButtonDown("Bbutton" + playerNum);
+        bool isAbuttonClick = Input.GetButtonDown("Abutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
+        bool isBbuttonClick = Input.GetButtonDown("Bbutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
 
         //入力が成功しているかどうか
         bool isInputSuccess = true;
