@@ -32,8 +32,8 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
     [SerializeField] protected List<Vector3> rankAnnouncementRotate = new List<Vector3>();  //ランク発表時のプレイヤー角度
 
-    protected GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
-    protected List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
+    public GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
+    public List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
     protected byte onePlayer;                                                            //1人側プレイヤー
     protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
@@ -176,9 +176,19 @@ public class MiniGameManager : MonoBehaviour
     //プレイヤーすべて削除
     public void PlayerAllDelete()
     {
-        //Destroy(onePlayerParent.gameObject);
-        //for(int i = 0; i < threePlayerParent.Count; i++)
-        //    Destroy(threePlayerParent[i].gameObject);
+        //親がいるのなら
+        if (onePlayerParent != null)
+            Destroy(onePlayerParent.gameObject);
+        else
+            Destroy(onePlayerObj.gameObject);
+
+        //親がいるやつは消す
+        for (int i = 0; i < threePlayerParent.Count; i++)
+            Destroy(threePlayerParent[i].gameObject);
+
+        //親がいないやつを消す
+        for (int i = 0; i < threePlayerObj.Count; i++)
+            if (threePlayerObj[i] != null) Destroy(threePlayerObj[i].gameObject);
     }
 
     /////////////////////////////////ミニゲーム情報//////////////////////////////////////
@@ -221,7 +231,7 @@ public class MiniGameManager : MonoBehaviour
         //新たにプレイヤー召喚
         for (byte i = 0; i < nowMiniGameRank.Count; i++)
         {
-            GameObject obj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(nowMiniGameRank.Keys.ElementAt(i)));
+            GameObject obj = (GameObject)Resources.Load("Prefabs/" + PlayerManager.GetPlayerVisual(nowMiniGameRank.Keys.ElementAt(i)));
             obj = Instantiate(obj, rankAnnouncementPos[i], Quaternion.identity);
             obj.transform.position = rankAnnouncementPos[i];
             obj.transform.localScale = rankAnnouncementScale[i];

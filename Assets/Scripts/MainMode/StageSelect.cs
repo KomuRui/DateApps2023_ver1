@@ -30,6 +30,7 @@ public class StageSelect : MonoBehaviour
     {
         PlayerManager.Initializ();
         ScoreManager.Initializ();
+        StageSelectManager.Initializ();
 
         //fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
