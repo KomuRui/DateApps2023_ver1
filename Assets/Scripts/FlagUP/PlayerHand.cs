@@ -45,7 +45,7 @@ public class PlayerHand : MonoBehaviour
         flagInfo[Flag.RIGHT] = RightFlagIngo;
 
         //èâä˙
-        initializeRotate = (isOnePlayer) ? Vector3.zero : new Vector3(0,180,0);
+        initializeRotate = new Vector3(0,180,0);
 
     }
 
