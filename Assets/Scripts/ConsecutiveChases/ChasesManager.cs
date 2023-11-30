@@ -11,12 +11,14 @@ public class ChasesManager : MiniGameManager
     //ゴールした順番、（番号が若い順で早い）
     private List<byte> goalPlayer;
 
+    [SerializeField] private GameObject canvas;
+
     [SerializeField] List<ConsecutivePlayer> threePlayerList;
 
     //Startと同じ
     public override void SceneStart()
     {
-
+        canvas.SetActive(true);
     }
 
     //Updateと同じ

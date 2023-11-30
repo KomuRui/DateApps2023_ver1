@@ -50,6 +50,7 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     [SerializeField] private List<Sprite> newCommandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
+
     private bool crossKeyContinuous = false;    //十字キー
     private bool isControll = false;            //操作しているかどうか
     bool isMiss = false;//直前にミスしたかどうか

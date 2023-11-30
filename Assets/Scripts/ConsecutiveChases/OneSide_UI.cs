@@ -12,11 +12,18 @@ public class OneSide_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //位置を変える
+        Setposition();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        //位置を変える
+        Setposition();
+    }
+
+    void Setposition()
     {
         UnityEngine.Vector3 myRectTfm;
 
@@ -24,7 +31,7 @@ public class OneSide_UI : MonoBehaviour
 
         playerPos.x += SHIFT_HOR_UI;
         playerPos.y += SHIFT_VER_UI;
-        
+
         myRectTfm = RectTransformUtility.WorldToScreenPoint(Camera.main, playerPos);
 
         // カメラ後方にあるターゲットのスクリーン座標は、画面中心に対する点対称の座標にする
