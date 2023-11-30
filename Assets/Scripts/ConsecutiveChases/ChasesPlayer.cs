@@ -47,7 +47,7 @@ public class ChasesPlayer : MonoBehaviour
     [SerializeField] private int playerNum;                           // プレイヤー番号
     [SerializeField] private Queue<COMMAND_TYPE> nextCommand = new();                    //次のコマンドのキュー
     [SerializeField] private List<Tuple<COMMAND_TYPE, COMMAND_STATE>> commandList = new();                    //次のコマンドのキュー
-    [SerializeField] private List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
+    [SerializeField] public List<Image> nextCommandImageList = new List<Image>(); //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     [SerializeField] private List<Sprite> newCommandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
 

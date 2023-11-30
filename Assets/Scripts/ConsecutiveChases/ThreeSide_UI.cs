@@ -13,11 +13,12 @@ public class ThreeSide_UI: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameManager.nowMiniGameManager.threePlayerObj[playerNum];
+        player = GameManager.nowMiniGameManager.threePlayerObj[this.GetComponent<PlayerNum>().playerNum - 2];
 
         //ˆÊ’u‚ð•Ï‚¦‚é
         SetPosition();
     }
+
 
     // Update is called once per frame
     void Update()
