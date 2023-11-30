@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static FlagUpGameManager;
@@ -18,7 +19,7 @@ public class FlagUpGameManager : MiniGameManager
     //ラウンド
     public enum Round
     {
-        ONE,
+        ONE = 1,
         TWO,
         THREE,
         FOUR,
@@ -44,6 +45,7 @@ public class FlagUpGameManager : MiniGameManager
     [SerializeField] private int firstHalfFlagUpMax;              //前半の旗上げ回数
     [SerializeField] private int secondHalfFlagUpMax;             //後半の旗上げ回数
     [SerializeField] private SETable se;                          //SE
+    [SerializeField] private TextMeshProUGUI roundText;       //ラウンドテキスト
 
     public Turn turn;                                          //どっちのターンか
     private Round nowRound;                                    //現在のラウンド数
@@ -117,13 +119,17 @@ public class FlagUpGameManager : MiniGameManager
         yield return new WaitForSeconds(delay);
 
         //1人側か3人側プレイヤーの旗上げが終了したならターン変更
-        if (roundInfo[nowRound].flagUpMaxCount <= nowFlagUpCount)
+        if (nowRound <= Round.FIVE)
         {
-            ChangeTurn();
-            StartCoroutine(RoundStart(1.0f));
+            if (roundInfo[nowRound].flagUpMaxCount <= nowFlagUpCount)
+            {
+                ChangeTurn();
+                StartCoroutine(RoundStart(1.0f));
+            }
+            else
+                StartCoroutine(FlagUpStart(0.5f));
+
         }
-        else
-            StartCoroutine(FlagUpStart(0.5f));
 
         isFlagUpPermit = false;
     }
@@ -149,9 +155,16 @@ public class FlagUpGameManager : MiniGameManager
         }
         else
         {
-            turn = Turn.ONE_PLAYER;
-            mainCamera.position = onePlayerTurnCameraPos;
-            mainCamera.localEulerAngles = onePlayerTurnCameraRotate;
+            if(nowRound <= Round.FIVE)
+            {
+                nowRound++;
+                turn = Turn.ONE_PLAYER;
+                mainCamera.position = onePlayerTurnCameraPos;
+                mainCamera.localEulerAngles = onePlayerTurnCameraRotate;
+            }
+
+            roundText.text = ((int)nowRound).ToString();
+
         }
 
     }
