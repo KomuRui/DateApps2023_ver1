@@ -20,13 +20,26 @@ public class PlayerHand : MonoBehaviour
         public bool isUp;       //上がっているか
     }
 
+    private enum FlagState
+    {
+        ALL_DOWN,
+        RIGHT_UP,
+        LEFT_UP,
+        ALL_UP,
+    }
+
+
+
     [SerializeField] private int playerNum;       // プレイヤー番号
     [SerializeField] private GameObject leftOb;   // 左の旗
     [SerializeField] private GameObject rightOb;  // 右の旗
     [SerializeField] private bool isOnePlayer;    // 1人プレイヤーかどうか
+    [SerializeField] public int oneFlagState;    // 1人プレイヤー旗状態
+    [SerializeField] public int threeFlagState;    // 3人プレイヤー旗状態
 
     private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
     private Vector3 initializeRotate; 
+
 
     // Start is called before the first frame update
     void Start()
@@ -145,6 +158,12 @@ public class PlayerHand : MonoBehaviour
 
     public void AllFlagDown()
     {
+        //if(flagInfo[Flag.LEFT].isUp)
+
+            //if(flagInfo[Flag.RIGHT].isUp)
+
+
+
        flagInfo[Flag.LEFT].flag.transform.DORotate(initializeRotate, 0.1f);
        flagInfo[Flag.RIGHT].flag.transform.DORotate(initializeRotate, 0.1f);
        flagInfo[Flag.LEFT].isUp = false;
