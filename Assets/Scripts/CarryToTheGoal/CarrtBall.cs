@@ -30,19 +30,22 @@ public class CarrtBall : MonoBehaviour
         //ŠC‚æ‚è‰º‚ÉŒ¾‚Á‚½‚çƒŠƒXƒ|[ƒ“
         if (transform.position.y <= -1.5)
         {
-            transform.position = new Vector3(tyekkuPointPos.position.x,tyekkuPointPos.position.y + 1.5f, 22.85f);
+            transform.position = new Vector3(tyekkuPointPos.position.x,tyekkuPointPos.position.y + 2.0f, 22.85f);
             rb.velocity = Vector3.zero;
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Goal" && !GameManager.nowMiniGameManager.IsFinish())
+        {
+            ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).isGoal = true;
+            GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Goal" && !GameManager.nowMiniGameManager.IsFinish())
-        {
-            ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).isGoal = true;
-            GameManager.nowMiniGameManager.SetMiniGameFinish();
-        }
-
         if (collision.gameObject.tag == "TyekkuPoint" && nextTyekkuPointPos.position.y > collision.gameObject.transform.position.y)
         {
             tyekkuPointPos = nextTyekkuPointPos;

@@ -17,7 +17,7 @@ public class MainFloor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(transform.eulerAngles.z);
         ///”ÍˆÍ“à‚É‚¨‚³‚ß‚é
         if (transform.eulerAngles.z > 10 && transform.eulerAngles.z < 335)
         {

@@ -53,7 +53,7 @@ public class LookOnTexture : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(transform.position, Vector3.down); // Ray‚ð¶¬
 
-        if (Physics.Raycast(ray, out hit, 10000))
+        if (Physics.Raycast(ray, out hit, 1000000000))
         {
 
             if (Vector3.Angle(Vector3.up, hit.normal) >= 30 || hit.collider.gameObject.tag == "Sea")
