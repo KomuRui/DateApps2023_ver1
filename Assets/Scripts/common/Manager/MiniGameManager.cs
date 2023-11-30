@@ -87,7 +87,7 @@ public class MiniGameManager : MonoBehaviour
             threePlayer[num] = false;
 
         //ÉvÉåÉCÉÑÅ[Ç∆âÊëúê∂ê¨
-        onePlayerObj = (GameObject)Resources.Load("Prefabs" + StageSelectManager.nowMiniGameName + "One" + PlayerManager.GetPlayerVisual(onePlayer));
+        onePlayerObj = (GameObject)Resources.Load("Prefabs/" + miniGameName + "/One/" + PlayerManager.GetPlayerVisual(onePlayer));
         onePlayerObj = Instantiate(onePlayerObj, onePlayerPos, Quaternion.identity);
         onePlayerObj.transform.position = onePlayerPos;
         onePlayerObj.transform.localScale = onePlayerScale;
@@ -103,14 +103,14 @@ public class MiniGameManager : MonoBehaviour
         int lookNum = 0;
         foreach (byte num in threePlayer.Keys)
         {
-            threePlayerObj[lookNum] = (GameObject)Resources.Load("Prefabs" + StageSelectManager.nowMiniGameName + "Three" + PlayerManager.GetPlayerVisual(num));
+            threePlayerObj.Add((GameObject)Resources.Load("Prefabs/" + miniGameName + "/Three/" + PlayerManager.GetPlayerVisual(num)));
             threePlayerObj[lookNum] = Instantiate(threePlayerObj[lookNum], this.transform.position, Quaternion.identity);
             threePlayerObj[lookNum].transform.position = threePlayerPos[lookNum];
             threePlayerObj[lookNum].transform.localScale = threePlayerScale[lookNum];
             threePlayerObj[lookNum].transform.localEulerAngles = threePlayerRotate[lookNum];
             threePlayerObj[lookNum].transform.GetComponent<PlayerNum>().playerNum = num;
 
-            if (threePlayerParent[lookNum] != null)
+            if (lookNum < threePlayerParent.Count)
                 threePlayerObj[lookNum].transform.parent = threePlayerParent[lookNum].transform;
 
 
