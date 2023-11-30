@@ -104,7 +104,7 @@ public class SurfboardPlayer : MonoBehaviour
 
             this.transform.GetChild(0).transform.parent = null;
 
-            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 

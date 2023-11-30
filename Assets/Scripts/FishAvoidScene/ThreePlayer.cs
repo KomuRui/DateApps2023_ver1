@@ -194,7 +194,7 @@ public class ThreePlayer : MonoBehaviour
     void DestroyPlayer()
     {
         // ミニゲームに死んだことを伝える
-        GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
+        GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
 
         //オブジェクトを削除
         //Destroy(this.gameObject);

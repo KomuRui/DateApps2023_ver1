@@ -25,8 +25,9 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
 
-    [SerializeField] protected Image onePlayerImage;                                     //1人側プレイヤーの画像
-    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();         //3人側プレイヤーの画像
+    [SerializeField] protected Image onePlayerImage;                                                            //1人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                                //3人側プレイヤーの画像
+    [SerializeField] protected Dictionary<byte,Image> threePlayerImageTable = new Dictionary<byte, Image>();    //3人側プレイヤーの画像
 
     [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
     [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
@@ -115,7 +116,10 @@ public class MiniGameManager : MonoBehaviour
 
 
             if (threePlayerImage[lookNum] != null)
+            {
                 threePlayerImage[lookNum].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
+                threePlayerImageTable[num] = threePlayerImage[lookNum];
+            }
             lookNum++;
         }
     }
@@ -154,22 +158,22 @@ public class MiniGameManager : MonoBehaviour
         SetMiniGameFinish();
     }
 
-    public void PlayerDead(GameObject player)
+    public void PlayerDead(byte player)
     {
-        Color c = testImageTable[player].color;
+        Color c = threePlayerImageTable[player].color;
         c.r = 0.2f;
         c.g = 0.2f;
         c.b = 0.2f;
-        testImageTable[player].color = c;
+        threePlayerImageTable[player].color = c;
     }
 
-    public void PlayerHeal(GameObject player)
+    public void PlayerHeal(byte player)
     {
-        Color c = testImageTable[player].color;
+        Color c = threePlayerImageTable[player].color;
         c.r = 1.0f;
         c.g = 1.0f;
         c.b = 1.0f;
-        testImageTable[player].color = c;
+        threePlayerImageTable[player].color = c;
     }
 
 
