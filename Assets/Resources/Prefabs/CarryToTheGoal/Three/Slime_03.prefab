@@ -67,7 +67,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114501383228088852}
   serializedVersion: 4
-  m_Mass: 0.5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 100
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 117673430885926016}
   damType: 0
-  moveSpeed: 0.5
+  moveSpeed: 0.7
   rotationSpeed: 180
   gravitySpeed: 3
   isHorizontalInput: 1
@@ -138,6 +138,7 @@ MonoBehaviour:
   isAnimDamage: 1
   playerNum: 1
   localGravity: {x: 0, y: -3, z: 0}
+  isMuteki: 0
 --- !u!114 &6886456958226535917
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -65,8 +65,8 @@ public class MiniGameManager : MonoBehaviour
     void Start()
     {
         /////////////////////////////////α版だけ
-        PlayerManager.Initializ();
-        ScoreManager.Initializ();
+       // PlayerManager.Initializ();
+       // ScoreManager.Initializ();
 
         /////初期化
         GameManager.nowMiniGameManager = this;
@@ -81,11 +81,11 @@ public class MiniGameManager : MonoBehaviour
             testImageTable[testPlayer[i]] = testImage[i];
         }
         //各プレイヤー番号設定
-        //onePlayer = PlayerManager.GetOnePlayer();
+        onePlayer = PlayerManager.GetOnePlayer();
 
-        //List<byte> threeP = PlayerManager.GetThreePlayer();
-        //foreach(byte num in threeP)
-        //    threePlayer[num] = false;
+        List<byte> threeP = PlayerManager.GetThreePlayer();
+        foreach (byte num in threeP)
+            threePlayer[num] = false;
 
         ////プレイヤーと画像生成
         //onePlayerObj = (GameObject)Resources.Load(PlayerManager.GetPlayerVisual(onePlayer));
@@ -97,7 +97,7 @@ public class MiniGameManager : MonoBehaviour
 
         //if (onePlayerParent != null)
         //    onePlayerObj.transform.parent = onePlayerParent.transform;
-           
+
 
         //if (onePlayerImage != null)
         //     onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
@@ -114,7 +114,7 @@ public class MiniGameManager : MonoBehaviour
 
         //    if (threePlayerParent[i] != null)
         //        threePlayerObj[i].transform.parent = threePlayerParent[i].transform;
-                
+
 
         //    if (threePlayerImage[i] != null)
         //        threePlayerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));

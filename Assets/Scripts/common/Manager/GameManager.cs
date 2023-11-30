@@ -11,6 +11,6 @@ public static class GameManager
     {
         PlayerManager.Initializ();
         ScoreManager.Initializ();
-        ScoreManager.Initializ();
+        StageSelectManager.Initializ();
     }
 }

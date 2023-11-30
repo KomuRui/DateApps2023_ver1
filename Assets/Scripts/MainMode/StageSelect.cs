@@ -43,7 +43,7 @@ public class StageSelect : MonoBehaviour
         Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
         //2秒後に開始
-        StartCoroutine(RandomMiniGameSelectStart(2.0f));
+        StartCoroutine(RandomMiniGameSelectStart(4.0f));
     }
 
     // Update is called once per frame
@@ -63,47 +63,47 @@ public class StageSelect : MonoBehaviour
     IEnumerator RandomMiniGameSelectStart(float delay)
     {
         yield return new WaitForSeconds(delay);
+        StageSelectManager.ChangeMiniGameScene();
+        //count++;
 
-        count++;
+        //for (int i = 0; i < stageImageObj.Count; i++)
+        //{
+        //    Color c = stageImageObj[i].GetComponent<MeshRenderer>().material.color;
 
-        for (int i = 0; i < stageImageObj.Count; i++)
-        {
-            Color c = stageImageObj[i].GetComponent<MeshRenderer>().material.color;
+        //    if (lookMiniGameNum == i)
+        //    {
+        //        stageImageObj[i].transform.localScale = selectScale;
+        //        c.a = selectAlpha;
 
-            if (lookMiniGameNum == i)
-            {
-                stageImageObj[i].transform.localScale = selectScale;
-                c.a = selectAlpha;
+        //    }
+        //    else
+        //    {
+        //        stageImageObj[i].transform.localScale = notSelectScale;
+        //        c.a = notSelectAlpha;
+        //    }
 
-            }
-            else
-            {
-                stageImageObj[i].transform.localScale = notSelectScale;
-                c.a = notSelectAlpha;
-            }
+        //    stageImageObj[i].GetComponent<MeshRenderer>().material.color = c;
+        //}
 
-            stageImageObj[i].GetComponent<MeshRenderer>().material.color = c;
-        }
+        ////見る位置変える
+        //lookMiniGameNum++;
+        //if (lookMiniGameNum >= stageImageObj.Count)
+        //{
+        //    lookMiniGameNum = 0;
+        //    changeTime += Random.Range(1 + count, 3 + count) / 100.0f;
+        //    if (changeTime > 0.6f)
+        //    {
+        //        isFinish = true;
+        //        finishImage = Random.Range(0, stageImageObj.Count);
+        //    }
+        //}
 
-        //見る位置変える
-        lookMiniGameNum++;
-        if (lookMiniGameNum >= stageImageObj.Count)
-        {
-            lookMiniGameNum = 0;
-            changeTime += Random.Range(1 + count, 3 + count) / 100.0f;
-            if (changeTime > 0.6f)
-            {
-                isFinish = true;
-                finishImage = Random.Range(0, stageImageObj.Count);
-            }
-        }
-
-        //終わりなら
-        if (isFinish && lookMiniGameNum == finishImage)
-            StartCoroutine(StartSceneChange(2.0f));
-        else
-            //0.3秒後に開始
-            StartCoroutine(RandomMiniGameSelectStart(changeTime));
+        ////終わりなら
+        //if (isFinish && lookMiniGameNum == finishImage)
+        //    StartCoroutine(StartSceneChange(2.0f));
+        //else
+        //    //0.3秒後に開始
+        //    StartCoroutine(RandomMiniGameSelectStart(changeTime));
 
     }
 }

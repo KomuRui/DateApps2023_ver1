@@ -19,6 +19,9 @@ public static class PlayerManager
     //プレイヤー人数
     public const int PLAYER_MAX = 4;
 
+    //1人側プレイヤーの番号
+    private static byte onePlayerNum = 1;
+
     //初期化
     public static void Initializ()
     {
@@ -39,10 +42,10 @@ public static class PlayerManager
         player[4].isThreePlayer = true;
 
         ///////////////////見た目と画像を手動で設定するので汚くなります(α版のみ)//////////////////////////
-        player[1].visualPath = "Prefabs/Slime_01";
-        player[2].visualPath = "Prefabs/Slime_01_King";
-        player[3].visualPath = "Prefabs/Slime_01_MeltalHelmet";
-        player[4].visualPath = "Prefabs/Slime_01_Viking";
+        player[1].visualPath = "Slime_01";
+        player[2].visualPath = "Slime_01_King";
+        player[3].visualPath = "Slime_01_MeltalHelmet";
+        player[4].visualPath = "Slime_01_Viking";
 
         player[1].vitualImagePath = "image_010";
         player[2].vitualImagePath = "image_002";
@@ -50,6 +53,16 @@ public static class PlayerManager
         player[4].vitualImagePath = "image_004";
 
 
+    }
+    
+    //次の1人側を設定
+    public static void NextOnePlayer() {
+
+        player[onePlayerNum].isThreePlayer = true;
+        onePlayerNum++;
+        if (onePlayerNum > 4) return;
+
+        player[onePlayerNum].isThreePlayer = false;
     }
 
     //プレイヤーの見た目を設定
