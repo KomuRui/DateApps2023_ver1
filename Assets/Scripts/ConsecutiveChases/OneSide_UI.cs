@@ -9,6 +9,7 @@ public class OneSide_UI : MonoBehaviour
     [SerializeField] public const float SHIFT_VER_UI = 7.0f;
     [SerializeField] public const float SHIFT_HOR_UI = -4.0f;
 
+
     // Start is called before the first frame update
     void Start()
     {

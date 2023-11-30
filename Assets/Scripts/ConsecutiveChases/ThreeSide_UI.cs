@@ -8,13 +8,17 @@ public class ThreeSide_UI: MonoBehaviour
     public UnityEngine.Vector3 playerPos = UnityEngine.Vector3.zero;
     public const float SHIFT_VER_UI = 1.0f;
     public const float SHIFT_HOR_UI = -0.5f;
+    [SerializeField] private int playerNum;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameManager.nowMiniGameManager.threePlayerObj[this.GetComponent<PlayerNum>().playerNum - 2];
+
         //ˆÊ’u‚ð•Ï‚¦‚é
         SetPosition();
     }
+
 
     // Update is called once per frame
     void Update()

@@ -185,10 +185,8 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Sea" )
         {
-            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).kill++;
-            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
-
-            if (((NotFallHoleGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 
