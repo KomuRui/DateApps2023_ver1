@@ -19,7 +19,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    [SerializeField] private Image nextCommandImage; //次のコマンドの画像を表示する場所のリスト
+    [SerializeField] private List<Image> nextCommandImage; //次のコマンドの画像を表示する場所のリスト
     [SerializeField] private List<Sprite> commandImageList = new List<Sprite>(); //コマンドの画像のリスト（何の画像を使うか）
     [SerializeField] private float SPEED_MAX = 14.0f;       //スピードの最大
     [SerializeField] private float deceleration = 150.0f;       //減速率
@@ -58,7 +58,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
         buttonFlag = false;
 
-        nextCommandImage.sprite = commandImageList[1];
+        nextCommandImage[playerNum - 2].sprite = commandImageList[1];
     }
 
     //顔のテクスチャ設定
@@ -265,7 +265,7 @@ public class ConsecutivePlayer : MonoBehaviour
             rb.AddForce(force, ForceMode.Force);          // 力を加える
 
             isDead = true;
-            GameManager.nowMiniGameManager.PlayerDead(this.gameObject);
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
             //ゲームマネージャーに終わったことを伝える
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
@@ -290,22 +290,22 @@ public class ConsecutivePlayer : MonoBehaviour
         {
             if (buttonFlag) 
             {
-                nextCommandImage.sprite = commandImageList[2];
+                nextCommandImage[playerNum - 2].sprite = commandImageList[2];
             }
             else
             {
-                nextCommandImage.sprite = commandImageList[3];
+                nextCommandImage[playerNum - 2].sprite = commandImageList[3];
             }
         }
         else
         {
             if (buttonFlag)
             {
-                nextCommandImage.sprite = commandImageList[0];
+                nextCommandImage[playerNum - 2].sprite = commandImageList[0];
             }
             else
             {
-                nextCommandImage.sprite = commandImageList[1];
+                nextCommandImage[playerNum - 2].sprite = commandImageList[1];
             }
         }
         

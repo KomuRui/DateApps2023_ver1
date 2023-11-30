@@ -222,7 +222,7 @@ Transform:
   - {fileID: 9220413957887384756}
   - {fileID: 1002512342394797780}
   m_Father: {fileID: 0}
-  m_RootOrder: 38
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5040376219064831212
 Animator:
@@ -315,11 +315,13 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 1}
   nextCommandImage: {fileID: 0}
   commandImageList:
-  - {fileID: 21300000, guid: 572b078f1944d22418415318f780e5ce, type: 3}
-  - {fileID: 21300000, guid: 17b463269e5b5684eb67402ce44d21cc, type: 3}
+  - {fileID: 21300000, guid: ddc98ca143781264aadf579100f971ea, type: 3}
+  - {fileID: 21300000, guid: 0d223d5af239cfa46be078107365fe45, type: 3}
+  - {fileID: 21300000, guid: 3e1522d120536384590e065a53465e3d, type: 3}
+  - {fileID: 21300000, guid: 0442375ab74834444ac581bbb27996c1, type: 3}
   SPEED_MAX: 14
   deceleration: 0.003
-  missDeceleration: 50
+  missDeceleration: 5
   addSpeed: 0.3
   moveSpeed: 0
   rotationSpeed: 180
@@ -332,9 +334,11 @@ MonoBehaviour:
   isAnimDamage: 1
   buttonCount: 0
   playerNum: 3
+  chasesManager: {fileID: 0}
   buttonFlag: 0
-  goolFlag: 0
+  isGoal: 0
   isDead: 0
+  isMiss: 0
 --- !u!114 &-4350169300980340802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0f7e881652524409894735c0bcb56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 0
+  playerNum: 3
 --- !u!1 &6845574887620819107
 GameObject:
   m_ObjectHideFlags: 0
