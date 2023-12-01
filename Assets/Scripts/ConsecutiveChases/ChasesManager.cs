@@ -115,7 +115,7 @@ public class ChasesManager : MiniGameManager
             ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
         }
 
-        byte rank = 1;
+        byte rank = oneWin;
         //ƒS[ƒ‹‚µ‚½l’B‚É‡ˆÊ‚ğ‚Â‚¯‚é
         for (int i = 0; i < goalPlayer.Count(); i++)
         {
