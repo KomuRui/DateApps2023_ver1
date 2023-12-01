@@ -72,7 +72,6 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
-        SceneStart();
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
@@ -122,6 +121,8 @@ public class MiniGameManager : MonoBehaviour
             }
             lookNum++;
         }
+
+        SceneStart();
     }
 
     //更新

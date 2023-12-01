@@ -17,13 +17,21 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!GameManager.nowMiniGameManager.IsFinish())
+        {
+            CameraMove();
+        }
+    }
+
+    public void CameraMove()
+    {
         //一番進んでいるプレイヤー
         float priorityDistance = -9999.0f;
 
         //プレイヤーの一番早いやつの位置
         for (int i = 0; i < playerList.Count; i++)
         {
-            if (playerList[i].transform.position.z >= priorityDistance)
+            if (playerList[i] != null && playerList[i].transform.position.z >= priorityDistance)
             {
                 priorityDistance = playerList[i].transform.position.z;
             }
