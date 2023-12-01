@@ -11,6 +11,15 @@ public class SurfboardManager : MiniGameManager
     {
     }
 
+    //ゲーム開始時に呼ばれる
+    public override void MiniGameStart()
+    {
+        foreach (var player in threePlayerObj)
+        {
+            player.GetComponent<OneSurfboardPlayer>().threePlayer.Add(player);
+        }
+    }
+
     //Updateと同じ
     public override void MiniGameUpdate()
     {
@@ -30,6 +39,8 @@ public class SurfboardManager : MiniGameManager
             GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
         //////////////////////////////////
+       
+        
     }
 
     //ミニゲームが終わったら呼ばれる

@@ -93,7 +93,7 @@ public class SurfboardPlayer : MonoBehaviour
     private void Fall()
     {
         //子供がいたら
-        if (this.transform.childCount > 0)
+        for (int i = 0; i < this.transform.childCount; i++)
         {
             isDead = true;
 
