@@ -60,6 +60,7 @@ public class PlayerHand : MonoBehaviour
 
         flagInfo[Flag.LEFT] = leftFlagIngo;
         flagInfo[Flag.RIGHT] = RightFlagIngo;
+        flagState = new int[5];
         flagTurn = 0;
         turnMax = 3;
 
@@ -162,12 +163,19 @@ public class PlayerHand : MonoBehaviour
         flagInfo[f].isUp = !(flagInfo[f].isUp);
     }
 
+    public void TurnReset()
+    {
+        flagTurn = 0;
+    }
+
     public void AllFlagDown()
     {
+
         if (isOnePlayer)
         {
             if (flagTurn < turnMax)
             {
+                Debug.Log(flagTurn);
                 flagState[flagTurn] = 0;
 
                 if (flagInfo[Flag.RIGHT].isUp)
@@ -175,18 +183,21 @@ public class PlayerHand : MonoBehaviour
 
                 if (flagInfo[Flag.LEFT].isUp)
                     flagState[flagTurn] += 2;
+                Debug.Log(flagState[flagTurn]);
             }
             else
             {
+                Debug.Log(flagState[0] + "," + flagState[1] + "," + flagState[2]);
+                //Debug.Log("ageru");
                 // GMOb.instance.SetFlagState
             }
 
 
         }
-        //else
-        //{
-        //oneOb.GetComponent<PlayerHand>().flagState[flagTurn];
-        //}
+        else
+        {
+
+        }
 
         flagTurn++;
         flagInfo[Flag.LEFT].flag.transform.DORotate(initializeRotate, 0.1f);

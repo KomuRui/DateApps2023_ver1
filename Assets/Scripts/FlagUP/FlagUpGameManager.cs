@@ -93,6 +93,8 @@ public class FlagUpGameManager : MiniGameManager
         //全て下げる
         AllFlagDown();
 
+        TurnReset();
+
         //長い笛
         se.PlayLongFlute();
         StartCoroutine(FlagUpStart(2.0f));
@@ -108,6 +110,7 @@ public class FlagUpGameManager : MiniGameManager
 
         //全て下げる
         AllFlagDown();
+        //いっかいめなし
 
         //短い笛
         se.PlayShortFlute();
@@ -141,6 +144,12 @@ public class FlagUpGameManager : MiniGameManager
     {
         for (int i = 0; i < player.Count; i++)
             player[i].GetComponent<PlayerHand>().AllFlagDown();
+    }
+
+    private void TurnReset()
+    {
+        for (int i = 0; i < player.Count; i++)
+            player[i].GetComponent<PlayerHand>().TurnReset();
     }
 
     //ターン変更
