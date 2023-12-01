@@ -5,6 +5,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static FlagUpGameManager;
 
+
+//ラウンド
+public enum Round
+{
+    ONE = 1,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    MAX
+}
+
 public class FlagUpGameManager : MiniGameManager
 {
 
@@ -13,17 +25,6 @@ public class FlagUpGameManager : MiniGameManager
     {
         ONE_PLAYER,
         THREE_PLAYER,
-        MAX
-    }
-
-    //ラウンド
-    public enum Round
-    {
-        ONE = 1,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE,
         MAX
     }
 
@@ -47,10 +48,11 @@ public class FlagUpGameManager : MiniGameManager
     [SerializeField] private SETable se;                          //SE
     [SerializeField] private TextMeshProUGUI roundText;       //ラウンドテキスト
     [SerializeField] private TextMeshProUGUI finishText;       //ラウンドテキスト
-    [SerializeField] public int[] oneFlagState = new int[5];    // 旗状態
+    [SerializeField] public int[] oneFlagState;    // 旗状態
+    [SerializeField] public int nowRank;
 
     public Turn turn;                                          //どっちのターンか
-    private Round nowRound;                                    //現在のラウンド数
+    public Round nowRound;                                    //現在のラウンド数
     private int nowFlagUpCount;                               //現在の旗上げ回数
     public bool isFlagUpPermit;                                //旗上げ許可するか
     private Dictionary<Round, RoundInfo> roundInfo = new Dictionary<Round, RoundInfo>(); //ラウンド情報
@@ -62,6 +64,13 @@ public class FlagUpGameManager : MiniGameManager
         nowRound = Round.ONE;
         isFlagUpPermit = false;
         nowFlagUpCount = 0;
+        oneFlagState = new int[5];
+        nowRank = 4;
+
+        for (int i = 0;i < 5;i++)
+        {
+            oneFlagState[i] = 0;
+        }
 
         //ラウンド情報の初期化
         RoundInfo firstHalf = new RoundInfo();
@@ -150,6 +159,13 @@ public class FlagUpGameManager : MiniGameManager
     {
         for (int i = 0; i < player.Count; i++)
             player[i].GetComponent<PlayerHand>().TurnReset();
+
+        for (int j = 0; j < player.Count; j++)
+        {
+            oneFlagState[j] = player[0].GetComponent<PlayerHand>().GetFlagState(j);
+           
+        }
+            
     }
 
     //ターン変更
@@ -190,5 +206,27 @@ public class FlagUpGameManager : MiniGameManager
         {
             oneFlagState[i] = FlagState[i];
         }
+    }
+
+    public override void MiniGameFinish()
+    {
+        //ScoreManager.AddScore(playerNum,rank);
+
+        //１人側が勝ったかどうか
+        bool isWinOnePLayer = false;
+
+        //プレイヤーがすべて死んでいるのなら
+        if (isPlayerAllDead)
+        {
+            ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 1);
+            isWinOnePLayer = true;
+        }
+        else
+        { 
+
+            ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
+
+        }
+
     }
 }
