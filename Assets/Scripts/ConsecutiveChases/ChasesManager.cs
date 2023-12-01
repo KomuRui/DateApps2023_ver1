@@ -10,7 +10,7 @@ using static UnityEditor.Progress;
 public class ChasesManager : MiniGameManager
 {
     //ゴールした順番、（番号が若い順で早い）
-    private List<byte> goalPlayer;
+    public List<byte> goalPlayer;
 
     [SerializeField] private GameObject canvas;
 
@@ -22,11 +22,7 @@ public class ChasesManager : MiniGameManager
     public override void SceneStart()
     {
         canvas.SetActive(true);
-    }
 
-    //ゲーム開始時に呼ばれる
-    public override void MiniGameStart()
-    {
         onePlayerObj.GetComponent<ChasesPlayer>().nextCommandImageList = onePlayerNextCommandImageList;
 
         foreach (var player in threePlayerObj)
@@ -41,15 +37,19 @@ public class ChasesManager : MiniGameManager
         }
     }
 
+    //ゲーム開始時に呼ばれる
+    public override void MiniGameStart()
+    {
+    }
+
     //Updateと同じ
     public override void MiniGameUpdate()
     {
         ///////////a版のみ////////////////
-
         bool flag = true;
         foreach (var item in threePlayerObj)
         {
-            if (!item.GetComponent<ConsecutivePlayer>().isGoal && !item.GetComponent<ConsecutivePlayer>().isDead)
+            if (item != null &&!item.GetComponent<ConsecutivePlayer>().isGoal && !item.GetComponent<ConsecutivePlayer>().isDead)
             {
                 flag = false;
             }
@@ -59,6 +59,7 @@ public class ChasesManager : MiniGameManager
         {
             GameManager.nowMiniGameManager.SetMiniGameFinish();
         }
+
         //////////////////////////////////
     }
 
@@ -66,7 +67,7 @@ public class ChasesManager : MiniGameManager
     public override void MiniGameFinish()
     {
         //ランキングをつける
-        //Ranking();
+        Ranking();
     }
 
     //プレイヤーにランクをつける
@@ -77,12 +78,12 @@ public class ChasesManager : MiniGameManager
 
         //<Player番号、距離>
         var threeRankMiss = new Dictionary<byte, float>();
-        List<byte> threeRankResult = new List<byte>();
+        List<Dictionary<byte, float>> threeRankResult = new List<Dictionary<byte, float>>();
 
         foreach (GameObject player in threePlayerObj)
         {
             //全員倒していたら
-            if (goalPlayer == null)
+            if (goalPlayer.Count() == 0)
             {
                 //1Pプレイヤーを勝ちにする
                 onePlayerWin = true;
@@ -100,19 +101,7 @@ public class ChasesManager : MiniGameManager
 
         ///////////ランキングをつける//////////
 
-        //ゴールした人達に順位をつける
-        for (int i = 0; i < threeRankResult.Count; i++)
-        {
-            threeRankResult.Add(goalPlayer[i]);
-        }
-
-        //ゴールしてない人に順位をつける
-        foreach (var item in sortedDictionary)
-        {
-            threeRankResult.Add(item.Key);
-        }
-
-        byte oneWin = 1;
+        byte oneWin = 0;
         //1Pが勝っていたら
         if (onePlayerWin)
         {
@@ -126,11 +115,32 @@ public class ChasesManager : MiniGameManager
             ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
         }
 
-        
-        //3P側の順位を確定
-        for (byte i = 0; i < threeRankResult.Count; i++) 
+        byte rank = 1;
+        //ゴールした人達に順位をつける
+        for (int i = 0; i < goalPlayer.Count(); i++)
         {
-            ScoreManager.AddScore(threeRankResult[i], (byte)(i + oneWin));
+            rank++;
+            ScoreManager.AddScore(goalPlayer[i], rank);
+        }
+
+        //ゴールしてない人に順位をつける
+
+        float tmp = -9999;
+        byte tai = 0;
+        foreach (var item in sortedDictionary)
+        {
+            rank++;
+            if (tmp != (float)item.Value)
+            {
+                ScoreManager.AddScore(item.Key, (byte)(rank - tai));
+                tmp = (float)item.Value;
+                tai = 0;
+            }
+            else
+            {
+                tai++;
+                ScoreManager.AddScore(item.Key, (byte)(rank - tai));
+            }
         }
     }
 
