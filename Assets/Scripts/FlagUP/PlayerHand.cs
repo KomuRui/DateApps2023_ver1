@@ -37,7 +37,10 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private int flagCount = 3;    // 
     [SerializeField] private int flagTurn;    // 
     [SerializeField] private int turnMax;    // 
+    [SerializeField] private bool isFirstFlag;    // 
+    [SerializeField] private bool isRank;    // 
     [SerializeField] public int[] flagState = new int[5];    // 旗状態
+    [SerializeField] public int ranking;    // 
     [SerializeField] private GameObject GMOb;  // 1
 
 
@@ -63,17 +66,27 @@ public class PlayerHand : MonoBehaviour
         flagState = new int[5];
         flagTurn = 0;
         turnMax = 3;
+        ranking = 0;
+        isFirstFlag = true;
+        isRank = false;
 
         //初期
         initializeRotate = new Vector3(0,180,0);
-
+        playerNum = this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //旗上げ
         FlagUp();
+
+        if(isRank)
+        {
+            ((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank--;
+            isRank = false;
+        }
 
         ////ストップしてない&自分のターン
         //if (flagUpGameManager.isStop == false && flagUpGameManager.isAloneTurn == false)
@@ -166,46 +179,109 @@ public class PlayerHand : MonoBehaviour
     public void TurnReset()
     {
         flagTurn = 0;
+        isFirstFlag = true;
+
+        if ((int)((FlagUpGameManager)GameManager.nowMiniGameManager).nowRound >= 3)
+            turnMax = 5;
     }
 
     public void AllFlagDown()
     {
 
         if (isOnePlayer)
+        //if(((FlagUpGameManager)GameManager.nowMiniGameManager).turn == 0)
         {
-            if (flagTurn < turnMax)
+            //if (isOnePlayer)
             {
-                Debug.Log(flagTurn);
-                flagState[flagTurn] = 0;
+                if (flagTurn < turnMax && isFirstFlag == false)
+                {
+                    Debug.Log(flagTurn);
+                    flagState[flagTurn] = 0;
 
-                if (flagInfo[Flag.RIGHT].isUp)
-                    flagState[flagTurn] += 1;
+                    if (flagInfo[Flag.RIGHT].isUp)
+                        flagState[flagTurn] += 1;
 
-                if (flagInfo[Flag.LEFT].isUp)
-                    flagState[flagTurn] += 2;
-                Debug.Log(flagState[flagTurn]);
-            }
-            else
-            {
+                    if (flagInfo[Flag.LEFT].isUp)
+                        flagState[flagTurn] += 2;
+                    Debug.Log(flagState[flagTurn]);
+                    flagTurn++;
+
+
+                }
+                else
+                {
+                    isFirstFlag = false;
+                    Debug.Log(flagState[0] + "," + flagState[1] + "," + flagState[2]);
+                    //Debug.Log("ageru");
+                    // GMOb.instance.SetFlagState
+                }
                 Debug.Log(flagState[0] + "," + flagState[1] + "," + flagState[2]);
-                //Debug.Log("ageru");
-                // GMOb.instance.SetFlagState
             }
+                
 
 
         }
         else
         {
+            if (!isOnePlayer)
+            {
+                if (flagTurn < turnMax && isFirstFlag == false)
+                {
+                    Debug.Log("3ninn" + flagTurn);
+
+                    flagState[flagTurn] = 0;
+
+                    if (flagInfo[Flag.RIGHT].isUp)
+                        flagState[flagTurn] += 1;
+
+                    if (flagInfo[Flag.LEFT].isUp)
+                        flagState[flagTurn] += 2;
+
+                    if (((FlagUpGameManager)GameManager.nowMiniGameManager).oneFlagState[flagTurn] != flagState[flagTurn])
+                    {
+
+                        ranking = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank;
+                        ScoreManager.AddScore(GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum, ((byte)((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank));
+
+
+                        isRank = true;
+
+                        GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
+                        GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
+                        Rigidbody rb;
+                        rb = this.GetComponent<Rigidbody>();
+                        rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+                        rb.useGravity = true;
+                        Debug.Log("4");
+
+                    }
+
+                    flagTurn++;
+                }
+                else
+                {
+                    isFirstFlag = false;
+                    Debug.Log("start");
+                }
+            }
+                
+
+
 
         }
 
-        flagTurn++;
         flagInfo[Flag.LEFT].flag.transform.DORotate(initializeRotate, 0.1f);
         flagInfo[Flag.RIGHT].flag.transform.DORotate(initializeRotate, 0.1f);
         flagInfo[Flag.LEFT].isUp = false;
         flagInfo[Flag.RIGHT].isUp = false;
 
 
+    }
+
+    //一人側の手
+    public int GetFlagState(int flagTurn)
+    {
+        return flagState[flagTurn];
     }
 
     //上げれない

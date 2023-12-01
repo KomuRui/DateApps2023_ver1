@@ -59,6 +59,7 @@ public class ConsecutivePlayer : MonoBehaviour
         buttonFlag = false;
 
         nextCommandImage[playerNum - 2].sprite = commandImageList[1];
+        int a = 0;
     }
 
     //顔のテクスチャ設定
@@ -277,6 +278,9 @@ public class ConsecutivePlayer : MonoBehaviour
         {
             Debug.Log(playerNum + "P Goal"); // ログを表示する
             isGoal = true;
+
+            ChasesManager a = GameManager.nowMiniGameManager.gameObject.GetComponent<ChasesManager>();
+            a.goalPlayer.Add(gameObject.GetComponent<PlayerNum>().playerNum);
         }
     }
 
