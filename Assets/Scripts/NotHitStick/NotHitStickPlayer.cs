@@ -156,7 +156,6 @@ public class NotHitStickPlayer : MonoBehaviour
 
         int beforeStage = nowStageNum;
         float nowInput = Input.GetAxis("L_Stick_V" + playerNum);
-        Debug.Log(Math.Abs(beforeInput));
 
         //©“®ƒWƒƒƒ“ƒv(•Ê‚Ì‘«ê‚É)
         if (nowInput <= -0.8f && beforeInput > -0.8f)
@@ -253,7 +252,9 @@ public class NotHitStickPlayer : MonoBehaviour
         if (collision.transform.tag == "Stage")
         {
             isJump2 = false;
-            rb.velocity = Vector3.zero;
+
+            if(rb != null)
+                rb.velocity = Vector3.zero;
         }
     }
 
@@ -271,9 +272,8 @@ public class NotHitStickPlayer : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         Destroy(this.gameObject);
-        ((NotHitStickGameManager)GameManager.nowMiniGameManager).kill++;
-        if (((NotHitStickGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
     }
 
     //—‚Æ‚·
