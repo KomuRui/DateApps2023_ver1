@@ -11,7 +11,7 @@ public class LookOnTexture : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
-    [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] public int playerNum;                   // プレイヤー番号
 
     private Vector3 beforePos;
 

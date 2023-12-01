@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6240035589528108048}
   - component: {fileID: 1630466496980597967}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Slime_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7070497187373543585}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9059354515224662082}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2079165559679691821}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1010704685829148314}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5452033728409415026}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8598370363390736743}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,9 +294,9 @@ GameObject:
   - component: {fileID: 7920096539048285563}
   - component: {fileID: 2160290688409789380}
   - component: {fileID: -3321679789332112991}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Slime_03 King
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -504,6 +504,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7f9934f54349dc2489d80b0298740ae5, type: 3}
       propertyPath: m_Name
       value: Crown
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7f9934f54349dc2489d80b0298740ae5, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

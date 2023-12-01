@@ -39,7 +39,7 @@ public class CarryBullet : MonoBehaviour
             if (!other.gameObject.GetComponent<CarryToTheGoalPlayer>().isMuteki)
             {
                 other.GetComponent<CarryToTheGoalPlayer>().Damege();
-                manager.Damege(other.gameObject);
+                manager.Damege(other.gameObject.GetComponent<PlayerNum>().playerNum);
             }
         }
     }

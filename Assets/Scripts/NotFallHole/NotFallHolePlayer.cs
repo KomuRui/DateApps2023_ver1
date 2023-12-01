@@ -40,6 +40,7 @@ public class NotFallHolePlayer : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
 
         rBody = this.GetComponent<Rigidbody>();
+        playerNum = this.GetComponent<PlayerNum>().playerNum;
     }
 
     //顔のテクスチャ設定

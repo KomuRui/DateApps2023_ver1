@@ -82,8 +82,8 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         float verticalInput = 0;
 
         // “ü—Í‚ðŽæ“¾
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.GetComponent<PlayerNum>().playerNum);
 
         //“ü—Í‚ª‚È‚¢‚Ì‚È‚ç
         if ((horizontalInput == 0 && verticalInput == 0) || isDamege)
@@ -245,10 +245,8 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     //Ž€–S
     public void Dead()
     {
-        //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
-        ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).kill++;
+        GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerDead(this.gameObject.GetComponent<PlayerNum>().playerNum);
         Destroy(this.gameObject);
-
-        if (((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).kill >= 3) GameManager.nowMiniGameManager.SetMiniGameFinish();
     }
 }

@@ -54,6 +54,9 @@ public class NotHitStickPlayer : MonoBehaviour
 
         //リジットボディ取得
         rb = GetComponent<Rigidbody>();
+
+        //プレイヤー番号設定
+        playerNum = this.GetComponent<PlayerNum>().playerNum;
     }
 
     //顔のテクスチャ設定

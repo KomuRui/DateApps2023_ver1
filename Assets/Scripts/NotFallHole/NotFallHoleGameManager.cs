@@ -9,10 +9,17 @@ public class NotFallHoleGameManager : MiniGameManager
 {
     //°‚ÌŠJ‚¢‚Ä‚é”
     public int openCount;
+    public AllParentRotate rotate;
+    public List<FallRotateFloor> Floor;
 
     public override void SceneStart()
     {
         openCount = 0;
+        rotate.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
+
+        for (int i = 0; i < Floor.Count; i++)
+            Floor[i].SetPlayerNum(onePlayerObj.GetComponent<PlayerNum>().playerNum);
+
     }
 
     public override void MiniGameUpdate()

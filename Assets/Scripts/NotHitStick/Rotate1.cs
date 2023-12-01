@@ -7,7 +7,7 @@ public class Rotate1 : MonoBehaviour
 {
 
     [SerializeField] private float speed;         // スピード
-    [SerializeField] private int playerNum;       // プレイヤー番号
+    [SerializeField] public int playerNum;       // プレイヤー番号
 
     private float power = 0.0f;
 
@@ -24,11 +24,11 @@ public class Rotate1 : MonoBehaviour
         if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         //現在の力を取得
-        power += -Input.GetAxis("L_Stick_V1") * speed * Time.deltaTime;
+        power += -Input.GetAxis("L_Stick_V" + playerNum) * speed * Time.deltaTime;
         power = Math.Min(0.08f, Math.Abs(power)) * Math.Sign(power);
 
         //力が加えられてないのなら減速する
-        if (Input.GetAxis("L_Stick_V1") == 0 && power != 0) power *= 0.99f;
+        if (Input.GetAxis("L_Stick_V" + playerNum) == 0 && power != 0) power *= 0.99f;
 
         //角度を加算し、範囲内に収める
         transform.eulerAngles += new Vector3(0, power, 0);

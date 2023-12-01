@@ -6,7 +6,7 @@ using DG.Tweening;
 public class FallRotateFloor : MonoBehaviour
 {
 
-    [SerializeField] private int playerNum = 1;
+    [SerializeField] public int playerNum = 1;
     [SerializeField] private string buttonName = "Abutton";
     [SerializeField] private int sige = 1;
     [SerializeField] private NotFallHoleGameManager mana;
@@ -29,11 +29,9 @@ public class FallRotateFloor : MonoBehaviour
     {
         rotateSign = 1;
 
-        //ƒ{ƒ^ƒ“‚Ì–¼‘O‚ğİ’è‚µ‚Ä‚¨‚­
-        buttonName += playerNum;
-
         //‰Šú‰ñ“]‚ğİ’è
         initialRotation = transform.rotation;
+
     }
 
     // Update is called once per frame
@@ -99,6 +97,8 @@ public class FallRotateFloor : MonoBehaviour
 
 
     }
+
+    public void SetPlayerNum(byte num) { buttonName += num; }
 
     IEnumerator WaitRotate(float delay)
     {

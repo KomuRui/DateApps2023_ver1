@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2801763587582659252}
   - component: {fileID: 7662989809328438731}
   - component: {fileID: 8993426007632191036}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Slime_01_MeltalHelmet
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6334014552331424767}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4258556919345914888}
   - component: {fileID: 5355279890853372393}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Slime_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6321325395426597769}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5834138466811387491}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5498108113373646898}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 62984811879355848}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3462816320211211166}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.003_L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,6 +492,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: de4b5f1ab048d034990ce739a01d7544, type: 3}
       propertyPath: m_Name
       value: MetalHelmet
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: de4b5f1ab048d034990ce739a01d7544, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

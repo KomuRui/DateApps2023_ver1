@@ -51,6 +51,7 @@ public class LetsPaintPlayer : MonoBehaviour
 
         //リジットボディ取得
         rBody = this.GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
@@ -70,8 +71,8 @@ public class LetsPaintPlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)

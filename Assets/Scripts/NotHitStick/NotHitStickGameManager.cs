@@ -6,9 +6,13 @@ using UnityEngine;
 public class NotHitStickGameManager : MiniGameManager
 {
     public int kill = 0;
+    public Rotate1 rotate1;
+    public Rotate2 rotate2;
 
     public override void SceneStart()
     {
+        rotate1.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
+        rotate2.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
     }
 
     public override void MiniGameUpdate()

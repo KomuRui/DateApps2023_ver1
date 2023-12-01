@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AllParentRotate : MonoBehaviour
 {
-    [SerializeField] private int playerNum = 1;
+    [SerializeField] public int playerNum = 1;
     [SerializeField] private float speed;
 
     private Vector3 power = new Vector3(0.0f, 0.0f, 0.0f);
@@ -13,7 +13,7 @@ public class AllParentRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        playerNum = GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum;
     }
 
     // Update is called once per frame
