@@ -290,22 +290,22 @@ public class ConsecutivePlayer : MonoBehaviour
         {
             if (buttonFlag) 
             {
-                nextCommandImage[playerNum - 2].sprite = commandImageList[2];
+                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[2];
             }
             else
             {
-                nextCommandImage[playerNum - 2].sprite = commandImageList[3];
+                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[3];
             }
         }
         else
         {
             if (buttonFlag)
             {
-                nextCommandImage[playerNum - 2].sprite = commandImageList[0];
+                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[0];
             }
             else
             {
-                nextCommandImage[playerNum - 2].sprite = commandImageList[1];
+                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[1];
             }
         }
         
