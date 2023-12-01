@@ -14,10 +14,6 @@ public class SurfboardManager : MiniGameManager
     //ƒQ[ƒ€ŠJn‚ÉŒÄ‚Î‚ê‚é
     public override void MiniGameStart()
     {
-        foreach (var player in threePlayerObj)
-        {
-            player.GetComponent<OneSurfboardPlayer>().threePlayer.Add(player);
-        }
     }
 
     //Update‚Æ“¯‚¶

@@ -7,17 +7,11 @@ public class OneSurfboardPlayer : MonoBehaviour
     [SerializeField] private float rotateSpeed  = 0.3f;                   //傾く速さ
     [SerializeField] private float kajiRotateSpeed = 32.0f;                   //1秒間で舵が傾く角度
     [SerializeField] private int playerNum;                   // プレイヤー番号
-    [SerializeField] public List<GameObject> threePlayer;                //3人側のオブジェクト
-    private List<SurfboardPlayer> threePlayerComporment;                //3人側のオブジェクト
     [SerializeField] private GameObject kaji;
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (GameObject player in threePlayer)
-        {
-            threePlayerComporment.Add(player.GetComponent<SurfboardPlayer>());
-        }
     }
 
     // Update is called once per frame
@@ -41,14 +35,15 @@ public class OneSurfboardPlayer : MonoBehaviour
         //舵を動かす
         KajiMove(horizontalInput);
 
-        foreach (var item in threePlayerComporment)
+        foreach (var item in GameManager.nowMiniGameManager.threePlayerObj)
         {
-            if (item.sumRotateX + horizontalInput <= item.LIMIT_ROTATE && item.sumRotateX + horizontalInput >= -item.LIMIT_ROTATE && !item.isDead)
+            SurfboardPlayer p = item.transform.parent.gameObject.GetComponent<SurfboardPlayer>();
+            if (p.sumRotateX + horizontalInput <= p.LIMIT_ROTATE && p.sumRotateX + horizontalInput >= -p.LIMIT_ROTATE && !p.isDead)
             {
-                item.sumRotateX += horizontalInput;
+                p.sumRotateX += horizontalInput;
 
                 //スティックによって回転
-                item.transform.Rotate(new Vector3(0, horizontalInput, 0));
+                p.transform.Rotate(new Vector3(0, horizontalInput, 0));
             }
         }
     }
