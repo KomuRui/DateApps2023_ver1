@@ -97,14 +97,16 @@ public class SurfboardPlayer : MonoBehaviour
         {
             isDead = true;
 
-            Rigidbody childRb = this.transform.GetChild(0).GetComponent<Rigidbody>();
+
+            Rigidbody childRb = this.transform.GetChild(i).GetComponent<Rigidbody>();
 
             //重力を使用する
             childRb.useGravity = true;
 
-            this.transform.GetChild(0).transform.parent = null;
+            this.transform.GetChild(i).transform.parent = null;
+            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(i).GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(i).GetComponent<PlayerNum>().playerNum);
 
-            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(0).GetComponent<PlayerNum>().playerNum);
         }
     }
 

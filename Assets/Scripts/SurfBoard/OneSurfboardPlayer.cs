@@ -37,7 +37,10 @@ public class OneSurfboardPlayer : MonoBehaviour
 
         foreach (var item in GameManager.nowMiniGameManager.threePlayerObj)
         {
+            if(item == null || item.transform.parent == null || item.transform.parent.gameObject.GetComponent<SurfboardPlayer>() == null) continue;
+            
             SurfboardPlayer p = item.transform.parent.gameObject.GetComponent<SurfboardPlayer>();
+
             if (p.sumRotateX + horizontalInput <= p.LIMIT_ROTATE && p.sumRotateX + horizontalInput >= -p.LIMIT_ROTATE && !p.isDead)
             {
                 p.sumRotateX += horizontalInput;
