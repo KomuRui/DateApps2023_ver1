@@ -185,7 +185,7 @@ public class OnePlayer : MonoBehaviour
             }
         }
 
-
+        byte num = this.GetComponent<PlayerNum>().playerNum;
 
         if (isStop)
         {
@@ -194,7 +194,7 @@ public class OnePlayer : MonoBehaviour
                 StartCoroutine(AllCoolCorou());
             }           
         }//ペンギン
-        else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + playerNum) )&& isPenguin)
+        else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("Abutton" + num) )&& isPenguin)
         {
             //ぺんぎんを生成
             InitPenguin(new Vector3(this.transform.position.x, -0.53f, 10), penguinRotate);
@@ -206,7 +206,7 @@ public class OnePlayer : MonoBehaviour
             //isStop = true;
 
         }//サメ
-        else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + playerNum))&& isShark)
+        else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Bbutton" + num))&& isShark)
         {
             //さめを生成
             InitShark(new Vector3(this.transform.position.x, -1, 10), sharkRotate);
@@ -218,7 +218,7 @@ public class OnePlayer : MonoBehaviour
             //StartCoroutine(SharkCoolCorou());
             //isStop = true;
         }//魚群
-        else if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Xbutton" + playerNum))&& isFishes)
+        else if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Xbutton" + num))&& isFishes)
         {
             //さかなを生成
             InitFish(new Vector3(this.transform.position.x, -0.9f, 10), fishesRotate);
@@ -230,7 +230,7 @@ public class OnePlayer : MonoBehaviour
             //StartCoroutine(FishesCoolCorou());
             //isStop = true;
         }//イルカ
-        else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + playerNum))&& isDolphin)
+        else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + num))&& isDolphin)
         {
             //いるかを生成
             InitDolphin(new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
@@ -253,8 +253,8 @@ public class OnePlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.GetComponent<PlayerNum>().playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)

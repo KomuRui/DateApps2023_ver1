@@ -17,11 +17,13 @@ public class MiniGameManager : MonoBehaviour
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
     [SerializeField] protected GameObject onePlayerParent;                                   //1人側プレイヤーの親オブジェクト
+    [SerializeField] protected GameObject onePlayerChild;                                    //1人側プレイヤーの子オブジェクト
     [SerializeField] protected bool onePlayerParentDelete;                                   //1人側プレイヤーの親削除するか
     [SerializeField] protected Vector3 onePlayerPos;                                         //1人側プレイヤーの初期位置
     [SerializeField] protected Vector3 onePlayerScale;                                       //1人側プレイヤーの拡大率
     [SerializeField] protected Vector3 onePlayerRotate;                                      //1人側プレイヤーの角度
     [SerializeField] protected List<GameObject> threePlayerParent = new List<GameObject>();  //3人側プレイヤーの親オブジェクト
+    [SerializeField] protected List<GameObject> threePlayerChild = new List<GameObject>();   //3人側プレイヤーの子オブジェクト
     [SerializeField] protected bool threePlayerParentDelete;                                 //3人側プレイヤーの親削除するか
     [SerializeField] protected List<Vector3> threePlayerPos = new List<Vector3>();           //3人側プレイヤーの初期位置
     [SerializeField] protected List<Vector3> threePlayerScale = new List<Vector3>();         //3人側プレイヤーの拡大率
@@ -39,7 +41,7 @@ public class MiniGameManager : MonoBehaviour
     public List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
     protected byte onePlayer;                                                            //1人側プレイヤー
-    protected Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
+    public Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
     public Dictionary<byte, float> lifeTime = new Dictionary<byte, float>();          //3人側プレイヤーの生きてる時間
 
     ////////////////////////////////////カメラ////////////////////////////////////////////
@@ -94,6 +96,9 @@ public class MiniGameManager : MonoBehaviour
         if (onePlayerParent != null)
             onePlayerObj.transform.parent = onePlayerParent.transform;
 
+        if (onePlayerChild != null)
+            onePlayerChild.transform.parent = onePlayerObj.transform;
+
         if (onePlayerImage != null)
         {
             onePlayerImage.sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
@@ -113,6 +118,8 @@ public class MiniGameManager : MonoBehaviour
             if (lookNum < threePlayerParent.Count)
                 threePlayerObj[lookNum].transform.parent = threePlayerParent[lookNum].transform;
 
+            if (lookNum < threePlayerChild.Count)
+                threePlayerChild[lookNum].transform.parent = threePlayerObj[lookNum].transform;
 
             if (threePlayerImage[lookNum] != null)
             {

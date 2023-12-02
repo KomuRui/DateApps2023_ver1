@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +50,8 @@ public class FlagUpGameManager : MiniGameManager
     [SerializeField] private TextMeshProUGUI roundText;       //ラウンドテキスト
     [SerializeField] private TextMeshProUGUI finishText;       //ラウンドテキスト
     [SerializeField] public int[] oneFlagState;    // 旗状態
-    [SerializeField] public int nowRank;
+    [SerializeField] public Dictionary<byte,int> rankInfo = new Dictionary<byte, int>(); //ランク情報(プレイヤー番号、どのくらい生きたか)
+    [SerializeField] public int nowFlagUp;                 //どのくらいの回数旗上げしたか
 
     public Turn turn;                                          //どっちのターンか
     public Round nowRound;                                    //現在のラウンド数
@@ -65,7 +67,7 @@ public class FlagUpGameManager : MiniGameManager
         isFlagUpPermit = false;
         nowFlagUpCount = 0;
         oneFlagState = new int[5];
-        nowRank = 4;
+        nowFlagUp = 0;
 
         for (int i = 0;i < 5;i++)
         {
@@ -116,6 +118,7 @@ public class FlagUpGameManager : MiniGameManager
 
         //旗上げ回数プラス
         nowFlagUpCount++;
+        nowFlagUp++;
 
         //全て下げる
         AllFlagDown();
@@ -171,6 +174,8 @@ public class FlagUpGameManager : MiniGameManager
     //ターン変更
     public void ChangeTurn() {
 
+        if (isPlayerAllDead) return;
+
         //旗上げ回数初期化
         nowFlagUpCount = 0;
 
@@ -222,10 +227,42 @@ public class FlagUpGameManager : MiniGameManager
             isWinOnePLayer = true;
         }
         else
-        { 
-
             ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 4);
 
+        //順位を確認
+        byte nowRank = (isWinOnePLayer ? (byte)2 : (byte)1);
+        byte sameRank = 0;
+
+        //生き残っている人に順位をつける
+        foreach (var player in threePlayer)
+        {
+            //生きているのなら
+            if (!player.Value)
+            {
+                ScoreManager.AddScore(player.Key, nowRank);
+                sameRank++;
+            }
+        }
+
+        //3人側の得点をソートで並び変える
+        var sortedDictionary = rankInfo.OrderByDescending(pair => pair.Value);
+        float beforeValue = -1;
+        foreach (var item in sortedDictionary)
+        {
+            //生きているのならこの先処理しない
+            if (!threePlayer[item.Key]) continue;
+
+            //前回の値と違うのならば
+            if (beforeValue != item.Value)
+            {
+                nowRank += sameRank;
+                sameRank = 1;
+            }
+            else
+                sameRank++;
+
+            beforeValue = item.Value;
+            ScoreManager.AddScore(item.Key, nowRank);
         }
 
     }

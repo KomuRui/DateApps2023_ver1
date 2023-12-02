@@ -75,8 +75,8 @@ public class ThreePlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.GetComponent<PlayerNum>().playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)
@@ -195,6 +195,7 @@ public class ThreePlayer : MonoBehaviour
     {
         // ミニゲームに死んだことを伝える
         GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
 
         //オブジェクトを削除
         //Destroy(this.gameObject);

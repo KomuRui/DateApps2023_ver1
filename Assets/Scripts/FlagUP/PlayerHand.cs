@@ -46,6 +46,7 @@ public class PlayerHand : MonoBehaviour
 
     private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
     private Vector3 initializeRotate; 
+    private bool isDead; 
 
 
     // Start is called before the first frame update
@@ -69,84 +70,19 @@ public class PlayerHand : MonoBehaviour
         ranking = 0;
         isFirstFlag = true;
         isRank = false;
+        isDead = false;
 
         //初期
         initializeRotate = new Vector3(0,180,0);
-        playerNum = this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.nowMiniGameManager.IsFinish()) return;
 
         //旗上げ
         FlagUp();
-
-        if(isRank)
-        {
-            ((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank--;
-            isRank = false;
-        }
-
-        ////ストップしてない&自分のターン
-        //if (flagUpGameManager.isStop == false && flagUpGameManager.isAloneTurn == false)
-        //{
-        //    if (isInput)
-        //    {
-        //        if (Input.GetButtonDown("LBbutton" + playerNum))
-        //        {
-        //            leftOb.transform.DORotate(Vector3.forward * -90f, 0.1f);
-        //        }
-        //        else if (Input.GetButtonDown("RBbutton" + playerNum))
-        //        {
-        //            rightOb.transform.DORotate(Vector3.forward * 90f, 0.1f);
-        //        }
-        //        else if (Input.GetButtonDown("Abutton" + playerNum))
-        //        {
-        //            leftOb.transform.DORotate(Vector3.forward * 0, 0.1f);
-        //            rightOb.transform.DORotate(Vector3.forward * 0, 0.1f);
-        //        }
-
-        //        if (isFirst)
-        //        {
-        //            isFirst = false;
-        //            //上げれる時間
-        //            Invoke("StopPlayer", 5.0f);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (flagMax > flagUpNum && isFirst)
-        //        {
-        //            isFirst = false;
-
-        //            //1人側ターンにする
-        //            flagUpGameManager.isAloneTurn = true;
-
-        //            if (flagMax == flagUpNum)
-        //            {
-
-        //                //旗上げ回数0に戻す
-        //                flagUpNum = 0;
-        //                //ラウンド3以上だったら旗上げ回数5
-        //                if (flagUpGameManager.roundNum >= 2)
-        //                {
-        //                    flagMax = 5;
-        //                }
-
-        //                flagUpGameManager.roundNum++;
-        //            }
-
-        //            //あげれない時間
-        //            Invoke("PlayPlayer", 5.0f);
-        //        }
-
-        //        if(flagUpGameManager.roundNum >= 3)
-        //        {
-        //            flagUpGameManager.isStop = true;
-        //        }
-        //    }
-        //}
     }
 
     private void FlagUp()
@@ -159,9 +95,9 @@ public class PlayerHand : MonoBehaviour
         if (((FlagUpGameManager)GameManager.nowMiniGameManager).turn == FlagUpGameManager.Turn.THREE_PLAYER && isOnePlayer) return;
 
         //旗上げ処理
-        if (Input.GetButtonDown("LBbutton" + playerNum))
+        if (Input.GetButtonDown("LBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.LEFT);
-        else if (Input.GetButtonDown("RBbutton" + playerNum))
+        else if (Input.GetButtonDown("RBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.RIGHT);
     }
 
@@ -187,6 +123,7 @@ public class PlayerHand : MonoBehaviour
 
     public void AllFlagDown()
     {
+        if (isDead) return;
 
         if (isOnePlayer)
         //if(((FlagUpGameManager)GameManager.nowMiniGameManager).turn == 0)
@@ -195,7 +132,6 @@ public class PlayerHand : MonoBehaviour
             {
                 if (flagTurn < turnMax && isFirstFlag == false)
                 {
-                    Debug.Log(flagTurn);
                     flagState[flagTurn] = 0;
 
                     if (flagInfo[Flag.RIGHT].isUp)
@@ -203,7 +139,6 @@ public class PlayerHand : MonoBehaviour
 
                     if (flagInfo[Flag.LEFT].isUp)
                         flagState[flagTurn] += 2;
-                    Debug.Log(flagState[flagTurn]);
                     flagTurn++;
 
 
@@ -211,11 +146,7 @@ public class PlayerHand : MonoBehaviour
                 else
                 {
                     isFirstFlag = false;
-                    Debug.Log(flagState[0] + "," + flagState[1] + "," + flagState[2]);
-                    //Debug.Log("ageru");
-                    // GMOb.instance.SetFlagState
                 }
-                Debug.Log(flagState[0] + "," + flagState[1] + "," + flagState[2]);
             }
                 
 
@@ -227,7 +158,6 @@ public class PlayerHand : MonoBehaviour
             {
                 if (flagTurn < turnMax && isFirstFlag == false)
                 {
-                    Debug.Log("3ninn" + flagTurn);
 
                     flagState[flagTurn] = 0;
 
@@ -239,20 +169,14 @@ public class PlayerHand : MonoBehaviour
 
                     if (((FlagUpGameManager)GameManager.nowMiniGameManager).oneFlagState[flagTurn] != flagState[flagTurn])
                     {
-
-                        ranking = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank;
-                        ScoreManager.AddScore(GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum, ((byte)((FlagUpGameManager)GameManager.nowMiniGameManager).nowRank));
-
-
-                        isRank = true;
-
+                        ((FlagUpGameManager)GameManager.nowMiniGameManager).rankInfo[this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum] = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowFlagUp;
                         GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
                         GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
                         Rigidbody rb;
                         rb = this.GetComponent<Rigidbody>();
                         rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
                         rb.useGravity = true;
-                        Debug.Log("4");
+                        isDead = true;
 
                     }
 
@@ -261,7 +185,6 @@ public class PlayerHand : MonoBehaviour
                 else
                 {
                     isFirstFlag = false;
-                    Debug.Log("start");
                 }
             }
                 

@@ -5262,6 +5262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameName: FlagUp
   onePlayerParent: {fileID: 543451898}
+  onePlayerChild: {fileID: 0}
   onePlayerParentDelete: 0
   onePlayerPos: {x: 20, y: 0, z: -12}
   onePlayerScale: {x: 6, y: 6, z: 6}
@@ -5270,6 +5271,7 @@ MonoBehaviour:
   - {fileID: 1158498894}
   - {fileID: 445316567}
   - {fileID: 1776382116}
+  threePlayerChild: []
   threePlayerParentDelete: 0
   threePlayerPos:
   - {x: 0, y: -0.5, z: -5.5}
@@ -5289,23 +5291,23 @@ MonoBehaviour:
   - {fileID: 1412130833}
   - {fileID: 727293358}
   rankAnnouncementPos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: -11, y: -1.1, z: -4.6}
+  - {x: -10.2, y: -1.1, z: -4.6}
+  - {x: -9.4, y: -1.1, z: -4.6}
+  - {x: -8.6, y: -1.1, z: -4.6}
   rankAnnouncementScale:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 1}
   rankAnnouncementRotate:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 150, z: 0}
+  - {x: 0, y: 168, z: 0}
+  - {x: 0, y: 192, z: 0}
+  - {x: 0, y: 210, z: 0}
   onePlayerObj: {fileID: 0}
   threePlayerObj: []
-  rankCameraPos: {x: 0, y: 0, z: 0}
+  rankCameraPos: {x: -9.8, y: -0.4, z: -6.5}
   rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
   rankText: {fileID: 8390815714765577522, guid: 8e80cdc72e244654394924d371986104, type: 3}
@@ -5329,7 +5331,7 @@ MonoBehaviour:
   roundText: {fileID: 893581750}
   finishText: {fileID: 1628966993}
   oneFlagState: 0000000000000000000000000000000000000000
-  nowRank: 0
+  nowFlagUp: 0
   turn: 0
   nowRound: 0
   isFlagUpPermit: 0

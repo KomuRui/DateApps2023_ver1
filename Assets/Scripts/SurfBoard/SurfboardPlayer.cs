@@ -86,28 +86,25 @@ public class SurfboardPlayer : MonoBehaviour
             Fall();
         }
 
-        Debug.Log(hp);
+       // Debug.Log(hp);
     }
 
     //落下処理
     private void Fall()
     {
-        //子供がいたら
-        for (int i = 0; i < this.transform.childCount; i++)
-        {
-            isDead = true;
+        if (isDead) return;
 
-
-            Rigidbody childRb = this.transform.GetChild(i).GetComponent<Rigidbody>();
-
-            //重力を使用する
-            childRb.useGravity = true;
-
-            this.transform.GetChild(i).transform.parent = null;
-            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(i).GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(i).GetComponent<PlayerNum>().playerNum);
-
-        }
+        isDead = true;
+         
+         Debug.Log("a");
+         Rigidbody childRb = this.transform.GetChild(0).GetComponent<Rigidbody>();
+         
+         //重力を使用する
+         childRb.useGravity = true;
+         
+         GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(0).GetComponent<PlayerNum>().playerNum);
+         GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(0).GetComponent<PlayerNum>().playerNum);
+        this.transform.GetChild(0).transform.parent = null;
     }
 
     //プレイヤーの動き
