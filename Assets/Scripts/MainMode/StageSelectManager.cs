@@ -14,11 +14,13 @@ public static class StageSelectManager
     public static List<string> notPlayminiGameSceneName = new List<string>(); //プレイしていないミニゲームの名前
     public static List<string> playMiniGameSceneName = new List<string>();    //すでにプレイしているミニゲームの名前
     public static string nowMiniGameName;
+    public static bool isMainModeFinish;
 
     //初期化
     public static void Initializ()
     {
         nowMiniGameName = "";
+        isMainModeFinish = false;
         nowRound = 1;
         notPlayminiGameSceneName.Add("AvoidFish");
         notPlayminiGameSceneName.Add("CarryToTheGoal");
@@ -42,10 +44,14 @@ public static class StageSelectManager
     public static int GetNowRound() { return nowRound; }
 
     //次のラウンドへ
-    public static void NextRound() 
+    public static void NextRound()
     {
         //もう最大ラウンド数以上になっているのならばこの先処理しない
-        if (nowRound >= MAX_ROUND) return;
+        if (nowRound >= MAX_ROUND)
+        {
+            isMainModeFinish = true;
+            return;
+        }
 
         nowRound++; 
     }

@@ -74,6 +74,17 @@ public static class ScoreManager
 
     //順位取得
     public static int GetRank(byte numPlayer) { return score[numPlayer].rank; }
+   
+    //任意順位のプレイヤー番号取得
+    public static List<byte> GetNominatePlayerRank(byte rank) 
+    {
+        List<byte> a = new List<byte>();
+
+        foreach (var player in score)
+            if (player.Value.rank == rank) a.Add(player.Key);
+
+        return a;
+    }
 
     //順位によって獲得するポイントを取得
     public static int GetRankScore(byte numPlayer,byte rank) 

@@ -13,8 +13,9 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private  List<GameObject> stageImageObj;
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private GameObject rankText;   
+    [SerializeField] private GameObject mainModeWinPlayerCanvas;
 
-    
+    private bool isMainModeFinish = false;
     private float changeTime = 0.1f;
     private int finishImage = 0;
     private int count = 0;
@@ -28,6 +29,27 @@ public class StageSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ラウンド全て終了しているのなら
+        if(StageSelectManager.isMainModeFinish)
+        {
+            roundText.text = "";
+            mainModeWinPlayerCanvas = Instantiate(mainModeWinPlayerCanvas, new Vector3(0, 0, 0), Quaternion.identity);
+
+            //1位のプレイヤを取得
+            List<byte> a = ScoreManager.GetNominatePlayerRank(1);
+            string text = "Win\n";
+            for (int i = 0; i < a.Count; i++)
+                text += a[i] + "P " + ScoreManager.GetScore(a[i]) + "point\n";
+
+            //テキスト変更
+            mainModeWinPlayerCanvas.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
+
+            //2秒後に開始
+            StartCoroutine(MainModeFinish(2.0f));
+
+            return;
+        }
+
         //fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
 
@@ -39,13 +61,29 @@ public class StageSelect : MonoBehaviour
         }
         Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
-        //2秒後に開始
+        //4秒後に開始
         StartCoroutine(RandomMiniGameSelectStart(4.0f));
     }
 
     // Update is called once per frame
     void Update()
     {
+        //終わったのなら
+        if (isMainModeFinish) GoModeSelect();
+    }
+
+    private void GoModeSelect()
+    {
+        if (Input.GetButtonDown("Abutton1")) SceneManager.LoadScene("ModeSelect");
+    }
+
+    //メインモード終了
+    IEnumerator MainModeFinish(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //終わりに変更
+        isMainModeFinish = true;
     }
 
     //シーン遷移開始
