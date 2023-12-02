@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c0be69d61ba98fc4eb27988ae8b7143b, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -2757,11 +2757,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameName: NotHitStick
   onePlayerParent: {fileID: 0}
+  onePlayerChild: {fileID: 0}
   onePlayerParentDelete: 0
   onePlayerPos: {x: 0, y: 9, z: 0}
   onePlayerScale: {x: 7.65, y: 7.65, z: 7.65}
   onePlayerRotate: {x: 0, y: 0, z: 0}
   threePlayerParent: []
+  threePlayerChild: []
   threePlayerParentDelete: 0
   threePlayerPos:
   - {x: 0, y: 8.6, z: 13}

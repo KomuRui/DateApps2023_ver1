@@ -5,10 +5,12 @@ using UnityEngine;
 public static class GameManager
 {
     public static MiniGameManager nowMiniGameManager; //現在のミニゲーム管理
-  
+    public static bool isTitleStart = false; //タイトルから始めてるかどうか
+
     //初期化
     public static void Initializ()
     {
+        isTitleStart = true;
         PlayerManager.Initializ();
         ScoreManager.Initializ();
         StageSelectManager.Initializ();

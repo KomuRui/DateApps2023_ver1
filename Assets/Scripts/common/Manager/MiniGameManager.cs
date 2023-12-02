@@ -61,12 +61,16 @@ public class MiniGameManager : MonoBehaviour
     protected bool isStart;             //ミニゲーム開始しているか
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
+    protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
 
     void Start()
     {
-       /////////////////////////////////α版だけ
-       PlayerManager.Initializ();
-       ScoreManager.Initializ();
+        /////////////////////////////////α版だけ
+        if (!GameManager.isTitleStart)
+        {
+            PlayerManager.Initializ();
+            ScoreManager.Initializ();
+        }
 
         /////初期化
         GameManager.nowMiniGameManager = this;
@@ -136,12 +140,16 @@ public class MiniGameManager : MonoBehaviour
     void Update()
     {
         //順位発表しているかつBボタンが押されたのなら
-        if (nowRankAnnouncement && Input.GetButtonDown("Bbutton1"))
+        if (nowRankAnnouncement && Input.GetButtonDown("Abutton1"))
         {
             StageSelectManager.NextRound();
             ScoreManager.ReCalcRank();
             SceneManager.LoadScene("MainMode");
         }
+
+        //勝利側を発表しているかつBボタンが押されたのなら
+        if (isWinPlayerPrint && Input.GetButtonDown("Abutton1"))
+            ChangeRankAnnouncement();
 
         //生きている3人側の時間記録
         foreach(byte num in threePlayer.Keys)
@@ -227,14 +235,31 @@ public class MiniGameManager : MonoBehaviour
         endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
         MiniGameFinish();
 
-        //4秒後に順位発表に移行
-        Invoke("ChangeRankAnnouncement", 4.0f);
+        Invoke("WinPlayerTextPrint", 2.0f);
+    }
+
+    //勝利して側のテキストを表示
+    public void WinPlayerTextPrint()
+    {
+        bool isOnePlayerWin = false;
+        endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 25;
+
+        foreach (var rank in nowMiniGameRank)
+            if (rank.Key == onePlayer && rank.Value == 1) isOnePlayerWin = true;
+
+        if (isOnePlayerWin)
+            endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "WinOnePlayer";
+        else
+            endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "WinThreePlayer";
+
+        isWinPlayerPrint = true;
     }
 
     //順位発表に変更
     public void ChangeRankAnnouncement()
     {
         nowRankAnnouncement = true;
+        isWinPlayerPrint = false;
 
         var sortedDictionary = nowMiniGameRank.OrderBy((pair) => pair.Value);
         Dictionary<byte,byte> rankTable = new Dictionary<byte,byte>();

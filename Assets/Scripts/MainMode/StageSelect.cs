@@ -28,10 +28,6 @@ public class StageSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerManager.Initializ();
-        ScoreManager.Initializ();
-        StageSelectManager.Initializ();
-
         //fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
 

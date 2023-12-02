@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 92515b631acc8f7439f9badc3306efd6, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -2254,6 +2254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameName: SurfBoard
   onePlayerParent: {fileID: 0}
+  onePlayerChild: {fileID: 0}
   onePlayerParentDelete: 0
   onePlayerPos: {x: 0, y: -0.83, z: 0.39}
   onePlayerScale: {x: 6, y: 6, z: 6}
@@ -2262,6 +2263,7 @@ MonoBehaviour:
   - {fileID: 329187691}
   - {fileID: 156291066}
   - {fileID: 2036011847}
+  threePlayerChild: []
   threePlayerParentDelete: 0
   threePlayerPos:
   - {x: -2, y: -0.5, z: -5.5}
