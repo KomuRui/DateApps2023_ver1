@@ -22,8 +22,18 @@ public class Fish : MonoBehaviour
     {
         isCurve = true;
         curve = 0;
-        rnd = Random.Range(1, 4);//1Å`3
-        player = GameObject.Find("Player" + rnd);
+
+        List<GameObject> notKillPlayer = new List<GameObject>();
+        if (GameObject.Find("Player2") != null) notKillPlayer.Add(GameObject.Find("Player2"));
+        if (GameObject.Find("Player3") != null) notKillPlayer.Add(GameObject.Find("Player3"));
+        if (GameObject.Find("Player4") != null) notKillPlayer.Add(GameObject.Find("Player4"));
+
+        if (notKillPlayer.Count == 1)
+            rnd = 0;
+        else
+            rnd = Random.Range(0, notKillPlayer.Count);//1Å`3
+
+        player = notKillPlayer[rnd];
 
     }
 

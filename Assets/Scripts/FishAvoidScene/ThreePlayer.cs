@@ -198,7 +198,7 @@ public class ThreePlayer : MonoBehaviour
         GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
 
         //オブジェクトを削除
-        //Destroy(this.gameObject);
+        Destroy(this.gameObject.transform.parent.gameObject);
     }
 
 
