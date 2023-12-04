@@ -143,6 +143,7 @@ public class MiniGameManager : MonoBehaviour
         if (nowRankAnnouncement && Input.GetButtonDown("Abutton1"))
         {
             StageSelectManager.NextRound();
+            PlayerManager.NextOnePlayer();
             ScoreManager.ReCalcRank();
             SceneManager.LoadScene("MainMode");
         }

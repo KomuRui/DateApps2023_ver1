@@ -35,9 +35,16 @@ public static class StageSelectManager
     //ミニゲームシーンに変更
     public static void ChangeMiniGameScene()
     {
-        nowMiniGameName = notPlayminiGameSceneName[Random.Range(0, notPlayminiGameSceneName.Count)];
-        notPlayminiGameSceneName.Remove(nowMiniGameName);
-        SceneManager.LoadScene(nowMiniGameName);
+        if (nowRound == 3)
+        {
+            SceneManager.LoadScene("ConsecutiveChases");
+        }
+        else
+        {
+            nowMiniGameName = notPlayminiGameSceneName[Random.Range(0, notPlayminiGameSceneName.Count)];
+            notPlayminiGameSceneName.Remove(nowMiniGameName);
+            SceneManager.LoadScene(nowMiniGameName);
+        }
     }
 
     //現在のラウンド数を取得

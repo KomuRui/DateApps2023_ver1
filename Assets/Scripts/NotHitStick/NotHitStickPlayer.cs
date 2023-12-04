@@ -27,7 +27,7 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private bool isAnimJump = true;          // ジャンプアニメーション許可するか
     [SerializeField] private bool isAnimAttack = true;        // 攻撃アニメーション許可するか
     [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
-    [SerializeField] private GameObject[] stage;              // 床のゲームオブジェクト
+    [SerializeField] public GameObject[] stage;              // 床のゲームオブジェクト
     [SerializeField] private float jumpPower;                 // ジャンプ力
     [SerializeField] private int nowStageNum;                 // 乗っている床の番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
@@ -92,8 +92,8 @@ public class NotHitStickPlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + playerNum);
-        if (isVerticalInput) verticalInput = Input.GetAxis("L_Stick_V" + playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = Input.GetAxis("L_Stick_V" + this.GetComponent<PlayerNum>().playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)

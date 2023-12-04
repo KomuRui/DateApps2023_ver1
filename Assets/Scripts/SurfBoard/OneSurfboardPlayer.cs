@@ -30,7 +30,7 @@ public class OneSurfboardPlayer : MonoBehaviour
         float horizontalInput = 0;
 
         // “ü—Í‚ðŽæ“¾
-        horizontalInput = Input.GetAxis("L_Stick_H" + playerNum) * rotateSpeed;
+        horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum) * rotateSpeed;
 
         //‘Ç‚ð“®‚©‚·
         KajiMove(horizontalInput);

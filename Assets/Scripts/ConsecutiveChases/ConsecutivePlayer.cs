@@ -38,6 +38,7 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private ChasesManager chasesManager;     //マネージャー
 
+    public int threePlayerNum = 0;
     public bool buttonFlag = true;
     public bool isGoal = false; //ゴールしたか
     public bool isDead = false; //死んでいるか
@@ -58,7 +59,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
         buttonFlag = false;
 
-        nextCommandImage[playerNum - 2].sprite = commandImageList[1];
+        nextCommandImage[threePlayerNum].sprite = commandImageList[1];
         int a = 0;
     }
 
@@ -294,22 +295,22 @@ public class ConsecutivePlayer : MonoBehaviour
         {
             if (buttonFlag) 
             {
-                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[2];
+                nextCommandImage[threePlayerNum].sprite = commandImageList[2];
             }
             else
             {
-                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[3];
+                nextCommandImage[threePlayerNum].sprite = commandImageList[3];
             }
         }
         else
         {
             if (buttonFlag)
             {
-                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[0];
+                nextCommandImage[threePlayerNum].sprite = commandImageList[0];
             }
             else
             {
-                nextCommandImage[gameObject.GetComponent<PlayerNum>().playerNum - 2].sprite = commandImageList[1];
+                nextCommandImage[threePlayerNum].sprite = commandImageList[1];
             }
         }
         

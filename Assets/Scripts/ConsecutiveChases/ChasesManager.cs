@@ -25,10 +25,22 @@ public class ChasesManager : MiniGameManager
 
         onePlayerObj.GetComponent<ChasesPlayer>().nextCommandImageList = onePlayerNextCommandImageList;
 
-        foreach (var player in threePlayerObj)
+        for(int i = 0; i < threePlayerNextCommandImageList.Count; i++) 
         {
-            player.GetComponent<ConsecutivePlayer>().nextCommandImage = threePlayerNextCommandImageList;
+            threePlayerNextCommandImageList[i].GetComponent<ThreeSide_UI>().player = threePlayerObj[i];
+            threePlayerNextCommandImageList[i].GetComponent<ThreeSide_UI>().SetPosition();
         }
+
+        for(int i = 0; i < threePlayerObj.Count; i++) 
+        {
+            threePlayerObj[i].GetComponent<ConsecutivePlayer>().nextCommandImage = threePlayerNextCommandImageList;
+            threePlayerObj[i].GetComponent<ConsecutivePlayer>().threePlayerNum = i;
+        }
+
+        //foreach (var player in threePlayerObj)
+        //{
+        //    player.GetComponent<ConsecutivePlayer>().nextCommandImage = threePlayerNextCommandImageList;
+        //}
 
         camera.GetComponent<CameraController>().playerList.Add(onePlayerObj);
         foreach (var player in threePlayerObj)

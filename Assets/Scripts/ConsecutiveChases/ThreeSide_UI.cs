@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThreeSide_UI: MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] public GameObject player;
     public UnityEngine.Vector3 playerPos = UnityEngine.Vector3.zero;
     public const float SHIFT_VER_UI = 1.0f;
     public const float SHIFT_HOR_UI = -0.5f;
@@ -13,14 +13,6 @@ public class ThreeSide_UI: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < GameManager.nowMiniGameManager.threePlayerObj.Count; i++)
-        {
-            if (GameManager.nowMiniGameManager.threePlayerObj[i].GetComponent<PlayerNum>().playerNum == this.GetComponent<PlayerNum>().playerNum)
-                player = GameManager.nowMiniGameManager.threePlayerObj[i];
-        }
-
-        //ˆÊ’u‚ð•Ï‚¦‚é
-        SetPosition();
     }
 
 
@@ -32,7 +24,7 @@ public class ThreeSide_UI: MonoBehaviour
     }
 
     //ˆÊ’u‚ð•Ï‚¦‚é
-    void SetPosition()
+    public void SetPosition()
     {
         UnityEngine.Vector3 myRectTfm;
 

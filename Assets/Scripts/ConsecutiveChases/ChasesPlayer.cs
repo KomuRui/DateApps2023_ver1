@@ -278,8 +278,8 @@ public class ChasesPlayer : MonoBehaviour
     public COMMAND_RESULT CheckOnCommandButton()
     {
         //十字キーの入力を受け取る
-        crossAxisV = UnityEngine.Input.GetAxis("D_Pad_V" + playerNum);
-        crossAxisH = UnityEngine.Input.GetAxis("D_Pad_H" + playerNum);
+        crossAxisV = UnityEngine.Input.GetAxis("D_Pad_V" + this.GetComponent<PlayerNum>().playerNum);
+        crossAxisH = UnityEngine.Input.GetAxis("D_Pad_H" + this.GetComponent<PlayerNum>().playerNum);
 
         //十字キーが離されたらもう一回押せるようになる
         if (crossAxisV == 0 && crossAxisH == 0)

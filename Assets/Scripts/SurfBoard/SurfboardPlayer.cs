@@ -115,7 +115,7 @@ public class SurfboardPlayer : MonoBehaviour
         float horizontalInput = 0;
 
         // 入力を取得
-        horizontalInput = Input.GetAxis("L_Stick_H" + playerNum) * rotationSpeed;
+        horizontalInput = Input.GetAxis("L_Stick_H" + this.transform.GetChild(0).GetComponent<PlayerNum>().playerNum) * rotationSpeed;
 
         if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
         {
