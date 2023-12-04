@@ -24,9 +24,9 @@ public class Fish : MonoBehaviour
         curve = 0;
 
         List<GameObject> notKillPlayer = new List<GameObject>();
-        if (GameObject.Find("Player2") != null) notKillPlayer.Add(GameObject.Find("Player2"));
-        if (GameObject.Find("Player3") != null) notKillPlayer.Add(GameObject.Find("Player3"));
-        if (GameObject.Find("Player4") != null) notKillPlayer.Add(GameObject.Find("Player4"));
+        if (GameObject.Find("Player2") != null) notKillPlayer.Add(GameObject.Find("Player2").transform.GetChild(0).gameObject);
+        if (GameObject.Find("Player3") != null) notKillPlayer.Add(GameObject.Find("Player3").transform.GetChild(0).gameObject);
+        if (GameObject.Find("Player4") != null) notKillPlayer.Add(GameObject.Find("Player4").transform.GetChild(0).gameObject);
 
         if (notKillPlayer.Count == 1)
             rnd = 0;
@@ -127,7 +127,7 @@ public class Fish : MonoBehaviour
     public void Shark()
     {
         transform.position += new Vector3(0, 0, -0.01f);
-        if (player != null && player.transform.position.y > this.transform.position.y)
+        if (player != null && player.transform.position.z < this.transform.position.z - 5)
         {
             if (player.transform.position.x < this.transform.position.x)
             {
