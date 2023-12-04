@@ -140,8 +140,8 @@ public class FlagUpGameManager : MiniGameManager
         {
             if (roundInfo[nowRound].flagUpMaxCount <= nowFlagUpCount)
             {
-                ChangeTurn();
-                StartCoroutine(RoundStart(1.0f));
+                Invoke("ChangeTurn",1.0f);
+                StartCoroutine(RoundStart(2.0f));
             }
             else
                 StartCoroutine(FlagUpStart(0.5f));
