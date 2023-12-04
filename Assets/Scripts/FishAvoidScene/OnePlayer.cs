@@ -137,9 +137,10 @@ public class OnePlayer : MonoBehaviour
     void Update()
     {
 
-        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish())
-            //“®‚«
-            Move();
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+        
+        //“®‚«
+        Move();
 
         //ó‘ÔXV
         StateUpdata();
