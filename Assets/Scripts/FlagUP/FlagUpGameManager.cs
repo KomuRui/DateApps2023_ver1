@@ -63,7 +63,7 @@ public class FlagUpGameManager : MiniGameManager
     {
         //èâä˙âª
         turn = Turn.ONE_PLAYER;
-        nowRound = Round.ONE;
+        nowRound = Round.THREE;
         isFlagUpPermit = false;
         nowFlagUpCount = 0;
         oneFlagState = new int[5];
@@ -163,7 +163,7 @@ public class FlagUpGameManager : MiniGameManager
         for (int i = 0; i < player.Count; i++)
             player[i].GetComponent<PlayerHand>().TurnReset();
 
-        for (int j = 0; j < player.Count; j++)
+        for (int j = 0; j < 5; j++)
         {
             oneFlagState[j] = player[0].GetComponent<PlayerHand>().GetFlagState(j);
            
