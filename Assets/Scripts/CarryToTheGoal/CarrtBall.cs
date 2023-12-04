@@ -30,7 +30,7 @@ public class CarrtBall : MonoBehaviour
         //ŠC‚æ‚è‰º‚ÉŒ¾‚Á‚½‚çƒŠƒXƒ|[ƒ“
         if (transform.position.y <= -1.5)
         {
-            transform.position = new Vector3(tyekkuPointPos.position.x,tyekkuPointPos.position.y + 2.0f, 22.85f);
+            transform.position = new Vector3(tyekkuPointPos.position.x + 4.0f,tyekkuPointPos.position.y + 3.0f, 22.85f);
             rb.velocity = Vector3.zero;
         }
     }
