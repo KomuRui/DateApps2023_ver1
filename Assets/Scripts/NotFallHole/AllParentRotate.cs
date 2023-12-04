@@ -13,7 +13,6 @@ public class AllParentRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerNum = GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum;
     }
 
     // Update is called once per frame
@@ -32,8 +31,8 @@ public class AllParentRotate : MonoBehaviour
 
         bool isLB = false;
         bool isRB = false;
-        if (Input.GetAxis("L_Stick_H" + playerNum) < -0.8f) isLB = true;
-        if (Input.GetAxis("L_Stick_H" + playerNum) > 0.8f) isRB = true;
+        if (Input.GetAxis("L_Stick_H" + GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum) < -0.8f) isLB = true;
+        if (Input.GetAxis("L_Stick_H" + GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum) > 0.8f) isRB = true;
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
         if (!isRB && !isLB)
