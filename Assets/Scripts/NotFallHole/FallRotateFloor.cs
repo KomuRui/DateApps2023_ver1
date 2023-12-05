@@ -44,7 +44,7 @@ public class FallRotateFloor : MonoBehaviour
         if (Input.GetButtonDown(buttonName) && !isPush && mana.AddCount())
         {
 
-            if (Input.GetButton("RBbutton" + playerNum))
+            if (Input.GetButton("RBbutton" + GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum))
                 rotateSign = -1;
             else
                 rotateSign = 1;
