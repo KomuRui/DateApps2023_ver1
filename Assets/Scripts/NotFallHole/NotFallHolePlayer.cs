@@ -19,6 +19,7 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private float gravitySpeed = 0.05f;      // 重力速度
+    [SerializeField] private float jumpPower = 0.05f;         // ジャンプ力
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
     [SerializeField] private bool isAnimIdle = true;
@@ -28,8 +29,11 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private Vector3 localGravity;
+    private bool isJump;
+    private bool isJumpInvoke;
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
+    private Ray ray; // Rayを生成
 
     void Start()
     {
@@ -39,6 +43,8 @@ public class NotFallHolePlayer : MonoBehaviour
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
 
+        isJump = false;
+        isJumpInvoke = false;
         rBody = this.GetComponent<Rigidbody>();
         playerNum = this.GetComponent<PlayerNum>().playerNum;
     }
@@ -58,7 +64,7 @@ public class NotFallHolePlayer : MonoBehaviour
         Move();
 
         //ジャンプ
-        //Jump();
+        Jump();
     }
 
     private void FixedUpdate()
@@ -94,7 +100,7 @@ public class NotFallHolePlayer : MonoBehaviour
         }
 
         //歩き状態に変更
-        ChangeStateTo(SlimeAnimationState.Walk);
+       // ChangeStateTo(SlimeAnimationState.Walk);
 
         // カメラの向きを基準にプレイヤーを移動
         Vector3 forwardDirection = mainCameraTransform.forward;
@@ -115,10 +121,11 @@ public class NotFallHolePlayer : MonoBehaviour
     private void Jump()
     {
         //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton" + playerNum)) return;
+        if (!Input.GetButtonDown("Abutton" + playerNum) || isJump) return;
 
         //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
+        rBody.AddForce(Vector3.up * jumpPower);
+        isJump = true;
     }
 
     //状態更新
@@ -182,9 +189,34 @@ public class NotFallHolePlayer : MonoBehaviour
         this.currentState = state;
     }
 
+    void SetResetJump() { isJump = false; isJumpInvoke = false; }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate && !isJumpInvoke && isJump)
+        {
+            isJumpInvoke = true;
+            Invoke("SetResetJump", 0.3f);
+        }
+    }
+
+    void OnCollisionStay(Collision other)
+    {
+        if (!(other.transform.tag != "Player")) return;
+
+        RaycastHit hit;
+        ray = new Ray(transform.position, Vector3.up);
+        if (rBody.velocity.y < 0 && Physics.Raycast(ray, out hit, 10000) && hit.transform.tag == "Player" && hit.transform.gameObject != this.gameObject)
+        {
+            isJumpInvoke = true;
+            rBody.AddForce(Vector3.up * jumpPower);
+            Invoke("SetResetJump", 0.3f);
+        }
+    }
+
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Sea" )
+        if (collision.transform.tag == "Sea")
         {
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
             GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);

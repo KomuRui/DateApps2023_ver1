@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3399754762103887737}
   m_Layer: 0
   m_Name: Slime_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,9 +157,10 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 4496389636799792062}
   damType: 0
-  moveSpeed: 0.5
+  moveSpeed: 2.5
   rotationSpeed: 180
   gravitySpeed: 3
+  jumpPower: 600
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
