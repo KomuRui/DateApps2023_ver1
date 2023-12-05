@@ -3,29 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class NotHitStickGameManager : MiniGameManager
+public class TerrorHammerGameManager : MiniGameManager
 {
-    public int kill = 0;
-    public Rotate1 rotate1;
-    public Rotate2 rotate2;
-    public GameObject[] floor;
-
+    /// Start is called before the first frame update
     public override void SceneStart()
     {
-        rotate1.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
-        rotate2.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
 
-        int i = 2;
-        foreach (var player in threePlayerObj)
-        {
-            player.GetComponent<NotHitStickPlayer>().stage = floor;
-            player.GetComponent<NotHitStickPlayer>().nowStageNum = i;
-            i--;
-        }
-    }
-
-    public override void MiniGameUpdate()
-    {
     }
 
     //ÉQÅ[ÉÄèIóπéûÇ…åƒÇŒÇÍÇÈ
@@ -80,5 +63,4 @@ public class NotHitStickGameManager : MiniGameManager
             ScoreManager.AddScore(item.Key, nowRank);
         }
     }
-
 }
