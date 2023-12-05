@@ -29,7 +29,7 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
     [SerializeField] public GameObject[] stage;              // 床のゲームオブジェクト
     [SerializeField] private float jumpPower;                 // ジャンプ力
-    [SerializeField] private int nowStageNum;                 // 乗っている床の番号
+    [SerializeField] public int nowStageNum;                 // 乗っている床の番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private float stunTime = 2;              //スタン時間
 
@@ -176,7 +176,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
@@ -188,7 +188,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
@@ -264,6 +264,7 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Stage")
         {
+            isJump = false;
             isJump2 = false;
 
             if(rb != null)
@@ -329,10 +330,10 @@ public class NotHitStickPlayer : MonoBehaviour
         isStun = true;
 
         //潰れる
-        this.transform.localScale = new Vector3(transform.localScale.x, 0.3f, transform.localScale.z);
+        this.transform.localScale = new Vector3(transform.localScale.x, 1.0f, transform.localScale.z);
 
         // 2秒後に解除
-        Invoke("CancellationStun",2);　
+        Invoke("CancellationStun",1.5f);　
     }
 
     //スタン解除

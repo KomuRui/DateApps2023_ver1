@@ -237,7 +237,7 @@ public class NotFallHolePlayer : MonoBehaviour
             if (hit.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
             hit.transform.GetComponent<NotFallHolePlayer>().isMuteki = true;
             hit.transform.GetComponent<NotFallHolePlayer>().isStan = true;
-            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetStan",2.0f);
+            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetStan",3.0f);
             hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetMuteki", 4.0f);
             hit.transform.GetComponent<NotFallHolePlayer>().SetOhNoScale();
             hit.transform.GetComponent<NotFallHolePlayer>().GetComponent<BoxCollider>().enabled = true;
