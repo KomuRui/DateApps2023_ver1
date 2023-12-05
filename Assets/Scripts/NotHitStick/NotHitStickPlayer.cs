@@ -31,6 +31,7 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private float jumpPower;                 // ジャンプ力
     [SerializeField] private int nowStageNum;                 // 乗っている床の番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private float stunTime = 2;              //スタン時間
 
     //リジットボディ
     private Rigidbody rb;
@@ -38,6 +39,15 @@ public class NotHitStickPlayer : MonoBehaviour
     //ジャンプしているか
     private bool isJump = false;
     private bool isJump2 = false;
+
+    private bool isInvokeJump = false;
+
+    //無敵かどうか
+    private bool isInvincible = false;
+
+    //スタン状態かどうか
+    public bool isStun = false;
+
 
     // メインカメラのTransform
     private Transform mainCameraTransform;
@@ -68,7 +78,7 @@ public class NotHitStickPlayer : MonoBehaviour
     void Update()
     {
         //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isStun) return;
 
         //状態更新
         StateUpdata();
@@ -85,7 +95,7 @@ public class NotHitStickPlayer : MonoBehaviour
     {
 
         //ジャンプしているならこの先処理しない
-        if (isJump  || isJump2) return;
+        if (isJump) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -259,6 +269,27 @@ public class NotHitStickPlayer : MonoBehaviour
             if(rb != null)
                 rb.velocity = Vector3.zero;
         }
+
+        //プレイヤーに当たったら
+        if (collision.transform.tag == "Player")
+        {
+            //もし当たったプレイヤーが下にいるか、スタンしていたら終わる
+            if (collision.transform.position.y < transform.position.y || isStun)
+            {
+                if(!gameObject.GetComponent<NotHitStickPlayer>().isStun)
+                    DowbleJump();
+                return;
+            }
+           
+            
+            //ジャンプしていて、相手がスタンじゃなかったら
+            //さらに無敵ではないなら
+            if(collision.gameObject.GetComponent<NotHitStickPlayer>().isJump || collision.gameObject.GetComponent<NotHitStickPlayer>().isJump2 &&
+                !collision.gameObject.GetComponent<NotHitStickPlayer>().isStun && !isInvincible)
+
+                //スタン状態にする
+                StunMe();
+        }
     }
 
     void OnTriggerEnter(Collider collision)
@@ -289,6 +320,58 @@ public class NotHitStickPlayer : MonoBehaviour
 
         //点滅止める
         tweener.Pause();
+    }
 
+    //スタン状態にする
+    public void StunMe()
+    {
+        //スタン状態に
+        isStun = true;
+
+        //潰れる
+        this.transform.localScale = new Vector3(transform.localScale.x, 0.3f, transform.localScale.z);
+
+        // 2秒後に解除
+        Invoke("CancellationStun",2);　
+    }
+
+    //スタン解除
+    public void CancellationStun()
+    {
+        //潰れる
+        this.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+        isStun = false;
+
+        //無敵化
+        isInvincible = true;
+
+        //2秒後無敵解除
+        Invoke("ResetInvincible", 2);
+    }
+
+    //ダブルジャンプ
+    public void DowbleJump()
+    {
+        if (isInvokeJump) return;
+
+        isInvokeJump = true;
+
+        //ジャンプ
+        rb.AddForce(Vector3.up * (jumpPower * 0.8f));
+
+        //無限ジャンプができないように
+        Invoke("ResetJump", 0.3f);
+    }
+
+
+    public void ResetJump()
+    {
+        isInvokeJump = false;
+    }
+
+    //無敵解除
+    public void ResetInvincible()
+    {
+        isInvincible = false;
     }
 }
