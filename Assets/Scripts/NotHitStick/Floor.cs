@@ -104,7 +104,7 @@ public class Floor : MonoBehaviour
         transform.DOMove(new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z), 1f).SetEase(Ease.InOutQuart);
 
         //Œ³‚É–ß‚·
-        StartCoroutine(Undo(4.0f));
+        StartCoroutine(Undo(6.0f));
     }
 
     //Œ³‚É–ß‚·

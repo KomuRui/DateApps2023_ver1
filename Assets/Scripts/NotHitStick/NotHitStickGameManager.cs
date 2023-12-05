@@ -15,8 +15,13 @@ public class NotHitStickGameManager : MiniGameManager
         rotate1.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
         rotate2.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
 
+        int i = 2;
         foreach (var player in threePlayerObj)
+        {
             player.GetComponent<NotHitStickPlayer>().stage = floor;
+            player.GetComponent<NotHitStickPlayer>().nowStageNum = i;
+            i--;
+        }
     }
 
     public override void MiniGameUpdate()
