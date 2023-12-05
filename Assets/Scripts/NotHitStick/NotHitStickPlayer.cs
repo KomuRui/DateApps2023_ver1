@@ -39,6 +39,9 @@ public class NotHitStickPlayer : MonoBehaviour
     private bool isJump = false;
     private bool isJump2 = false;
 
+    //スタン状態かどうか
+    private bool isStun = false;
+
     // メインカメラのTransform
     private Transform mainCameraTransform;
 
@@ -68,7 +71,7 @@ public class NotHitStickPlayer : MonoBehaviour
     void Update()
     {
         //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isStun) return;
 
         //状態更新
         StateUpdata();
@@ -259,6 +262,19 @@ public class NotHitStickPlayer : MonoBehaviour
             if(rb != null)
                 rb.velocity = Vector3.zero;
         }
+
+        if (collision.transform.tag == "Player")
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(transform.position, Vector3.up); // Rayを生成
+
+            //スタン状態ではなく、レイがプレイヤーに当たったら
+            if (Physics.Raycast(ray, out hit, 10000) && hit.collider.CompareTag("Player") && !isStun)
+            {
+                //スタンする
+                StunMe();
+            }
+        }
     }
 
     void OnTriggerEnter(Collider collision)
@@ -289,6 +305,19 @@ public class NotHitStickPlayer : MonoBehaviour
 
         //点滅止める
         tweener.Pause();
+    }
 
+    public void StunMe()
+    {
+        //スタン状態にする
+        isStun = true;
+
+        //2秒後にスタン解除
+        Invoke("CancellationStun", 2);
+    }
+
+    public void CancellationStun()
+    {
+        isStun = false;
     }
 }
