@@ -40,7 +40,12 @@ public class NotHitStickPlayer : MonoBehaviour
     private bool isJump = false;
     private bool isJump2 = false;
 
+    //ジャンプできる状態かどうか
+    private bool canJump = true;
+
     private bool isInvokeJump = false;
+
+    private float jumpSpeedRatio = 1;
 
     //無敵かどうか
     private bool isInvincible = false;
@@ -93,7 +98,6 @@ public class NotHitStickPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         //ジャンプしているならこの先処理しない
         if (isJump) return;
 
@@ -124,8 +128,18 @@ public class NotHitStickPlayer : MonoBehaviour
         // 移動方向を計算
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
+        //ジャンプ中なら遅く
+        if (isJump2)
+        {
+            jumpSpeedRatio = 0.5f;
+        }
+        else
+        {
+            jumpSpeedRatio = 1;
+        }
+
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime * jumpSpeedRatio;
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -149,6 +163,7 @@ public class NotHitStickPlayer : MonoBehaviour
                 //元に戻す
                 StartCoroutine(Drop(0.3f));
             }
+           
 
             return;
         }
@@ -156,7 +171,8 @@ public class NotHitStickPlayer : MonoBehaviour
         if (isJump2) return;
 
         //通常
-        if (Input.GetButtonDown("Abutton" + playerNum))
+        //ジャンプ出来る状態なら
+        if (Input.GetButtonDown("Abutton" + playerNum) && canJump)
         {
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
@@ -164,6 +180,9 @@ public class NotHitStickPlayer : MonoBehaviour
             //上に力を加える
             rb.AddForce(Vector3.up * jumpPower);
             isJump2 = true;
+
+            canJump = false;
+
             return;
         }
 
@@ -264,6 +283,10 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Stage")
         {
+            if(!canJump)
+                //0.5秒後にジャンプ出来るように
+                Invoke("CanJump", 0.5f);
+
             isJump = false;
             isJump2 = false;
 
@@ -374,5 +397,11 @@ public class NotHitStickPlayer : MonoBehaviour
     public void ResetInvincible()
     {
         isInvincible = false;
+    }
+
+    //ジャンプ出来るようにする
+    public void CanJump()
+    {
+        canJump = true;
     }
 }
