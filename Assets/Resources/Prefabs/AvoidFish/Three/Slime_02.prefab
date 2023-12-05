@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3492929935409327249}
   - component: {fileID: 7293447013906497792}
   - component: {fileID: 4439546614155008571}
+  - component: {fileID: 8132347363575844970}
   m_Layer: 0
   m_Name: Slime_02
   m_TagString: Player
@@ -37,7 +38,7 @@ Transform:
   - {fileID: 4960869465935586538}
   - {fileID: 6619142259291706517}
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8721062337823060580
 Animator:
@@ -118,7 +119,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -138,7 +139,6 @@ MonoBehaviour:
   faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
   SmileBody: {fileID: 1616212600526073401}
   currentState: 0
-  animator: {fileID: 0}
   damType: 0
   moveSpeed: 7000
   rotationSpeed: 180
@@ -149,6 +149,7 @@ MonoBehaviour:
   isAnimJump: 1
   isAnimAttack: 1
   isAnimDamage: 1
+  isBound: 0
   playerNum: 3
 --- !u!135 &4439546614155008571
 SphereCollider:
@@ -171,6 +172,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8132347363575844970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428666654007928981}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50fa665e4d18d1e4e99f20f4a09486ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
+  SmileBody: {fileID: 1616212600526073401}
+  currentState: 0
+  animator: {fileID: 8721062337823060580}
+  damType: 0
+  moveSpeed: 2500
+  rotationSpeed: 180
+  gravitySpeed: 0.05
+  flashingTime: 0.5
+  isHorizontalInput: 1
+  isVerticalInput: 1
+  isAnimIdle: 1
+  isAnimWalk: 1
+  isAnimJump: 1
+  isAnimAttack: 1
+  isAnimDamage: 1
+  playerNum: 3
+  localGravity: {x: 0, y: 0, z: 0}
+  col: {fileID: 0}
 --- !u!1 &638435870299827284
 GameObject:
   m_ObjectHideFlags: 0
