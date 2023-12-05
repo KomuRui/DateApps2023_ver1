@@ -8,7 +8,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
-    [SerializeField] private bool isVerticalInput = false;     // 縦の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -27,7 +27,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             //動き
             Move();
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.7f, 1.7f));
 
     }
 
