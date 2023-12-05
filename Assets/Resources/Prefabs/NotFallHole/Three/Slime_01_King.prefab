@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 161283960697667601}
   - component: {fileID: 1016520417484342140}
   - component: {fileID: 7086431692627457235}
+  - component: {fileID: 5009802823234662226}
   m_Layer: 0
   m_Name: Slime_01_King
   m_TagString: Player
@@ -285,7 +286,7 @@ Transform:
   - {fileID: 376688879971312029}
   - {fileID: 4655967021927755846}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5009364588485184383
 Animator:
@@ -388,6 +389,7 @@ MonoBehaviour:
   isAnimDamage: 1
   playerNum: 3
   localGravity: {x: 0, y: -40, z: 0}
+  rBody: {fileID: 0}
 --- !u!114 &7086431692627457235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +403,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+--- !u!65 &5009802823234662226
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169883624779192906}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.61277205, y: 0.11379175, z: 0.57838696}
+  m_Center: {x: 0.008415921, y: 0.27172598, z: 0.017265894}
 --- !u!1 &9141188687622392916
 GameObject:
   m_ObjectHideFlags: 0

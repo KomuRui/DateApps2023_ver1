@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 3794095775594617233}
   - component: {fileID: 9163281492531244272}
   - component: {fileID: -7489208782204287776}
+  - component: {fileID: -4964627763255130051}
   m_Layer: 0
   m_Name: Slime_02
   m_TagString: Player
@@ -306,6 +307,7 @@ MonoBehaviour:
   isAnimDamage: 1
   playerNum: 2
   localGravity: {x: 0, y: -40, z: 0}
+  rBody: {fileID: 0}
 --- !u!136 &3794095775594617233
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -369,6 +371,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+--- !u!65 &-4964627763255130051
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105707867781739998}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.61277205, y: 0.11379175, z: 0.57838696}
+  m_Center: {x: 0.008415921, y: 0.27172598, z: 0.017265894}
 --- !u!1 &7108745062065923987
 GameObject:
   m_ObjectHideFlags: 0

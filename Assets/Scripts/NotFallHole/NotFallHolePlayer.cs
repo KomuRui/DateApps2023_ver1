@@ -31,7 +31,11 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private Vector3 localGravity;
     private bool isJump;
     private bool isJumpInvoke;
-    private Rigidbody rBody;
+    private bool isMuteki;
+    private bool isStan;
+    private Vector3 initialScale;
+    private Vector3 stanScale;
+    public Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
     private Ray ray; // Rayを生成
 
@@ -43,8 +47,13 @@ public class NotFallHolePlayer : MonoBehaviour
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
 
+        initialScale = transform.localScale;
+        stanScale = transform.localScale;
+        stanScale.y = 1.3f;
         isJump = false;
         isJumpInvoke = false;
+        isMuteki = false;
+        isStan = false;
         rBody = this.GetComponent<Rigidbody>();
         playerNum = this.GetComponent<PlayerNum>().playerNum;
     }
@@ -59,6 +68,9 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         //状態更新
         StateUpdata();
+
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isStan) return;
 
         //動き
         Move();
@@ -80,9 +92,6 @@ public class NotFallHolePlayer : MonoBehaviour
     //移動
     private void Move()
     {
-        //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -189,7 +198,16 @@ public class NotFallHolePlayer : MonoBehaviour
         this.currentState = state;
     }
 
-    void SetResetJump() { isJump = false; isJumpInvoke = false; }
+    public void SetResetJump() { isJump = false; isJumpInvoke = false; }
+    public void SetResetMuteki() { isMuteki = false; }
+    public void SetResetStan() { 
+        isStan = false;
+        this.GetComponent<BoxCollider>().enabled = false;
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        SetResetScale();
+    }
+    public void SetResetScale() { transform.localScale = initialScale; }
+    public void SetOhNoScale() { transform.localScale = stanScale; }
 
     void OnCollisionEnter(Collision other)
     {
@@ -202,15 +220,28 @@ public class NotFallHolePlayer : MonoBehaviour
 
     void OnCollisionStay(Collision other)
     {
-        if (!(other.transform.tag != "Player")) return;
+        if (other.transform.tag != "Player") return;
 
         RaycastHit hit;
-        ray = new Ray(transform.position, Vector3.up);
+        ray = new Ray(transform.position, Vector3.down);
+        
+        //二段ジャンプの条件が成立しているのなら
         if (rBody.velocity.y < 0 && Physics.Raycast(ray, out hit, 10000) && hit.transform.tag == "Player" && hit.transform.gameObject != this.gameObject)
         {
+            //二段ジャンプ処理
             isJumpInvoke = true;
-            rBody.AddForce(Vector3.up * jumpPower);
+            rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
             Invoke("SetResetJump", 0.3f);
+
+            //無敵ならこの先処理しない
+            if (hit.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
+            hit.transform.GetComponent<NotFallHolePlayer>().isMuteki = true;
+            hit.transform.GetComponent<NotFallHolePlayer>().isStan = true;
+            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetStan",2.0f);
+            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetMuteki", 4.0f);
+            hit.transform.GetComponent<NotFallHolePlayer>().SetOhNoScale();
+            hit.transform.GetComponent<NotFallHolePlayer>().GetComponent<BoxCollider>().enabled = true;
+            hit.transform.GetComponent<NotFallHolePlayer>().GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 

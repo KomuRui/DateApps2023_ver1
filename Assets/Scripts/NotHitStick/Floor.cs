@@ -112,6 +112,9 @@ public class Floor : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        //ƒNƒŠƒA
+        hitPlayer.Clear();
+
         //”’F‚É‚µ‚Ä‚¨‚­
         GetComponent<MeshRenderer>().material.color = Color.white;
         transform.DOMove(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), 1f).SetEase(Ease.InOutQuart);
