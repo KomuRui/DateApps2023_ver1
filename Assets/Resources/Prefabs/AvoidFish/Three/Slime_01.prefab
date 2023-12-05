@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 8619351586608227059}
   - component: {fileID: 7813229538285290268}
   - component: {fileID: 8280119200313680752}
+  - component: {fileID: 2624636736107035161}
   m_Layer: 0
   m_Name: Slime_01
   m_TagString: Player
@@ -144,7 +145,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355989732891216273}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1f6a1ee24d666e44b9fbae15b43f726b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -154,7 +155,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.42
   m_Height: 1
@@ -168,7 +169,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355989732891216273}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -182,7 +183,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -202,9 +203,9 @@ MonoBehaviour:
   faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
   SmileBody: {fileID: 4114508188023779826}
   currentState: 0
-  animator: {fileID: 770748465319906638}
+  animator: {fileID: 0}
   damType: 0
-  moveSpeed: 3.5
+  moveSpeed: 7000
   rotationSpeed: 180
   isHorizontalInput: 1
   isVerticalInput: 1
@@ -214,6 +215,27 @@ MonoBehaviour:
   isAnimAttack: 1
   isAnimDamage: 1
   playerNum: 3
+--- !u!135 &2624636736107035161
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355989732891216273}
+  m_Material: {fileID: 13400000, guid: 1f6a1ee24d666e44b9fbae15b43f726b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3962889678624707477
 GameObject:
   m_ObjectHideFlags: 0
