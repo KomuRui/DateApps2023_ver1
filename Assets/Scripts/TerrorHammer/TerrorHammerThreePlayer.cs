@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TerrorHammerThreePlayer : MonoBehaviour
@@ -69,5 +70,19 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Hammer")
+        {
+            Debug.Log("当たった!");
+            // ミニゲームに死んだことを伝える
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+
+            //オブジェクトを削除
+            Destroy(this.gameObject.transform.parent.gameObject);
+        }
     }
 }
