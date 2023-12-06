@@ -10,13 +10,19 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
     [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
+    [SerializeField] public float startPosX;     // スタート
+    [SerializeField] public float checkPosX;     // チェック
+    [SerializeField] private float nowPosX;     // プレイヤー
+    [SerializeField] private int point;     // プレイヤー
+
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
     // Start is called before the first frame update
     void Start()
     {
-
+        nowPosX = startPosX;
+        point = 0;
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
     }
@@ -24,11 +30,24 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish())
+        if (!GameManager.nowMiniGameManager.IsFinish() && point < 3)
             //動き
             Move();
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.7f, 1.7f));
+
+        //チェック
+        if(nowPosX == startPosX && this.transform.position.x > checkPosX)
+        {
+            nowPosX = checkPosX;
+        }
+
+        if (nowPosX == checkPosX && this.transform.position.x < startPosX)
+        {
+            nowPosX = startPosX;
+            point++;
+            Debug.Log(point);
+        }
 
     }
 
@@ -74,7 +93,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Hammer")
+        //if (collision.gameObject.tag == "Hammer")
         {
             Debug.Log("当たった!");
             // ミニゲームに死んだことを伝える
