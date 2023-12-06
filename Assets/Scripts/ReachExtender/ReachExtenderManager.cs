@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ReachExtenderManager : MiniGameManager
 {
-    // Start is called before the first frame update
-    void Start()
+    //Startと同じ
+    public override void SceneStart()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    //ゲーム開始時に呼ばれる
+    public override void MiniGameStart()
     {
-        
+    }
+
+    //Updateと同じ
+    public override void MiniGameUpdate()
+    {
+    }
+
+    //ミニゲームが終わったら呼ばれる
+    public override void MiniGameFinish()
+    {
     }
 }
