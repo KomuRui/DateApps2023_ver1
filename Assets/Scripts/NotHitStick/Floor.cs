@@ -104,13 +104,16 @@ public class Floor : MonoBehaviour
         transform.DOMove(new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z), 1f).SetEase(Ease.InOutQuart);
 
         //å≥Ç…ñﬂÇ∑
-        StartCoroutine(Undo(4.0f));
+        StartCoroutine(Undo(6.0f));
     }
 
     //å≥Ç…ñﬂÇ∑
     IEnumerator Undo(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        //ÉNÉäÉA
+        hitPlayer.Clear();
 
         //îíêFÇ…ÇµÇƒÇ®Ç≠
         GetComponent<MeshRenderer>().material.color = Color.white;

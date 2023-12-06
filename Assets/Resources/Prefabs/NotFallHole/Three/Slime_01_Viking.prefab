@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5294012991289501712}
   - component: {fileID: 8693140434012867200}
   - component: {fileID: -5446090739390290767}
+  - component: {fileID: -2013440689656464375}
   m_Layer: 0
   m_Name: Slime_01_Viking
   m_TagString: Player
@@ -157,9 +158,10 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 4420831399522596258}
   damType: 0
-  moveSpeed: 0.5
+  moveSpeed: 2.5
   rotationSpeed: 180
   gravitySpeed: 3
+  jumpPower: 600
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -169,6 +171,7 @@ MonoBehaviour:
   isAnimDamage: 1
   playerNum: 4
   localGravity: {x: 0, y: -40, z: 0}
+  rBody: {fileID: 0}
 --- !u!114 &-5446090739390290767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +185,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+--- !u!65 &-2013440689656464375
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018182528578298592}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.61277205, y: 0.11379175, z: 0.57838696}
+  m_Center: {x: 0.008415921, y: 0.27172598, z: 0.017265894}
 --- !u!1 &1751024971551895754
 GameObject:
   m_ObjectHideFlags: 0

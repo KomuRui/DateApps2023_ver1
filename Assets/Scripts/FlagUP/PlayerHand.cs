@@ -97,7 +97,7 @@ public class PlayerHand : MonoBehaviour
         //ä¯è„Ç∞èàóù
         if (Input.GetButtonDown("LBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.LEFT);
-        else if (Input.GetButtonDown("RBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
+        if (Input.GetButtonDown("RBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.RIGHT);
     }
 

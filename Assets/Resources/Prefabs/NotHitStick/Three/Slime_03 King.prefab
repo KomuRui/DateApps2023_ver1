@@ -189,14 +189,14 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 737018295435842550}
   damType: 0
-  moveSpeed: 1
+  moveSpeed: 2.5
   rotationSpeed: 180
   gravitySpeed: 0.05
   beforeInput: 0
   isHorizontalInput: 1
   isVerticalInput: 0
   isAnimIdle: 1
-  isAnimWalk: 1
+  isAnimWalk: 0
   isAnimJump: 1
   isAnimAttack: 1
   isAnimDamage: 1
@@ -204,9 +204,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  jumpPower: 240
+  jumpPower: 280
   nowStageNum: 0
   playerNum: 4
+  stunTime: 2
+  isStun: 0
 --- !u!114 &3689859098422524934
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TerrorHammerThreePlayer : MonoBehaviour
@@ -8,7 +9,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
-    [SerializeField] private bool isVerticalInput = false;     // 縦の入力許可するか
+    [SerializeField] private bool isVerticalInput = true;     // 縦の入力許可するか
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -27,7 +28,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             //動き
             Move();
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.7f, 1.7f));
 
     }
 
@@ -69,5 +70,19 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Hammer")
+        {
+            Debug.Log("当たった!");
+            // ミニゲームに死んだことを伝える
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+
+            //オブジェクトを削除
+            Destroy(this.gameObject.transform.parent.gameObject);
+        }
     }
 }

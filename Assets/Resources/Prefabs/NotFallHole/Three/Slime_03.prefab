@@ -45,9 +45,10 @@ GameObject:
   - component: {fileID: 6857501346204604746}
   - component: {fileID: 2591554424437940494}
   - component: {fileID: -8413594833395893352}
+  - component: {fileID: 6813539867426016194}
   m_Layer: 0
   m_Name: Slime_03
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,9 +158,10 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 8681920189030531902}
   damType: 0
-  moveSpeed: 0.5
+  moveSpeed: 2.5
   rotationSpeed: 180
   gravitySpeed: 3
+  jumpPower: 600
   isHorizontalInput: 1
   isVerticalInput: 1
   isAnimIdle: 1
@@ -169,6 +171,7 @@ MonoBehaviour:
   isAnimDamage: 1
   playerNum: 3
   localGravity: {x: 0, y: -40, z: 0}
+  rBody: {fileID: 0}
 --- !u!114 &-8413594833395893352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +185,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+--- !u!65 &6813539867426016194
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786800923286095301}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.61277205, y: 0.11379175, z: 0.57838696}
+  m_Center: {x: 0.008415921, y: 0.27172598, z: 0.017265894}
 --- !u!1 &2388960869107696354
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,8 +29,9 @@ public class NotHitStickPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;        // ダメージアニメーション許可するか
     [SerializeField] public GameObject[] stage;              // 床のゲームオブジェクト
     [SerializeField] private float jumpPower;                 // ジャンプ力
-    [SerializeField] private int nowStageNum;                 // 乗っている床の番号
+    [SerializeField] public int nowStageNum;                 // 乗っている床の番号
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private float stunTime = 2;              //スタン時間
 
     //リジットボディ
     private Rigidbody rb;
@@ -39,8 +40,24 @@ public class NotHitStickPlayer : MonoBehaviour
     private bool isJump = false;
     private bool isJump2 = false;
 
+<<<<<<< HEAD
     //スタン状態かどうか
     private bool isStun = false;
+=======
+    //ジャンプできる状態かどうか
+    private bool canJump = true;
+
+    private bool isInvokeJump = false;
+
+    private float jumpSpeedRatio = 1;
+
+    //無敵かどうか
+    private bool isInvincible = false;
+
+    //スタン状態かどうか
+    public bool isStun = false;
+
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
 
     // メインカメラのTransform
     private Transform mainCameraTransform;
@@ -86,9 +103,8 @@ public class NotHitStickPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         //ジャンプしているならこの先処理しない
-        if (isJump  || isJump2) return;
+        if (isJump) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -117,8 +133,18 @@ public class NotHitStickPlayer : MonoBehaviour
         // 移動方向を計算
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
+        //ジャンプ中なら遅く
+        if (isJump2)
+        {
+            jumpSpeedRatio = 0.5f;
+        }
+        else
+        {
+            jumpSpeedRatio = 1;
+        }
+
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime * jumpSpeedRatio;
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -142,6 +168,7 @@ public class NotHitStickPlayer : MonoBehaviour
                 //元に戻す
                 StartCoroutine(Drop(0.3f));
             }
+           
 
             return;
         }
@@ -149,7 +176,8 @@ public class NotHitStickPlayer : MonoBehaviour
         if (isJump2) return;
 
         //通常
-        if (Input.GetButtonDown("Abutton" + playerNum))
+        //ジャンプ出来る状態なら
+        if (Input.GetButtonDown("Abutton" + playerNum) && canJump)
         {
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
@@ -157,6 +185,9 @@ public class NotHitStickPlayer : MonoBehaviour
             //上に力を加える
             rb.AddForce(Vector3.up * jumpPower);
             isJump2 = true;
+
+            canJump = false;
+
             return;
         }
 
@@ -169,7 +200,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum--;
             nowStageNum = Math.Max(nowStageNum, 0);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
@@ -181,7 +212,7 @@ public class NotHitStickPlayer : MonoBehaviour
             nowStageNum++;
             nowStageNum = Math.Min(nowStageNum, stage.Length - 1);
             if (beforeStage == nowStageNum) return;
-            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f).OnComplete(() => { isJump2 = false; isJump = false; });
+            tweener = transform.DOMoveZ(stage[nowStageNum].transform.position.z, 1.0f);
             tweener.Play();
             ChangeStateTo(SlimeAnimationState.Idle);
             rb.AddForce(Vector3.up * jumpPower);
@@ -257,12 +288,18 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Stage")
         {
+            if(!canJump)
+                //0.5秒後にジャンプ出来るように
+                Invoke("CanJump", 0.5f);
+
+            isJump = false;
             isJump2 = false;
 
             if(rb != null)
                 rb.velocity = Vector3.zero;
         }
 
+<<<<<<< HEAD
         if (collision.transform.tag == "Player")
         {
             RaycastHit hit;
@@ -274,6 +311,27 @@ public class NotHitStickPlayer : MonoBehaviour
                 //スタンする
                 StunMe();
             }
+=======
+        //プレイヤーに当たったら
+        if (collision.transform.tag == "Player")
+        {
+            //もし当たったプレイヤーが下にいるか、スタンしていたら終わる
+            if (collision.transform.position.y < transform.position.y || isStun)
+            {
+                if(!gameObject.GetComponent<NotHitStickPlayer>().isStun)
+                    DowbleJump();
+                return;
+            }
+           
+            
+            //ジャンプしていて、相手がスタンじゃなかったら
+            //さらに無敵ではないなら
+            if(collision.gameObject.GetComponent<NotHitStickPlayer>().isJump || collision.gameObject.GetComponent<NotHitStickPlayer>().isJump2 &&
+                !collision.gameObject.GetComponent<NotHitStickPlayer>().isStun && !isInvincible)
+
+                //スタン状態にする
+                StunMe();
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
         }
     }
 
@@ -307,6 +365,7 @@ public class NotHitStickPlayer : MonoBehaviour
         tweener.Pause();
     }
 
+<<<<<<< HEAD
     public void StunMe()
     {
         //スタン状態にする
@@ -319,5 +378,64 @@ public class NotHitStickPlayer : MonoBehaviour
     public void CancellationStun()
     {
         isStun = false;
+=======
+    //スタン状態にする
+    public void StunMe()
+    {
+        //スタン状態に
+        isStun = true;
+
+        //潰れる
+        this.transform.localScale = new Vector3(transform.localScale.x, 1.0f, transform.localScale.z);
+
+        // 2秒後に解除
+        Invoke("CancellationStun",1.5f);　
+    }
+
+    //スタン解除
+    public void CancellationStun()
+    {
+        //潰れる
+        this.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+        isStun = false;
+
+        //無敵化
+        isInvincible = true;
+
+        //2秒後無敵解除
+        Invoke("ResetInvincible", 2);
+    }
+
+    //ダブルジャンプ
+    public void DowbleJump()
+    {
+        if (isInvokeJump) return;
+
+        isInvokeJump = true;
+
+        //ジャンプ
+        rb.AddForce(Vector3.up * (jumpPower * 0.8f));
+
+        //無限ジャンプができないように
+        Invoke("ResetJump", 0.3f);
+    }
+
+
+    public void ResetJump()
+    {
+        isInvokeJump = false;
+    }
+
+    //無敵解除
+    public void ResetInvincible()
+    {
+        isInvincible = false;
+    }
+
+    //ジャンプ出来るようにする
+    public void CanJump()
+    {
+        canJump = true;
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
     }
 }
