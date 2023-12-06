@@ -40,6 +40,10 @@ public class NotHitStickPlayer : MonoBehaviour
     private bool isJump = false;
     private bool isJump2 = false;
 
+<<<<<<< HEAD
+    //スタン状態かどうか
+    private bool isStun = false;
+=======
     //ジャンプできる状態かどうか
     private bool canJump = true;
 
@@ -53,6 +57,7 @@ public class NotHitStickPlayer : MonoBehaviour
     //スタン状態かどうか
     public bool isStun = false;
 
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
 
     // メインカメラのTransform
     private Transform mainCameraTransform;
@@ -294,6 +299,19 @@ public class NotHitStickPlayer : MonoBehaviour
                 rb.velocity = Vector3.zero;
         }
 
+<<<<<<< HEAD
+        if (collision.transform.tag == "Player")
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(transform.position, Vector3.up); // Rayを生成
+
+            //スタン状態ではなく、レイがプレイヤーに当たったら
+            if (Physics.Raycast(ray, out hit, 10000) && hit.collider.CompareTag("Player") && !isStun)
+            {
+                //スタンする
+                StunMe();
+            }
+=======
         //プレイヤーに当たったら
         if (collision.transform.tag == "Player")
         {
@@ -313,6 +331,7 @@ public class NotHitStickPlayer : MonoBehaviour
 
                 //スタン状態にする
                 StunMe();
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
         }
     }
 
@@ -346,6 +365,20 @@ public class NotHitStickPlayer : MonoBehaviour
         tweener.Pause();
     }
 
+<<<<<<< HEAD
+    public void StunMe()
+    {
+        //スタン状態にする
+        isStun = true;
+
+        //2秒後にスタン解除
+        Invoke("CancellationStun", 2);
+    }
+
+    public void CancellationStun()
+    {
+        isStun = false;
+=======
     //スタン状態にする
     public void StunMe()
     {
@@ -403,5 +436,6 @@ public class NotHitStickPlayer : MonoBehaviour
     public void CanJump()
     {
         canJump = true;
+>>>>>>> fd4145f9059a08b5c97674c42de51ba0e9526095
     }
 }
