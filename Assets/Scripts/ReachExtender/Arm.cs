@@ -5,9 +5,8 @@ using UnityEngine;
 public class Arm : MonoBehaviour
 {
     [SerializeField] Transform trans;
-
-    //
     [SerializeField] List<GameObject> magicHandTopList = new List<GameObject>();
+    [SerializeField] List<GameObject> magicHandList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -18,15 +17,14 @@ public class Arm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (var item in magicHandTopList)
+        for (int i = 0; i < magicHandList.Count; i++)
         {
-            if(item.activeSelf)
+            if (magicHandList[i].activeSelf)
             {
-                transform.position = trans.position;
+                transform.position = magicHandTopList[i].transform.position ;
                 return;
             }
-            
         }
-        
+        transform.position = trans.position;
     }
 }
