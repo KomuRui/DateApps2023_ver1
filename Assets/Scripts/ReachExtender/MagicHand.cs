@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,18 @@ public class MagicHand : MonoBehaviour
 
     private bool bigMax = false;        //マジックハンドが伸びきったかどうか
     [SerializeField] private GameObject nextArmParent;
+    [SerializeField] private GameObject nextArmParentTop;
 
 
     void Start()
     {
         //1秒後に伸びきる
         Invoke("BigMax", 5f);
+
+        if (nextArmParentTop != null)
+        {
+            transform.position = nextArmParentTop.transform.position;
+        }
     }
     
     // Update is called once per frame
@@ -22,6 +29,8 @@ public class MagicHand : MonoBehaviour
     {
         if (!bigMax)
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
+
+
     }
 
     public void BigMax()
