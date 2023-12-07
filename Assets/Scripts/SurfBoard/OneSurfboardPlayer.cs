@@ -46,7 +46,7 @@ public class OneSurfboardPlayer : MonoBehaviour
                 p.sumRotateX += horizontalInput;
 
                 //スティックによって回転
-                p.transform.Rotate(new Vector3(0, horizontalInput, 0));
+                p.transform.Rotate(new Vector3(0, horizontalInput * Time.deltaTime * 300, 0));
             }
         }
     }

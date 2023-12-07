@@ -122,7 +122,7 @@ public class SurfboardPlayer : MonoBehaviour
             sumRotateX += horizontalInput;
 
             //スティックによって回転
-            transform.Rotate(new Vector3(0, horizontalInput, 0));
+            transform.Rotate(new Vector3(0, horizontalInput * Time.deltaTime * 300, 0));
         }
 
         //if (sumRotateZ + verticalInput <= LIMIT_ROTATE && sumRotateZ + verticalInput >= -LIMIT_ROTATE)
