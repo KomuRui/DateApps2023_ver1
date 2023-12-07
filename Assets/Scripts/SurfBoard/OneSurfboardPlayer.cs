@@ -30,7 +30,7 @@ public class OneSurfboardPlayer : MonoBehaviour
         float horizontalInput = 0;
 
         // 入力を取得
-        horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum) * rotateSpeed;
+        horizontalInput = Input.GetAxis("L_Stick_H" + this.GetComponent<PlayerNum>().playerNum) * rotateSpeed * Time.deltaTime * 300;
 
         //舵を動かす
         KajiMove(horizontalInput);
@@ -46,7 +46,7 @@ public class OneSurfboardPlayer : MonoBehaviour
                 p.sumRotateX += horizontalInput;
 
                 //スティックによって回転
-                p.transform.Rotate(new Vector3(0, horizontalInput * Time.deltaTime * 300, 0));
+                p.transform.Rotate(new Vector3(0, horizontalInput, 0));
             }
         }
     }
