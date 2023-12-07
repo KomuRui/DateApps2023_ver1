@@ -40,12 +40,12 @@ public class AllParentRotate : MonoBehaviour
         else if (isLB)
         {
             power -= new Vector3(0, speed * Time.deltaTime, 0);
-            power.y = Math.Min(0.09f, Math.Abs(power.y)) * Math.Sign(power.y);
+            power.y = Math.Min(0.3f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
         else
         {
             power += new Vector3(0, speed * Time.deltaTime, 0);
-            power.y = Math.Min(0.09f, Math.Abs(power.y)) * Math.Sign(power.y);
+            power.y = Math.Min(0.3f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
 
         transform.eulerAngles += power;

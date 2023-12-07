@@ -26,6 +26,7 @@ public static class PlayerManager
     public static void Initializ()
     {
         player = new Dictionary<byte, PlayerInfo>();
+        onePlayerNum = 1;
 
         for (byte i = 1; i < PLAYER_MAX + 1; i++)
         {
