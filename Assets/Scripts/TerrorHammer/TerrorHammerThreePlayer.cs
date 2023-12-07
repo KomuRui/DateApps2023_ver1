@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class TerrorHammerThreePlayer : MonoBehaviour
@@ -14,6 +15,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] public float checkPosX;     // チェック
     [SerializeField] private float nowPosX;     // プレイヤー
     [SerializeField] private int point;     // プレイヤー
+    [SerializeField] public TextMeshProUGUI pointText;       //点数テキスト
 
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
@@ -49,6 +51,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         {
             nowPosX = startPosX;
             point++;
+            pointText.SetText(point.ToString());
             Debug.Log(point);
         }
 
