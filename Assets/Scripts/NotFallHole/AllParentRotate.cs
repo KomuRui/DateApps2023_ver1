@@ -39,15 +39,15 @@ public class AllParentRotate : MonoBehaviour
             power *= 0.997f;
         else if (isLB)
         {
-            power -= new Vector3(0, speed * Time.deltaTime, 0);
-            power.y = Math.Min(0.3f, Math.Abs(power.y)) * Math.Sign(power.y);
+            power -= new Vector3(0, speed, 0);
+            power.y = Math.Min(40f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
         else
         {
-            power += new Vector3(0, speed * Time.deltaTime, 0);
-            power.y = Math.Min(0.3f, Math.Abs(power.y)) * Math.Sign(power.y);
+            power += new Vector3(0, speed, 0);
+            power.y = Math.Min(40f, Math.Abs(power.y)) * Math.Sign(power.y);
         }
 
-        transform.eulerAngles += power;
+        transform.eulerAngles += power * Time.deltaTime;
     }
 }
