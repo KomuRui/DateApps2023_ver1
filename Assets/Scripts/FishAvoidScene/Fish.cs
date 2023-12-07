@@ -12,7 +12,7 @@ public class Fish : MonoBehaviour
     float curve;
     float width = 0.004f;
     float speed = 0.6f;
-    float height = 5f * 0.6f;
+    float height = 5f;
     float a = 0.6f;
     float fishAngle;
     int rnd;
@@ -82,7 +82,7 @@ public class Fish : MonoBehaviour
         transform.position += new Vector3(0, height * Time.deltaTime * speed, -3.5f * Time.deltaTime * speed);
         //2.25;
         transform.Rotate(new Vector3(100f * Time.deltaTime * speed, 0, 0));
-        if (transform.position.y > 0.0f)
+        if (transform.position.y > -0.2f)
         {
             height = -height;
             //transform.Rotate(new Vector3(300, 0, 0));
@@ -93,7 +93,7 @@ public class Fish : MonoBehaviour
 
         //250 350;
 
-        if (transform.position.y < -3.2f)
+        if (transform.position.y < -3f)
         {
             height = -height;
             transform.eulerAngles = (new Vector3(220, 180, 0));
