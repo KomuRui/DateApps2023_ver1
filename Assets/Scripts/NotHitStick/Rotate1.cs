@@ -24,14 +24,14 @@ public class Rotate1 : MonoBehaviour
         if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         //Œ»Ý‚Ì—Í‚ðŽæ“¾
-        power += -Input.GetAxis("L_Stick_V" + playerNum) * speed * Time.deltaTime;
-        power = Math.Min(0.08f, Math.Abs(power)) * Math.Sign(power);
+        power += -Input.GetAxis("L_Stick_V" + playerNum) * speed;
+        power = Math.Min(30.0f, Math.Abs(power)) * Math.Sign(power);
 
         //—Í‚ª‰Á‚¦‚ç‚ê‚Ä‚È‚¢‚Ì‚È‚çŒ¸‘¬‚·‚é
         if (Input.GetAxis("L_Stick_V" + playerNum) == 0 && power != 0) power *= 0.99f;
 
         //Šp“x‚ð‰ÁŽZ‚µA”ÍˆÍ“à‚ÉŽû‚ß‚é
-        transform.eulerAngles += new Vector3(0, power, 0);
+        transform.eulerAngles += new Vector3(0, power * Time.deltaTime, 0);
 
         ///”ÍˆÍ“à‚É‚¨‚³‚ß‚é
         if (transform.eulerAngles.y > 35 && transform.eulerAngles.y < 300)

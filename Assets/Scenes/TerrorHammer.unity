@@ -2644,6 +2644,7 @@ GameObject:
   - component: {fileID: 930733500}
   - component: {fileID: 930733501}
   - component: {fileID: 930733502}
+  - component: {fileID: 930733503}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -2692,7 +2693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352db6d5ba1862848a199fc9e84b57ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 600
   rotationSpeed: 180
   isHorizontalInput: 1
   isVerticalInput: 1
@@ -2721,6 +2722,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!54 &930733503
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930733497}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1001 &941151928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3503,6 +3531,7 @@ GameObject:
   - component: {fileID: 1199241319}
   - component: {fileID: 1199241318}
   - component: {fileID: 1199241320}
+  - component: {fileID: 1199241321}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -3551,7 +3580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352db6d5ba1862848a199fc9e84b57ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 600
   rotationSpeed: 180
   isHorizontalInput: 1
   isVerticalInput: 1
@@ -3580,6 +3609,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!54 &1199241321
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199241316}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1218730055
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,6 +5146,7 @@ GameObject:
   - component: {fileID: 1647448036}
   - component: {fileID: 1647448037}
   - component: {fileID: 1647448038}
+  - component: {fileID: 1647448039}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -5138,7 +5195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352db6d5ba1862848a199fc9e84b57ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 600
   rotationSpeed: 180
   isHorizontalInput: 1
   isVerticalInput: 1
@@ -5167,6 +5224,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!54 &1647448039
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647448033}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1660461454
 GameObject:
   m_ObjectHideFlags: 0
