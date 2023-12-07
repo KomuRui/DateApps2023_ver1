@@ -15,7 +15,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] private float nowPosX;     // プレイヤー
     [SerializeField] private int point;     // プレイヤー
 
-
+    private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
     // Start is called before the first frame update
@@ -25,6 +25,9 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         point = 0;
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        //リジットボディ取得
+        rBody = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -82,8 +85,9 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
 
+        
 
         //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
@@ -93,15 +97,15 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag == "Hammer")
+        if (collision.gameObject.tag == "Hammer")
         {
             Debug.Log("当たった!");
             // ミニゲームに死んだことを伝える
-            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
 
             //オブジェクトを削除
-            Destroy(this.gameObject.transform.parent.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
