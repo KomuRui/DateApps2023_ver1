@@ -153,7 +153,7 @@ public class ConsecutivePlayer : MonoBehaviour
             // 移動
             //アニメーションの速度に合わせるために遅くする
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
-            rb.AddForce(moveDirection * moveSpeed, ForceMode.Force);    // 力を加える
+            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400, ForceMode.Force);    // 力を加える
             //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             //ジャンプ
@@ -263,8 +263,8 @@ public class ConsecutivePlayer : MonoBehaviour
             Debug.Log("Hit"); // ログを表示する
 
             Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();  // rigidbodyを取得
-            Vector3 force = new Vector3(0.0f, 800.0f, 0.0f);  // 力を設定
-            rb.AddForce(force, ForceMode.Force);          // 力を加える
+            Vector3 force = new Vector3(0.0f, 15000.0f, 0.0f);  // 力を設定
+            rb.AddForce(force * Time.deltaTime, ForceMode.Force);          // 力を加える
 
             isDead = true;
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);

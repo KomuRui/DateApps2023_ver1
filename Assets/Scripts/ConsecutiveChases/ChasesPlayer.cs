@@ -186,7 +186,7 @@ public class ChasesPlayer : MonoBehaviour
 
             // ˆÚ“®
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody‚ðŽæ“¾
-            rb.AddForce(moveDirection * moveSpeed, ForceMode.Force);    // —Í‚ð‰Á‚¦‚é
+            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 150, ForceMode.Force);    // —Í‚ð‰Á‚¦‚é
             //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             //ƒWƒƒƒ“ƒv
