@@ -11,7 +11,7 @@ public class Fish : MonoBehaviour
     bool isCurve;
     float curve;
     float width = 0.004f;
-    float height = 0.01f;
+    float height = 1f;
     float a = 0.6f;
     float fishAngle;
     int rnd;
@@ -70,17 +70,17 @@ public class Fish : MonoBehaviour
     //ペンギン
     public void Penguin()
     {
-        transform.position += new Vector3(0, 0, -0.02f);
+        transform.position += new Vector3(0, 0, -2f * Time.deltaTime);
     }
 
     //イルカ
     public void Dolphin()
     {
-        transform.position += new Vector3(0, 0, -0.007f);
+        transform.position += new Vector3(0, 0, -0.7f * Time.deltaTime);
         //this.transform.DOJump(new Vector3(transform.position.x, -3, -15.0f), jumpPower: 1.5f, numJumps: 5, duration: 7f);
-        transform.position += new Vector3(0, height, -0.007f);
+        transform.position += new Vector3(0, height * Time.deltaTime, -0.7f * Time.deltaTime);
         //2.25;
-        transform.Rotate(new Vector3(0.2f, 0, 0));
+        transform.Rotate(new Vector3(20f * Time.deltaTime, 0, 0));
         if (transform.position.y > 0.0f)
         {
             height = -height;
@@ -120,22 +120,22 @@ public class Fish : MonoBehaviour
 
         this.transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.3f, 4.3f), this.transform.position.y, this.transform.position.z);
 
-        this.transform.position += this.transform.forward * 0.01f;
+        this.transform.position += this.transform.forward * 1f *Time.deltaTime;
     }
 
     //サメ
     public void Shark()
     {
-        transform.position += new Vector3(0, 0, -0.01f);
+        transform.position += new Vector3(0, 0, -1f * Time.deltaTime);
         if (player != null && player.transform.position.z < this.transform.position.z - 5)
         {
             if (player.transform.position.x < this.transform.position.x)
             {
-                transform.position += new Vector3(-0.002f, 0, 0);
+                transform.position += new Vector3(-0.2f * Time.deltaTime, 0, 0);
             }
             else
             {
-                transform.position += new Vector3(0.002f, 0, 0);
+                transform.position += new Vector3(0.2f * Time.deltaTime, 0, 0);
             }
             this.transform.LookAt(player.transform.position);
             transform.eulerAngles = (new Vector3(0, 270, 0));
