@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,11 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] private float nowPosX;     // プレイヤー
     [SerializeField] private int point;     // プレイヤー
     [SerializeField] public TextMeshProUGUI pointText;       //点数テキスト
+    [SerializeField] private GameObject HammerOb;  // ハンマー
+    
+    private Vector3 initializeRotate;
+    private Vector3 AttackRotate;
+    private bool isAttack;
 
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
@@ -30,16 +36,21 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
         //リジットボディ取得
         rBody = this.GetComponent<Rigidbody>();
+
+        //初期
+        initializeRotate = new Vector3(90, 0, 0);
+        AttackRotate = new Vector3(0, 0, 0);
+        isAttack = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish() && point < 3)
+        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1)
             //動き
             Move();
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.7f, 1.7f));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.0f, 1.0f));//1.7f
 
         //チェック
         if(nowPosX == startPosX && this.transform.position.x > checkPosX)
@@ -55,6 +66,22 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             Debug.Log(point);
         }
 
+
+        //攻撃
+        if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
+        {
+            isAttack = false;
+            //HammerOb.transform.DORotate(initializeRotate, 0.1f);
+            //HammerOb.transform.DORotate(AttackRotate, 0.5f);
+            HammerOb.transform.DORotate(AttackRotate, 0.5f).SetEase(Ease.InBack);
+
+            //1.5秒後にあげる
+            Invoke("HammerUp", 0.5f);
+            Invoke("HammerAttack", 2.0f);
+
+        }
+
+        
     }
 
     //移動
@@ -96,6 +123,16 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    public void HammerUp()
+    {
+        HammerOb.transform.DORotate(initializeRotate, 0.5f).SetEase(Ease.InQuad);
+    }
+
+    public void HammerAttack()
+    {
+        isAttack = true;
     }
 
     void OnCollisionEnter(Collision collision)
