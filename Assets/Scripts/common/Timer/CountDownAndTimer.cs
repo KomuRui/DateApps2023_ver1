@@ -11,7 +11,7 @@ public class CountDownAndTimer : MonoBehaviour
 
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
-    [SerializeField] private float time = 30.0f;
+    [SerializeField] public float time = 30.0f;
     private bool isStop = true;
     public bool isfinish = false;
 
