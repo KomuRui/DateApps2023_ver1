@@ -84,11 +84,8 @@ public class DriveChaseFishPlayer : MonoBehaviour
             return;
         }
 
-        //歩き状態に変更
-        ChangeStateTo(SlimeAnimationState.Walk);
-
         // カメラの向きを基準にプレイヤーを移動
-        Vector3 forwardDirection = mainCameraTransform.forward;
+        Vector3 forwardDirection = new Vector3(0,0,1);
         Vector3 rightDirection = mainCameraTransform.right;
         forwardDirection.y = 0f; // Y軸成分を0にすることで水平方向に制限
 
@@ -96,7 +93,7 @@ public class DriveChaseFishPlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -165,11 +162,6 @@ public class DriveChaseFishPlayer : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Sea")
-        {
-            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
-        }
     }
 
 }

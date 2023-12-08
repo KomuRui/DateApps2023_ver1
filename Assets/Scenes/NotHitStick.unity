@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9647c55e0dc7ef84da7e453ceefe486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 0.2
   playerNum: 1
 --- !u!1001 &492742412
 PrefabInstance:
@@ -2774,6 +2774,8 @@ MonoBehaviour:
   jumpPower: 240
   nowStageNum: 0
   playerNum: 4
+  stunTime: 2
+  isStun: 0
 --- !u!65 &1161002762
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3681,10 +3683,10 @@ MonoBehaviour:
   - {fileID: 1205843370}
   - {fileID: 633056562}
   rankAnnouncementPos:
-  - {x: -2.4, y: 8.6, z: 13}
-  - {x: -0.8, y: 8.6, z: 13}
-  - {x: 0.8, y: 8.6, z: 13}
   - {x: 2.4, y: 8.6, z: 13}
+  - {x: 0.8, y: 8.6, z: 13}
+  - {x: -0.8, y: 8.6, z: 13}
+  - {x: -2.4, y: 8.6, z: 13}
   rankAnnouncementScale:
   - {x: 1.7, y: 1.7, z: 1.7}
   - {x: 1.7, y: 1.7, z: 1.7}
@@ -4921,6 +4923,8 @@ MonoBehaviour:
   jumpPower: 220
   nowStageNum: 1
   playerNum: 2
+  stunTime: 2
+  isStun: 0
 --- !u!65 &1889017912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5376,7 +5380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68d6fa864c794b4498c612b5a0969ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 0.2
   playerNum: 1
 --- !u!1 &2090301346
 GameObject:
@@ -5554,6 +5558,8 @@ MonoBehaviour:
   jumpPower: 200
   nowStageNum: 2
   playerNum: 3
+  stunTime: 2
+  isStun: 0
 --- !u!65 &2094399564
 BoxCollider:
   m_ObjectHideFlags: 0

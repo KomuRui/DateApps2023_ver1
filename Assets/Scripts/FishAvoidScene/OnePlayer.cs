@@ -234,7 +234,7 @@ public class OnePlayer : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("Ybutton" + num))&& isDolphin)
         {
             //Ç¢ÇÈÇ©Çê∂ê¨
-            InitDolphin(new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
+            InitDolphin(new Vector3(this.transform.position.x, -2, 10), dolphinRotate);
 
             //Instantiate(dolphinP, new Vector3(this.transform.position.x, -3, 10), dolphinRotate);
             //dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);

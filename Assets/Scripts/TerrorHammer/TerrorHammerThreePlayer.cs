@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class TerrorHammerThreePlayer : MonoBehaviour
@@ -14,8 +16,14 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] public float checkPosX;     // チェック
     [SerializeField] private float nowPosX;     // プレイヤー
     [SerializeField] private int point;     // プレイヤー
+    [SerializeField] public TextMeshProUGUI pointText;       //点数テキスト
+    [SerializeField] private GameObject HammerOb;  // ハンマー
+    
+    private Vector3 initializeRotate;
+    private Vector3 AttackRotate;
+    private bool isAttack;
 
-
+    private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
     // Start is called before the first frame update
@@ -25,16 +33,24 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         point = 0;
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        //リジットボディ取得
+        rBody = this.GetComponent<Rigidbody>();
+
+        //初期
+        initializeRotate = new Vector3(90, 0, 0);
+        AttackRotate = new Vector3(0, 0, 0);
+        isAttack = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish() && point < 3)
+        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1)
             //動き
             Move();
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.7f, 1.7f));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.0f, 1.0f));//1.7f
 
         //チェック
         if(nowPosX == startPosX && this.transform.position.x > checkPosX)
@@ -46,9 +62,26 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         {
             nowPosX = startPosX;
             point++;
+            pointText.SetText(point.ToString());
             Debug.Log(point);
         }
 
+
+        //攻撃
+        if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
+        {
+            isAttack = false;
+            //HammerOb.transform.DORotate(initializeRotate, 0.1f);
+            //HammerOb.transform.DORotate(AttackRotate, 0.5f);
+            HammerOb.transform.DORotate(AttackRotate, 0.5f).SetEase(Ease.InBack);
+
+            //1.5秒後にあげる
+            Invoke("HammerUp", 0.5f);
+            Invoke("HammerAttack", 2.0f);
+
+        }
+
+        
     }
 
     //移動
@@ -82,8 +115,9 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
 
+        
 
         //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
@@ -91,17 +125,27 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
 
+    public void HammerUp()
+    {
+        HammerOb.transform.DORotate(initializeRotate, 0.5f).SetEase(Ease.InQuad);
+    }
+
+    public void HammerAttack()
+    {
+        isAttack = true;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag == "Hammer")
+        if (collision.gameObject.tag == "Hammer")
         {
             Debug.Log("当たった!");
             // ミニゲームに死んだことを伝える
-            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
 
             //オブジェクトを削除
-            Destroy(this.gameObject.transform.parent.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
