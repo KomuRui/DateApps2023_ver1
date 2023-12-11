@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GimmickBase : MonoBehaviour
 {
+
+    private bool isAction = false;
+    private bool isInput = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +18,12 @@ public class GimmickBase : MonoBehaviour
     {
         GimmickUpdate();
 
-        //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton" + 1)) return;
+        //if (Input.GetButtonDown("Abutton1"))
+            //SetIsInput(true);
+
+        //入力があったかアクションを終えていたらこの先処理しない
+        if (!isInput || isAction) return;
+        isAction = true;
         Action();
     }
 
@@ -34,4 +41,8 @@ public class GimmickBase : MonoBehaviour
     {
     }
 
+    public void SetIsInput(bool a)
+    {
+        isInput = a;
+    }
 }

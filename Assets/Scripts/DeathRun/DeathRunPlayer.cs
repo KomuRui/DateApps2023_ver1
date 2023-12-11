@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -50,8 +51,11 @@ public class DeathRunPlayer : MonoBehaviour
         //動き
         Move();
 
-        //ジャンプ
-        Jump();
+        //ジャンプ　
+        //Jump();
+
+        //強制スクロール
+        ForcedScrolling();
 
         //状態更新
         StateUpdata();
@@ -164,4 +168,36 @@ public class DeathRunPlayer : MonoBehaviour
 
         this.currentState = state;
     }
+
+    //強制スクロール
+    public void ForcedScrolling()
+    {
+        Debug.Log("Cube Screen" + Camera.main.WorldToScreenPoint(this.transform.position));
+
+        //スクリーン座標に変換
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(this.transform.position);
+
+        //画面から出ないように
+        if (screenPoint.y < 0)
+        {
+            Vector3 vec = Camera.main.ScreenToWorldPoint(new Vector3(screenPoint.x, 0, screenPoint.z));
+            transform.position = new Vector3(vec.x, vec.y,vec.z);
+        }
+        else if (screenPoint.y > Screen.height)
+        {
+            Vector3 vec = Camera.main.ScreenToWorldPoint(new Vector3(screenPoint.x, Screen.height, screenPoint.z));
+            transform.position = new Vector3( vec.x, vec.y, vec.z);
+        }
+
+        //上にいかないように
+        transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
+    }
+
+    //void OnTriggerStay(Collider other)
+    //{
+    //    //Aボタンが押されてないのならこの先処理しない
+    //    if (!Input.GetButtonDown("Abutton" + +this.GetComponent<PlayerNum>().playerNum)) return;
+
+
+    //}
 }
