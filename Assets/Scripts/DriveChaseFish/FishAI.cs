@@ -16,7 +16,7 @@ public class FishAI : MonoBehaviour
         if (goal == null) return;
         
         lookNum = Random.Range(0, goal.Length);
-        float scale = Random.Range(1.0f, 2.1f);
+        float scale = 1.7f;
         this.transform.localScale = new Vector3 (scale, scale, scale);
         this.GetComponent<NavMeshAgent>().speed = Random.Range(2, 11);
 
