@@ -66,7 +66,6 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             Debug.Log(point);
         }
 
-
         //çUåÇ
         if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
         {
@@ -78,10 +77,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             //1.5ïbå„Ç…Ç†Ç∞ÇÈ
             Invoke("HammerUp", 0.5f);
             Invoke("HammerAttack", 2.0f);
-
         }
-
-        
     }
 
     //à⁄ìÆ
