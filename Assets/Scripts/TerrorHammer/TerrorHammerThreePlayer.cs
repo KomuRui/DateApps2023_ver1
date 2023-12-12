@@ -72,7 +72,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
         {
             isAttack = false;
-            HammerOb.transform.DORotate(AttackRotate, 0.5f).SetEase(Ease.InBack);
+            HammerOb.transform.DORotate(new Vector3 (AttackRotate.x,-this.transform.localEulerAngles.y, -AttackRotate.z ), 0.5f).SetEase(Ease.InBack);
 
             //1.5ïbå„Ç…Ç†Ç∞ÇÈ
             Invoke("HammerUp", 0.5f);
@@ -116,7 +116,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
     public void HammerUp()
     {
-        HammerOb.transform.DORotate(new Vector3 (initializeRotate.x, initializeRotate.y,initializeRotate.z), 0.5f).SetEase(Ease.InQuad);
+        HammerOb.transform.DORotate(new Vector3 (initializeRotate.x,-this.transform.localEulerAngles.y, initializeRotate.z/* + this.transform.rotation.z*/), 0.5f).SetEase(Ease.InQuad);
     }
 
     public void HammerAttack()
