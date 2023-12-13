@@ -6,7 +6,7 @@ public class Cannon : GimmickBase
 {
     [SerializeField] private GameObject shotPos;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private float bulletSpeed = 15000000f;
+    [SerializeField] private float bulletSpeed = 1500f;
 
     public override void Action()
     {
