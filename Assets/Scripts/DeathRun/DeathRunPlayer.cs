@@ -13,6 +13,8 @@ public class DeathRunPlayer : MonoBehaviour
     public GameObject SmileBody;
     public SlimeAnimationState currentState;
 
+    Rigidbody rb;
+
     public Animator animator;
     public int damType;
 
@@ -29,6 +31,8 @@ public class DeathRunPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
 
+    private bool isGoal = false;
+
     private Transform mainCameraTransform; // メインカメラのTransform
 
     void Start()
@@ -38,6 +42,8 @@ public class DeathRunPlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -48,6 +54,8 @@ public class DeathRunPlayer : MonoBehaviour
 
     void Update()
     {
+        if (isGoal) return;
+
         //動き
         Move();
 
@@ -64,7 +72,6 @@ public class DeathRunPlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -93,7 +100,11 @@ public class DeathRunPlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        //transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        //rb.velocity = -moveDirection;
+
+        //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -199,6 +210,18 @@ public class DeathRunPlayer : MonoBehaviour
         if (other.gameObject.tag == "Bullet")
         {
             Destroy(gameObject);
+        }
+
+        //ゴールに触れたら
+        if (other.gameObject.tag == "Goal")
+        {
+            isGoal = true;
+        }
+
+        //アンカーに当たったら時に
+        if (other.gameObject.tag == "Anchor")
+        {
+            isGoal = true;
         }
     }
 }
