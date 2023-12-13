@@ -193,11 +193,12 @@ public class DeathRunPlayer : MonoBehaviour
         transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
     }
 
-    //void OnTriggerStay(Collider other)
-    //{
-    //    //Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢‚Ì‚È‚ç‚±‚Ìæˆ—‚µ‚È‚¢
-    //    if (!Input.GetButtonDown("Abutton" + +this.GetComponent<PlayerNum>().playerNum)) return;
-
-
-    //}
+    void OnTriggerStay(Collider other)
+    {
+        //’e‚É“–‚½‚Á‚½‚ç
+        if (other.gameObject.tag == "Bullet")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
