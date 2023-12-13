@@ -195,9 +195,10 @@ public class DeathRunPlayer : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag = "Player")
+        //’e‚É“–‚½‚Á‚½‚ç
+        if (other.gameObject.tag == "Bullet")
         {
-
+            Destroy(gameObject);
         }
     }
 }
