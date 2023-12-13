@@ -28,6 +28,7 @@ public class DriveChaseFishPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
 
+    public bool isMove = true; //動けるかどうか
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -66,7 +67,7 @@ public class DriveChaseFishPlayer : MonoBehaviour
     private void Move()
     {
         //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || !isMove) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -159,10 +160,6 @@ public class DriveChaseFishPlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
-    }
-
-    void OnTriggerEnter(Collider collision)
-    {
     }
 
 }
