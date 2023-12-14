@@ -14,7 +14,7 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z > 13) return;
+        if (transform.position.z > 12) return;
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed); 
     }

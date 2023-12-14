@@ -32,7 +32,18 @@ public class MagicHand : MonoBehaviour
         if (!bigMax)
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
 
+        //例が当たった時情報
+        RaycastHit rayHit;
 
+        //レイを飛ばす方向
+        Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
+
+        //レイを飛ばす
+        //Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
+        UnityEngine.Physics.Raycast(transform.position, ray, out rayHit, 9999);
+
+        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
+        //rayHit.normal;
     }
 
     public void BigMax()
@@ -41,6 +52,7 @@ public class MagicHand : MonoBehaviour
         if(nextArmParent != null)
         {
             Vector3 ray = transform.parent.gameObject.transform.position - myArmParentTop.gameObject.transform.position;
+            //Debug.DrawRay(transform.position, ray, )
             //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き), RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
             nextArmParent.SetActive(true);
         }
