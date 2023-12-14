@@ -27,6 +27,7 @@ public class DriveChaseFishPlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private bool isOnePlayer;                // 1人側プレイやーかどうか
 
     public bool isMove = true; //動けるかどうか
     private Rigidbody rBody;
@@ -96,6 +97,11 @@ public class DriveChaseFishPlayer : MonoBehaviour
         // 移動
         //rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        if(isOnePlayer)
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.2f, 9.2f),transform.position.y,Mathf.Clamp(transform.position.z, -4.5f, 4.5f));
+        else
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -12.8f, 13.2f),transform.position.y,Mathf.Clamp(transform.position.z, -9.0f, 9.0f));
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);

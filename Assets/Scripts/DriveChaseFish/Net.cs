@@ -19,6 +19,7 @@ public class Net : MonoBehaviour
     private bool isNetMove;        //ネット移動中か
     private bool isNetImposition = false;  //ネット発動してるか
     private bool isNetReturn = false;      //ネットを元に戻しているか
+    private List<GameObject> getFish = new List<GameObject>();  //取得した魚
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,9 @@ public class Net : MonoBehaviour
             this.transform.DOScale(new Vector3(impositionScale.x, initialScale.y, impositionScale.z), 1f).OnComplete(NetReturn);
             return;
         }
+
+        //捕まえた魚をすべて覚えておく
+        getFish = netCollider.fishObj;
 
         //網に当たっている魚を捕まえる
         foreach (var fish in netCollider.fishObj)

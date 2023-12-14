@@ -67,12 +67,12 @@ public class ThreePlayer : MonoBehaviour
         }
         else
         {
-            a++;
-            if (a > 10)
-            {
-                isBound = false;
-                a = 0;
-            }
+            //a++;
+            //if (a > 10)
+            //{
+            //    isBound = false;
+            //    a = 0;
+            //}
 
         }
             //ˆÚ“®§ŒÀH
