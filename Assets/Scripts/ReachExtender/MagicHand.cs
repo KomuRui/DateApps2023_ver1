@@ -38,11 +38,17 @@ public class MagicHand : MonoBehaviour
         //レイを飛ばす方向
         Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
 
-        //レイを飛ばす
-        //Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
-        UnityEngine.Physics.Raycast(transform.position, ray, out rayHit, 9999);
+        //レイを飛ばす方向
+        Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
 
-        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
+        //レイを飛ばす
+        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
+        if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
+        {
+            Debug.DrawRay(rayHit.point, rayHit.normal * 9999999, Color.red, 30);
+        }
+
+       
         //rayHit.normal;
     }
 
