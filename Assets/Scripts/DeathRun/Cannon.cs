@@ -6,7 +6,7 @@ public class Cannon : GimmickBase
 {
     [SerializeField] private GameObject shotPos;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private float bulletSpeed = 15000000f;
+    [SerializeField] private float bulletSpeed = 15f;
 
     public override void Action()
     {
@@ -25,16 +25,24 @@ public class Cannon : GimmickBase
     //球を発射
     public void Shot()
     {
-        GameObject createdBullet = Instantiate(bullet) as GameObject;
-        createdBullet.transform.position = shotPos.transform.position;
+        //弾を表示
+        bullet.gameObject.SetActive(true);
+
+        //弾を発射位置に
+        bullet.transform.position = shotPos.transform.position;
 
         //発射ベクトル
-        Vector3 force = new Vector3(1,0,0);
+        Vector3 force = transform.forward;
+        bullet.GetComponent<DeathRunBullet>().SetMoveDirection(force);
 
-        //発射の向きと速度を決定
-        force *= bulletSpeed * Time.deltaTime;
+        //速度を決定
+        bullet.GetComponent<DeathRunBullet>().SetMoveSpeed(bulletSpeed);
+
+
+        //force *= bulletSpeed * Time.deltaTime;
 
         // Rigidbodyに力を加えて発射
-        createdBullet.GetComponent<Rigidbody>().AddForce(force);
+        //Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        //rb.AddForce(force, ForceMode.Impulse);
     }
 }
