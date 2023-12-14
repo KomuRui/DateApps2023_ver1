@@ -8,6 +8,7 @@ public class FishAI : MonoBehaviour
     [SerializeField] private Transform[] goal;
     private int lookNum = 0;
     private NavMeshAgent agent = null;
+    private float time = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +35,6 @@ public class FishAI : MonoBehaviour
     {
         transform.position = new Vector3(transform.position.x,-0.35f, transform.position.z);
 
-        if (agent == null) return;
-
         if (Vector3.Distance(agent.destination, transform.position) < 1.0f)
             MoveChange();
 
@@ -46,10 +45,17 @@ public class FishAI : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(pathDirection) * Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
         }
+
+        //ŽžŠÔŒo‰ß
+        time += Time.deltaTime;
+        if (time > 3) MoveChange();
+
     }
 
     void MoveChange()
     {
+        this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        time = 0.0f;
         lookNum = Random.Range(0, goal.Length);
         agent.SetDestination(new Vector3(goal[lookNum].position.x, this.transform.position.y, goal[lookNum].position.z));
     }
