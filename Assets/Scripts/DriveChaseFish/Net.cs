@@ -17,6 +17,8 @@ public class Net : MonoBehaviour
     private Vector3 initialScale;  //初期拡大率
     private float startTime;       //移動開始時間
     private bool isNetMove;        //ネット移動中か
+    private bool isNetImposition = false;  //ネット発動してるか
+    private bool isNetReturn = false;      //ネットを元に戻しているか
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,7 @@ public class Net : MonoBehaviour
     void Update()
     {
         //網発動
-        if (Input.GetButtonDown("Abutton" + transform.parent.GetComponent<PlayerNum>().playerNum)) NetExecute();
+        if (!isNetImposition && Input.GetButtonDown("Abutton" + transform.parent.GetComponent<PlayerNum>().playerNum)) NetExecute();
 
         //移動中なら計算
         if (isNetMove) NetPosCalc();
@@ -40,21 +42,36 @@ public class Net : MonoBehaviour
     //網を発動
     public void NetExecute()
     {
-        //網に当たっている魚を捕まえる
-        foreach(var fish in netCollider.fishObj)
+        //魚を一匹も捕まえれなかったら
+        if(netCollider.fishObj.Count <= 0)
         {
+            transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
+            startTime = Time.time;
+            isNetImposition = true;
+            isNetMove = true;
+            isNetReturn = false;
+            this.transform.DOScale(new Vector3(impositionScale.x, initialScale.y, impositionScale.z), 1f).OnComplete(NetReturn);
+            return;
+        }
+
+        //網に当たっている魚を捕まえる
+        foreach (var fish in netCollider.fishObj)
+        {
+            fish.layer = 9;
             fish.GetComponent<NavMeshAgent>().enabled = false;
             fish.transform.parent = transform.parent;
         }
 
         //網のマーカーに当たり判定をつける
-        netMark.GetComponent<NavMeshObstacle>().enabled = true;
+        //netMark.GetComponent<NavMeshObstacle>().enabled = true;
         netMark.GetComponent<MeshCollider>().enabled = true;
 
         //もろもろ設定
         transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
         startTime = Time.time;
+        isNetImposition = true;
         isNetMove = true;
+        isNetReturn = false;
         this.transform.DOScale(new Vector3(impositionScale.x, initialScale.y,impositionScale.z), 1f).OnComplete(ParentMoveOK);
     }
 
@@ -62,9 +79,26 @@ public class Net : MonoBehaviour
     private void NetPosCalc()
     {
         float distCovered = (Time.time - startTime) / moveSpeed; // 移動した距離を計算
-        transform.position = Vector3.Lerp(transform.position, impositionBase.position, distCovered); // 移動
+
+        if(isNetReturn)
+            transform.position = Vector3.Lerp(transform.position, transform.parent.GetComponent<DriveChaseFishPlayer>().transform.position, distCovered);  //移動
+        else
+            transform.position = Vector3.Lerp(transform.position, impositionBase.position, distCovered); //移動
     }
 
     //親の移動を許可
     private void ParentMoveOK() { transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; }
+
+    //親の移動を許可
+    private void ParentMoveOK2() { transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; isNetImposition = false; }
+
+
+    //網もとに戻す
+    private void NetReturn()
+    {
+        startTime = Time.time;
+        isNetReturn = true;
+        this.transform.DOScale(new Vector3(initialScale.x, initialScale.y, initialScale.z), 1f).OnComplete(ParentMoveOK2);
+    }
+
 }
