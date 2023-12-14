@@ -24,13 +24,6 @@ public class MagicHand : MonoBehaviour
         {
             transform.position = nextArmParentTop.transform.position;
         }
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        if (!bigMax)
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
 
         //ó·Ç™ìñÇΩÇ¡ÇΩéûèÓïÒ
         RaycastHit rayHit;
@@ -47,6 +40,15 @@ public class MagicHand : MonoBehaviour
         {
             Debug.DrawRay(rayHit.point, rayHit.normal * 9999999, Color.red, 30);
         }
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
+        if (!bigMax)
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
+
+        
 
        
         //rayHit.normal;
