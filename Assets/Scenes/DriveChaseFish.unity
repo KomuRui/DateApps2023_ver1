@@ -593,6 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7624cf803d9d0479d51a8075834c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  net: {fileID: 1827884090}
   fishObj: []
 --- !u!1001 &22709027
 PrefabInstance:
@@ -845,6 +846,7 @@ MonoBehaviour:
   moveSpeed: 30
   netCollider: {fileID: 754923814}
   netMark: {fileID: 404575419}
+  isNetMove: 0
 --- !u!136 &43361319
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1105,7 +1107,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &47508266
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1239,7 +1242,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &64600653
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1900,7 +1904,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &129586836
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2334,7 +2339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145896619}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 28.23, z: 0}
+  m_LocalPosition: {x: 0, y: 28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2394,7 +2399,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &146012954
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2588,7 +2594,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &176145720
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3052,7 +3059,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &204784823
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3155,7 +3163,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &206203775
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3252,7 +3261,7 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
@@ -3474,7 +3483,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &242319853
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3577,7 +3587,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &246169897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3814,7 +3825,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &254285490
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4023,7 +4035,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &272435364
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4945,7 +4958,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &301948367
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5048,7 +5062,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &310001673
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5391,7 +5406,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &317069310
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6042,7 +6058,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &349647933
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6231,7 +6248,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &356101803
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6334,7 +6352,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &386355096
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6861,7 +6880,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &412712826
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7232,7 +7252,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &430199859
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7569,7 +7590,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &449308361
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7698,7 +7720,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &466846551
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7783,7 +7806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 638fe2ccd72dba34787d24239a1c9d46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.01
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 638fe2ccd72dba34787d24239a1c9d46, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8172,7 +8195,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &493823731
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8922,7 +8946,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &547094552
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9025,7 +9050,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &557016875
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9128,7 +9154,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &560074516
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9231,7 +9258,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &560612384
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9766,7 +9794,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &585613170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10173,7 +10202,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &618021449
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10410,7 +10440,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &631121150
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10575,7 +10606,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &652086526
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10812,7 +10844,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &665035601
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10914,6 +10947,7 @@ MonoBehaviour:
   moveSpeed: 30
   netCollider: {fileID: 1989123906}
   netMark: {fileID: 1449244976}
+  isNetMove: 0
 --- !u!136 &681909184
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11174,7 +11208,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &699258311
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11277,7 +11312,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &701593598
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11611,7 +11647,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &703864914
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11991,7 +12028,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &733852494
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12259,7 +12297,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &738661421
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12613,7 +12652,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &740226814
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12822,7 +12862,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &744170950
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12917,6 +12958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7624cf803d9d0479d51a8075834c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  net: {fileID: 0}
   fishObj: []
 --- !u!136 &754923815
 CapsuleCollider:
@@ -13025,7 +13067,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &762422302
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13128,7 +13171,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &762862154
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14362,7 +14406,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &834815120
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14501,7 +14546,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &850120159
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14604,7 +14650,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &868571027
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14872,7 +14919,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &878975268
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15109,7 +15157,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &894748770
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15329,7 +15378,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &912109062
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15432,7 +15482,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &915235413
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15535,7 +15586,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &927131997
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15906,7 +15958,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &941137799
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16040,7 +16093,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &949058538
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16143,7 +16197,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &957352320
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16251,7 +16306,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &971448690
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16354,7 +16410,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &984280909
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16997,7 +17054,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1044951947
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17190,7 +17248,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1048480330
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17360,7 +17419,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1086612895
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17734,7 +17794,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1118717475
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18106,7 +18167,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1133461862
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18240,7 +18302,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1137528478
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18510,7 +18573,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1154773732
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18747,7 +18811,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1172728344
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19363,7 +19428,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1229505699
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19765,7 +19831,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1241350201
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20246,7 +20313,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1263948958
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20344,7 +20412,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1268298850
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20452,7 +20521,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1285166655
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21145,7 +21215,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1355758050
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21248,7 +21319,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1358025035
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21756,7 +21828,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1412888734
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21890,7 +21963,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1424994538
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -22380,7 +22454,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1463547568
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -22927,7 +23002,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1484623941
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23195,7 +23271,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1491534903
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23290,6 +23367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7624cf803d9d0479d51a8075834c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  net: {fileID: 0}
   fishObj: []
 --- !u!136 &1507858344
 CapsuleCollider:
@@ -23367,7 +23445,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1516611373
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23465,7 +23544,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1525007208
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23633,7 +23713,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1526942710
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23736,7 +23817,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1532871187
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23973,7 +24055,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1541879377
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24076,7 +24159,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1547321174
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24615,6 +24699,7 @@ MonoBehaviour:
   moveSpeed: 30
   netCollider: {fileID: 1507858343}
   netMark: {fileID: 1865126863}
+  isNetMove: 0
 --- !u!136 &1580533450
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25452,7 +25537,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1638974702
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25586,7 +25672,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1652869066
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25823,7 +25910,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1658451837
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -26532,7 +26620,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1727392661
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -27068,7 +27157,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1756954757
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -27309,7 +27399,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1778079126
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -27745,7 +27836,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1804198860
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -28325,6 +28417,7 @@ MonoBehaviour:
   moveSpeed: 30
   netCollider: {fileID: 20132107}
   netMark: {fileID: 2091892447}
+  isNetMove: 0
 --- !u!1001 &1828597889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29331,7 +29424,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1887086514
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29465,7 +29559,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1890060989
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29568,7 +29663,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1895427966
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29832,7 +29928,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1929360610
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -30177,7 +30274,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1948513488
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -30462,6 +30560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7624cf803d9d0479d51a8075834c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  net: {fileID: 0}
   fishObj: []
 --- !u!136 &1989123907
 CapsuleCollider:
@@ -30673,7 +30772,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &1996291449
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31075,7 +31175,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2012430141
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31321,7 +31422,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2022729394
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31458,7 +31560,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2031403810
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31762,7 +31865,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2042178926
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31860,7 +31964,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2046202497
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -32102,7 +32207,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2065000383
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -32621,7 +32727,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2124280605
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -32858,7 +32965,8 @@ MonoBehaviour:
   - {fileID: 759325654}
   - {fileID: 334538020}
   isAIMove: 1
-  maxHeight: 2
+  maxHeight: 10
+  jumpTime: 120
 --- !u!195 &2126698277
 NavMeshAgent:
   m_ObjectHideFlags: 0

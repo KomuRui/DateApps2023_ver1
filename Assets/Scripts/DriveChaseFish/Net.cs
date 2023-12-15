@@ -16,7 +16,7 @@ public class Net : MonoBehaviour
     private Vector3 initialPos;    //初期位置
     private Vector3 initialScale;  //初期拡大率
     private float startTime;       //移動開始時間
-    private bool isNetMove;        //ネット移動中か
+    public bool isNetMove;        //ネット移動中か
     private bool isNetImposition = false;  //ネット発動してるか
     private bool isNetReturn = false;      //ネットを元に戻しているか
     private List<GameObject> getFish = new List<GameObject>();  //取得した魚
@@ -67,7 +67,6 @@ public class Net : MonoBehaviour
         }
 
         //網のマーカーに当たり判定をつける
-        //netMark.GetComponent<NavMeshObstacle>().enabled = true;
         netMark.GetComponent<MeshCollider>().enabled = true;
 
         //もろもろ設定
@@ -93,12 +92,12 @@ public class Net : MonoBehaviour
     //捕まえた魚をプールに落とす
     public void FishGoPool(Transform[] fallPoint, Transform[] goalPoint)
     {
-        //落ちるポイントを決める
-        int fallLookNum = Random.Range(0, fallPoint.Length);
-
         //魚にプールに向かわせる
         foreach (var fish in getFish)
+        {
+            int fallLookNum = Random.Range(0, fallPoint.Length);
             fish.GetComponent<FishAI>().SetPoolMove(goalPoint, fallPoint[fallLookNum].position);
+        }
     }
 
     //親の移動を許可

@@ -38,6 +38,7 @@ public class SurfboardPlayer : MonoBehaviour
 
     private float hp = 10.0f;
     public bool isDead = false;
+    int a = 1;
     
 
 
@@ -116,6 +117,11 @@ public class SurfboardPlayer : MonoBehaviour
 
         // 入力を取得
         horizontalInput = Input.GetAxis("L_Stick_H" + this.transform.GetChild(0).GetComponent<PlayerNum>().playerNum) * rotationSpeed * Time.deltaTime * 300;
+
+        if (Input.GetButtonDown("Abutton" + 1))
+            a *= -1;
+
+        horizontalInput *= a;
 
         if (sumRotateX + horizontalInput <= LIMIT_ROTATE && sumRotateX + horizontalInput >= -LIMIT_ROTATE)
         {
