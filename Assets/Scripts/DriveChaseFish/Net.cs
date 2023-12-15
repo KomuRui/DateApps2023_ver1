@@ -90,6 +90,17 @@ public class Net : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, impositionBase.position, distCovered); //移動
     }
 
+    //捕まえた魚をプールに落とす
+    public void FishGoPool(Transform[] fallPoint, Transform[] goalPoint)
+    {
+        //落ちるポイントを決める
+        int fallLookNum = Random.Range(0, fallPoint.Length);
+
+        //魚にプールに向かわせる
+        foreach (var fish in getFish)
+            fish.GetComponent<FishAI>().SetPoolMove(goalPoint, fallPoint[fallLookNum].position);
+    }
+
     //親の移動を許可
     private void ParentMoveOK() { transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; }
 
@@ -98,10 +109,12 @@ public class Net : MonoBehaviour
 
 
     //網もとに戻す
-    private void NetReturn()
+    public void NetReturn()
     {
         startTime = Time.time;
         isNetReturn = true;
+        isNetImposition = true;
+        isNetMove = true;
         this.transform.DOScale(new Vector3(initialScale.x, initialScale.y, initialScale.z), 1f).OnComplete(ParentMoveOK2);
     }
 
