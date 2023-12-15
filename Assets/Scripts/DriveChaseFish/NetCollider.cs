@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NetCollider : MonoBehaviour
 {
-
+    public Net net;
     public List<GameObject> fishObj = new List<GameObject>();
 
     // Start is called before the first frame update

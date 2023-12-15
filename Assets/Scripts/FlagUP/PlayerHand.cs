@@ -18,6 +18,7 @@ public class PlayerHand : MonoBehaviour
         public GameObject flag; //Šø
         public int flagSign;    //Šø‚Ì•„†
         public bool isUp;       //ã‚ª‚Á‚Ä‚¢‚é‚©
+        public int count;
     }
 
     private enum FlagState
@@ -42,8 +43,7 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] public int[] flagState = new int[5];    // Šøó‘Ô
     [SerializeField] public int ranking;    // 
     [SerializeField] private GameObject GMOb;  // 1
-
-
+    private int count;  // 1
     private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
     private Vector3 initializeRotate; 
     private bool isDead; 
@@ -74,6 +74,7 @@ public class PlayerHand : MonoBehaviour
 
         //‰Šú
         initializeRotate = new Vector3(0,180,0);
+        count = 0;
     }
 
     // Update is called once per frame
@@ -103,6 +104,7 @@ public class PlayerHand : MonoBehaviour
 
     private void FlagUp(Flag f)
     {
+        if (flagInfo[f].count >= 1) return;
         //Šø‚ªã‚ª‚Á‚Ä‚¢‚é‚Ì‚È‚ç
         if (flagInfo[f].isUp)
             flagInfo[f].flag.transform.DORotate(initializeRotate, 0.1f);
@@ -110,6 +112,7 @@ public class PlayerHand : MonoBehaviour
             flagInfo[f].flag.transform.DORotate(new Vector3(0, initializeRotate.y,1 * 90) * flagInfo[f].flagSign, 0.1f);
 
         flagInfo[f].isUp = !(flagInfo[f].isUp);
+        flagInfo[f].count++;
     }
 
     public void TurnReset()
@@ -124,7 +127,8 @@ public class PlayerHand : MonoBehaviour
     public void AllFlagDown()
     {
         if (isDead) return;
-
+        flagInfo[Flag.RIGHT].count = 0;
+        flagInfo[Flag.LEFT].count = 0;
         if (isOnePlayer)
         //if(((FlagUpGameManager)GameManager.nowMiniGameManager).turn == 0)
         {

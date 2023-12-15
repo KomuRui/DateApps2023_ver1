@@ -95,7 +95,7 @@ public class DeathRunPlayer : MonoBehaviour
         Vector3 forwardDirection = mainCameraTransform.forward;
         Vector3 rightDirection = mainCameraTransform.right;
         forwardDirection.y = 0f; // Y²¬•ª‚ğ0‚É‚·‚é‚±‚Æ‚Å…•½•ûŒü‚É§ŒÀ
-
+        
         // ˆÚ“®•ûŒü‚ğŒvZ
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 

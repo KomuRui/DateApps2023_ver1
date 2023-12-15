@@ -63,7 +63,7 @@ public class FlagUpGameManager : MiniGameManager
     {
         //‰Šú‰»
         turn = Turn.ONE_PLAYER;
-        nowRound = Round.ONE;
+        nowRound = Round.THREE;
         isFlagUpPermit = false;
         nowFlagUpCount = 0;
         oneFlagState = new int[5];
