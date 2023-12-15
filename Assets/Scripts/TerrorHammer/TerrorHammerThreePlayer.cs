@@ -134,13 +134,6 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             isSuper = true;
             Invoke("MovePlayer", 2f);
             Invoke("WeakPlayer", 3f);
-
-            // ミニゲームに死んだことを伝える
-            //GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
-            //GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
-
-            //オブジェクトを削除
-            //Destroy(this.gameObject);
         }
     }
 
