@@ -24,6 +24,22 @@ public class MagicHand : MonoBehaviour
         {
             transform.position = nextArmParentTop.transform.position;
         }
+
+        //例が当たった時情報
+        RaycastHit rayHit;
+
+        //レイを飛ばす方向
+        Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
+
+        //レイを飛ばす方向
+        Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
+
+        //レイを飛ばす
+        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
+        if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
+        {
+            Debug.DrawRay(rayHit.point, rayHit.normal * 9999999, Color.red, 30);
+        }
     }
     
     // Update is called once per frame
@@ -32,17 +48,9 @@ public class MagicHand : MonoBehaviour
         if (!bigMax)
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
 
-        //例が当たった時情報
-        RaycastHit rayHit;
+        
 
-        //レイを飛ばす方向
-        Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
-
-        //レイを飛ばす
-        //Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
-        UnityEngine.Physics.Raycast(transform.position, ray, out rayHit, 9999);
-
-        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 3, false);
+       
         //rayHit.normal;
     }
 
