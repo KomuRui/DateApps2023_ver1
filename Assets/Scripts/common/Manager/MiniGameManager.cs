@@ -54,6 +54,7 @@ public class MiniGameManager : MonoBehaviour
     public GameObject endText;          //終了テキスト
     public GameObject rankText;         //順位テキスト
     public List<GameObject> killCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
+    public TextMeshProUGUI redayText;   //準備のテキスト
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
@@ -71,6 +72,7 @@ public class MiniGameManager : MonoBehaviour
         {
             PlayerManager.Initializ();
             ScoreManager.Initializ();
+            TutorialManager.Initializ();
         }
 
         /////初期化
@@ -159,6 +161,11 @@ public class MiniGameManager : MonoBehaviour
         {
             foreach (byte num in threePlayer.Keys)
                 if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+        }
+        else if(redayText != null)
+        {
+            TutorialManager.Update();
+            redayText.text = TutorialManager.GetReadyOKSum() + "/" + PlayerManager.PLAYER_MAX + " ok " + ((int)TutorialManager.tutorialTime).ToString();
         }
 
         //継承先の更新
