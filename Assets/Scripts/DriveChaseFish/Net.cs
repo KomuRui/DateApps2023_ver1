@@ -120,7 +120,7 @@ public class Net : MonoBehaviour
         }
 
         //取った魚の分得点追加
-        //((DriveChaseFishGameManager)GameManager.nowMiniGameManager).FishScorePlus(transform.parent.GetComponent<PlayerNum>().playerNum, fishSum);
+        ((DriveChaseFishGameManager)GameManager.nowMiniGameManager).FishScorePlus(transform.parent.GetComponent<PlayerNum>().playerNum, fishSum);
 
         //網のコライダーをつける
         netCollider.GetComponent<CapsuleCollider>().enabled = true;

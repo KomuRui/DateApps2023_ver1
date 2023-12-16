@@ -12,6 +12,12 @@ public class DriveChaseFishGameManager : MiniGameManager
     //シーン開始
     public override void SceneStart() {
 
+       
+    }
+
+    //ミニゲームスタート
+    public override void MiniGameStart()
+    {
         //各プレイヤーの得点初期化
         for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
             fiscScore[i + 1] = 0;
