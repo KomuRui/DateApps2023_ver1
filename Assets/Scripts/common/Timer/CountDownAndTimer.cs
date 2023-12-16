@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using System;
 
 public class CountDownAndTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeText;       //時間制限テキスト
     [SerializeField] private TextMeshProUGUI countDownText;  //カウントダウンテキスト
+    [SerializeField] private Fade fade;  //フェード
 
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
@@ -22,6 +24,10 @@ public class CountDownAndTimer : MonoBehaviour
         beforeTime = time;
         beforeScale = countDownText.transform.localScale;
         countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
+
+        if(fade != null)
+            fade.FadeOut(1.0f);
+
         StartCoroutine(CountDownText(1.0f));
     }
 
