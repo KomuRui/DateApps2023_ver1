@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class MiniGameManager : MonoBehaviour
 {
 
-    [SerializeField] private string miniGameName;  //ミニゲームシーンの名前
+    [SerializeField] public string miniGameName;  //ミニゲームシーンの名前
 
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
@@ -63,7 +63,6 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
     protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
-    protected bool isTutorial;          //チュートリアルかどうか
 
     void Start()
     {
@@ -81,7 +80,6 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
-        isTutorial = true;
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
@@ -137,6 +135,14 @@ public class MiniGameManager : MonoBehaviour
             lookNum++;
         }
 
+        //チュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+        {
+            // 新しいビューポート領域を設定する
+            Rect newViewportRect = new Rect(0, 0, 1, 1);
+            Camera.main.rect = newViewportRect;
+        }
+
         SceneStart();
     }
 
@@ -157,12 +163,12 @@ public class MiniGameManager : MonoBehaviour
             ChangeRankAnnouncement();
 
         //生きている3人側の時間記録
-        if (!isTutorial)
+        if (TutorialManager.isTutorialFinish)
         {
             foreach (byte num in threePlayer.Keys)
                 if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
         }
-        else if(redayText != null)
+        else if(redayText != null && !TutorialManager.isTutorialFinish)
         {
             TutorialManager.Update();
             redayText.text = TutorialManager.GetReadyOKSum() + "/" + PlayerManager.PLAYER_MAX + " ok " + ((int)TutorialManager.tutorialTime).ToString();
@@ -244,7 +250,7 @@ public class MiniGameManager : MonoBehaviour
         if (isFinish) return;
 
         //チュートリアルなら
-        if(isTutorial)
+        if(!TutorialManager.isTutorialFinish)
         {
             SceneManager.LoadScene(miniGameName);
             return;
@@ -315,6 +321,26 @@ public class MiniGameManager : MonoBehaviour
         foreach(var obj in killCanvas)
             obj.SetActive(false);
     }
+
+    //チュートリアル終わり
+    public void TutorialFinish() 
+    {
+        //フェードが情報ないのなら
+        if (this.GetComponent<CountDownAndTimer>().fade != null)
+            this.GetComponent<CountDownAndTimer>().fade.FadeIn(1.0f);
+
+        //フェードのレンダリングモードを変更
+        this.GetComponent<CountDownAndTimer>().fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+
+        //終わり
+        TutorialManager.isTutorialFinish = true;
+
+        //シーンを本番にチェンジ
+        Invoke("SceneChange", 1.0f);
+    }
+
+    //シーン変更
+    public void SceneChange() { SceneManager.LoadScene(miniGameName); }
 
     //シーン開始
     public virtual void SceneStart() {}

@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public static class TutorialManager 
 {
 
     private static Dictionary<int, bool> playerReadyOK = new Dictionary<int, bool>();
-    public static float tutorialTime = 45;
+    public static float tutorialTime = 10;
+    public static bool isTutorialFinish = false;
 
     ///test用
     public static bool isInitializOK = false;
@@ -43,7 +45,12 @@ public static class TutorialManager
         //時間計測
         tutorialTime -= Time.deltaTime;
         tutorialTime = Mathf.Max(tutorialTime, 0);
+        if (tutorialTime <= 1)
+        {
+            GameManager.nowMiniGameManager.TutorialFinish();
+        }
     }
+
 
     //プレイヤーを準備OKに設定
     public static void SetPlayerReadyOK(int playerNum) { playerReadyOK[playerNum] = true; }

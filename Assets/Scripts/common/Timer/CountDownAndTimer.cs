@@ -9,23 +9,26 @@ public class CountDownAndTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeText;       //時間制限テキスト
     [SerializeField] private TextMeshProUGUI countDownText;  //カウントダウンテキスト
-    [SerializeField] private Fade fade;  //フェード
+    [SerializeField] public Fade fade;  //フェード
 
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
     [SerializeField] public float time = 30.0f;
     private bool isStop = true;
     public bool isfinish = false;
-    private float beforeTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        beforeTime = time;
         beforeScale = countDownText.transform.localScale;
         countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
 
-        if(fade != null)
+        //もしチュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+            fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+
+        //フェードが情報ないのなら
+        if (fade != null)
             fade.FadeOut(1.0f);
 
         StartCoroutine(CountDownText(1.0f));
