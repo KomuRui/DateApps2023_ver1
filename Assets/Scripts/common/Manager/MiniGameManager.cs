@@ -62,6 +62,7 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
     protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
+    protected bool isTutorial;          //チュートリアルかどうか
 
     void Start()
     {
@@ -78,6 +79,7 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
+        isTutorial = true;
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
@@ -153,8 +155,11 @@ public class MiniGameManager : MonoBehaviour
             ChangeRankAnnouncement();
 
         //生きている3人側の時間記録
-        foreach(byte num in threePlayer.Keys)
-            if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+        if (!isTutorial)
+        {
+            foreach (byte num in threePlayer.Keys)
+                if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+        }
 
         //継承先の更新
         MiniGameUpdate();
@@ -231,6 +236,13 @@ public class MiniGameManager : MonoBehaviour
         //すでに終わっているならこの先処理しない
         if (isFinish) return;
 
+        //チュートリアルなら
+        if(isTutorial)
+        {
+            SceneManager.LoadScene(miniGameName);
+            return;
+        }
+        
         isFinish = true; 
         isStart = false;
         endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);

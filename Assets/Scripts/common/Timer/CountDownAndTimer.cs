@@ -14,10 +14,12 @@ public class CountDownAndTimer : MonoBehaviour
     [SerializeField] public float time = 30.0f;
     private bool isStop = true;
     public bool isfinish = false;
+    private float beforeTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        beforeTime = time;
         beforeScale = countDownText.transform.localScale;
         countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
         StartCoroutine(CountDownText(1.0f));

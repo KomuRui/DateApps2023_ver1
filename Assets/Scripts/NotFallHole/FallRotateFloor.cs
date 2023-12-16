@@ -41,7 +41,7 @@ public class FallRotateFloor : MonoBehaviour
         if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         //”CˆÓ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
-        if (Input.GetButtonDown(buttonName) && !isPush && mana.AddCount())
+        if (Input.GetButtonDown(buttonName + GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum) && !isPush && mana.AddCount())
         {
 
             if (Input.GetButton("RBbutton" + GameManager.nowMiniGameManager.onePlayerObj.GetComponent<PlayerNum>().playerNum))
@@ -98,7 +98,7 @@ public class FallRotateFloor : MonoBehaviour
 
     }
 
-    public void SetPlayerNum(byte num) { buttonName += num; }
+    public void SetPlayerNum(byte num) { /*buttonName += num;*/ }
 
     IEnumerator WaitRotate(float delay)
     {
