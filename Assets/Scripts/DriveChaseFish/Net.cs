@@ -13,7 +13,6 @@ public class Net : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;   //移動速度
     [SerializeField] private NetCollider netCollider;  //網のコライダー
     [SerializeField] private GameObject netMark;       //網のマーカー
-    private Vector3 initialPos;    //初期位置
     private Vector3 initialScale;  //初期拡大率
     private float startTime;       //移動開始時間
     public bool isNetMove;        //ネット移動中か
@@ -24,8 +23,7 @@ public class Net : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //位置と拡大率を保存しておく
-        initialPos = transform.position;
+        //拡大率を保存しておく
         initialScale = transform.localScale;
     }
 
@@ -63,11 +61,15 @@ public class Net : MonoBehaviour
         {
             fish.layer = 9;
             fish.GetComponent<NavMeshAgent>().enabled = false;
+            fish.GetComponent<Rigidbody>().isKinematic = true;
             fish.transform.parent = transform.parent;
         }
 
         //網のマーカーに当たり判定をつける
         netMark.GetComponent<MeshCollider>().enabled = true;
+
+        //網のコライダーを外す
+        netCollider.GetComponent<CapsuleCollider>().enabled = false;
 
         //もろもろ設定
         transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
@@ -92,12 +94,37 @@ public class Net : MonoBehaviour
     //捕まえた魚をプールに落とす
     public void FishGoPool(Transform[] fallPoint, Transform[] goalPoint)
     {
+        //魚の総数
+        int fishSum = 0;
+
+        //魚管理
+        DriveChaseFishGameManager mana = ((DriveChaseFishGameManager)GameManager.nowMiniGameManager);
+
         //魚にプールに向かわせる
         foreach (var fish in getFish)
         {
             int fallLookNum = Random.Range(0, fallPoint.Length);
+            fish.GetComponent<Rigidbody>().isKinematic = false;
             fish.GetComponent<FishAI>().SetPoolMove(goalPoint, fallPoint[fallLookNum].position);
+
+            //黄金の魚なら
+            if (fish.tag == "GoldFishes")
+            {
+                mana.fishManager.goldFishCount--;
+                fishSum += 3;
+            }
+            else
+                fishSum++;
+
+            mana.fishManager.fishSumCount--;
         }
+
+        //取った魚の分得点追加
+        //((DriveChaseFishGameManager)GameManager.nowMiniGameManager).FishScorePlus(transform.parent.GetComponent<PlayerNum>().playerNum, fishSum);
+
+        //網のコライダーをつける
+        netCollider.GetComponent<CapsuleCollider>().enabled = true;
+        netCollider.fishObj.Clear();
     }
 
     //親の移動を許可

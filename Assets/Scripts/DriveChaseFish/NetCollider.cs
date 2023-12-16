@@ -22,13 +22,13 @@ public class NetCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Fishes") 
+        if (collision.transform.tag == "Fishes" || collision.transform.tag == "GoldFishes") 
             fishObj.Add(collision.gameObject);
     }
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.transform.tag == "Fishes") 
+        if (collision.transform.tag == "Fishes" || collision.transform.tag == "GoldFishes") 
             fishObj.Remove(collision.gameObject);
     }
 }
