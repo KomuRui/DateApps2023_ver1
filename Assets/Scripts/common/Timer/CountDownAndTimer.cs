@@ -7,8 +7,10 @@ using System;
 
 public class CountDownAndTimer : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI timeText;       //時間制限テキスト
-    [SerializeField] private TextMeshProUGUI countDownText;  //カウントダウンテキスト
+    [SerializeField] private TextMeshProUGUI timeText;               //時間制限テキスト
+    [SerializeField] private TextMeshProUGUI countDownText;          //カウントダウンテキスト
+    [SerializeField] private TextMeshProUGUI tutorialTimeText;       //時間制限テキスト(チュートリアル用)
+    [SerializeField] private TextMeshProUGUI tutorialCountDownText;  //カウントダウンテキスト(チュートリアル用)
     [SerializeField] public Fade fade;  //フェード
 
     private int nowCountDownTime = 3;
@@ -20,12 +22,25 @@ public class CountDownAndTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beforeScale = countDownText.transform.localScale;
-        countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
 
         //もしチュートリアルが終わっているのなら
-        if (TutorialManager.isTutorialFinish)
+        if (TutorialManager.isTutorialFinish && fade != null)
+        {
             fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            timeText.gameObject.SetActive(true);
+            countDownText.gameObject.SetActive(true);
+            tutorialTimeText.gameObject.SetActive(false);
+            tutorialCountDownText.gameObject.SetActive(false);
+        }
+        else if (tutorialTimeText != null)
+        {
+            timeText = tutorialTimeText;
+            countDownText = tutorialCountDownText;
+        }
+
+        //カウントダウン
+        beforeScale = countDownText.transform.localScale;
+        countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
 
         //フェードが情報ないのなら
         if (fade != null)

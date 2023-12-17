@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 //using UnityEditor.SceneManagement;
 //using UnityEditor.SearchService;
@@ -31,6 +32,7 @@ public class MiniGameManager : MonoBehaviour
 
     [SerializeField] protected Image onePlayerImage;                                                       //1人側プレイヤーの画像
     [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                           //3人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImageTutorial = new List<Image>();                   //3人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected Dictionary<byte,Image> playerImageTable = new Dictionary<byte, Image>();    //プレイヤーの画像
 
     [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
@@ -63,6 +65,7 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
     protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
+    public bool isTutorialUse;          //チュートリアルを使うかどうか
 
     void Start()
     {
@@ -80,6 +83,27 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
+
+        //チュートリアルを使わないのなら
+        if(!isTutorialUse)
+            TutorialManager.isTutorialFinish = true;
+
+        //チュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+        {
+            // 新しいビューポート領域を設定する
+            Rect newViewportRect = new Rect(0, 0, 1, 1);
+            Camera.main.rect = newViewportRect;
+
+            //有効と無効切り替え
+            for(int i = 0; i < threePlayerImage.Count; i++)
+            {
+                threePlayerImage[i].gameObject.SetActive(true);
+                threePlayerImageTutorial[i].gameObject.SetActive(false);
+            }
+        }
+        else
+            threePlayerImage = threePlayerImageTutorial;
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
@@ -135,14 +159,6 @@ public class MiniGameManager : MonoBehaviour
             lookNum++;
         }
 
-        //チュートリアルが終わっているのなら
-        if (TutorialManager.isTutorialFinish)
-        {
-            // 新しいビューポート領域を設定する
-            Rect newViewportRect = new Rect(0, 0, 1, 1);
-            Camera.main.rect = newViewportRect;
-        }
-
         SceneStart();
     }
 
@@ -168,10 +184,16 @@ public class MiniGameManager : MonoBehaviour
             foreach (byte num in threePlayer.Keys)
                 if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
         }
+        //チュートリアルが終わってないのなら
         else if(redayText != null && !TutorialManager.isTutorialFinish)
         {
+            //時間と準備人数を表示
             TutorialManager.Update();
             redayText.text = TutorialManager.GetReadyOKSum() + "/" + PlayerManager.PLAYER_MAX + " ok " + ((int)TutorialManager.tutorialTime).ToString();
+
+            //全員が準備できたのなら
+            if (TutorialManager.GetReadyOKSum() >= PlayerManager.PLAYER_MAX)
+                TutorialFinish();
         }
 
         //継承先の更新
