@@ -2732,6 +2732,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9579ef9f84adb674b9471332d325a7a9, type: 3}
   m_PrefabInstance: {fileID: 378016169}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &647834690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11491604, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+  m_PrefabInstance: {fileID: 227880088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d416d1715bbc06d4789612d1211da8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &654950385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d22eeff78f5c1be4289b1f99f21c95eb, type: 3}
@@ -2792,12 +2803,12 @@ GameObject:
   - component: {fileID: 727293359}
   - component: {fileID: 727293358}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: ThreePlayerIcon3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &727293357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3449,7 +3460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &893581749
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3467,7 +3478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 665, y: 425}
+  m_AnchoredPosition: {x: 738, y: 425}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &893581750
@@ -3490,7 +3501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 1/5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3579,7 +3590,7 @@ GameObject:
   - component: {fileID: 899733570}
   - component: {fileID: 899733569}
   m_Layer: 5
-  m_Name: Image (5)
+  m_Name: ThreePlayerIcon3Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3594,7 +3605,7 @@ RectTransform:
   m_GameObject: {fileID: 899733567}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.548, y: 1.548, z: 1.548}
+  m_LocalScale: {x: 1.0104461, y: 1.0104461, z: 1.0104461}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1198892196}
@@ -3602,7 +3613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -532, y: -440}
+  m_AnchoredPosition: {x: -685.39, y: -214.61}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899733569
@@ -3759,7 +3770,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3181411425026401797, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_Name
-      value: CountDown (1)
+      value: CountDownTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_Pivot.x
@@ -3798,6 +3809,18 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.312245
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.312245
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10.312245
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3827,11 +3850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -338
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3855,6 +3878,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
   m_PrefabInstance: {fileID: 977735544}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &977735546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6758455094650612603, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
+  m_PrefabInstance: {fileID: 977735544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1036755365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 440718, guid: 6488b6e6bbe8a9c4585b531a71d8211c, type: 3}
@@ -3872,7 +3906,7 @@ GameObject:
   - component: {fileID: 1057173036}
   - component: {fileID: 1057173035}
   m_Layer: 5
-  m_Name: RoundText (1)
+  m_Name: RoundTextTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3887,7 +3921,7 @@ RectTransform:
   m_GameObject: {fileID: 1057173033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.3857, y: 4.3857, z: 4.3857}
+  m_LocalScale: {x: 2.862735, y: 2.862735, z: 2.862735}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1198892196}
@@ -3895,7 +3929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 665, y: 425}
+  m_AnchoredPosition: {x: 141, y: 288}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057173035
@@ -3918,7 +3952,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 1/5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4083,7 +4117,7 @@ GameObject:
   - component: {fileID: 1102143720}
   - component: {fileID: 1102143719}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: ThreePlayerIcon2Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4098,7 +4132,7 @@ RectTransform:
   m_GameObject: {fileID: 1102143717}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.548, y: 1.548, z: 1.548}
+  m_LocalScale: {x: 1.0104461, y: 1.0104461, z: 1.0104461}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1198892196}
@@ -4106,7 +4140,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -692, y: -439}
+  m_AnchoredPosition: {x: -789.83, y: -213.96}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102143719
@@ -5066,12 +5100,12 @@ GameObject:
   - component: {fileID: 1412130834}
   - component: {fileID: 1412130833}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: ThreePlayerIcon2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1412130832
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5252,7 +5286,7 @@ GameObject:
   - component: {fileID: 1498167862}
   - component: {fileID: 1498167861}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: ThreePlayerIcon1Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5267,7 +5301,7 @@ RectTransform:
   m_GameObject: {fileID: 1498167859}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.548, y: 1.548, z: 1.548}
+  m_LocalScale: {x: 1.0104461, y: 1.0104461, z: 1.0104461}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1198892196}
@@ -5275,7 +5309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -850, y: -436}
+  m_AnchoredPosition: {x: -892.95, y: -212}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1498167861
@@ -5798,12 +5832,12 @@ GameObject:
   - component: {fileID: 1679907133}
   - component: {fileID: 1679907132}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ThreePlayerIcon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1679907131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6245,9 +6279,9 @@ MonoBehaviour:
   - {fileID: 1412130833}
   - {fileID: 727293358}
   threePlayerImageTutorial:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1498167861}
+  - {fileID: 1102143719}
+  - {fileID: 899733569}
   rankAnnouncementPos:
   - {x: -11, y: -1.1, z: -4.6}
   - {x: -10.2, y: -1.1, z: -4.6}
@@ -6289,6 +6323,7 @@ MonoBehaviour:
   secondHalfFlagUpMax: 5
   se: {fileID: 834899572}
   roundText: {fileID: 893581750}
+  roundTextTutorial: {fileID: 1057173035}
   oneFlagState: 0000000000000000000000000000000000000000
   nowFlagUp: 0
   turn: 0
@@ -6324,8 +6359,8 @@ MonoBehaviour:
   timeText: {fileID: 0}
   countDownText: {fileID: 2032194999}
   tutorialTimeText: {fileID: 0}
-  tutorialCountDownText: {fileID: 0}
-  fade: {fileID: 0}
+  tutorialCountDownText: {fileID: 977735546}
+  fade: {fileID: 647834690}
   time: 30
   isfinish: 0
 --- !u!1 &1834108579
@@ -7406,6 +7441,10 @@ PrefabInstance:
     - target: {fileID: 3181411425026401797, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_Name
       value: CountDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181411425026401797, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
       propertyPath: m_Pivot.x
