@@ -27,12 +27,13 @@ public class CountDownAndTimer : MonoBehaviour
         if (TutorialManager.isTutorialFinish && fade != null)
         {
             fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            timeText.gameObject.SetActive(true);
-            countDownText.gameObject.SetActive(true);
-            tutorialTimeText.gameObject.SetActive(false);
-            tutorialCountDownText.gameObject.SetActive(false);
+
+            if(timeText != null)  timeText.gameObject.SetActive(true);
+            if(countDownText != null) countDownText.gameObject.SetActive(true);
+            if(tutorialTimeText != null) tutorialTimeText.gameObject.SetActive(false);
+            if(tutorialCountDownText != null) tutorialCountDownText.gameObject.SetActive(false);
         }
-        else if (tutorialTimeText != null)
+        else if (tutorialCountDownText != null || tutorialTimeText != null)
         {
             timeText = tutorialTimeText;
             countDownText = tutorialCountDownText;

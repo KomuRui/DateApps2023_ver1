@@ -9,7 +9,7 @@ public static class TutorialManager
 {
 
     private static Dictionary<int, bool> playerReadyOK = new Dictionary<int, bool>();
-    public static float tutorialTime = 10;
+    public static float tutorialTime = 45;
     public static bool isTutorialFinish = false;
 
     ///test—p

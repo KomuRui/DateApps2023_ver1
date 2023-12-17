@@ -31,6 +31,7 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
 
     [SerializeField] protected Image onePlayerImage;                                                       //1人側プレイヤーの画像
+    [SerializeField] protected Image onePlayerImageTutorial;                                               //1人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                           //3人側プレイヤーの画像
     [SerializeField] protected List<Image> threePlayerImageTutorial = new List<Image>();                   //3人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected Dictionary<byte,Image> playerImageTable = new Dictionary<byte, Image>();    //プレイヤーの画像
@@ -96,14 +97,24 @@ public class MiniGameManager : MonoBehaviour
             Camera.main.rect = newViewportRect;
 
             //有効と無効切り替え
-            for(int i = 0; i < threePlayerImage.Count; i++)
+            for (int i = 0; i < threePlayerImage.Count; i++)
             {
                 threePlayerImage[i].gameObject.SetActive(true);
-                threePlayerImageTutorial[i].gameObject.SetActive(false);
+                if(threePlayerImageTutorial[i] != null) threePlayerImageTutorial[i].gameObject.SetActive(false);
+            }
+
+            //1人側の画像があるのなら
+            if (onePlayerImage != null)
+            {
+                onePlayerImage.gameObject.SetActive(true);
+                onePlayerImageTutorial.gameObject.SetActive(false);
             }
         }
         else
+        {
+            onePlayerImage = onePlayerImageTutorial;
             threePlayerImage = threePlayerImageTutorial;
+        }
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
