@@ -91,10 +91,14 @@ public class OnePlayer : MonoBehaviour
     bool isDolphin;
     bool isStop;
     bool isCoroutineStart;
-    public GameObject PenguinImage;
+    GameObject PenguinImage;
     GameObject SharkImage;
     GameObject FishesImage;
     GameObject DolphinImage;
+    string penginName;
+    string sharkName;
+    string fishesName;
+    string dolphinName;
 
 
     // Start is called before the first frame update
@@ -114,9 +118,27 @@ public class OnePlayer : MonoBehaviour
         isDolphin = true;
         isStop = false;
         isCoroutineStart = false;
-        SharkImage = GameObject.Find("SharkCoolTimeImage");
-        FishesImage = GameObject.Find("FishesCoolTimeImage");
-        DolphinImage = GameObject.Find("DolphinCoolTimeImage");
+
+        if (TutorialManager.isTutorialFinish)
+        {
+            penginName = "PenguinCoolTimeImage";
+            sharkName = "SharkCoolTimeImage";
+            fishesName = "FishesCoolTimeImage";
+            dolphinName = "DolphinCoolTimeImage";
+        }
+        else
+        {
+
+            penginName = "PenguinCoolTimeImageTutorial";
+            sharkName = "SharkCoolTimeImageTutorial";
+            fishesName = "FishesCoolTimeImageTutorial";
+            dolphinName = "DolphinCoolTimeImageTutorial";
+        }
+
+        PenguinImage = GameObject.Find(penginName);
+        SharkImage = GameObject.Find(sharkName);
+        FishesImage = GameObject.Find(fishesName);
+        DolphinImage = GameObject.Find(dolphinName);
 
         ///////////////オブジェクトプールで使う///////////////
         //海の生き物たち保持する空のオブジェクトを生成
@@ -151,7 +173,7 @@ public class OnePlayer : MonoBehaviour
             penguinLeftTime -= Time.deltaTime / pinguinCoolTime;
             //penguinPre.GetComponent<Image>().fillAmount = penguinLeftTime;
             //GameObject UI_Text = penguinPre.transform.Find("name").gameObject;
-            penguinPre.transform.Find("PenguinCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = penguinLeftTime;
+            penguinPre.transform.Find(penginName).gameObject.GetComponent<Image>().fillAmount = penguinLeftTime;
             Debug.Log("a");
             if (penguinLeftTime < 0)
             {
@@ -161,7 +183,7 @@ public class OnePlayer : MonoBehaviour
         if (isShark == false)
         {
             sharkLeftTime -= Time.deltaTime / sharkCoolTime;
-            sharkPre.transform.Find("SharkCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = sharkLeftTime;
+            sharkPre.transform.Find(sharkName).gameObject.GetComponent<Image>().fillAmount = sharkLeftTime;
             if (sharkLeftTime < 0)
             {
                 Destroy(sharkPre.GetComponent<Image>());
@@ -170,7 +192,7 @@ public class OnePlayer : MonoBehaviour
         if (isFishes == false)
         {
             fishesLeftTime -= Time.deltaTime / fishesCoolTime;
-            fishesPre.transform.Find("FishesCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = fishesLeftTime;
+            fishesPre.transform.Find(fishesName).gameObject.GetComponent<Image>().fillAmount = fishesLeftTime;
             if (fishesLeftTime < 0)
             {
                 Destroy(fishesPre.GetComponent<Image>());
@@ -179,7 +201,7 @@ public class OnePlayer : MonoBehaviour
         if (isDolphin == false)
         {
             dolphinLeftTime -= Time.deltaTime / dolphinCoolTime;
-            dolphinPre.transform.Find("DolphinCoolTimeImage").gameObject.GetComponent<Image>().fillAmount = dolphinLeftTime;
+            dolphinPre.transform.Find(dolphinName).gameObject.GetComponent<Image>().fillAmount = dolphinLeftTime;
             if (dolphinLeftTime < 0)
             {
                 Destroy(dolphinPre.GetComponent<Image>());
@@ -412,6 +434,10 @@ public class OnePlayer : MonoBehaviour
         //非アクティブなオブジェクトがない場合新規生成
         Instantiate(penguinP, pos, rotation);
         penguinPre = Instantiate(penguinImage, new Vector3(0, 0, 0), Quaternion.identity);
+        for (int i = 0; i < penguinPre.transform.childCount; i++)
+        {
+            if (penguinPre.transform.GetChild(i).name != penginName) penguinPre.transform.GetChild(i).gameObject.SetActive(false);
+        }
         penguinLeftTime = 1;
 
         StartCoroutine(PenguinCoolCorou());
@@ -437,6 +463,10 @@ public class OnePlayer : MonoBehaviour
         //非アクティブなオブジェクトがない場合新規生成
         Instantiate(sharkP, pos, rotation);
         sharkPre = Instantiate(sharkImage, new Vector3(0, 0, 0), Quaternion.identity);
+        for (int i = 0; i < sharkPre.transform.childCount; i++)
+        {
+            if (sharkPre.transform.GetChild(i).name != sharkName) sharkPre.transform.GetChild(i).gameObject.SetActive(false);
+        }
         sharkLeftTime = 1;
 
         StartCoroutine(SharkCoolCorou());
@@ -461,6 +491,11 @@ public class OnePlayer : MonoBehaviour
         //非アクティブなオブジェクトがない場合新規生成
         Instantiate(fishesP, pos, rotation);
         fishesPre = Instantiate(fishesImage, new Vector3(0, 0, 0), Quaternion.identity);
+        for (int i = 0; i < fishesPre.transform.childCount; i++)
+        {
+            if (fishesPre.transform.GetChild(i).name != fishesName) fishesPre.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
         fishesLeftTime = 1;
 
         StartCoroutine(FishesCoolCorou());
@@ -485,6 +520,12 @@ public class OnePlayer : MonoBehaviour
         //非アクティブなオブジェクトがない場合新規生成
         Instantiate(dolphinP, pos, rotation);
         dolphinPre = Instantiate(dolphinImage, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        for(int i = 0; i < dolphinPre.transform.childCount; i++)
+        {
+            if (dolphinPre.transform.GetChild(i).name != dolphinName) dolphinPre.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
         dolphinLeftTime = 1;
 
         StartCoroutine(DolphinCoolCorou());

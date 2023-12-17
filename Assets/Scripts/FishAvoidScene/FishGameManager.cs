@@ -5,10 +5,23 @@ using UnityEngine;
 
 public class FishGameManager : MiniGameManager
 {
+
+    [SerializeField] private List<GameObject> image;
+    [SerializeField] private List<GameObject> imageTutorial;
+
     // Start is called before the first frame update
     public override void SceneStart()
     {
-        
+        //チュートリアルがおわっていないのならこの先処理しない
+        if (!TutorialManager.isTutorialFinish) return;
+
+        //有効と無効を適用
+        for(int i = 0; i < image.Count; i++)
+        {
+            image[i].SetActive(true);
+            imageTutorial[i].SetActive(false);
+        }
+
     }
 
     //ゲーム終了時に呼ばれる

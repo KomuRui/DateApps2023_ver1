@@ -22,32 +22,6 @@ public class CountDownAndTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        //もしチュートリアルが終わっているのなら
-        if (TutorialManager.isTutorialFinish && fade != null)
-        {
-            fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-
-            if(timeText != null)  timeText.gameObject.SetActive(true);
-            if(countDownText != null) countDownText.gameObject.SetActive(true);
-            if(tutorialTimeText != null) tutorialTimeText.gameObject.SetActive(false);
-            if(tutorialCountDownText != null) tutorialCountDownText.gameObject.SetActive(false);
-        }
-        else if (tutorialCountDownText != null || tutorialTimeText != null)
-        {
-            timeText = tutorialTimeText;
-            countDownText = tutorialCountDownText;
-        }
-
-        //カウントダウン
-        beforeScale = countDownText.transform.localScale;
-        countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
-
-        //フェードが情報ないのなら
-        if (fade != null)
-            fade.FadeOut(1.0f);
-
-        StartCoroutine(CountDownText(1.0f));
     }
 
     // Update is called once per frame
@@ -94,5 +68,35 @@ public class CountDownAndTimer : MonoBehaviour
             GameManager.nowMiniGameManager.SetMiniGameStart();
         }
 
+    }
+
+    //カウントダウンとタイマーを設定する
+    public void SetCountDownAndTimer()
+    {
+        //もしチュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish && fade != null)
+        {
+            fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+
+            if (timeText != null) timeText.gameObject.SetActive(true);
+            if (countDownText != null) countDownText.gameObject.SetActive(true);
+            if (tutorialTimeText != null) tutorialTimeText.gameObject.SetActive(false);
+            if (tutorialCountDownText != null) tutorialCountDownText.gameObject.SetActive(false);
+        }
+        else if (tutorialCountDownText != null || tutorialTimeText != null)
+        {
+            timeText = tutorialTimeText;
+            countDownText = tutorialCountDownText;
+        }
+
+        //カウントダウン
+        beforeScale = countDownText.transform.localScale;
+        countDownText.transform.DOScale(5.0f, 1.0f).SetEase(Ease.InCubic);
+
+        //フェードが情報ないのなら
+        if (fade != null)
+            fade.FadeOut(1.0f);
+
+        StartCoroutine(CountDownText(1.0f));
     }
 }
