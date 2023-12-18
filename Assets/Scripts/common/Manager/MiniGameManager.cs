@@ -165,7 +165,7 @@ public class MiniGameManager : MonoBehaviour
             if (lookNum < threePlayerChild.Count)
                 threePlayerChild[lookNum].transform.parent = threePlayerObj[lookNum].transform;
 
-            if (threePlayerImage[lookNum] != null)
+            if (threePlayerImage.Count > lookNum && threePlayerImage[lookNum] != null)
             {
                 threePlayerImage[lookNum].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
                 playerImageTable[num] = threePlayerImage[lookNum];
@@ -235,6 +235,8 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerDead(byte player)
     {
+        if (playerImageTable == null) return;
+
         Color c = playerImageTable[player].color;
         c.r = 0.2f;
         c.g = 0.2f;
@@ -244,6 +246,8 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerHeal(byte player)
     {
+        if (playerImageTable == null) return;
+
         Color c = playerImageTable[player].color;
         c.r = 1.0f;
         c.g = 1.0f;
