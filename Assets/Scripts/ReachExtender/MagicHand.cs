@@ -25,24 +25,6 @@ public class MagicHand : MonoBehaviour
         {
             transform.position = nextArmParentTop.transform.position;
         }
-
-        //例が当たった時情報
-        RaycastHit rayHit;
-
-        //レイを飛ばす方向
-        Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
-
-        //レイを飛ばす方向
-        Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
-
-        //レイを飛ばす
-        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
-        if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
-        {
-            Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
-
-            Debug.DrawRay(rayHit.point, refrect * 9999999, Color.red, 30);
-        }
     }
     
     // Update is called once per frame
@@ -61,12 +43,33 @@ public class MagicHand : MonoBehaviour
     public void BigMax()
     {
         bigMax = true;
-        //if(nextArmParent != null)
-        //{
-        //    Vector3 ray = transform.parent.gameObject.transform.position - myArmParentTop.gameObject.transform.position;
-        //    //Debug.DrawRay(transform.position, ray, )
-        //    //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き), RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
-        //    nextArmParent.SetActive(true);
-        //}
+        if (nextArmParent != null)
+        {
+            //例が当たった時情報
+            RaycastHit rayHit;
+
+            //レイを飛ばす方向
+            Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
+
+            //レイを飛ばす方向
+            Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
+
+            //レイを飛ばす
+            Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
+            if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
+            {
+                //反射ベクトルを作成
+                Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
+
+                //位置を設定
+                nextArmParent.transform.position = rayHit.point;
+
+                //向きを設定
+                //LOOｋatを使う
+
+                Debug.DrawRay(rayHit.point, refrect * 9999999, Color.red, 30);
+            }
+            nextArmParent.SetActive(true);
+        }
     }
 }
