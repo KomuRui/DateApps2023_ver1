@@ -21,7 +21,7 @@ public class NetMark : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         //プールに当たって自分の対応しているプールなら
-        if (other.transform.tag == "Pool" && !net.isNetMove && transform.parent.GetComponent<PlayerNum>().playerNum == other.gameObject.GetComponent<Pool>().playerNum)
+        if (other.transform.tag == "Pool" && !net.isNetMove && transform.parent.parent.GetComponent<PlayerNum>().playerNum == other.gameObject.GetComponent<Pool>().playerNum)
         {
             this.GetComponent<MeshCollider>().enabled = false;
             net.NetReturn();
@@ -32,7 +32,7 @@ public class NetMark : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         //プールに当たって自分の対応しているプールなら
-        if (other.transform.tag == "Pool" && transform.parent.GetComponent<PlayerNum>().playerNum == other.gameObject.GetComponent<Pool>().playerNum)
+        if (other.transform.tag == "Pool" && transform.parent.parent.GetComponent<PlayerNum>().playerNum == other.gameObject.GetComponent<Pool>().playerNum)
         {
             net.NetReturn();
             net.FishGoPool(other.gameObject.GetComponent<Pool>().fallPoint, other.gameObject.GetComponent<Pool>().goalPoint);

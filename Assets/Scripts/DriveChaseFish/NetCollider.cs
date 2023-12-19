@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NetCollider : MonoBehaviour
 {
@@ -22,13 +23,13 @@ public class NetCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Fishes") 
+        if ((collision.transform.tag == "Fishes" || collision.transform.tag == "GoldFishes") && collision.GetComponent<NavMeshAgent>().enabled)
             fishObj.Add(collision.gameObject);
     }
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.transform.tag == "Fishes") 
+        if ((collision.transform.tag == "Fishes" || collision.transform.tag == "GoldFishes") && collision.GetComponent<NavMeshAgent>().enabled) 
             fishObj.Remove(collision.gameObject);
     }
 }

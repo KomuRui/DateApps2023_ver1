@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -10,11 +11,13 @@ public class Canon : MonoBehaviour
     [SerializeField] private bool isHorizontalInput = true;   // â°ÇÃì¸óÕãñâ¬Ç∑ÇÈÇ©
     [SerializeField] private bool isVerticalInput = false;     // ècÇÃì¸óÕãñâ¬Ç∑ÇÈÇ©
     Rigidbody rb;
+    Vector3 movePos;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();  // rigidbodyÇéÊìæ
+        movePos = transform.right * 0.1f;
     }
 
     // Update is called once per frame
@@ -25,6 +28,17 @@ public class Canon : MonoBehaviour
             //ìÆÇ´
             Move();
         }
+
+
+        //if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
+        //{
+        //    isAttack = false;
+        //    HammerOb.transform.DORotate(new Vector3(AttackRotate.x, -this.transform.localEulerAngles.y, -AttackRotate.z), 0.5f).SetEase(Ease.InBack);
+
+        //    //1.5ïbå„Ç…Ç†Ç∞ÇÈ
+        //    Invoke("HammerUp", 0.5f);
+        //    Invoke("HammerAttack", 2.0f);
+        //}
     }
 
     //à⁄ìÆ
@@ -63,11 +77,14 @@ public class Canon : MonoBehaviour
         //rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
         if(horizontalInput > 0)
         {
-            rb.AddForce(transform.right * 10.0f);
+            transform.position = new Vector3(transform.position.x + transform.right.x * moveSpeed, transform.position.y + transform.right.y * moveSpeed, transform.position.z + transform.right.z * moveSpeed);
+            //rb.AddForce(transform.right * moveSpeed, ForceMode.Force);
+            //transform.position = new Vector3(transform.position.x + movePos.x, transform.position.y + movePos.y, transform.position.z + movePos.z);
         }
-        if(verticalInput < 0)
+        if(horizontalInput < 0)
         {
-            rb.AddForce(-transform.right * 10.0f);
+            transform.position = new Vector3(transform.position.x - transform.right.x * moveSpeed, transform.position.y - transform.right.y * moveSpeed, transform.position.z - transform.right.z * moveSpeed);
+            //rb.AddForce(-transform.right * moveSpeed, ForceMode.Force);
         }
 
         //rb.velocity = -moveDirection;
@@ -80,22 +97,16 @@ public class Canon : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "RightWall")
+        if (collision.gameObject.tag == "RightWall")
         {
             Debug.Log("ìñÇΩÇ¡ÇΩ!");
-            transform.Rotate(90, 0, 0);
+            transform.Rotate(0, -90, 0);
+            //this.transform.position = new Vector3(5.3f, this.transform.position.y, this.transform.position.z);
         }
-        else
+
+        if (collision.gameObject.tag == "LeftWall")
         {
-            //Rigidbody otherRb = collision.gameObject.GetComponent<Rigidbody>();
-
-            //if(otherRb != null)
-            //{
-            //    Vector3 knockbackForce = -otherRb.velocity * 50.0f;
-
-            //    otherRb.AddForce(knockbackForce);
-            //}
+            transform.Rotate(0, 90, 0);
         }
-        //isBound = true;
     }
 }

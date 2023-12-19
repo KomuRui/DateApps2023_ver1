@@ -27,7 +27,11 @@ public class FishAI : MonoBehaviour
         float scale = 1.7f;
         parent = transform.parent;
         this.transform.localScale = new Vector3 (scale, scale, scale);
-        this.GetComponent<NavMeshAgent>().speed = Random.Range(2, 11);
+
+        if(this.tag == "GoldFishes")
+            this.GetComponent<NavMeshAgent>().speed = 8;
+        else
+            this.GetComponent<NavMeshAgent>().speed = Random.Range(2, 11);
 
         //nullならこのさきしょりしない
         if (goal[lookNum] == null) return;
@@ -54,7 +58,7 @@ public class FishAI : MonoBehaviour
     {
         transform.position = new Vector3(transform.position.x, -0.35f, transform.position.z);
 
-        if (Vector3.Distance(agent.destination, transform.position) < 2.5f)
+        if (Vector3.Distance(agent.destination, transform.position) < 1.0f)
             GoalChange();
 
         // パスの方向を計算し、Look At コンストレイントに適用します
@@ -79,6 +83,8 @@ public class FishAI : MonoBehaviour
     //ゴール先変更
     private void GoalChange()
     {
+        if (!agent.enabled || !this.gameObject.active) return;
+
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         time = 0.0f;
         lookNum = Random.Range(0, goal.Length);

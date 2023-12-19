@@ -7,14 +7,18 @@ public class FishManager : MonoBehaviour
     [SerializeField] private List<Transform> dokanPosList = new List<Transform>();
     [SerializeField] private int oneTimeFishMax = 10;
     [SerializeField] private List<GameObject> noActiveFish = new List<GameObject>();
+    [SerializeField] private List<GameObject> noActiveGoldFish = new List<GameObject>();
     [SerializeField] private CountDownAndTimer timer;
-    private List<GameObject> ActiveFish = new List<GameObject>();
-    private int goldFishCount;
+    private List<GameObject> activeFish = new List<GameObject>();
+    private List<GameObject> activeGoldFish = new List<GameObject>();
+    public int fishSumCount;
+    public int goldFishCount;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        fishSumCount = 0;
         goldFishCount = 0;
         StartCoroutine(FishInstantiate(4.0f));
     }
@@ -22,7 +26,6 @@ public class FishManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(ActiveFish.Count);
     }
 
     //ãõê∂ê¨
@@ -53,13 +56,31 @@ public class FishManager : MonoBehaviour
         //ãõê∂ê¨Ç∑ÇÈ
         for (int i = 0; i < fishCount.Length; i++)
         {
+
             for (int j = 0; j < fishCount[i]; j++)
             {
-                GameObject fish = noActiveFish[0];
-                fish.SetActive(true);
-                fish.transform.position = dokanPosList[i].transform.position;
-                ActiveFish.Add(fish);
-                noActiveFish.Remove(fish);
+                GameObject fish = null;
+                //1/15ÇÃämó¶Ç≈â©ã‡ÇÃãõÇê∂ê¨Ç∑ÇÈ
+                if(Random.Range(0,15) == 1 && goldFishCount < 3 && fishSumCount < 35)
+                {
+                    fish = noActiveGoldFish[0];
+                    activeGoldFish.Add(fish);
+                    noActiveGoldFish.Remove(fish);
+                    fish.SetActive(true);
+                    fish.transform.position = dokanPosList[i].transform.position;
+                    goldFishCount++;
+                    fishSumCount++;
+                }
+                else if(fishSumCount < 35)
+                {
+                    fish = noActiveFish[0];
+                    activeFish.Add(fish);
+                    noActiveFish.Remove(fish);
+                    fish.SetActive(true);
+                    fish.transform.position = dokanPosList[i].transform.position;
+                    fishSumCount++;
+                }
+
             }
         }
 

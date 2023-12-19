@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 //using UnityEditor.SceneManagement;
 //using UnityEditor.SearchService;
@@ -12,7 +13,7 @@ using UnityEngine.UI;
 public class MiniGameManager : MonoBehaviour
 {
 
-    [SerializeField] private string miniGameName;  //ミニゲームシーンの名前
+    [SerializeField] public string miniGameName;  //ミニゲームシーンの名前
 
     ////////////////////////////////////プレイヤー情報////////////////////////////////////////////
 
@@ -30,7 +31,9 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Vector3> threePlayerRotate = new List<Vector3>();        //3人側プレイヤーの角度
 
     [SerializeField] protected Image onePlayerImage;                                                       //1人側プレイヤーの画像
+    [SerializeField] protected Image onePlayerImageTutorial;                                               //1人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                           //3人側プレイヤーの画像
+    [SerializeField] protected List<Image> threePlayerImageTutorial = new List<Image>();                   //3人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected Dictionary<byte,Image> playerImageTable = new Dictionary<byte, Image>();    //プレイヤーの画像
 
     [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
@@ -54,6 +57,7 @@ public class MiniGameManager : MonoBehaviour
     public GameObject endText;          //終了テキスト
     public GameObject rankText;         //順位テキスト
     public List<GameObject> killCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
+    public TextMeshProUGUI redayText;   //準備のテキスト
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
@@ -62,6 +66,7 @@ public class MiniGameManager : MonoBehaviour
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
     protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
+    public bool isTutorialUse;          //チュートリアルを使うかどうか
 
     void Start()
     {
@@ -70,6 +75,7 @@ public class MiniGameManager : MonoBehaviour
         {
             PlayerManager.Initializ();
             ScoreManager.Initializ();
+            TutorialManager.Initializ();
         }
 
         /////初期化
@@ -78,6 +84,40 @@ public class MiniGameManager : MonoBehaviour
         isPlayerAllDead = false;
         isStart = false;
         isFinish = false;
+
+        //チュートリアルを使わないのなら
+        if(!isTutorialUse)
+            TutorialManager.isTutorialFinish = true;
+
+        //チュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+        {
+            // 新しいビューポート領域を設定する
+            Rect newViewportRect = new Rect(0, 0, 1, 1);
+            Camera.main.rect = newViewportRect;
+
+            //有効と無効切り替え
+            for (int i = 0; i < threePlayerImage.Count; i++)
+            {
+                threePlayerImage[i].gameObject.SetActive(true);
+                if(threePlayerImageTutorial[i] != null) threePlayerImageTutorial[i].gameObject.SetActive(false);
+            }
+
+            //1人側の画像があるのなら
+            if (onePlayerImage != null)
+            {
+                onePlayerImage.gameObject.SetActive(true);
+                onePlayerImageTutorial.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            onePlayerImage = onePlayerImageTutorial;
+            threePlayerImage = threePlayerImageTutorial;
+        }
+
+        //カウントダウンとタイマーを設定する
+        this.GetComponent<CountDownAndTimer>().SetCountDownAndTimer();
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
@@ -125,7 +165,7 @@ public class MiniGameManager : MonoBehaviour
             if (lookNum < threePlayerChild.Count)
                 threePlayerChild[lookNum].transform.parent = threePlayerObj[lookNum].transform;
 
-            if (threePlayerImage[lookNum] != null)
+            if (threePlayerImage.Count > lookNum && threePlayerImage[lookNum] != null)
             {
                 threePlayerImage[lookNum].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
                 playerImageTable[num] = threePlayerImage[lookNum];
@@ -153,8 +193,22 @@ public class MiniGameManager : MonoBehaviour
             ChangeRankAnnouncement();
 
         //生きている3人側の時間記録
-        foreach(byte num in threePlayer.Keys)
-            if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+        if (TutorialManager.isTutorialFinish)
+        {
+            foreach (byte num in threePlayer.Keys)
+                if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
+        }
+        //チュートリアルが終わってないのなら
+        else if(redayText != null && !TutorialManager.isTutorialFinish)
+        {
+            //時間と準備人数を表示
+            TutorialManager.Update();
+            redayText.text = TutorialManager.GetReadyOKSum() + "/" + PlayerManager.PLAYER_MAX + " ok " + ((int)TutorialManager.tutorialTime).ToString();
+
+            //全員が準備できたのなら
+            if (TutorialManager.GetReadyOKSum() >= PlayerManager.PLAYER_MAX)
+                TutorialFinish();
+        }
 
         //継承先の更新
         MiniGameUpdate();
@@ -181,6 +235,8 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerDead(byte player)
     {
+        if (playerImageTable == null) return;
+
         Color c = playerImageTable[player].color;
         c.r = 0.2f;
         c.g = 0.2f;
@@ -190,6 +246,8 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerHeal(byte player)
     {
+        if (playerImageTable == null) return;
+
         Color c = playerImageTable[player].color;
         c.r = 1.0f;
         c.g = 1.0f;
@@ -231,6 +289,13 @@ public class MiniGameManager : MonoBehaviour
         //すでに終わっているならこの先処理しない
         if (isFinish) return;
 
+        //チュートリアルなら
+        if(!TutorialManager.isTutorialFinish)
+        {
+            SceneManager.LoadScene(miniGameName);
+            return;
+        }
+        
         isFinish = true; 
         isStart = false;
         endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
@@ -296,6 +361,26 @@ public class MiniGameManager : MonoBehaviour
         foreach(var obj in killCanvas)
             obj.SetActive(false);
     }
+
+    //チュートリアル終わり
+    public void TutorialFinish() 
+    {
+        //フェードが情報ないのなら
+        if (this.GetComponent<CountDownAndTimer>().fade != null)
+            this.GetComponent<CountDownAndTimer>().fade.FadeIn(1.0f);
+
+        //フェードのレンダリングモードを変更
+        this.GetComponent<CountDownAndTimer>().fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+
+        //終わり
+        TutorialManager.isTutorialFinish = true;
+
+        //シーンを本番にチェンジ
+        Invoke("SceneChange", 1.0f);
+    }
+
+    //シーン変更
+    public void SceneChange() { SceneManager.LoadScene(miniGameName); }
 
     //シーン開始
     public virtual void SceneStart() {}

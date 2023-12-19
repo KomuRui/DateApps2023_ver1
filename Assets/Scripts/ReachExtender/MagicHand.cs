@@ -18,7 +18,7 @@ public class MagicHand : MonoBehaviour
     void Start()
     {
         //1ïbå„Ç…êLÇ—Ç´ÇÈ
-        Invoke("BigMax", 5f);
+        //Invoke("BigMax", 5f);
 
         if (nextArmParentTop != null)
         {
@@ -38,7 +38,9 @@ public class MagicHand : MonoBehaviour
         Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
         if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
         {
-            Debug.DrawRay(rayHit.point, rayHit.normal * 9999999, Color.red, 30);
+            Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
+
+            Debug.DrawRay(rayHit.point, refrect * 9999999, Color.red, 30);
         }
     }
     
@@ -47,11 +49,12 @@ public class MagicHand : MonoBehaviour
     {
         if (!bigMax)
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
-
-        
-
-       
         //rayHit.normal;
+
+        if(myArmParentTop.GetComponent<MagicHandIsHit>().isHit)
+        {
+            BigMax();
+        }
     }
 
     public void BigMax()

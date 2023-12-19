@@ -13,7 +13,6 @@ public class Net : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;   //移動速度
     [SerializeField] private NetCollider netCollider;  //網のコライダー
     [SerializeField] private GameObject netMark;       //網のマーカー
-    private Vector3 initialPos;    //初期位置
     private Vector3 initialScale;  //初期拡大率
     private float startTime;       //移動開始時間
     public bool isNetMove;        //ネット移動中か
@@ -24,8 +23,7 @@ public class Net : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //位置と拡大率を保存しておく
-        initialPos = transform.position;
+        //拡大率を保存しておく
         initialScale = transform.localScale;
     }
 
@@ -33,7 +31,7 @@ public class Net : MonoBehaviour
     void Update()
     {
         //網発動
-        if (!isNetImposition && Input.GetButtonDown("Abutton" + transform.parent.GetComponent<PlayerNum>().playerNum)) NetExecute();
+        if (!isNetImposition && Input.GetButtonDown("Abutton" + transform.parent.parent.GetComponent<PlayerNum>().playerNum)) NetExecute();
 
         //移動中なら計算
         if (isNetMove) NetPosCalc();
@@ -46,7 +44,7 @@ public class Net : MonoBehaviour
         //魚を一匹も捕まえれなかったら
         if(netCollider.fishObj.Count <= 0)
         {
-            transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
+            transform.parent.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
             startTime = Time.time;
             isNetImposition = true;
             isNetMove = true;
@@ -63,14 +61,18 @@ public class Net : MonoBehaviour
         {
             fish.layer = 9;
             fish.GetComponent<NavMeshAgent>().enabled = false;
-            fish.transform.parent = transform.parent;
+            fish.GetComponent<Rigidbody>().isKinematic = true;
+            fish.transform.parent = transform.parent.parent;
         }
 
         //網のマーカーに当たり判定をつける
         netMark.GetComponent<MeshCollider>().enabled = true;
 
+        //網のコライダーを外す
+        netCollider.GetComponent<CapsuleCollider>().enabled = false;
+
         //もろもろ設定
-        transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
+        transform.parent.parent.GetComponent<DriveChaseFishPlayer>().isMove = false;
         startTime = Time.time;
         isNetImposition = true;
         isNetMove = true;
@@ -84,7 +86,7 @@ public class Net : MonoBehaviour
         float distCovered = (Time.time - startTime) / moveSpeed; // 移動した距離を計算
 
         if(isNetReturn)
-            transform.position = Vector3.Lerp(transform.position, transform.parent.GetComponent<DriveChaseFishPlayer>().transform.position, distCovered);  //移動
+            transform.position = Vector3.Lerp(transform.position, transform.parent.parent.GetComponent<DriveChaseFishPlayer>().transform.position, distCovered);  //移動
         else
             transform.position = Vector3.Lerp(transform.position, impositionBase.position, distCovered); //移動
     }
@@ -92,19 +94,44 @@ public class Net : MonoBehaviour
     //捕まえた魚をプールに落とす
     public void FishGoPool(Transform[] fallPoint, Transform[] goalPoint)
     {
+        //魚の総数
+        int fishSum = 0;
+
+        //魚管理
+        DriveChaseFishGameManager mana = ((DriveChaseFishGameManager)GameManager.nowMiniGameManager);
+
         //魚にプールに向かわせる
         foreach (var fish in getFish)
         {
             int fallLookNum = Random.Range(0, fallPoint.Length);
+            fish.GetComponent<Rigidbody>().isKinematic = false;
             fish.GetComponent<FishAI>().SetPoolMove(goalPoint, fallPoint[fallLookNum].position);
+
+            //黄金の魚なら
+            if (fish.tag == "GoldFishes")
+            {
+                mana.fishManager.goldFishCount--;
+                fishSum += 3;
+            }
+            else
+                fishSum++;
+
+            mana.fishManager.fishSumCount--;
         }
+
+        //取った魚の分得点追加
+        ((DriveChaseFishGameManager)GameManager.nowMiniGameManager).FishScorePlus(transform.parent.parent.GetComponent<PlayerNum>().playerNum, fishSum);
+
+        //網のコライダーをつける
+        netCollider.GetComponent<CapsuleCollider>().enabled = true;
+        netCollider.fishObj.Clear();
     }
 
     //親の移動を許可
-    private void ParentMoveOK() { transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; }
+    private void ParentMoveOK() { transform.parent.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; }
 
     //親の移動を許可
-    private void ParentMoveOK2() { transform.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; isNetImposition = false; }
+    private void ParentMoveOK2() { transform.parent.parent.GetComponent<DriveChaseFishPlayer>().isMove = true; isNetMove = false; isNetImposition = false; }
 
 
     //網もとに戻す

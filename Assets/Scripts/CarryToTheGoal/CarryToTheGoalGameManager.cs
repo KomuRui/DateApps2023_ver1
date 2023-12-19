@@ -12,6 +12,7 @@ public class CarryToTheGoalGameManager : MiniGameManager
 
     //プレイヤーライフ
     [SerializeField] private List<TextMeshProUGUI> lifeText;
+    [SerializeField] private List<TextMeshProUGUI> lifeTextTutorial;
     public Dictionary<byte, TextMeshProUGUI> playerLifeText = new Dictionary<byte, TextMeshProUGUI>();
     public Dictionary<byte, int> playerLife = new Dictionary<byte, int>();
     public LookOnTexture cannon;
@@ -21,8 +22,24 @@ public class CarryToTheGoalGameManager : MiniGameManager
     // Start is called before the first frame update
     public override void SceneStart()
     {
+
+        //チュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+        {
+            //有効と無効切り替え
+            for (int j = 0; j < lifeText.Count; j++)
+            {
+                lifeText[j].gameObject.SetActive(true);
+                lifeTextTutorial[j].gameObject.SetActive(false);
+            }
+        }
+        else
+            lifeText = lifeTextTutorial;
+
+        //大砲を操作するプレイヤーの番号を取得
         cannon.playerNum = onePlayerObj.GetComponent<PlayerNum>().playerNum;
 
+        //プレイヤーとライフテキストを適応させる
         int i = 0;
         foreach (byte num in threePlayer.Keys)
         {
