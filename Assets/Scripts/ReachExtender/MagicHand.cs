@@ -13,6 +13,7 @@ public class MagicHand : MonoBehaviour
     [SerializeField] private GameObject nextArmParent;
     [SerializeField] private GameObject nextArmParentTop;
     [SerializeField] private GameObject myArmParentTop;
+    private int magicHandNum = 0;
 
 
     void Start()
@@ -60,12 +61,12 @@ public class MagicHand : MonoBehaviour
     public void BigMax()
     {
         bigMax = true;
-        if(nextArmParent != null)
-        {
-            Vector3 ray = transform.parent.gameObject.transform.position - myArmParentTop.gameObject.transform.position;
-            //Debug.DrawRay(transform.position, ray, )
-            //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き), RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
-            nextArmParent.SetActive(true);
-        }
+        //if(nextArmParent != null)
+        //{
+        //    Vector3 ray = transform.parent.gameObject.transform.position - myArmParentTop.gameObject.transform.position;
+        //    //Debug.DrawRay(transform.position, ray, )
+        //    //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き), RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
+        //    nextArmParent.SetActive(true);
+        //}
     }
 }

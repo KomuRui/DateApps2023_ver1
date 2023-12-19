@@ -661,10 +661,12 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   onePlayerImage: {fileID: 0}
+  onePlayerImageTutorial: {fileID: 0}
   threePlayerImage:
   - {fileID: 1585398206}
   - {fileID: 79747153}
   - {fileID: 1905979750}
+  threePlayerImageTutorial: []
   rankAnnouncementPos:
   - {x: 1.5, y: 0, z: 0}
   - {x: 0.5, y: 0, z: 0}
@@ -690,6 +692,8 @@ MonoBehaviour:
   rankText: {fileID: 8390815714765577522, guid: 8e80cdc72e244654394924d371986104, type: 3}
   killCanvas:
   - {fileID: 582711609}
+  redayText: {fileID: 0}
+  isTutorialUse: 0
 --- !u!114 &317224229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +708,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 1218872260}
   countDownText: {fileID: 694917249}
+  tutorialTimeText: {fileID: 0}
+  tutorialCountDownText: {fileID: 0}
+  fade: {fileID: 0}
   time: 30
   isfinish: 0
 --- !u!1001 &332939554
@@ -1078,6 +1085,10 @@ PrefabInstance:
       propertyPath: nextArmParent
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8596448786463482718, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
+      propertyPath: myArmParentTop
+      value: 
+      objectReference: {fileID: 1701441040}
     - target: {fileID: 8596448786463482718, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: nextArmParentTop
       value: 
@@ -3596,6 +3607,10 @@ PrefabInstance:
       propertyPath: myArmParentTop
       value: 
       objectReference: {fileID: 1506203008}
+    - target: {fileID: 8596448786463482718, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
+      propertyPath: nextArmParentTop
+      value: 
+      objectReference: {fileID: 1701441040}
     m_RemovedComponents:
     - {fileID: 592891807197925552, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
     m_RemovedGameObjects: []

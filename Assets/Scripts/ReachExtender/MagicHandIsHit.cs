@@ -5,7 +5,7 @@ using UnityEngine;
 public class MagicHandIsHit : MonoBehaviour
 {
 
-    public bool isHit;
+    public bool isHit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,10 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        isHit = true;
+        if (other.tag == "Player")
+        {
+            isHit = true;
+        }
     }
 
     void OnTriggerEixt(Collider other)
