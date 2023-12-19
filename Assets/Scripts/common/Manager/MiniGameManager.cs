@@ -99,8 +99,13 @@ public class MiniGameManager : MonoBehaviour
             //—LŒø‚Æ–³ŒøØ‚è‘Ö‚¦
             for (int i = 0; i < threePlayerImage.Count; i++)
             {
-                threePlayerImage[i].gameObject.SetActive(true);
-                if(threePlayerImageTutorial[i] != null) threePlayerImageTutorial[i].gameObject.SetActive(false);
+                if(threePlayerImage[i]) threePlayerImage[i].gameObject.SetActive(true);
+                
+            }
+            //—LŒø‚Æ–³ŒøØ‚è‘Ö‚¦
+            for (int i = 0; i < threePlayerImageTutorial.Count; i++)
+            {
+                if (threePlayerImageTutorial[i]) threePlayerImageTutorial[i].gameObject.SetActive(false);
             }
 
             //1l‘¤‚Ì‰æ‘œ‚ª‚ ‚é‚Ì‚È‚ç
