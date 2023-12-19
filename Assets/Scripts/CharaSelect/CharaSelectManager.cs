@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharaSelectManager : MonoBehaviour
@@ -210,10 +208,13 @@ public class CharaSelectManager : MonoBehaviour
     {
         //Œˆ’è
         if (Input.GetButtonDown("Abutton" + playerNum) && !playerInfo[playerNum].isSelect)
+        {
             playerInfo[playerNum].isSelect = true;
 
-        //Œˆ’è‚µ‚½ƒLƒƒƒ‰‚ğˆÃ‚­‚·‚é
-       // playerInfo[playerNum].charaSelectOutlineInfo
+            //Œˆ’è‚µ‚½ƒLƒƒƒ‰‚ğ“®‚©‚·
+            playerInfo[playerNum].charaSelectOutlineInfo.Select();
+        }
+        
     }
 
     //ƒLƒƒƒ‰‰ğœ

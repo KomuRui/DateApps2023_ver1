@@ -11,10 +11,12 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     private byte selectPlayerNum = 0;  //選択しているプレイヤーの番号
     public CharaSelectManager.LineNum line; //自分がどのラインか
     public int num;                         //何番目か
+    private Vector3 initialRotate;          //初期回転
 
     // Start is called before the first frame update
     void Start()
     {
+        initialRotate = transform.localEulerAngles;
     }
 
     // Update is called once per frame
@@ -57,6 +59,6 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     //選択
     public void Select()
     {
-        
+        this.transform.DORotate(new Vector3(initialRotate.x, initialRotate.y + 360.0f, initialRotate.z), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
     }
 }
