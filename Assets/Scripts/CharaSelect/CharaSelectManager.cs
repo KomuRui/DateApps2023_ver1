@@ -13,6 +13,16 @@ public class CharaSelectManager : MonoBehaviour
         MAX_LINE
     }
 
+    //宝庫
+    public enum Direction
+    {
+        RIGHT,
+        LEFT,
+        UP,
+        DOWN,
+        MAX_DIRECTION
+    }
+
     //プレイヤー情報
     class PlayerInfo
     {
@@ -89,6 +99,9 @@ public class CharaSelectManager : MonoBehaviour
         CharaChange(3);
         CharaChange(4);
 
+        //キャラ決定
+
+
         //入力値を取得
         for (int i = 0; i < inputXY.Count; i++)
         {
@@ -101,8 +114,7 @@ public class CharaSelectManager : MonoBehaviour
     private void CharaChange(byte playerNum)
     {
         //右移動できそうなら
-        if (inputXY[playerNum].beforeInputX <= 0.75 && inputXY[playerNum].nowInputX >= 0.8 && playerInfo[playerNum].num != 3 &&
-            lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num + 1) - 1].GetComponent<CharaSelectOutlineInfo>().SetSelect(playerNum, playerInfo[playerNum].selectColor))
+        if (IsInputOK(playerNum,Direction.RIGHT) && playerInfo[playerNum].num != 3 && IsNextCharaNotSelect(playerNum,Direction.RIGHT,1))
         {
             lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num) - 1].GetComponent<CharaSelectOutlineInfo>().SetSelectRelease(playerNum);
             playerInfo[playerNum].num++;
@@ -128,5 +140,59 @@ public class CharaSelectManager : MonoBehaviour
             lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num - 1)].GetComponent<CharaSelectOutlineInfo>().SetSelectRelease(playerNum);
             playerInfo[playerNum].line--;
         }    
+    }
+
+    //入力がOKかどうか
+    private bool IsInputOK(byte playerNum,Direction dir)
+    {
+        switch(dir)
+        {
+            case Direction.RIGHT:
+                if (inputXY[playerNum].beforeInputX <= 0.75 && inputXY[playerNum].nowInputX >= 0.8)
+                    return true;
+                else
+                    return false;
+            case Direction.LEFT:
+                if (inputXY[playerNum].beforeInputX >= -0.75 && inputXY[playerNum].nowInputX <= -0.8)
+                    return true;
+                else
+                    return false;
+            case Direction.DOWN:
+                if (inputXY[playerNum].beforeInputY <= 0.75 && inputXY[playerNum].nowInputY >= 0.8)
+                    return true;
+                else
+                    return false;
+            case Direction.UP:
+                if (inputXY[playerNum].beforeInputY >= -0.75 && inputXY[playerNum].nowInputY <= -0.8)
+                    return true;
+                else
+                    return false;
+        }
+
+        return false;
+    }
+
+    //次に選びたいキャラが選択されていないか
+    private bool IsNextCharaNotSelect(byte playerNum, Direction dir,int plusNum)
+    {
+        switch (dir)
+        {
+            case Direction.RIGHT:
+                    return playerInfo[playerNum].num + (plusNum - 1) < 3 && lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num + plusNum) - 1].GetComponent<CharaSelectOutlineInfo>().SetSelect(playerNum, playerInfo[playerNum].selectColor); 
+            case Direction.LEFT:
+                    return playerInfo[playerNum].num - (plusNum - 1) > 1 && lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num - plusNum) - 1].GetComponent<CharaSelectOutlineInfo>().SetSelect(playerNum, playerInfo[playerNum].selectColor);
+            case Direction.DOWN:
+                    return lineCharaTable[(byte)(playerInfo[playerNum].line + plusNum)][(playerInfo[playerNum].num - 1)].GetComponent<CharaSelectOutlineInfo>().SetSelect(playerNum, playerInfo[playerNum].selectColor);
+            case Direction.UP:
+                    return lineCharaTable[(byte)(playerInfo[playerNum].line - plusNum)][(playerInfo[playerNum].num - 1)].GetComponent<CharaSelectOutlineInfo>().SetSelect(playerNum, playerInfo[playerNum].selectColor);
+        }
+
+        return false;
+    }
+
+    //キャラ決定
+    private void CharaDecide(byte playerNum)
+    {
+
     }
 }
