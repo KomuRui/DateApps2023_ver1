@@ -12,11 +12,13 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     public CharaSelectManager.LineNum line; //©•ª‚ª‚Ç‚Ìƒ‰ƒCƒ“‚©
     public int num;                         //‰½”Ô–Ú‚©
     private Vector3 initialRotate;          //‰Šú‰ñ“]
+    public GameObject marubatu;             //~
 
     // Start is called before the first frame update
     void Start()
     {
         initialRotate = transform.localEulerAngles;
+        marubatu.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -59,6 +61,14 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     //‘I‘ğ
     public void Select()
     {
-        this.transform.DORotate(new Vector3(initialRotate.x, initialRotate.y + 360.0f, initialRotate.z), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
+        this.transform.DORotate(new Vector3(initialRotate.x, initialRotate.y + 360.0f, initialRotate.z), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack).OnComplete(() => marubatu.gameObject.SetActive(true));
+    }
+
+    //‰ğœ
+    public void Release()
+    {
+        marubatu.gameObject.SetActive(false);
+        this.transform.DORotate(new Vector3(initialRotate.x, initialRotate.y + 360.0f, initialRotate.z), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.OutBack);
+
     }
 }
