@@ -27,8 +27,11 @@ public class ReachExtenderOnePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    //[SerializeField] private GameObject firstMagicHand;
 
     private Transform mainCameraTransform; // メインカメラのTransform
+
+    private bool isMoving = false;
 
     void Start()
     {
@@ -47,11 +50,14 @@ public class ReachExtenderOnePlayer : MonoBehaviour
 
     void Update()
     {
+
+        //動いていたら
+        if (isMoving) return;
+
+        Action();
+
         //動き
         Move();
-
-        //ジャンプ
-        Jump();
 
         //状態更新
         StateUpdata();
@@ -163,5 +169,23 @@ public class ReachExtenderOnePlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    public void SetIsMoving(bool a)
+    {
+        isMoving = a;
+    }
+
+    public bool GetIsMoving()
+    {
+        return isMoving;
+    }
+
+    public void Action()
+    {
+        //Aボタンが押されてないのならこの先処理しない
+        if (!Input.GetButtonDown("Abutton" + +this.GetComponent<PlayerNum>().playerNum)) return;
+
+        SetIsMoving(true);
     }
 }

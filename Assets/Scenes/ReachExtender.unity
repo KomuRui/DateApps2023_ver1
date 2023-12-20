@@ -3147,9 +3147,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1873743737}
-    - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1873743738}
     - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
       insertIndex: -1
@@ -3160,6 +3157,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1873743741}
+    - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1873743737}
+    - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1873743742}
   m_SourcePrefab: {fileID: 100100000, guid: 31b477e177276454fb155279c175a2a2, type: 3}
 --- !u!4 &1873743735 stripped
 Transform:
@@ -3178,7 +3181,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873743736}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1eaa7226b529714785569666d05e213, type: 3}
   m_Name: 
@@ -3282,6 +3285,33 @@ CapsuleCollider:
   m_Height: 0.91
   m_Direction: 1
   m_Center: {x: 0, y: 0.39, z: 0}
+--- !u!114 &1873743742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873743736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff66367e410722459375e43b1dcba74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
+  SmileBody: {fileID: 124332063}
+  currentState: 0
+  animator: {fileID: 1873743738}
+  damType: 0
+  moveSpeed: 5
+  rotationSpeed: 180
+  isHorizontalInput: 1
+  isVerticalInput: 1
+  isAnimIdle: 1
+  isAnimWalk: 0
+  isAnimJump: 0
+  isAnimAttack: 1
+  isAnimDamage: 1
+  playerNum: 0
 --- !u!1 &1905979748
 GameObject:
   m_ObjectHideFlags: 0
@@ -3780,7 +3810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413203584081932041, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 2413203584081932041, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3788,7 +3818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413203584081932041, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 2413203584081932041, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalRotation.w

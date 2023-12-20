@@ -221,7 +221,12 @@ public class CharaSelectManager : MonoBehaviour
     private void CharaUnlock(byte playerNum)
     {
         //‰ğœ
-        if(Input.GetButtonDown("Bbutton" + playerNum) && playerInfo[playerNum].isSelect)
+        if (Input.GetButtonDown("Bbutton" + playerNum) && playerInfo[playerNum].isSelect)
+        {
             playerInfo[playerNum].isSelect = false;
+
+            //‰ğœ‚µ‚½ƒLƒƒƒ‰‚ğ“®‚©‚·
+            playerInfo[playerNum].charaSelectOutlineInfo.Release();
+        }
     }
 }
