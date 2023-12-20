@@ -15,23 +15,18 @@ public class MagicHandIsHit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "Stage")
         {
             isHit = true;
         }
-    }
-
-    void OnTriggerEixt(Collider other)
-    {
-        if(other.tag == "Stage")
+        else
         {
             isHit = false;
         }
-       
     }
+
 }

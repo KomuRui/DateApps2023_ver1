@@ -22,7 +22,9 @@ public class MagicHand : MonoBehaviour
     private int maxRefrect = 1; 
 
     private Vector3 defScale;
-    private float speed = 0.002f;
+    private float speed = 0.008f;
+
+    public bool isFinish = false;
 
 
     void Start()
@@ -36,27 +38,24 @@ public class MagicHand : MonoBehaviour
         //一回大きくなりきったら処理をしない
         if (transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
+            isFinish = false;
+
             //伸びる
             Extend();
 
             //ステージに当たったら反射の処理
             if (myArmParentTop.GetComponent<MagicHandIsHit>() == null || !myArmParentTop.GetComponent<MagicHandIsHit>().isHit) return;
 
+            bigMax = true;
+
             //反射回数が一定に達していなかったら
             if (magicHandNum < maxRefrect)
-            {
-                BigMax();
-            }
-            else
-            {
-                bigMax = true;
-            }
+                Refrect();
         }
     }
 
-    public void BigMax()
+    public void Refrect()
     {
-        bigMax = true;
         if (nextArmParent != null)
         {
             //レイが当たった時情報
@@ -101,16 +100,27 @@ public class MagicHand : MonoBehaviour
     //戻る処理
     public void Return()
     {
+        myArmParentTop.GetComponent<MagicHandIsHit>().isHit = false;
+
         bigMax = true;
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - speed);
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - speed * 1.5f);
 
         if (defScale.z >= transform.localScale.z)
         {
             bigMax = false;
             transform.localScale = defScale;
 
-            if (nextArmParent == null) return;
-            this.gameObject.SetActive(false);
+            //つぎのアームがあるなら消さない
+            if (nextArmParent != null)
+            {
+                transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().SetIsMoving(false);
+                isFinish = true;
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+                isFinish = true;
+            }
         }
     }
 }

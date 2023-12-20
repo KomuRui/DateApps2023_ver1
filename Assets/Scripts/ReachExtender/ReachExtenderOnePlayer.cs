@@ -184,7 +184,7 @@ public class ReachExtenderOnePlayer : MonoBehaviour
     public void Action()
     {
         //Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢‚Ì‚È‚ç‚±‚Ìæˆ—‚µ‚È‚¢
-        if (!Input.GetButtonDown("Abutton" + +this.GetComponent<PlayerNum>().playerNum)) return;
+        if (!Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum)) return;
 
         SetIsMoving(true);
     }
