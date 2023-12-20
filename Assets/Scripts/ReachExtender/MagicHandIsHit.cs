@@ -20,7 +20,7 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Stage")
         {
             isHit = true;
         }
@@ -28,7 +28,7 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerEixt(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Stage")
         {
             isHit = false;
         }
