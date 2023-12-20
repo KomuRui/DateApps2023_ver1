@@ -29,7 +29,7 @@ public class CharaSelectManager : MonoBehaviour
     {
         public Color selectColor;                             //選択色
         public CharaSelectOutlineInfo charaSelectOutlineInfo; //キャラ選択アウトライン情報
-        public Outline charaOutline;                          //キャラアウトライン
+        public GameObject barunn;                             //浮輪
         public LineNum line;                                  //どのラインか
         public int num;                                       //何番目か
         public bool isSelect;                                 //選択しているかどうか
@@ -49,7 +49,7 @@ public class CharaSelectManager : MonoBehaviour
     [SerializeField] private List<CharaSelectOutlineInfo> line3Chara;
     [SerializeField] private List<Color> playerColor;
     [SerializeField] private List<CharaSelectOutlineInfo> playerInitializOutlineInfo;
-    [SerializeField] private List<Outline> outline;
+    [SerializeField] private List<GameObject> playerUkiwa;
 
     private Dictionary<byte, List<CharaSelectOutlineInfo>> lineCharaTable = new Dictionary<byte, List<CharaSelectOutlineInfo>>();
     private Dictionary<byte, PlayerInfo> playerInfo = new Dictionary<byte, PlayerInfo>();
@@ -78,7 +78,7 @@ public class CharaSelectManager : MonoBehaviour
             info.isSelect = false;
             info.selectColor = playerColor[i];
             info.charaSelectOutlineInfo = playerInitializOutlineInfo[i];
-            info.charaOutline = outline[i];
+            info.barunn = playerUkiwa[i];
             info.line = info.charaSelectOutlineInfo.line;
             info.num = info.charaSelectOutlineInfo.num;
             info.charaSelectOutlineInfo.SetSelect((byte)(i + 1), playerColor[i]);
@@ -110,7 +110,7 @@ public class CharaSelectManager : MonoBehaviour
     private void CharaChange(byte playerNum)
     {
         //選択しているのなら
-        if (playerInfo[playerNum].isSelect) return;
+        if (playerInfo[playerNum].isSelect || playerInfo[playerNum].charaSelectOutlineInfo.isAnimation) return;
 
         //キャラ選択の移動
         foreach(var dir in Enum.GetValues(typeof(Direction)).Cast<Direction>())
@@ -135,22 +135,22 @@ public class CharaSelectManager : MonoBehaviour
         switch(dir)
         {
             case Direction.RIGHT:
-                if (inputXY[playerNum].beforeInputX <= 0.75 && inputXY[playerNum].nowInputX >= 0.8)
+                if (inputXY[playerNum].beforeInputX <= 0.799 && inputXY[playerNum].nowInputX >= 0.8)
                     return true;
                 else
                     return false;
             case Direction.LEFT:
-                if (inputXY[playerNum].beforeInputX >= -0.75 && inputXY[playerNum].nowInputX <= -0.8)
+                if (inputXY[playerNum].beforeInputX >= -0.799 && inputXY[playerNum].nowInputX <= -0.8)
                     return true;
                 else
                     return false;
             case Direction.DOWN:
-                if (inputXY[playerNum].beforeInputY <= 0.75 && inputXY[playerNum].nowInputY >= 0.8)
+                if (inputXY[playerNum].beforeInputY <= 0.799 && inputXY[playerNum].nowInputY >= 0.8)
                     return true;
                 else
                     return false;
             case Direction.UP:
-                if (inputXY[playerNum].beforeInputY >= -0.75 && inputXY[playerNum].nowInputY <= -0.8)
+                if (inputXY[playerNum].beforeInputY >= -0.799 && inputXY[playerNum].nowInputY <= -0.8)
                     return true;
                 else
                     return false;
@@ -201,13 +201,18 @@ public class CharaSelectManager : MonoBehaviour
 
         //スクリプト更新
         playerInfo[playerNum].charaSelectOutlineInfo = lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num) - 1].GetComponent<CharaSelectOutlineInfo>();
+
+        //プレイヤーポジション
+        Vector3 playerPos = lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num) - 1].transform.position;
+        playerInfo[playerNum].barunn.transform.parent = lineCharaTable[(byte)playerInfo[playerNum].line][(playerInfo[playerNum].num) - 1].transform;
+        playerInfo[playerNum].barunn.transform.position = new Vector3(playerPos.x, playerInfo[playerNum].barunn.transform.position.y, playerPos.z); 
     }
 
     //キャラ決定
     private void CharaDecide(byte playerNum)
     {
         //決定
-        if (Input.GetButtonDown("Abutton" + playerNum) && !playerInfo[playerNum].isSelect)
+        if (Input.GetButtonDown("Abutton" + playerNum) && !playerInfo[playerNum].isSelect && !playerInfo[playerNum].charaSelectOutlineInfo.isAnimation)
         {
             playerInfo[playerNum].isSelect = true;
 
@@ -221,7 +226,7 @@ public class CharaSelectManager : MonoBehaviour
     private void CharaUnlock(byte playerNum)
     {
         //解除
-        if (Input.GetButtonDown("Bbutton" + playerNum) && playerInfo[playerNum].isSelect)
+        if (Input.GetButtonDown("Bbutton" + playerNum) && playerInfo[playerNum].isSelect && !playerInfo[playerNum].charaSelectOutlineInfo.isAnimation)
         {
             playerInfo[playerNum].isSelect = false;
 
