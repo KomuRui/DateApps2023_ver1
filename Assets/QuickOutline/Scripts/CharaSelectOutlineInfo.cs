@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class CharaSelectOutlineInfo : MonoBehaviour
 {
 
     public Animator animator;
+    public Sprite playerImage;        //プレイヤー画像
     private bool isSelect = false;     //選択されているかどうか
     public bool isAnimation = false;   //アニメーション中かどうか
     private byte selectPlayerNum = 0;  //選択しているプレイヤーの番号
@@ -27,14 +29,14 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //選択する
     //bool : 選択できたかどうか
-    public bool SetSelect(byte playerNum,Color outlineColor)
+    public bool SetSelect(byte playerNum, Color outlineColor)
     {
-        if (isSelect) 
+        if (isSelect)
             return false;
         else
         {
