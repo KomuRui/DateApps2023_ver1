@@ -313,7 +313,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &106360440
 GameObject:
@@ -917,6 +917,10 @@ PrefabInstance:
     - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
       propertyPath: m_Name
       value: FantasyHammer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2294,7 +2298,7 @@ Transform:
   m_Children:
   - {fileID: 58222793}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &511064934
 GameObject:
@@ -2310,7 +2314,7 @@ GameObject:
   - component: {fileID: 511064936}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Hammer
+  m_TagString: PlayerHammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2793,7 +2797,7 @@ Transform:
   m_Children:
   - {fileID: 1757166872}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &675263357
 GameObject:
@@ -2809,7 +2813,7 @@ GameObject:
   - component: {fileID: 675263359}
   m_Layer: 0
   m_Name: RightHammer
-  m_TagString: PlayerHammer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2982,6 +2986,10 @@ PrefabInstance:
     - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
       propertyPath: m_Name
       value: FantasyHammer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3928,7 +3936,7 @@ Transform:
   - {fileID: 1288145873}
   - {fileID: 1396322024}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &846418195
 PrefabInstance:
@@ -6393,7 +6401,7 @@ GameObject:
   - component: {fileID: 1459074729}
   m_Layer: 0
   m_Name: RightHammer
-  m_TagString: PlayerHammer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6516,7 +6524,7 @@ Transform:
   m_Children:
   - {fileID: 1230694475}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1517783386
 PrefabInstance:
@@ -7300,7 +7308,7 @@ Transform:
   - {fileID: 1091160687}
   - {fileID: 1459074732}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1647448036
 MonoBehaviour:
@@ -7504,7 +7512,7 @@ GameObject:
   - component: {fileID: 1671005658}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Hammer
+  m_TagString: PlayerHammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7953,7 +7961,7 @@ GameObject:
   - component: {fileID: 1714647866}
   m_Layer: 0
   m_Name: RightHammer
-  m_TagString: PlayerHammer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8645,7 +8653,7 @@ Transform:
   m_Children:
   - {fileID: 685545669}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1831453146
 GameObject:
@@ -9470,7 +9478,7 @@ GameObject:
   - component: {fileID: 1947165545}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Hammer
+  m_TagString: PlayerHammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9595,7 +9603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 1904361917}
   countDownText: {fileID: 2032194999}
-  time: 30
+  time: 300
   isfinish: 0
 --- !u!114 &1952637008
 MonoBehaviour:
@@ -9622,7 +9630,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1952637010
 MonoBehaviour:
@@ -10674,6 +10682,10 @@ PrefabInstance:
     - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
       propertyPath: m_Name
       value: FantasyHammer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455623346597643306, guid: 31521c72e48cd614b8345d4efca04c11, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

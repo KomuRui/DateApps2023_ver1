@@ -47,8 +47,8 @@ public class FlagUpGameManager : MiniGameManager
     [SerializeField] private int firstHalfFlagUpMax;              //前半の旗上げ回数
     [SerializeField] private int secondHalfFlagUpMax;             //後半の旗上げ回数
     [SerializeField] private SETable se;                          //SE
-    [SerializeField] private TextMeshProUGUI roundText;       //ラウンドテキスト
-    [SerializeField] private TextMeshProUGUI finishText;       //ラウンドテキスト
+    [SerializeField] private TextMeshProUGUI roundText;           //ラウンドテキスト
+    [SerializeField] private TextMeshProUGUI roundTextTutorial;   //ラウンドテキスト(チュートリアル)
     [SerializeField] public int[] oneFlagState;    // 旗状態
     [SerializeField] public Dictionary<byte,int> rankInfo = new Dictionary<byte, int>(); //ランク情報(プレイヤー番号、どのくらい生きたか)
     [SerializeField] public int nowFlagUp;                 //どのくらいの回数旗上げしたか
@@ -73,6 +73,16 @@ public class FlagUpGameManager : MiniGameManager
         {
             oneFlagState[i] = 0;
         }
+
+        //チュートリアルが終わっているのなら
+        if (TutorialManager.isTutorialFinish)
+        {
+            //有効と無効切り替え
+            roundText.gameObject.SetActive(true);
+            roundTextTutorial.gameObject.SetActive(false);
+        }
+        else
+            roundText = roundTextTutorial;
 
         //ラウンド情報の初期化
         RoundInfo firstHalf = new RoundInfo();
@@ -199,7 +209,7 @@ public class FlagUpGameManager : MiniGameManager
                 SetMiniGameFinish();
             }
 
-            roundText.text = ((int)nowRound).ToString();
+            roundText.text = ((int)nowRound).ToString() + "/5";
 
         }
 

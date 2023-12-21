@@ -7,6 +7,8 @@ public class GimmickButton : MonoBehaviour
 
     [SerializeField] GimmickBase targetGimmick;
 
+    private bool isHit = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +18,17 @@ public class GimmickButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Abutton1") && isHit)
+            targetGimmick.SetIsInput(true);
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetButtonDown("Abutton1"))
-            targetGimmick.SetIsInput(true);
+        isHit = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        isHit = false;
     }
 }

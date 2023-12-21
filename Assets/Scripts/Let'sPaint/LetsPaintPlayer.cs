@@ -52,6 +52,17 @@ public class LetsPaintPlayer : MonoBehaviour
         //リジットボディ取得
         rBody = this.GetComponent<Rigidbody>();
 
+        //レンダリングモード変える
+        Material material = this.GetComponent<MeshRenderer>().material;
+        material.SetOverrideTag("RenderType", "");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 2000;
+
     }
 
     // Update is called once per frame

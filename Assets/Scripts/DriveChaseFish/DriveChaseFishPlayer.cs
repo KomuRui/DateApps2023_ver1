@@ -27,7 +27,9 @@ public class DriveChaseFishPlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    [SerializeField] private bool isOnePlayer;                // 1人側プレイやーかどうか
 
+    public bool isMove = true; //動けるかどうか
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -66,7 +68,7 @@ public class DriveChaseFishPlayer : MonoBehaviour
     private void Move()
     {
         //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || !isMove) return;
 
         // 入力を取得用
         float horizontalInput = 0;
@@ -93,7 +95,13 @@ public class DriveChaseFishPlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        //rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        if(isOnePlayer)
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.2f, 9.2f),transform.position.y,Mathf.Clamp(transform.position.z, -4.5f, 4.5f));
+        else
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -12.8f, 13.2f),transform.position.y,Mathf.Clamp(transform.position.z, -9.0f, 9.0f));
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -158,10 +166,6 @@ public class DriveChaseFishPlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
-    }
-
-    void OnTriggerEnter(Collider collision)
-    {
     }
 
 }

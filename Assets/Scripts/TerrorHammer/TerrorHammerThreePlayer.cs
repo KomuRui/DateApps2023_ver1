@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class TerrorHammerThreePlayer : MonoBehaviour
 {
-
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
@@ -22,6 +21,8 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     private Vector3 initializeRotate;
     private Vector3 AttackRotate;
     private bool isAttack;
+    private bool isSuper;
+    
 
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
@@ -38,15 +39,16 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         rBody = this.GetComponent<Rigidbody>();
 
         //初期
-        initializeRotate = new Vector3(90, 0, 0);
-        AttackRotate = new Vector3(0, 0, 0);
+        initializeRotate = new Vector3(90, 0, 180);
+        AttackRotate = new Vector3(0, 0, 180);
         isAttack = true;
+        isSuper = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1)
+        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1 && this.transform.localScale.y > 0.5f)
             //動き
             Move();
 
@@ -66,28 +68,21 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             Debug.Log(point);
         }
 
-
         //攻撃
         if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
         {
             isAttack = false;
-            //HammerOb.transform.DORotate(initializeRotate, 0.1f);
-            //HammerOb.transform.DORotate(AttackRotate, 0.5f);
-            HammerOb.transform.DORotate(AttackRotate, 0.5f).SetEase(Ease.InBack);
+            HammerOb.transform.DORotate(new Vector3 (AttackRotate.x,-this.transform.localEulerAngles.y, -AttackRotate.z ), 0.5f).SetEase(Ease.InBack);
 
             //1.5秒後にあげる
             Invoke("HammerUp", 0.5f);
             Invoke("HammerAttack", 2.0f);
-
         }
-
-        
     }
 
     //移動
     private void Move()
     {
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -103,9 +98,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             //ChangeStateTo(SlimeAnimationState.Idle);
             return;
         }
-
         
-
         // カメラの向きを基準にプレイヤーを移動
         Vector3 forwardDirection = mainCameraTransform.forward;
         Vector3 rightDirection = mainCameraTransform.right;
@@ -117,17 +110,13 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         // 移動
         rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
 
-        
-
-        //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
-
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
     }
 
     public void HammerUp()
     {
-        HammerOb.transform.DORotate(initializeRotate, 0.5f).SetEase(Ease.InQuad);
+        HammerOb.transform.DORotate(new Vector3 (initializeRotate.x,-this.transform.localEulerAngles.y, initializeRotate.z/* + this.transform.rotation.z*/), 0.5f).SetEase(Ease.InQuad);
     }
 
     public void HammerAttack()
@@ -137,15 +126,24 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Hammer")
+        if (collision.gameObject.tag == "PlayerHammer"/* && isSuper == false*/)
         {
-            Debug.Log("当たった!");
-            // ミニゲームに死んだことを伝える
-            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
-            GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(1).GetComponent<PlayerNum>().playerNum);
+            Debug.Log("つぶれた!");
 
-            //オブジェクトを削除
-            Destroy(this.gameObject);
+            this.transform.localScale = new Vector3(1, 0.3f, 1);
+            isSuper = true;
+            Invoke("MovePlayer", 2f);
+            Invoke("WeakPlayer", 3f);
         }
+    }
+
+    void WeakPlayer()
+    {
+        isSuper = false;
+    }
+
+    void MovePlayer()
+    {
+        this.transform.localScale = new Vector3(1, 1, 1);
     }
 }

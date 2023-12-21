@@ -67,12 +67,12 @@ public class ThreePlayer : MonoBehaviour
         }
         else
         {
-            a++;
-            if (a > 10)
-            {
-                isBound = false;
-                a = 0;
-            }
+            //a++;
+            //if (a > 10)
+            //{
+            //    isBound = false;
+            //    a = 0;
+            //}
 
         }
             //à⁄ìÆêßå¿ÅH
@@ -207,16 +207,16 @@ public class ThreePlayer : MonoBehaviour
         }
         else
         {
-            Rigidbody otherRb = collision.gameObject.GetComponent<Rigidbody>();
+            //Rigidbody otherRb = collision.gameObject.GetComponent<Rigidbody>();
 
-            if(otherRb != null)
-            {
-                Vector3 knockbackForce = -otherRb.velocity * 50.0f;
+            //if(otherRb != null)
+            //{
+            //    Vector3 knockbackForce = -otherRb.velocity * 50.0f;
 
-                otherRb.AddForce(knockbackForce);
-            }
+            //    otherRb.AddForce(knockbackForce);
+            //}
         }
-        isBound = true;
+        //isBound = true;
     }
 
 

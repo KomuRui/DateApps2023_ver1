@@ -50,7 +50,7 @@ public class StageSelect : MonoBehaviour
             return;
         }
 
-        //fade.FadeOut(fadeTime);
+        fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
 
         //順位テキスト表示

@@ -8,7 +8,6 @@ using System.Linq;
 public class LetsPaintGameManager : MiniGameManager
 {
     [SerializeField] private PaintTarget target;
-    [SerializeField] private TextMeshProUGUI[] playerPercentText; //パーセント
 
     private int[] playerPercent;
 
@@ -23,8 +22,6 @@ public class LetsPaintGameManager : MiniGameManager
     private void playerPercentCalc()
     {
         playerPercent = target.GetPercent(target);
-        for (int i = 0; i < playerPercentText.Length; i++)
-            playerPercentText[i].SetText(playerPercent[i].ToString() + "%");
     }
 
     //ゲーム終了時に呼ばれる
