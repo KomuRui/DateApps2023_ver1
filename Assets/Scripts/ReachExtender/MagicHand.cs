@@ -9,63 +9,118 @@ public class MagicHand : MonoBehaviour
     //[SerializeField] private GameObject onePlayer;
     // Start is called before the first frame update
 
-    private bool bigMax = false;        //マジックハンドが伸びきったかどうか
+    public bool bigMax = false;        //マジックハンドが伸びきったかどうか
+    private bool isReverse = false;       //マジックハンドが戻っているかどうか
+
     [SerializeField] private GameObject nextArmParent;
     [SerializeField] private GameObject nextArmParentTop;
     [SerializeField] private GameObject myArmParentTop;
+    [SerializeField] ArmHierarchy armHierarchy;
+
+    private GameObject preArm; // 前に伸びてたアーム
+    private int magicHandNum = 0;
+    private int maxRefrect = 1; 
+
+    private Vector3 defScale;
+    private float speed = 0.008f;
+
+    public bool isFinish = false;
 
 
     void Start()
     {
-        //1秒後に伸びきる
-        //Invoke("BigMax", 5f);
-
-        if (nextArmParentTop != null)
-        {
-            transform.position = nextArmParentTop.transform.position;
-        }
-
-        //例が当たった時情報
-        RaycastHit rayHit;
-
-        //レイを飛ばす方向
-        Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
-
-        //レイを飛ばす方向
-        Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
-
-        //レイを飛ばす
-        Debug.DrawRay(transform.position, ray * 9999999, Color.red, 30);
-        if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
-        {
-            Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
-
-            Debug.DrawRay(rayHit.point, refrect * 9999999, Color.red, 30);
-        }
+        defScale = transform.localScale;
     }
     
     // Update is called once per frame
     void Update()
     {
-        if (!bigMax)
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.001f, transform.localScale.z );
-        //rayHit.normal;
-
-        if(myArmParentTop.GetComponent<MagicHandIsHit>().isHit)
+        //一回大きくなりきったら処理をしない
+        if (transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
-            BigMax();
+            isFinish = false;
+
+            //伸びる
+            Extend();
+
+            //ステージに当たったら反射の処理
+            if (myArmParentTop.GetComponent<MagicHandIsHit>() == null || !myArmParentTop.GetComponent<MagicHandIsHit>().isHit) return;
+
+            bigMax = true;
+
+            //反射回数が一定に達していなかったら
+            if (magicHandNum < maxRefrect)
+                Refrect();
         }
     }
 
-    public void BigMax()
+    public void Refrect()
     {
-        bigMax = true;
-        if(nextArmParent != null)
+        if (nextArmParent != null)
         {
-            Vector3 ray = transform.parent.gameObject.transform.position - myArmParentTop.gameObject.transform.position;
-            //Debug.DrawRay(transform.position, ray, )
-            //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き), RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
+            //レイが当たった時情報
+            RaycastHit rayHit;
+
+            //レイを飛ばす方向
+            Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
+
+            //レイを飛ばす方向
+            Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
+
+            //レイを飛ばす
+            if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
+            {
+                //反射ベクトルを作成
+                Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
+
+                //位置を設定
+                nextArmParent.transform.position = rayHit.point;
+
+                //向きを設定
+                nextArmParent.transform.LookAt(refrect);
+            }
+
+            //反射回数をカウント
+            nextArmParent.GetComponent<MagicHand>().SetMagicHandNum(magicHandNum + 1);
             nextArmParent.SetActive(true);
+        }
+    }
+
+    public void SetMagicHandNum(int num)
+    {
+        magicHandNum = num;
+    }
+
+    //伸びる処理
+    public void Extend()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed);
+    }
+
+    //戻る処理
+    public void Return()
+    {
+        myArmParentTop.GetComponent<MagicHandIsHit>().isHit = false;
+
+        bigMax = true;
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - speed * 1.5f);
+
+        if (defScale.z >= transform.localScale.z)
+        {
+            bigMax = false;
+            transform.localScale = defScale;
+
+            //つぎのアームがあるなら消さない
+            if (nextArmParent != null)
+            {
+                transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().SetIsMoving(false);
+                isFinish = true;
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+                isFinish = true;
+            }
         }
     }
 }
