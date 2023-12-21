@@ -27,6 +27,7 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
+    private bool isMoving = false;
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -47,11 +48,11 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     void Update()
     {
+        //動いていたら
+        if (isMoving) return;
+
         //動き
         Move();
-
-        //ジャンプ
-        Jump();
 
         //状態更新
         StateUpdata();
@@ -163,5 +164,20 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    public void SetIsMoving(bool a)
+    {
+        isMoving = a;
+    }
+
+    public bool GetIsMoving()
+    {
+        return isMoving;
+    }
+
+    public void Action()
+    {
+        SetIsMoving(true);
     }
 }
