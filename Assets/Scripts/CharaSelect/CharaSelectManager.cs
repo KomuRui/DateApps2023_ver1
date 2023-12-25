@@ -46,6 +46,10 @@ public class CharaSelectManager : MonoBehaviour
         public float beforeInputY;
     }
 
+    //フェード
+    [SerializeField] private Fade fade;
+
+    //Playerに必要な情報
     [SerializeField] private List<CharaSelectOutlineInfo> line1Chara;
     [SerializeField] private List<CharaSelectOutlineInfo> line2Chara;
     [SerializeField] private List<CharaSelectOutlineInfo> line3Chara;
@@ -53,7 +57,9 @@ public class CharaSelectManager : MonoBehaviour
     [SerializeField] private List<CharaSelectOutlineInfo> playerInitializOutlineInfo;
     [SerializeField] private List<GameObject> playerUkiwa;
     [SerializeField] private List<Image> playerImage;
+    [SerializeField] private List<GameObject> playerOKImage;
 
+    //情報保管しているところ
     private Dictionary<byte, List<CharaSelectOutlineInfo>> lineCharaTable = new Dictionary<byte, List<CharaSelectOutlineInfo>>();
     private Dictionary<byte, PlayerInfo> playerInfo = new Dictionary<byte, PlayerInfo>();
     private Dictionary<byte, InputInfo> inputXY = new Dictionary<byte, InputInfo>();
@@ -88,6 +94,10 @@ public class CharaSelectManager : MonoBehaviour
             info.charaSelectOutlineInfo.SetSelect((byte)(i + 1), playerColor[i]);
             playerInfo[(byte)(i + 1)] = info;
         }
+
+        //フェードが情報あるのなら
+        if (fade)
+            fade.FadeOut(1.0f);
     }
 
     // Update is called once per frame
@@ -108,6 +118,9 @@ public class CharaSelectManager : MonoBehaviour
             inputXY[i].beforeInputX = inputXY[i].nowInputX;
             inputXY[i].beforeInputY = inputXY[i].nowInputY;
         }
+
+        //もし全員準備できたのならフェードイン
+        if(isAllPlayerOK()) fade.FadeIn(1.0f);
     }
 
     //キャラ変更
@@ -225,6 +238,9 @@ public class CharaSelectManager : MonoBehaviour
 
             //決定したキャラを動かす
             playerInfo[playerNum].charaSelectOutlineInfo.Select();
+
+            //OK画像を表示
+            playerOKImage[playerNum - 1].SetActive(true);
         }
 
     }
@@ -239,6 +255,21 @@ public class CharaSelectManager : MonoBehaviour
 
             //解除したキャラを動かす
             playerInfo[playerNum].charaSelectOutlineInfo.Release();
+
+            //OK画像を非表示
+            playerOKImage[playerNum - 1].SetActive(false);
         }
+    }
+
+    //全員準備できたか確認
+    private bool isAllPlayerOK()
+    {
+        for(byte i = 1; i < PlayerManager.PLAYER_MAX; i++)
+        {
+            //選択していないかアニメーションの最中ならfalseを返す
+            if (!playerInfo[i].isSelect || playerInfo[i].charaSelectOutlineInfo.isAnimation) return false;
+        }
+
+        return true;
     }
 }
