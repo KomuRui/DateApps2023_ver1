@@ -39,6 +39,7 @@ public class SubModeSelectManager : MonoBehaviour
             //プレイヤーの初期選択画像を初期化
             playerSelectImage[(byte)(i + 1)] = playerInitializSelectImafe[i];
             playerSelectImage[(byte)(i + 1)].playerSelectMyNum.Add((byte)(i + 1));
+            playerSelectImage[(byte)(i + 1)].ImageColorChange();
         }
     }
 
@@ -53,7 +54,15 @@ public class SubModeSelectManager : MonoBehaviour
 
             //変更ができたかチェック
             SubModeImageInfo info = playerSelectImage[i].SelectImageChange(i, inputXY);
-            if (info) playerSelectImage[i] = info;
+            if (info)
+            {
+                //変更できたのなら各画像の情報を変更
+                playerSelectImage[i].playerSelectMyNum.Remove(i);
+                info.playerSelectMyNum.Add(i);
+                playerSelectImage[i].ImageColorChange();
+                info.ImageColorChange();
+                playerSelectImage[i] = info;
+            }
 
             //今回の入力値を保存
             inputXY[i].beforeInputX = inputXY[i].nowInputX;

@@ -22,28 +22,17 @@ public class SubModeImageInfo : MonoBehaviour
     [SerializeField] private SubModeImageInfo downImage;    //下側の画像
     [SerializeField] private List<Image> edgeImage;         //枠の画像
     [SerializeField] private List<Image> playerNumberImage; //プレイヤー番号の画像
+    [SerializeField] private SubModeSelectManager mana;     //プレイヤー番号の画像
 
     //どの方向に選択画像があるか
     private Dictionary<Direction, SubModeImageInfo> dirSelectImage = new Dictionary<Direction, SubModeImageInfo>();
 
     //何人のプレイヤーから選択されているか
-    public List<byte> playerSelectMyNum;
+    public List<byte> playerSelectMyNum = new List<byte>();
 
     // Start is called before the first frame update
     void Start()
     {
-
-        //枠の画像たちを透明に設定
-        for(int i = 0; i < edgeImage.Count; i++)
-        {
-            Color a = edgeImage[i].color;
-            Color b = playerNumberImage[i].color;
-            a.r = 0;
-            b.r = 0;
-            edgeImage[i].color = a;
-            playerNumberImage[i].color = b;
-        }
-
         //各方向の画像を設定
         dirSelectImage[Direction.RIGHT] = rightImage;
         dirSelectImage[Direction.LEFT] = leftImage;
@@ -101,6 +90,89 @@ public class SubModeImageInfo : MonoBehaviour
     //画像の色変更
     public void ImageColorChange()
     {
+
+        //初期カラー
+        Color alpha = Color.black;
+        alpha.a = 0;
+        Color[] color = { alpha, alpha, alpha, alpha };
+
+        //選んでいるプレイヤーの人数によってかえる
+        switch(playerSelectMyNum.Count)
+        {
+            case 0:
+
+                //プレイヤー番号の色を変える
+                playerNumberImage[0].color = alpha;
+                playerNumberImage[1].color = alpha;
+                playerNumberImage[2].color = alpha;
+                playerNumberImage[3].color = alpha;
+
+                break;
+            case 1:
+
+                //枠の色を決める
+                color[0] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[1] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[2] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[3] = mana.playerColor[playerSelectMyNum[0] - 1];
+
+                //プレイヤー番号の色を変える
+                playerNumberImage[0].color = color[0];
+                playerNumberImage[1].color = alpha;
+                playerNumberImage[2].color = alpha;
+                playerNumberImage[3].color = alpha;
+
+                break;
+            case 2:
+
+                //枠の色を決める
+                color[0] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[1] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[2] = mana.playerColor[playerSelectMyNum[1] - 1];
+                color[3] = mana.playerColor[playerSelectMyNum[1] - 1];
+
+                //プレイヤー番号の色を変える
+                playerNumberImage[0].color = color[0];
+                playerNumberImage[1].color = color[2];
+                playerNumberImage[2].color = alpha;
+                playerNumberImage[3].color = alpha;
+
+                break;
+            case 3:
+
+                //枠の色を決める
+                color[0] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[1] = mana.playerColor[playerSelectMyNum[1] - 1];
+                color[2] = mana.playerColor[playerSelectMyNum[1] - 1];
+                color[3] = mana.playerColor[playerSelectMyNum[2] - 1];
+
+                //プレイヤー番号の色を変える
+                playerNumberImage[0].color = color[0];
+                playerNumberImage[1].color = color[1];
+                playerNumberImage[2].color = color[3];
+                playerNumberImage[3].color = alpha;
+
+                break;
+            case 4:
+
+                //枠の色を決める
+                color[0] = mana.playerColor[playerSelectMyNum[0] - 1];
+                color[1] = mana.playerColor[playerSelectMyNum[1] - 1];
+                color[2] = mana.playerColor[playerSelectMyNum[2] - 1];
+                color[3] = mana.playerColor[playerSelectMyNum[3] - 1];
+
+                //プレイヤー番号の色を変える
+                playerNumberImage[0].color = color[0];
+                playerNumberImage[1].color = color[1];
+                playerNumberImage[2].color = color[2];
+                playerNumberImage[3].color = color[3];
+
+                break;
+        }
+
+        //枠の画像の色を設定
+        for (int i = 0; i < edgeImage.Count; i++)
+            edgeImage[i].color = color[i];
 
     }
 }
