@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SubModeSelectManager : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class SubModeSelectManager : MonoBehaviour
 
     //プレイヤーの色
     [SerializeField] public List<Color> playerColor;
+
+    //プレイヤーが選択している画像を大きく表示するやつ
+    [SerializeField] public List<Image> playerSelectImageBig;
 
     //情報保管しているところ
     private Dictionary<byte, SubModeImageInfo> playerSelectImage = new Dictionary<byte, SubModeImageInfo>();
@@ -40,6 +44,7 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImage[(byte)(i + 1)] = playerInitializSelectImafe[i];
             playerSelectImage[(byte)(i + 1)].playerSelectMyNum.Add((byte)(i + 1));
             playerSelectImage[(byte)(i + 1)].ImageColorChange();
+            playerSelectImageBig[i].sprite = playerInitializSelectImafe[i].GetComponent<Image>().sprite;
         }
     }
 
@@ -62,6 +67,9 @@ public class SubModeSelectManager : MonoBehaviour
                 playerSelectImage[i].ImageColorChange();
                 info.ImageColorChange();
                 playerSelectImage[i] = info;
+
+                //大きい画像も変更
+                playerSelectImageBig[i - 1].sprite = playerSelectImage[i].GetComponent<Image>().sprite;
             }
 
             //今回の入力値を保存
