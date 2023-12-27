@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class SubModeImageInfo : MonoBehaviour
 {
@@ -20,9 +22,10 @@ public class SubModeImageInfo : MonoBehaviour
     [SerializeField] private SubModeImageInfo rightImage;   //右側の画像
     [SerializeField] private SubModeImageInfo upImage;      //上側の画像
     [SerializeField] private SubModeImageInfo downImage;    //下側の画像
-    [SerializeField] private List<Image> edgeImage;         //枠の画像
-    [SerializeField] private List<Image> playerNumberImage; //プレイヤー番号の画像
-    [SerializeField] private SubModeSelectManager mana;     //プレイヤー番号の画像
+    [SerializeField] private List<UnityEngine.UI.Image> edgeImage;         //枠の画像
+    [SerializeField] private List<UnityEngine.UI.Image> playerNumberImage; //プレイヤー番号の画像
+    [SerializeField] private SubModeSelectManager mana;                    //プレイヤー番号の画像
+    [SerializeField] private List<TextMeshProUGUI> text;                   //プレイヤー番号の文字
 
     //どの方向に選択画像があるか
     private Dictionary<Direction, SubModeImageInfo> dirSelectImage = new Dictionary<Direction, SubModeImageInfo>();
@@ -107,6 +110,12 @@ public class SubModeImageInfo : MonoBehaviour
                 playerNumberImage[2].color = alpha;
                 playerNumberImage[3].color = alpha;
 
+                //文字変更
+                text[0].text = "";
+                text[1].text = "";
+                text[2].text = "";
+                text[3].text = "";
+
                 break;
             case 1:
 
@@ -115,6 +124,12 @@ public class SubModeImageInfo : MonoBehaviour
                 color[1] = mana.playerColor[playerSelectMyNum[0] - 1];
                 color[2] = mana.playerColor[playerSelectMyNum[0] - 1];
                 color[3] = mana.playerColor[playerSelectMyNum[0] - 1];
+
+                //文字変更
+                text[0].text = playerSelectMyNum[0].ToString() + "P";
+                text[1].text = "";
+                text[2].text = "";
+                text[3].text = "";
 
                 //プレイヤー番号の色を変える
                 playerNumberImage[0].color = color[0];
@@ -131,6 +146,12 @@ public class SubModeImageInfo : MonoBehaviour
                 color[2] = mana.playerColor[playerSelectMyNum[1] - 1];
                 color[3] = mana.playerColor[playerSelectMyNum[1] - 1];
 
+                //文字変更
+                text[0].text = playerSelectMyNum[0].ToString() + "P";
+                text[1].text = playerSelectMyNum[1].ToString() + "P";
+                text[2].text = "";
+                text[3].text = "";
+
                 //プレイヤー番号の色を変える
                 playerNumberImage[0].color = color[0];
                 playerNumberImage[1].color = color[2];
@@ -146,6 +167,12 @@ public class SubModeImageInfo : MonoBehaviour
                 color[2] = mana.playerColor[playerSelectMyNum[1] - 1];
                 color[3] = mana.playerColor[playerSelectMyNum[2] - 1];
 
+                //文字変更
+                text[0].text = playerSelectMyNum[0].ToString() + "P";
+                text[1].text = playerSelectMyNum[1].ToString() + "P";
+                text[2].text = playerSelectMyNum[2].ToString() + "P";
+                text[3].text = "";
+
                 //プレイヤー番号の色を変える
                 playerNumberImage[0].color = color[0];
                 playerNumberImage[1].color = color[1];
@@ -160,6 +187,12 @@ public class SubModeImageInfo : MonoBehaviour
                 color[1] = mana.playerColor[playerSelectMyNum[1] - 1];
                 color[2] = mana.playerColor[playerSelectMyNum[2] - 1];
                 color[3] = mana.playerColor[playerSelectMyNum[3] - 1];
+
+                //文字変更
+                text[0].text = playerSelectMyNum[0].ToString() + "P";
+                text[1].text = playerSelectMyNum[1].ToString() + "P";
+                text[2].text = playerSelectMyNum[2].ToString() + "P";
+                text[3].text = playerSelectMyNum[3].ToString() + "P";
 
                 //プレイヤー番号の色を変える
                 playerNumberImage[0].color = color[0];
