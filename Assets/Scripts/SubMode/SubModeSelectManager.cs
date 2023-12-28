@@ -16,34 +16,23 @@ public class SubModeSelectManager : MonoBehaviour
         public float beforeInputY;
     }
 
-    //画像
-    [SerializeField] private List<SubModeImageInfo> image;
-
-    //プレイヤーの初期選択画像
-    [SerializeField] private List<SubModeImageInfo> playerInitializSelectImafe;
-
-    //プレイヤーの色
-    [SerializeField] public List<Color> playerColor;
-
-    //プレイヤーが選択している画像を大きく表示するやつ
-    [SerializeField] public List<Image> playerSelectImageBig;
-
-    //ビッグ画像のアニメーション先の位置
-    [SerializeField] public List<Vector3> imageBigAnimationPos;
-
-    //プレイヤー画像
-    [SerializeField] public List<Image> playerImage;
-
-    //操作説明の文字
-    [SerializeField] private TextMeshProUGUI text;
-
-    //フェード用
-    [SerializeField] private Fade fade;                     
+    [SerializeField] private List<SubModeImageInfo> image;                       //画像
+    [SerializeField] private List<SubModeImageInfo> playerInitializSelectImafe;  //プレイヤーの初期選択画像   
+    [SerializeField] public List<Color> playerColor;                             //プレイヤーの色
+    [SerializeField] public List<Image> playerSelectImageBig;                    //プレイヤーが選択している画像を大きく表示するやつ   
+    [SerializeField] public List<Vector3> imageBigAnimationPos;                  //ビッグ画像のアニメーション先の位置   
+    [SerializeField] public List<Image> playerImage;                             //プレイヤー画像  
+    [SerializeField] private TextMeshProUGUI text;                               //操作説明の文字
+    [SerializeField] private TextMeshProUGUI whoText;                            //誰のテキスト
+    [SerializeField] private Fade fade;                                          //フェード用           
 
     //情報保管しているところ
     private Dictionary<byte, SubModeImageInfo> playerSelectImage = new Dictionary<byte, SubModeImageInfo>();
     private Dictionary<byte, InputInfo> inputXY = new Dictionary<byte, InputInfo>();
     private Dictionary<byte, bool> isPlayerSelect = new Dictionary<byte, bool>();
+
+    //全プレイヤーがOKしたか
+    private bool isAllPlayerOk;
 
     void Start()
     {
@@ -65,6 +54,8 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImageBig[i].sprite = playerInitializSelectImafe[i].GetComponent<Image>().sprite;
             isPlayerSelect[(byte)(i + 1)] = false;
         }
+
+        isAllPlayerOk = false;
 
         //フェードが情報あるのなら
         if (fade)
@@ -144,6 +135,8 @@ public class SubModeSelectManager : MonoBehaviour
             //全員OKしたら
             if (isAllPlayerOK())
             {
+                isAllPlayerOk = true;
+
                 //各自アニメーションする
                 ImageAnimation(); 
             }
@@ -155,7 +148,7 @@ public class SubModeSelectManager : MonoBehaviour
     private void SelectImageUnlock(byte playerNum)
     {
         //解除
-        if (Input.GetButtonDown("Bbutton" + playerNum) && isPlayerSelect[playerNum])
+        if (Input.GetButtonDown("Bbutton" + playerNum) && isPlayerSelect[playerNum] && !isAllPlayerOk)
         {
             isPlayerSelect[playerNum] = false;
 
@@ -185,13 +178,19 @@ public class SubModeSelectManager : MonoBehaviour
 
         for (int i = 0; i < playerSelectImageBig.Count; i++)
         {
+            //プレイヤーが選択した大きい画像
             playerSelectImageBig[i].transform.GetChild(2).gameObject.SetActive(false);
             playerSelectImageBig[i].transform.GetChild(3).gameObject.SetActive(false);
             playerSelectImageBig[i].transform.DOScale(playerSelectImageBig[i].transform.localScale * 1.0f,1.0f);
             playerSelectImageBig[i].transform.DOLocalMove(imageBigAnimationPos[i],1.0f).OnComplete(OKImageNotActive);
+
+            //プレイヤー画像
+            playerImage[i].transform.DOLocalMoveY(-435, 1.0f);
         }
 
+        //テキスト
         text.gameObject.SetActive(false);
+        whoText.transform.DOLocalMoveY(300, 1.0f);
     }
 
     //OK画像を非アクティブに
@@ -200,7 +199,6 @@ public class SubModeSelectManager : MonoBehaviour
         for (int i = 0; i < playerSelectImageBig.Count; i++)
         {
             //OK画像を非表示
-            //playerSelectImageBig[i].transform.GetChild(0).gameObject.SetActive(false);
             playerSelectImageBig[i].transform.GetChild(1).gameObject.SetActive(false);
         }
     }
