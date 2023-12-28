@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +27,12 @@ public class SubModeSelectManager : MonoBehaviour
 
     //プレイヤーが選択している画像を大きく表示するやつ
     [SerializeField] public List<Image> playerSelectImageBig;
+
+    //ビッグ画像のアニメーション先の位置
+    [SerializeField] public List<Vector3> imageBigAnimationPos;
+
+    //操作説明の文字
+    [SerializeField] private TextMeshProUGUI text;
 
     //フェード用
     [SerializeField] private Fade fade;                     
@@ -130,8 +138,12 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImageBig[playerNum - 1].transform.GetChild(0).gameObject.SetActive(true);
             playerSelectImageBig[playerNum - 1].transform.GetChild(1).gameObject.SetActive(true);
 
-            //全員OKしたら画面外に移動させる
-            if (isAllPlayerOK()) imageMoveScreenOut();
+            //全員OKしたら
+            if (isAllPlayerOK())
+            {
+                //各自アニメーションする
+                imageAnimation(); 
+            }
         }
 
     }
@@ -162,10 +174,20 @@ public class SubModeSelectManager : MonoBehaviour
         return true;
     }
 
-    //画像画面外に移動
-    private void imageMoveScreenOut()
+    //画像アニメーション
+    private void imageAnimation()
     {
         foreach (var i in image)
             i.ImageMoveScreenOut();
+
+        for (int i = 0; i < playerSelectImageBig.Count; i++)
+        {
+            playerSelectImageBig[i].transform.GetChild(2).gameObject.SetActive(false);
+            playerSelectImageBig[i].transform.GetChild(3).gameObject.SetActive(false);
+            playerSelectImageBig[i].transform.DOScale(playerSelectImageBig[i].transform.localScale * 1.8f,1.0f);
+            playerSelectImageBig[i].transform.DOLocalMove(imageBigAnimationPos[i],1.0f);
+        }
+
+        text.gameObject.SetActive(false);
     }
 }
