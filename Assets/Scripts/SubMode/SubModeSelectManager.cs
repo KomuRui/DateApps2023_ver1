@@ -31,6 +31,9 @@ public class SubModeSelectManager : MonoBehaviour
     //ビッグ画像のアニメーション先の位置
     [SerializeField] public List<Vector3> imageBigAnimationPos;
 
+    //プレイヤー画像
+    [SerializeField] public List<Image> playerImage;
+
     //操作説明の文字
     [SerializeField] private TextMeshProUGUI text;
 
@@ -142,7 +145,7 @@ public class SubModeSelectManager : MonoBehaviour
             if (isAllPlayerOK())
             {
                 //各自アニメーションする
-                imageAnimation(); 
+                ImageAnimation(); 
             }
         }
 
@@ -175,7 +178,7 @@ public class SubModeSelectManager : MonoBehaviour
     }
 
     //画像アニメーション
-    private void imageAnimation()
+    private void ImageAnimation()
     {
         foreach (var i in image)
             i.ImageMoveScreenOut();
@@ -184,10 +187,21 @@ public class SubModeSelectManager : MonoBehaviour
         {
             playerSelectImageBig[i].transform.GetChild(2).gameObject.SetActive(false);
             playerSelectImageBig[i].transform.GetChild(3).gameObject.SetActive(false);
-            playerSelectImageBig[i].transform.DOScale(playerSelectImageBig[i].transform.localScale * 1.8f,1.0f);
-            playerSelectImageBig[i].transform.DOLocalMove(imageBigAnimationPos[i],1.0f);
+            playerSelectImageBig[i].transform.DOScale(playerSelectImageBig[i].transform.localScale * 1.0f,1.0f);
+            playerSelectImageBig[i].transform.DOLocalMove(imageBigAnimationPos[i],1.0f).OnComplete(OKImageNotActive);
         }
 
         text.gameObject.SetActive(false);
+    }
+
+    //OK画像を非アクティブに
+    private void OKImageNotActive()
+    {
+        for (int i = 0; i < playerSelectImageBig.Count; i++)
+        {
+            //OK画像を非表示
+            //playerSelectImageBig[i].transform.GetChild(0).gameObject.SetActive(false);
+            playerSelectImageBig[i].transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 }
