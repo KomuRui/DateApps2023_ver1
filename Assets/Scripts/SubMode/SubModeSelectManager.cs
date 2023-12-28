@@ -26,6 +26,7 @@ public class SubModeSelectManager : MonoBehaviour
     //情報保管しているところ
     private Dictionary<byte, SubModeImageInfo> playerSelectImage = new Dictionary<byte, SubModeImageInfo>();
     private Dictionary<byte, InputInfo> inputXY = new Dictionary<byte, InputInfo>();
+    private Dictionary<byte, bool> isPlayerSelect = new Dictionary<byte, bool>();
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImage[(byte)(i + 1)].playerSelectMyNum.Add((byte)(i + 1));
             playerSelectImage[(byte)(i + 1)].ImageColorChange();
             playerSelectImageBig[i].sprite = playerInitializSelectImafe[i].GetComponent<Image>().sprite;
+            isPlayerSelect[(byte)(i + 1)] = false;
         }
     }
 
@@ -57,24 +59,65 @@ public class SubModeSelectManager : MonoBehaviour
             inputXY[i].nowInputX = Input.GetAxis("L_Stick_H" + i);
             inputXY[i].nowInputY = Input.GetAxis("L_Stick_V" + i);
 
-            //変更ができたかチェック
-            SubModeImageInfo info = playerSelectImage[i].SelectImageChange(i, inputXY);
-            if (info)
-            {
-                //変更できたのなら各画像の情報を変更
-                playerSelectImage[i].playerSelectMyNum.Remove(i);
-                info.playerSelectMyNum.Add(i);
-                playerSelectImage[i].ImageColorChange();
-                info.ImageColorChange();
-                playerSelectImage[i] = info;
+            SelectImageChange(i);  //選択画像変更
+            SelectImageDecide(i);  //選択画像決定
+            SelectImageUnlock(i);  //選択画像解除
 
-                //大きい画像も変更
-                playerSelectImageBig[i - 1].sprite = playerSelectImage[i].GetComponent<Image>().sprite;
-            }
 
             //今回の入力値を保存
             inputXY[i].beforeInputX = inputXY[i].nowInputX;
             inputXY[i].beforeInputY = inputXY[i].nowInputY;
+        }
+    }
+
+    //選択画像変更
+    private void SelectImageChange(byte playerNum)
+    {
+        //選択中ならこの先処理しない
+        if (isPlayerSelect[playerNum]) return;
+
+        //変更ができたかチェック
+        SubModeImageInfo info = playerSelectImage[playerNum].SelectImageChange(playerNum, inputXY);
+        if (info)
+        {
+            //変更できたのなら各画像の情報を変更
+            playerSelectImage[playerNum].playerSelectMyNum.Remove(playerNum);
+            info.playerSelectMyNum.Add(playerNum);
+            playerSelectImage[playerNum].ImageColorChange();
+            info.ImageColorChange();
+            playerSelectImage[playerNum] = info;
+
+            //大きい画像も変更
+            playerSelectImageBig[playerNum - 1].sprite = playerSelectImage[playerNum].GetComponent<Image>().sprite;
+        }
+    }
+
+    //選択画像決定
+    private void SelectImageDecide(byte playerNum)
+    {
+        //決定
+        if (Input.GetButtonDown("Abutton" + playerNum) && !isPlayerSelect[playerNum])
+        {
+            isPlayerSelect[playerNum] = true;
+
+            //OK画像を表示
+            playerSelectImageBig[playerNum - 1].transform.GetChild(0).gameObject.SetActive(true);
+            playerSelectImageBig[playerNum - 1].transform.GetChild(1).gameObject.SetActive(true);
+        }
+
+    }
+
+    //選択画像解除
+    private void SelectImageUnlock(byte playerNum)
+    {
+        //解除
+        if (Input.GetButtonDown("Bbutton" + playerNum) && isPlayerSelect[playerNum])
+        {
+            isPlayerSelect[playerNum] = false;
+
+            //OK画像を非表示
+            playerSelectImageBig[playerNum - 1].transform.GetChild(0).gameObject.SetActive(false);
+            playerSelectImageBig[playerNum - 1].transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 }
