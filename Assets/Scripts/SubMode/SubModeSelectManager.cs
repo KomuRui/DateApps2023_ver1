@@ -14,6 +14,9 @@ public class SubModeSelectManager : MonoBehaviour
         public float beforeInputY;
     }
 
+    //画像
+    [SerializeField] private List<SubModeImageInfo> image;
+
     //プレイヤーの初期選択画像
     [SerializeField] private List<SubModeImageInfo> playerInitializSelectImafe;
 
@@ -22,6 +25,9 @@ public class SubModeSelectManager : MonoBehaviour
 
     //プレイヤーが選択している画像を大きく表示するやつ
     [SerializeField] public List<Image> playerSelectImageBig;
+
+    //フェード用
+    [SerializeField] private Fade fade;                     
 
     //情報保管しているところ
     private Dictionary<byte, SubModeImageInfo> playerSelectImage = new Dictionary<byte, SubModeImageInfo>();
@@ -48,6 +54,25 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImageBig[i].sprite = playerInitializSelectImafe[i].GetComponent<Image>().sprite;
             isPlayerSelect[(byte)(i + 1)] = false;
         }
+
+        //フェードが情報あるのなら
+        if (fade)
+            fade.FadeOut(1.0f);
+
+
+        /////////////////////////////////////Test////////////////////////////////////////////
+        
+        isPlayerSelect[2] = true;
+        isPlayerSelect[3] = true;
+        isPlayerSelect[4] = true;
+
+        //OK画像を表示
+        playerSelectImageBig[1].transform.GetChild(0).gameObject.SetActive(true);
+        playerSelectImageBig[1].transform.GetChild(1).gameObject.SetActive(true);
+        playerSelectImageBig[2].transform.GetChild(0).gameObject.SetActive(true);
+        playerSelectImageBig[2].transform.GetChild(1).gameObject.SetActive(true);
+        playerSelectImageBig[3].transform.GetChild(0).gameObject.SetActive(true);
+        playerSelectImageBig[3].transform.GetChild(1).gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -68,6 +93,7 @@ public class SubModeSelectManager : MonoBehaviour
             inputXY[i].beforeInputX = inputXY[i].nowInputX;
             inputXY[i].beforeInputY = inputXY[i].nowInputY;
         }
+
     }
 
     //選択画像変更
@@ -103,6 +129,9 @@ public class SubModeSelectManager : MonoBehaviour
             //OK画像を表示
             playerSelectImageBig[playerNum - 1].transform.GetChild(0).gameObject.SetActive(true);
             playerSelectImageBig[playerNum - 1].transform.GetChild(1).gameObject.SetActive(true);
+
+            //全員OKしたら画面外に移動させる
+            if (isAllPlayerOK()) imageMoveScreenOut();
         }
 
     }
@@ -119,5 +148,24 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImageBig[playerNum - 1].transform.GetChild(0).gameObject.SetActive(false);
             playerSelectImageBig[playerNum - 1].transform.GetChild(1).gameObject.SetActive(false);
         }
+    }
+
+    //全員準備できたか確認
+    private bool isAllPlayerOK()
+    {
+        for (byte i = 1; i < PlayerManager.PLAYER_MAX; i++)
+        {
+            //選択していないかアニメーションの最中ならfalseを返す
+            if (!isPlayerSelect[i]) return false;
+        }
+
+        return true;
+    }
+
+    //画像画面外に移動
+    private void imageMoveScreenOut()
+    {
+        foreach (var i in image)
+            i.ImageMoveScreenOut();
     }
 }

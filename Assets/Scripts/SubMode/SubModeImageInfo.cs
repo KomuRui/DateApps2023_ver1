@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,6 +27,7 @@ public class SubModeImageInfo : MonoBehaviour
     [SerializeField] private List<UnityEngine.UI.Image> playerNumberImage; //プレイヤー番号の画像
     [SerializeField] private SubModeSelectManager mana;                    //プレイヤー番号の画像
     [SerializeField] private List<TextMeshProUGUI> text;                   //プレイヤー番号の文字
+    [SerializeField] private float startPos;                //開始位置
 
     //どの方向に選択画像があるか
     private Dictionary<Direction, SubModeImageInfo> dirSelectImage = new Dictionary<Direction, SubModeImageInfo>();
@@ -36,6 +38,11 @@ public class SubModeImageInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //最初Dotweenで動きをつける
+        Vector3 moveAfterPos = transform.localPosition;
+        transform.localPosition = new Vector3(startPos, transform.localPosition.y, transform.localPosition.z);
+        transform.DOLocalMove(moveAfterPos, 1f);
+
         //各方向の画像を設定
         dirSelectImage[Direction.RIGHT] = rightImage;
         dirSelectImage[Direction.LEFT] = leftImage;
@@ -207,5 +214,11 @@ public class SubModeImageInfo : MonoBehaviour
         for (int i = 0; i < edgeImage.Count; i++)
             edgeImage[i].color = color[i];
 
+    }
+
+    //画像を画面外に移動させる
+    public void ImageMoveScreenOut()
+    {
+        transform.DOLocalMove(new Vector3(startPos, transform.localPosition.y, transform.localPosition.z), 1f);
     }
 }

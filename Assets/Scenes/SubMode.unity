@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 16699700}
   - component: {fileID: 16699703}
   - component: {fileID: 16699702}
-  - component: {fileID: 16699701}
   m_Layer: 5
   m_Name: Edge
   m_TagString: Untagged
@@ -162,27 +161,6 @@ RectTransform:
   m_AnchoredPosition: {x: -39.4, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &16699701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16699699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!114 &16699702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +544,7 @@ MonoBehaviour:
   - {fileID: 1813340498}
   - {fileID: 614786411}
   - {fileID: 1304961375}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &63828437
 GameObject:
@@ -731,7 +710,6 @@ GameObject:
   - component: {fileID: 92898323}
   - component: {fileID: 92898322}
   - component: {fileID: 92898320}
-  - component: {fileID: 92898321}
   m_Layer: 5
   m_Name: Edge
   m_TagString: Untagged
@@ -769,27 +747,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &92898321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92898319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &92898322
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1707,6 +1664,7 @@ MonoBehaviour:
   - {fileID: 248289958}
   - {fileID: 516299380}
   - {fileID: 615317296}
+  startPos: 1200
   playerSelectMyNum: 
 --- !u!1 &188433000
 GameObject:
@@ -2739,7 +2697,6 @@ GameObject:
   - component: {fileID: 293146176}
   - component: {fileID: 293146175}
   - component: {fileID: 293146173}
-  - component: {fileID: 293146174}
   m_Layer: 5
   m_Name: Edge
   m_TagString: Untagged
@@ -2777,27 +2734,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &293146174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293146172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &293146175
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4840,6 +4776,7 @@ MonoBehaviour:
   - {fileID: 1266107170}
   - {fileID: 618900638}
   - {fileID: 1326521446}
+  startPos: 1200
   playerSelectMyNum: 
 --- !u!1 &509303822
 GameObject:
@@ -5064,7 +5001,6 @@ GameObject:
   - component: {fileID: 522398867}
   - component: {fileID: 522398866}
   - component: {fileID: 522398864}
-  - component: {fileID: 522398865}
   m_Layer: 5
   m_Name: Edge (4)
   m_TagString: Untagged
@@ -5102,27 +5038,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &522398865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522398863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &522398866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6441,6 +6356,7 @@ MonoBehaviour:
   - {fileID: 1682842992}
   - {fileID: 466182121}
   - {fileID: 2116561795}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &635185843
 GameObject:
@@ -7441,7 +7357,6 @@ GameObject:
   - component: {fileID: 711791085}
   - component: {fileID: 711791088}
   - component: {fileID: 711791087}
-  - component: {fileID: 711791086}
   m_Layer: 5
   m_Name: Edge (16)
   m_TagString: Untagged
@@ -7469,27 +7384,6 @@ RectTransform:
   m_AnchoredPosition: {x: -38.7, y: 1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &711791086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711791084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!114 &711791087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8398,6 +8292,7 @@ MonoBehaviour:
   - {fileID: 1052516025}
   - {fileID: 1589688645}
   - {fileID: 653800993}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &824056759
 GameObject:
@@ -8998,6 +8893,7 @@ MonoBehaviour:
   - {fileID: 188433002}
   - {fileID: 95122977}
   - {fileID: 1193811295}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &857996755
 GameObject:
@@ -9116,6 +9012,7 @@ MonoBehaviour:
   - {fileID: 851372192}
   - {fileID: 528758740}
   - {fileID: 1403554743}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!4 &873908788 stripped
 Transform:
@@ -9950,6 +9847,7 @@ MonoBehaviour:
   - {fileID: 660156153}
   - {fileID: 171297582}
   - {fileID: 603362300}
+  startPos: 1200
   playerSelectMyNum: 
 --- !u!1 &998169344
 GameObject:
@@ -10122,6 +10020,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3152108a6b97846a3080e9e12e1fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image:
+  - {fileID: 634573900}
+  - {fileID: 1319464372}
+  - {fileID: 819099000}
+  - {fileID: 857996759}
+  - {fileID: 184298500}
+  - {fileID: 1693667165}
+  - {fileID: 995562675}
+  - {fileID: 39282238}
+  - {fileID: 1415005901}
+  - {fileID: 1812361135}
+  - {fileID: 853633816}
+  - {fileID: 1156727961}
+  - {fileID: 491038147}
   playerInitializSelectImafe:
   - {fileID: 634573900}
   - {fileID: 634573900}
@@ -10137,6 +10049,7 @@ MonoBehaviour:
   - {fileID: 1054850719}
   - {fileID: 102509391}
   - {fileID: 238401879}
+  fade: {fileID: 1635213986}
 --- !u!4 &998867589
 Transform:
   m_ObjectHideFlags: 0
@@ -10239,7 +10152,6 @@ GameObject:
   - component: {fileID: 1045987850}
   - component: {fileID: 1045987849}
   - component: {fileID: 1045987847}
-  - component: {fileID: 1045987848}
   m_Layer: 5
   m_Name: Edge (8)
   m_TagString: Untagged
@@ -10277,27 +10189,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1045987848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045987846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1045987849
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11129,7 +11020,6 @@ GameObject:
   - component: {fileID: 1102181495}
   - component: {fileID: 1102181494}
   - component: {fileID: 1102181492}
-  - component: {fileID: 1102181493}
   m_Layer: 5
   m_Name: Edge (8)
   m_TagString: Untagged
@@ -11167,27 +11057,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1102181493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102181491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1102181494
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11621,7 +11490,6 @@ GameObject:
   - component: {fileID: 1142230817}
   - component: {fileID: 1142230816}
   - component: {fileID: 1142230814}
-  - component: {fileID: 1142230815}
   m_Layer: 5
   m_Name: Edge (4)
   m_TagString: Untagged
@@ -11659,27 +11527,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1142230815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1142230813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1142230816
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11825,6 +11672,7 @@ MonoBehaviour:
   - {fileID: 567647590}
   - {fileID: 1998958517}
   - {fileID: 405503814}
+  startPos: 1200
   playerSelectMyNum: 
 --- !u!1 &1160823964
 GameObject:
@@ -13948,6 +13796,7 @@ MonoBehaviour:
   - {fileID: 2060530812}
   - {fileID: 1493763029}
   - {fileID: 824056761}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &1326521444
 GameObject:
@@ -14253,7 +14102,6 @@ GameObject:
   - component: {fileID: 1378404695}
   - component: {fileID: 1378404694}
   - component: {fileID: 1378404692}
-  - component: {fileID: 1378404693}
   m_Layer: 5
   m_Name: Edge (12)
   m_TagString: Untagged
@@ -14291,27 +14139,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1378404693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378404691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1378404694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15015,6 +14842,7 @@ MonoBehaviour:
   - {fileID: 257497222}
   - {fileID: 529752938}
   - {fileID: 1705654078}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &1416672491
 GameObject:
@@ -15556,6 +15384,159 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -191.7, z: 0}
+--- !u!1001 &1473492480
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 141186, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Name
+      value: FadeCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: cutoutRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: maskTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 090e635634dd8cf4980b5409e85fa55a, type: 3}
+    - target: {fileID: 22291984, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22333946, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 22333946, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22333946, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
 --- !u!1 &1493763027
 GameObject:
   m_ObjectHideFlags: 0
@@ -16466,7 +16447,6 @@ GameObject:
   - component: {fileID: 1605471783}
   - component: {fileID: 1605471786}
   - component: {fileID: 1605471785}
-  - component: {fileID: 1605471784}
   m_Layer: 5
   m_Name: Edge
   m_TagString: Untagged
@@ -16494,27 +16474,6 @@ RectTransform:
   m_AnchoredPosition: {x: -38.89077, y: -1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1605471784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605471782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!114 &1605471785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16707,6 +16666,17 @@ RectTransform:
   m_AnchoredPosition: {x: -13.990779, y: 75.85539}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1635213986 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11491604, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+  m_PrefabInstance: {fileID: 1473492480}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d416d1715bbc06d4789612d1211da8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1648836929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17430,7 +17400,6 @@ GameObject:
   - component: {fileID: 1688399537}
   - component: {fileID: 1688399536}
   - component: {fileID: 1688399534}
-  - component: {fileID: 1688399535}
   m_Layer: 5
   m_Name: Edge (12)
   m_TagString: Untagged
@@ -17468,27 +17437,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1688399535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688399533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1688399536
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17528,7 +17476,6 @@ GameObject:
   - component: {fileID: 1692413337}
   - component: {fileID: 1692413336}
   - component: {fileID: 1692413334}
-  - component: {fileID: 1692413335}
   m_Layer: 5
   m_Name: Edge (4)
   m_TagString: Untagged
@@ -17566,27 +17513,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1692413335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1692413333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d02a0dbb21cc74d9931791e7b9ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftImage: {fileID: 0}
-  rightImage: {fileID: 0}
-  upImage: {fileID: 0}
-  downImage: {fileID: 0}
-  edgeImage: []
-  playerNumberImage: []
-  mana: {fileID: 0}
-  text: []
-  playerSelectMyNum: 
 --- !u!222 &1692413336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17732,6 +17658,7 @@ MonoBehaviour:
   - {fileID: 963210063}
   - {fileID: 1495279279}
   - {fileID: 652326422}
+  startPos: 1200
   playerSelectMyNum: 
 --- !u!1 &1693776984
 GameObject:
@@ -18291,6 +18218,7 @@ MonoBehaviour:
   - {fileID: 336324075}
   - {fileID: 887540904}
   - {fileID: 331516105}
+  startPos: -1200
   playerSelectMyNum: 
 --- !u!1 &1813340496
 GameObject:
