@@ -680,6 +680,7 @@ MonoBehaviour:
   - {fileID: 614786411}
   - {fileID: 1304961375}
   startPos: -1200
+  miniGameName: CarryToTheGoal
   playerSelectMyNum: 
 --- !u!1 &63828437
 GameObject:
@@ -1719,7 +1720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -209.83693, y: 134}
+  m_AnchoredPosition: {x: 25, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174930959
@@ -1878,6 +1879,7 @@ MonoBehaviour:
   - {fileID: 516299380}
   - {fileID: 615317296}
   startPos: 1200
+  miniGameName: NotFallHole
   playerSelectMyNum: 
 --- !u!1 &188433000
 GameObject:
@@ -4640,7 +4642,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -261.3, y: 134}
+  m_AnchoredPosition: {x: -25, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &455737397
@@ -5197,6 +5199,7 @@ MonoBehaviour:
   - {fileID: 618900638}
   - {fileID: 1326521446}
   startPos: 1200
+  miniGameName: TerrorHammer
   playerSelectMyNum: 
 --- !u!1 &509303822
 GameObject:
@@ -6853,6 +6856,7 @@ MonoBehaviour:
   - {fileID: 466182121}
   - {fileID: 2116561795}
   startPos: -1200
+  miniGameName: NotHitStick
   playerSelectMyNum: 
 --- !u!1 &635185843
 GameObject:
@@ -8791,6 +8795,7 @@ MonoBehaviour:
   - {fileID: 1589688645}
   - {fileID: 653800993}
   startPos: -1200
+  miniGameName: Surfboard
   playerSelectMyNum: 
 --- !u!1 &824056759
 GameObject:
@@ -9392,6 +9397,7 @@ MonoBehaviour:
   - {fileID: 95122977}
   - {fileID: 1193811295}
   startPos: -1200
+  miniGameName: DriveChaseFish
   playerSelectMyNum: 
 --- !u!1 &857996755
 GameObject:
@@ -9511,6 +9517,7 @@ MonoBehaviour:
   - {fileID: 528758740}
   - {fileID: 1403554743}
   startPos: -1200
+  miniGameName: FlagUp
   playerSelectMyNum: 
 --- !u!4 &873908788 stripped
 Transform:
@@ -10346,6 +10353,7 @@ MonoBehaviour:
   - {fileID: 171297582}
   - {fileID: 603362300}
   startPos: 1200
+  miniGameName: Let'sPaint
   playerSelectMyNum: 
 --- !u!1 &998169344
 GameObject:
@@ -10559,7 +10567,9 @@ MonoBehaviour:
   - {fileID: 1359130793}
   text: {fileID: 1385561531}
   whoText: {fileID: 18919363}
+  bigSelectEdge: {fileID: 2026162703}
   fade: {fileID: 1635213986}
+  nextImageTime: 0.15
 --- !u!4 &998867589
 Transform:
   m_ObjectHideFlags: 0
@@ -11709,13 +11719,13 @@ RectTransform:
   - {fileID: 1054850718}
   - {fileID: 102509390}
   - {fileID: 238401878}
+  - {fileID: 2026162704}
   - {fileID: 1385561530}
   - {fileID: 18919362}
   - {fileID: 608331205}
   - {fileID: 1529433237}
   - {fileID: 466069361}
   - {fileID: 1359130792}
-  - {fileID: 2026162704}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12183,6 +12193,7 @@ MonoBehaviour:
   - {fileID: 1998958517}
   - {fileID: 405503814}
   startPos: 1200
+  miniGameName: ReachExtender
   playerSelectMyNum: 
 --- !u!1 &1160823964
 GameObject:
@@ -14307,6 +14318,7 @@ MonoBehaviour:
   - {fileID: 1493763029}
   - {fileID: 824056761}
   startPos: -1200
+  miniGameName: ConsecutiveChases
   playerSelectMyNum: 
 --- !u!1 &1324549805
 GameObject:
@@ -14343,7 +14355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -227.03595, y: 134}
+  m_AnchoredPosition: {x: 9, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1324549807
@@ -15505,6 +15517,7 @@ MonoBehaviour:
   - {fileID: 529752938}
   - {fileID: 1705654078}
   startPos: -1200
+  miniGameName: CannonSea
   playerSelectMyNum: 
 --- !u!1 &1416672491
 GameObject:
@@ -18397,6 +18410,7 @@ MonoBehaviour:
   - {fileID: 1495279279}
   - {fileID: 652326422}
   startPos: 1200
+  miniGameName: AvoidFish
   playerSelectMyNum: 
 --- !u!1 &1693776984
 GameObject:
@@ -18957,6 +18971,7 @@ MonoBehaviour:
   - {fileID: 887540904}
   - {fileID: 331516105}
   startPos: -1200
+  miniGameName: DeathRun
   playerSelectMyNum: 
 --- !u!1 &1813340496
 GameObject:
@@ -19339,7 +19354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -243.96988, y: 134}
+  m_AnchoredPosition: {x: -9, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829597045
@@ -20579,7 +20594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2026162704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20589,7 +20604,7 @@ RectTransform:
   m_GameObject: {fileID: 2026162703}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.7281, y: 5.7281, z: 11.915721}
+  m_LocalScale: {x: 5.7281, y: 5.7281, z: 11.915719}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 455737396}
@@ -20601,7 +20616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 675, y: -1000}
+  m_AnchoredPosition: {x: 674.99976, y: -1000.0007}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2027274185

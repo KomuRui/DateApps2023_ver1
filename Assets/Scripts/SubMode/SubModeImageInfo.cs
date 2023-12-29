@@ -28,6 +28,7 @@ public class SubModeImageInfo : MonoBehaviour
     [SerializeField] private SubModeSelectManager mana;                    //プレイヤー番号の画像
     [SerializeField] private List<TextMeshProUGUI> text;                   //プレイヤー番号の文字
     [SerializeField] private float startPos;                //開始位置
+    public string miniGameName;                             //ミニゲームの名前
 
     //どの方向に選択画像があるか
     private Dictionary<Direction, SubModeImageInfo> dirSelectImage = new Dictionary<Direction, SubModeImageInfo>();
