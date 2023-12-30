@@ -279,10 +279,12 @@ public class NotFallHolePlayer : MonoBehaviour
     //エフェクトを取得
     private GameObject GetHitEffect()
     {
-        for(int i = 0; i < hitEffect.transform.childCount; i++)
+        GameObject ef = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
+
+        for (int i = 0; i < ef.transform.childCount; i++)
         {
-            if (!hitEffect.transform.GetChild(i).gameObject.activeSelf)
-                return hitEffect.transform.GetChild(i).gameObject;
+            if (!ef.transform.GetChild(i).gameObject.activeSelf)
+                return ef.transform.GetChild(i).gameObject;
         }
 
         return null;
@@ -291,10 +293,12 @@ public class NotFallHolePlayer : MonoBehaviour
     //エフェクトを取得
     private GameObject GetTyakutiEffect()
     {
-        for (int i = 0; i < tyakutiEffect.transform.childCount; i++)
+        GameObject ef = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
+
+        for (int i = 0; i < ef.transform.childCount; i++)
         {
-            if (!tyakutiEffect.transform.GetChild(i).gameObject.activeSelf)
-                return tyakutiEffect.transform.GetChild(i).gameObject;
+            if (!ef.transform.GetChild(i).gameObject.activeSelf)
+                return ef.transform.GetChild(i).gameObject;
         }
 
         return null;

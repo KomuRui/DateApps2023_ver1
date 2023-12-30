@@ -48,4 +48,5 @@ public class HammerOnePlayer : MonoBehaviour
     {
         isAttack = true;
     }
+
 }

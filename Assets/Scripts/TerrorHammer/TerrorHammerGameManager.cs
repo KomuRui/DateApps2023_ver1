@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TerrorHammerGameManager : MiniGameManager
 {
+    public GameObject hitEffectParent;
+
     /// Start is called before the first frame update
     public override void SceneStart()
     {
