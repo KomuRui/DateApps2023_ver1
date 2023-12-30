@@ -96,9 +96,9 @@ public class PlayerHand : MonoBehaviour
         if (((FlagUpGameManager)GameManager.nowMiniGameManager).turn == FlagUpGameManager.Turn.THREE_PLAYER && isOnePlayer) return;
 
         //ä¯è„Ç∞èàóù
-        if (Input.GetButtonDown("LBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
+        if (Input.GetButtonDown("LBbutton" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.LEFT);
-        if (Input.GetButtonDown("RBbutton" + this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum))
+        if (Input.GetButtonDown("RBbutton" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum))
             FlagUp(Flag.RIGHT);
     }
 
@@ -173,9 +173,9 @@ public class PlayerHand : MonoBehaviour
 
                     if (((FlagUpGameManager)GameManager.nowMiniGameManager).oneFlagState[flagTurn] != flagState[flagTurn])
                     {
-                        ((FlagUpGameManager)GameManager.nowMiniGameManager).rankInfo[this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum] = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowFlagUp;
-                        GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
-                        GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(5).GetComponent<PlayerNum>().playerNum);
+                        ((FlagUpGameManager)GameManager.nowMiniGameManager).rankInfo[this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum] = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowFlagUp;
+                        GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
+                        GameManager.nowMiniGameManager.PlayerFinish(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
                         Rigidbody rb;
                         rb = this.GetComponent<Rigidbody>();
                         rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
