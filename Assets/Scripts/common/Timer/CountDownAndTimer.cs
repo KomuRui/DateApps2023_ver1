@@ -4,12 +4,15 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using System;
+using UnityEngine.UI;
 
 public class CountDownAndTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeText;               //時間制限テキスト
+    [SerializeField] private Image timeImage;                        //時間制限テキスト
     [SerializeField] private TextMeshProUGUI countDownText;          //カウントダウンテキスト
     [SerializeField] private TextMeshProUGUI tutorialTimeText;       //時間制限テキスト(チュートリアル用)
+    [SerializeField] private Image tutorialTimeImage;                //時間制限テキスト(チュートリアル用)
     [SerializeField] private TextMeshProUGUI tutorialCountDownText;  //カウントダウンテキスト(チュートリアル用)
     [SerializeField] public Fade fade;  //フェード
 
@@ -37,7 +40,7 @@ public class CountDownAndTimer : MonoBehaviour
         if (isStop || isfinish || GameManager.nowMiniGameManager.IsFinish() || timeText == null) return;
         time -= Time.deltaTime;
         time = Mathf.Max(time, 0);
-        timeText.text = ((int)time).ToString() + ":00";
+        timeText.text = ((int)time).ToString();
         if (time <= 1)
         {
             isfinish = true;
@@ -79,12 +82,15 @@ public class CountDownAndTimer : MonoBehaviour
             fade.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
 
             if (timeText != null) timeText.gameObject.SetActive(true);
+            if (timeImage != null) timeImage.gameObject.SetActive(true);
             if (countDownText != null) countDownText.gameObject.SetActive(true);
             if (tutorialTimeText != null) tutorialTimeText.gameObject.SetActive(false);
+            if (tutorialTimeImage != null) tutorialTimeImage.gameObject.SetActive(false);
             if (tutorialCountDownText != null) tutorialCountDownText.gameObject.SetActive(false);
         }
-        else if (tutorialCountDownText != null || tutorialTimeText != null)
+        else if (tutorialCountDownText != null || tutorialTimeText != null || tutorialTimeImage != null)
         {
+            timeImage = tutorialTimeImage;
             timeText = tutorialTimeText;
             countDownText = tutorialCountDownText;
         }
