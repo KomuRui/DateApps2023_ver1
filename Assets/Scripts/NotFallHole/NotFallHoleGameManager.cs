@@ -11,6 +11,8 @@ public class NotFallHoleGameManager : MiniGameManager
     public int openCount;
     public AllParentRotate rotate;
     public List<FallRotateFloor> Floor;
+    public GameObject hitEffectParent;
+    public GameObject tyakutiEffectParent;
 
     public override void SceneStart()
     {

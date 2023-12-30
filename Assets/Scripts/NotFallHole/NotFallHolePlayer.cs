@@ -29,6 +29,8 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private Vector3 localGravity;
+    private GameObject hitEffect;
+    private GameObject tyakutiEffect;
     private bool isJump;
     private bool isJumpInvoke;
     private bool isMuteki;
@@ -56,6 +58,8 @@ public class NotFallHolePlayer : MonoBehaviour
         isStan = false;
         rBody = this.GetComponent<Rigidbody>();
         playerNum = this.GetComponent<PlayerNum>().playerNum;
+        hitEffect = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).hitEffectParent;
+        tyakutiEffect = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
     }
 
     //顔のテクスチャ設定
@@ -213,6 +217,15 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate && !isJumpInvoke && isJump)
         {
+            //エフェクトを衝突位置に
+            GameObject effect = GetTyakutiEffect();
+            if (effect != null)
+            {
+                effect.transform.position = new Vector3(other.contacts[0].point.x, other.contacts[0].point.y + 0.1f, other.contacts[0].point.z);
+                effect.SetActive(true);
+                effect.GetComponent<ParticleSystem>().Play();
+            }
+
             isJumpInvoke = true;
             Invoke("SetResetJump", 0.3f);
         }
@@ -233,6 +246,15 @@ public class NotFallHolePlayer : MonoBehaviour
             rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
             Invoke("SetResetJump", 0.3f);
 
+            //エフェクトを衝突位置に
+            GameObject effect = GetHitEffect();
+            if (effect != null)
+            {
+                effect.transform.position = other.contacts[0].point;
+                effect.SetActive(true);
+                effect.GetComponent<ParticleSystem>().Play();
+            }
+
             //無敵ならこの先処理しない
             if (hit.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
             hit.transform.GetComponent<NotFallHolePlayer>().isMuteki = true;
@@ -252,6 +274,30 @@ public class NotFallHolePlayer : MonoBehaviour
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
             GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
+    }
+
+    //エフェクトを取得
+    private GameObject GetHitEffect()
+    {
+        for(int i = 0; i < hitEffect.transform.childCount; i++)
+        {
+            if (!hitEffect.transform.GetChild(i).gameObject.activeSelf)
+                return hitEffect.transform.GetChild(i).gameObject;
+        }
+
+        return null;
+    }
+
+    //エフェクトを取得
+    private GameObject GetTyakutiEffect()
+    {
+        for (int i = 0; i < tyakutiEffect.transform.childCount; i++)
+        {
+            if (!tyakutiEffect.transform.GetChild(i).gameObject.activeSelf)
+                return tyakutiEffect.transform.GetChild(i).gameObject;
+        }
+
+        return null;
     }
 
 }
