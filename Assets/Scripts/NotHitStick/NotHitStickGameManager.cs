@@ -10,7 +10,7 @@ public class NotHitStickGameManager : MiniGameManager
     public Rotate2 rotate2;
     public GameObject[] floor;
     public GameObject hitEffectParent;
-    public GameObject tyakutiEffectParent;
+    public GameObject jumpEffectParent;
 
     public override void SceneStart()
     {
@@ -83,16 +83,16 @@ public class NotHitStickGameManager : MiniGameManager
         }
     }
 
-    //着地エフェクトを表示
-    public void tyakutiEffect(Vector3 pos)
+    //ジャンプエフェクトを表示
+    public void JumpEffect(Vector3 pos)
     {
         GameObject ef = null;
 
-        for (int i = 0; i < tyakutiEffectParent.transform.childCount; i++)
+        for (int i = 0; i < jumpEffectParent.transform.childCount; i++)
         {
-            if (!tyakutiEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            if (!jumpEffectParent.transform.GetChild(i).gameObject.activeSelf)
             {
-                ef = tyakutiEffectParent.transform.GetChild(i).gameObject;
+                ef = jumpEffectParent.transform.GetChild(i).gameObject;
                 break;
             }
         }
@@ -106,7 +106,7 @@ public class NotHitStickGameManager : MiniGameManager
     }
 
     //プレイヤー踏んだ時のエフェクトを表示
-    public void hitEffect(Vector3 pos)
+    public void HitEffect(Vector3 pos)
     {
         GameObject ef = null;
 

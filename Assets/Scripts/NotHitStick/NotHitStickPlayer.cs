@@ -176,10 +176,16 @@ public class NotHitStickPlayer : MonoBehaviour
             //通常状態に変更
             ChangeStateTo(SlimeAnimationState.Idle);
 
+            //エフェクトの発生位置を求める
+            Vector3 efePos = transform.position;
+            efePos.y += 0.2f;
+
+            //エフェクト
+            ((NotHitStickGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
+
             //上に力を加える
             rb.AddForce(Vector3.up * jumpPower);
             isJump2 = true;
-
             canJump = false;
 
             return;
@@ -200,6 +206,13 @@ public class NotHitStickPlayer : MonoBehaviour
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
             isJump2 = true;
+
+            //エフェクトの発生位置を求める
+            Vector3 efePos = transform.position;
+            efePos.y += 0.2f;
+
+            //エフェクト
+            ((NotHitStickGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
         }
         else if (nowInput >= 0.8f && beforeInput < 0.8f)
         {
@@ -212,6 +225,13 @@ public class NotHitStickPlayer : MonoBehaviour
             rb.AddForce(Vector3.up * jumpPower);
             isJump = true;
             isJump2 = true;
+
+            //エフェクトの発生位置を求める
+            Vector3 efePos = transform.position;
+            efePos.y += 0.2f;
+
+            //エフェクト
+            ((NotHitStickGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
         }
 
         beforeInput = nowInput;
@@ -294,7 +314,7 @@ public class NotHitStickPlayer : MonoBehaviour
             efePos.z = transform.position.z;
 
             //エフェクト
-            ((NotHitStickGameManager)GameManager.nowMiniGameManager).tyakutiEffect(efePos);
+            ((NotHitStickGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
 
             isJump = false;
             isJump2 = false;
@@ -315,7 +335,7 @@ public class NotHitStickPlayer : MonoBehaviour
                 isJump = false;
 
                 //エフェクト
-                ((NotHitStickGameManager)GameManager.nowMiniGameManager).hitEffect(new Vector3(collision.contacts[0].point.x, collision.contacts[0].point.y + 0.1f, collision.contacts[0].point.z));
+                ((NotHitStickGameManager)GameManager.nowMiniGameManager).HitEffect(new Vector3(collision.contacts[0].point.x, collision.contacts[0].point.y + 0.1f, collision.contacts[0].point.z));
 
                 return;
             }

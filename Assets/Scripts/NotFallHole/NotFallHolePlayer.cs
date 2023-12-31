@@ -132,6 +132,13 @@ public class NotFallHolePlayer : MonoBehaviour
         //Aボタンが押されてないのならこの先処理しない
         if (!Input.GetButtonDown("Abutton" + playerNum) || isJump) return;
 
+        //エフェクトの発生位置を求める
+        Vector3 efePos = transform.position;
+        efePos.y += 0.2f;
+
+        //エフェクト
+        ((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
+
         //ジャンプ状態に変更    
         rBody.AddForce(Vector3.up * jumpPower);
         isJump = true;
@@ -213,8 +220,14 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate && !isJumpInvoke && isJump)
         {
+            //エフェクトの発生位置を求める
+            Vector3 efePos = other.contacts[0].point;
+            efePos.x = transform.position.x;
+            efePos.y += 0.2f;
+            efePos.z = transform.position.z;
+
             //エフェクト
-            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffect(new Vector3(other.contacts[0].point.x, other.contacts[0].point.y + 0.1f, other.contacts[0].point.z));
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
 
             //ジャンプのインターバル開始
             isJumpInvoke = true;
@@ -234,8 +247,13 @@ public class NotFallHolePlayer : MonoBehaviour
             rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
             Invoke("SetResetJump", 0.3f);
 
+            //エフェクトの発生位置を求める
+            Vector3 efePos = other.contacts[0].point;
+            efePos.x = transform.position.x;
+            efePos.z = transform.position.z;
+
             //エフェクトを衝突位置に
-            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).hitEffect(other.contacts[0].point);
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
 
             //無敵ならこの先処理しない
             if (other.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
