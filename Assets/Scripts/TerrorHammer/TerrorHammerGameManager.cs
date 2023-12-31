@@ -65,4 +65,26 @@ public class TerrorHammerGameManager : MiniGameManager
             ScoreManager.AddScore(item.Key, nowRank);
         }
     }
+
+    //ハンマーのヒットエフェクトを表示
+    public void HammerHitEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < hitEffectParent.transform.childCount; i++)
+        {
+            if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+       
+        if(ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
 }

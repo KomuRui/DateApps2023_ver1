@@ -9,6 +9,8 @@ public class NotHitStickGameManager : MiniGameManager
     public Rotate1 rotate1;
     public Rotate2 rotate2;
     public GameObject[] floor;
+    public GameObject hitEffectParent;
+    public GameObject tyakutiEffectParent;
 
     public override void SceneStart()
     {
@@ -78,6 +80,50 @@ public class NotHitStickGameManager : MiniGameManager
 
             beforeValue = item.Value;
             ScoreManager.AddScore(item.Key, nowRank);
+        }
+    }
+
+    //着地エフェクトを表示
+    public void tyakutiEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < tyakutiEffectParent.transform.childCount; i++)
+        {
+            if (!tyakutiEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = tyakutiEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    //プレイヤー踏んだ時のエフェクトを表示
+    public void hitEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < hitEffectParent.transform.childCount; i++)
+        {
+            if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
         }
     }
 

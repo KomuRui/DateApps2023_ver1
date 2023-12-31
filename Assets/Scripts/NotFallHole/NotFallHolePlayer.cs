@@ -29,8 +29,6 @@ public class NotFallHolePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private Vector3 localGravity;
-    private GameObject hitEffect;
-    private GameObject tyakutiEffect;
     private bool isJump;
     private bool isJumpInvoke;
     private bool isMuteki;
@@ -58,8 +56,6 @@ public class NotFallHolePlayer : MonoBehaviour
         isStan = false;
         rBody = this.GetComponent<Rigidbody>();
         playerNum = this.GetComponent<PlayerNum>().playerNum;
-        hitEffect = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).hitEffectParent;
-        tyakutiEffect = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
     }
 
     //顔のテクスチャ設定
@@ -217,15 +213,10 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate && !isJumpInvoke && isJump)
         {
-            //エフェクトを衝突位置に
-            GameObject effect = GetTyakutiEffect();
-            if (effect != null)
-            {
-                effect.transform.position = new Vector3(other.contacts[0].point.x, other.contacts[0].point.y + 0.1f, other.contacts[0].point.z);
-                effect.SetActive(true);
-                effect.GetComponent<ParticleSystem>().Play();
-            }
+            //エフェクト
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffect(new Vector3(other.contacts[0].point.x, other.contacts[0].point.y + 0.1f, other.contacts[0].point.z));
 
+            //ジャンプのインターバル開始
             isJumpInvoke = true;
             Invoke("SetResetJump", 0.3f);
         }
@@ -234,12 +225,9 @@ public class NotFallHolePlayer : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         if (other.transform.tag != "Player") return;
-
-        RaycastHit hit;
-        ray = new Ray(transform.position, Vector3.down);
         
         //二段ジャンプの条件が成立しているのなら
-        if (rBody.velocity.y < 0 && Physics.Raycast(ray, out hit, 10000) && hit.transform.tag == "Player" && hit.transform.gameObject != this.gameObject)
+        if (rBody.velocity.y < 0 && other.transform.position.y < transform.position.y)
         {
             //二段ジャンプ処理
             isJumpInvoke = true;
@@ -247,23 +235,17 @@ public class NotFallHolePlayer : MonoBehaviour
             Invoke("SetResetJump", 0.3f);
 
             //エフェクトを衝突位置に
-            GameObject effect = GetHitEffect();
-            if (effect != null)
-            {
-                effect.transform.position = other.contacts[0].point;
-                effect.SetActive(true);
-                effect.GetComponent<ParticleSystem>().Play();
-            }
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).hitEffect(other.contacts[0].point);
 
             //無敵ならこの先処理しない
-            if (hit.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
-            hit.transform.GetComponent<NotFallHolePlayer>().isMuteki = true;
-            hit.transform.GetComponent<NotFallHolePlayer>().isStan = true;
-            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetStan",3.0f);
-            hit.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetMuteki", 4.0f);
-            hit.transform.GetComponent<NotFallHolePlayer>().SetOhNoScale();
-            hit.transform.GetComponent<NotFallHolePlayer>().GetComponent<BoxCollider>().enabled = true;
-            hit.transform.GetComponent<NotFallHolePlayer>().GetComponent<CapsuleCollider>().enabled = false;
+            if (other.transform.GetComponent<NotFallHolePlayer>().isMuteki) return;
+            other.transform.GetComponent<NotFallHolePlayer>().isMuteki = true;
+            other.transform.GetComponent<NotFallHolePlayer>().isStan = true;
+            other.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetStan",3.0f);
+            other.transform.GetComponent<NotFallHolePlayer>().Invoke("SetResetMuteki", 4.0f);
+            other.transform.GetComponent<NotFallHolePlayer>().SetOhNoScale();
+            other.transform.GetComponent<NotFallHolePlayer>().GetComponent<BoxCollider>().enabled = true;
+            other.transform.GetComponent<NotFallHolePlayer>().GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 
@@ -276,32 +258,5 @@ public class NotFallHolePlayer : MonoBehaviour
         }
     }
 
-    //エフェクトを取得
-    private GameObject GetHitEffect()
-    {
-        GameObject ef = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
-
-        for (int i = 0; i < ef.transform.childCount; i++)
-        {
-            if (!ef.transform.GetChild(i).gameObject.activeSelf)
-                return ef.transform.GetChild(i).gameObject;
-        }
-
-        return null;
-    }
-
-    //エフェクトを取得
-    private GameObject GetTyakutiEffect()
-    {
-        GameObject ef = ((NotFallHoleGameManager)GameManager.nowMiniGameManager).tyakutiEffectParent;
-
-        for (int i = 0; i < ef.transform.childCount; i++)
-        {
-            if (!ef.transform.GetChild(i).gameObject.activeSelf)
-                return ef.transform.GetChild(i).gameObject;
-        }
-
-        return null;
-    }
 
 }

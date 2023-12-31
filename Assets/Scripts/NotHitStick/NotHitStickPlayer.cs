@@ -282,9 +282,19 @@ public class NotHitStickPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Stage")
         {
-            if(!canJump)
+            if (!canJump)
+            {
                 //0.5秒後にジャンプ出来るように
                 Invoke("CanJump", 0.5f);
+            }
+
+            //エフェクトの発生位置を求める
+            Vector3 efePos = collision.contacts[0].point;
+            efePos.x = transform.position.x;
+            efePos.z = transform.position.z;
+
+            //エフェクト
+            ((NotHitStickGameManager)GameManager.nowMiniGameManager).tyakutiEffect(efePos);
 
             isJump = false;
             isJump2 = false;
@@ -301,6 +311,12 @@ public class NotHitStickPlayer : MonoBehaviour
             {
                 if(!gameObject.GetComponent<NotHitStickPlayer>().isStun)
                     DowbleJump();
+
+                isJump = false;
+
+                //エフェクト
+                ((NotHitStickGameManager)GameManager.nowMiniGameManager).hitEffect(new Vector3(collision.contacts[0].point.x, collision.contacts[0].point.y + 0.1f, collision.contacts[0].point.z));
+
                 return;
             }
            

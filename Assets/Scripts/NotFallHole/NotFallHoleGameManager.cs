@@ -98,4 +98,48 @@ public class NotFallHoleGameManager : MiniGameManager
     }
 
     public void MinusCount() { openCount--; openCount = Math.Max(0, openCount); }
+
+    //着地エフェクトを表示
+    public void tyakutiEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < tyakutiEffectParent.transform.childCount; i++)
+        {
+            if (!tyakutiEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = tyakutiEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    //プレイヤー踏んだ時のエフェクトを表示
+    public void hitEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < hitEffectParent.transform.childCount; i++)
+        {
+            if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
 }
