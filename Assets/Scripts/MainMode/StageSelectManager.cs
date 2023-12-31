@@ -23,6 +23,7 @@ public static class StageSelectManager
         isMainModeFinish = false;
         nowRound = 1;
         notPlayminiGameSceneName.Clear();
+        playMiniGameSceneName.Clear();
         notPlayminiGameSceneName.Add("AvoidFish");
         notPlayminiGameSceneName.Add("CarryToTheGoal");
         notPlayminiGameSceneName.Add("ConsecutiveChases");
@@ -38,6 +39,7 @@ public static class StageSelectManager
     {
         nowMiniGameName = notPlayminiGameSceneName[Random.Range(0, notPlayminiGameSceneName.Count)];
         notPlayminiGameSceneName.Remove(nowMiniGameName);
+        playMiniGameSceneName.Add(nowMiniGameName);
         SceneManager.LoadScene(nowMiniGameName);
     }
 
