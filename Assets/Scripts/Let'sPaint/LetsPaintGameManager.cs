@@ -8,7 +8,8 @@ using System.Linq;
 public class LetsPaintGameManager : MiniGameManager
 {
     [SerializeField] private PaintTarget target;
-
+    public GameObject splashEffectParent;
+    public GameObject hitEffectParent;
     private int[] playerPercent;
 
     //更新
@@ -66,6 +67,50 @@ public class LetsPaintGameManager : MiniGameManager
             beforeValue = item.Value;
             ScoreManager.AddScore(threePlayerObj[item.Key - 1].GetComponent<PlayerNum>().playerNum, nowRank);
             lookNum++;
+        }
+    }
+
+    //海に落ちた時のエフェクトを表示
+    public void SplashEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < splashEffectParent.transform.childCount; i++)
+        {
+            if (!splashEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = splashEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    //当たった時のエフェクトを表示
+    public void HitEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < hitEffectParent.transform.childCount; i++)
+        {
+            if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
         }
     }
 }

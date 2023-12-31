@@ -82,8 +82,8 @@ public class LetsPaintPlayer : MonoBehaviour
         float verticalInput = 0;
 
         // 入力を取得
-        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
-        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
+        if (isHorizontalInput) horizontalInput = Input.GetAxis("L_Stick_H" + this.transform.GetChild(3).GetComponent<PlayerNum>().playerNum);
+        if (isVerticalInput) verticalInput = -Input.GetAxis("L_Stick_V" + this.transform.GetChild(3).GetComponent<PlayerNum>().playerNum);
 
         //入力がないのなら
         if (horizontalInput == 0 && verticalInput == 0)
@@ -159,7 +159,7 @@ public class LetsPaintPlayer : MonoBehaviour
         col.isMuteki = true;
 
         //回復
-        GameManager.nowMiniGameManager.PlayerHeal(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerHeal(this.transform.GetChild(3).GetComponent<PlayerNum>().playerNum);
 
         //コルーチン
         StartCoroutine(ReStart(1.0f));
@@ -221,9 +221,25 @@ public class LetsPaintPlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Sea" && !isRespawn)
         {
+            //エフェクトの発生位置を求める
+            Vector3 efePos = collision.ClosestPointOnBounds(this.transform.position);
+            efePos.x = transform.position.x;
+            efePos.z = transform.position.z;
+
+            //エフェクトを衝突位置に
+            ((LetsPaintGameManager)GameManager.nowMiniGameManager).SplashEffect(efePos);
+
             isRespawn = true;
-            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerDead(this.transform.GetChild(3).GetComponent<PlayerNum>().playerNum);
             StartCoroutine(StartRespawn(2.0f));
+        }
+        else if(collision.transform.tag == "Player")
+        {
+            //エフェクトの発生位置を求める
+            Vector3 efePos = collision.ClosestPointOnBounds(this.transform.position);
+
+            //エフェクトを衝突位置に
+            ((LetsPaintGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
         }
     }
 
