@@ -8,7 +8,7 @@ public class CharaSelectOutlineInfo : MonoBehaviour
 {
 
     public Animator animator;
-    public Sprite playerImage;        //プレイヤー画像
+    public Sprite playerImage;         //プレイヤー画像
     private bool isSelect = false;     //選択されているかどうか
     public bool isAnimation = false;   //アニメーション中かどうか
     private byte selectPlayerNum = 0;  //選択しているプレイヤーの番号
@@ -17,6 +17,8 @@ public class CharaSelectOutlineInfo : MonoBehaviour
     private Vector3 initialRotate;          //初期回転
     public GameObject marubatu;             //◎×
     public GameObject marubatuParent;       //◎×の親
+    public string myName;                   //自分の名前
+    public string myImageName;              //自分の画像の名前
 
     // Start is called before the first frame update
     void Start()

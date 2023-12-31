@@ -67,6 +67,8 @@ public class CharaSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //各ライン初期化
         lineCharaTable[(byte)LineNum.ONE] = line1Chara;
         lineCharaTable[(byte)LineNum.TWO] = line2Chara;
         lineCharaTable[(byte)LineNum.THREE] = line3Chara;
@@ -120,7 +122,18 @@ public class CharaSelectManager : MonoBehaviour
         }
 
         //もし全員準備できたのならフェードイン
-        if(isAllPlayerOK()) fade.FadeIn(1.0f);
+        if (isAllPlayerOK())
+        {
+            //プレイヤーマネージャーに各プレイヤーの情報を設定
+            for (byte i = 1; i < PlayerManager.PLAYER_MAX + 1; i++)
+            {
+                PlayerManager.SetPlayerVisual(i, playerInfo[i].charaSelectOutlineInfo.myName);
+                PlayerManager.SetPlayerVisualImage(i, playerInfo[i].charaSelectOutlineInfo.myImageName);
+            }
+
+            //フェード
+            fade.FadeIn(1.0f);
+        }
     }
 
     //キャラ変更
