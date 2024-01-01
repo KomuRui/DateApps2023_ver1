@@ -95,6 +95,7 @@ public class MiniGameManager : MonoBehaviour
             // 新しいビューポート領域を設定する
             Rect newViewportRect = new Rect(0, 0, 1, 1);
             Camera.main.rect = newViewportRect;
+            Camera.main.targetTexture = null;
 
             //有効と無効切り替え
             for (int i = 0; i < threePlayerImage.Count; i++)
