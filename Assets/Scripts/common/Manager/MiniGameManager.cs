@@ -58,6 +58,7 @@ public class MiniGameManager : MonoBehaviour
     public GameObject rankText;         //順位テキスト
     public List<GameObject> killCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
     public TextMeshProUGUI redayText;   //準備のテキスト
+    public GameObject renderImage;      //描画用の画像
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
 
@@ -115,6 +116,9 @@ public class MiniGameManager : MonoBehaviour
                 onePlayerImage.gameObject.SetActive(true);
                 onePlayerImageTutorial.gameObject.SetActive(false);
             }
+
+            //描画用の画像を無効に
+            if(renderImage != null) renderImage.SetActive(false);
         }
         else
         {
