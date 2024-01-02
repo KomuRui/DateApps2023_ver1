@@ -57,7 +57,7 @@ public class MiniGameManager : MonoBehaviour
     public GameObject endText;          //終了テキスト
     public GameObject rankText;         //順位テキスト
     public List<GameObject> killCanvas; //固有のキャンバス(各ミニゲームに表示してるUI,結果発表の時に消したいキャンバス)
-    public TextMeshProUGUI redayText;   //準備のテキスト
+    public List<GameObject> okImage;    //okの画像
     public GameObject renderImage;      //描画用の画像
 
     ////////////////////////////////////ミニゲーム情報////////////////////////////////////////////
@@ -209,11 +209,10 @@ public class MiniGameManager : MonoBehaviour
                 if (!threePlayer[num]) lifeTime[num] += Time.deltaTime;
         }
         //チュートリアルが終わってないのなら
-        else if(redayText != null && !TutorialManager.isTutorialFinish)
+        else if(okImage != null && !TutorialManager.isTutorialFinish)
         {
             //時間と準備人数を表示
             TutorialManager.Update();
-            redayText.text = TutorialManager.GetReadyOKSum() + "/" + PlayerManager.PLAYER_MAX + " ok " + ((int)TutorialManager.tutorialTime).ToString();
 
             //全員が準備できたのなら
             if (TutorialManager.GetReadyOKSum() >= PlayerManager.PLAYER_MAX)

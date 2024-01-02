@@ -8,8 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public static class TutorialManager 
 {
 
-    private static Dictionary<int, bool> playerReadyOK = new Dictionary<int, bool>();
-    public static float tutorialTime = 45;
+    public static Dictionary<byte, bool> playerReadyOK = new Dictionary<byte, bool>();
     public static bool isTutorialFinish = false;
 
     ///test用
@@ -22,8 +21,8 @@ public static class TutorialManager
         if (isInitializOK) return;
 
         //プレイヤー番号分初期化
-        for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
-            playerReadyOK[i + 1] = false;
+        for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
+            playerReadyOK[(byte)(i + 1)] = false;
 
         isInitializOK = true;
     }
@@ -41,27 +40,23 @@ public static class TutorialManager
         if (Input.GetButtonDown("Startbutton4"))
             SetPlayerReadyOK(4);
 
-
-        //時間計測
-        tutorialTime -= Time.deltaTime;
-        tutorialTime = Mathf.Max(tutorialTime, 0);
-        if (tutorialTime <= 1)
-        {
-            GameManager.nowMiniGameManager.TutorialFinish();
-        }
+        //準備OKしているのなら画像を表示
+        MiniGameManager mana = GameManager.nowMiniGameManager;
+        for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
+            if (playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
     }
 
 
     //プレイヤーを準備OKに設定
-    public static void SetPlayerReadyOK(int playerNum) { playerReadyOK[playerNum] = true; }
+    public static void SetPlayerReadyOK(byte playerNum) { playerReadyOK[playerNum] = true; }
 
     //準備OKしているプレイヤーを取得
     public static int GetReadyOKSum()
     {
        int sum = 0;
 
-        for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
-            if (playerReadyOK[i + 1]) sum++;
+        for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
+            if (playerReadyOK[(byte)(i + 1)]) sum++;
 
         return sum;
     }
