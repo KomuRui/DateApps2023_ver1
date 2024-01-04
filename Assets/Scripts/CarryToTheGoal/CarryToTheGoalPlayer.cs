@@ -307,7 +307,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         if (other.transform.tag != "Player") return;
 
         //二段ジャンプの条件が成立しているのなら
-        if (rBody.velocity.y < 0 && other.transform.position.y < transform.position.y && isJump)
+        if (rBody.velocity.y < 100 && other.transform.position.y < transform.position.y && isJump)
         {
             //二段ジャンプ処理
             isJumpInvoke = true;
