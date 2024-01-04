@@ -28,10 +28,17 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private Vector3 localGravity;
+    [SerializeField] private float jumpPower = 0.05f;         // ジャンプ力
     private Rigidbody rBody;
     private Transform mainCameraTransform; // メインカメラのTransform
     private bool isDamege = false;
-    public bool isMuteki = false;
+    public bool isMuteki = false;          //大砲の玉当たらない無敵かどうか
+    private bool isJump = false; 
+    private bool isJumpInvoke = false;
+    private bool isJumpMuteki = false;     //ジャンプ当たらない無敵かどうか
+    private bool isStan = false;
+    private Vector3 initialScale;
+    private Vector3 stanScale;
 
     void Start()
     {
@@ -42,6 +49,9 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
 
         rBody = this.GetComponent<Rigidbody>();
+        initialScale = transform.localScale;
+        stanScale = transform.localScale;
+        stanScale.y = 1.3f;
     }
 
     //顔のテクスチャ設定
@@ -53,7 +63,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     void Update()
     {
         //開始していないか終わっているのなら
-        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isDamege) return;
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || isDamege || isStan) return;
 
         //状態更新
         StateUpdata();
@@ -61,6 +71,8 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         //動き
         Move();
 
+        //ジャンプ
+        Jump();
     }
 
     private void FixedUpdate()
@@ -93,9 +105,6 @@ public class CarryToTheGoalPlayer : MonoBehaviour
             return;
         }
 
-        //歩き状態に変更
-        ChangeStateTo(SlimeAnimationState.Walk);
-
         // カメラの向きを基準にプレイヤーを移動
         Vector3 forwardDirection = mainCameraTransform.forward;
         Vector3 rightDirection = mainCameraTransform.right;
@@ -104,8 +113,17 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         // 移動方向を計算
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
-        // 移動
-        rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        //歩き状態に変更
+        if (!isJump)
+        {
+            ChangeStateTo(SlimeAnimationState.Walk);
+            rBody.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            ChangeStateTo(SlimeAnimationState.Idle);
+            rBody.AddForce(moveDirection * moveSpeed * 10000 * Time.deltaTime);
+        }
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -115,10 +133,18 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     private void Jump()
     {
         //Aボタンが押されてないのならこの先処理しない
-        if (!Input.GetButtonDown("Abutton" + playerNum)) return;
+        if (!Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) || isJump) return;
+
+        //エフェクトの発生位置を求める
+        Vector3 efePos = transform.position;
+        efePos.y += 0.2f;
+
+        //エフェクト
+        //((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
 
         //ジャンプ状態に変更    
-        ChangeStateTo(SlimeAnimationState.Jump);
+        rBody.AddForce(Vector3.up * jumpPower);
+        isJump = true;
     }
 
     //状態更新
@@ -248,5 +274,64 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         GameManager.nowMiniGameManager.PlayerDead(this.gameObject.GetComponent<PlayerNum>().playerNum);
         Destroy(this.gameObject);
+    }
+
+    public void SetResetJump() { isJump = false; isJumpInvoke = false; }
+    public void SetResetMuteki() { isMuteki = false; }
+    public void SetResetStan()
+    {
+        isStan = false;
+        SetResetScale();
+    }
+    public void SetResetScale() { transform.localScale = initialScale; }
+    public void SetOhNoScale() { transform.localScale = stanScale; }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.tag == "CarryStage" && !isJumpInvoke && isJump)
+        {
+            //エフェクトの発生位置を求める
+            Vector3 efePos = other.contacts[0].point;
+            efePos.x = transform.position.x;
+            efePos.y += 0.2f;
+            efePos.z = transform.position.z;
+
+            //エフェクト
+           // ((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
+
+            //ジャンプのインターバル開始
+            isJumpInvoke = true;
+            Invoke("SetResetJump", 0.3f);
+        }
+
+        if (other.transform.tag != "Player") return;
+
+        //二段ジャンプの条件が成立しているのなら
+        if (rBody.velocity.y < 0 && other.transform.position.y < transform.position.y)
+        {
+            //二段ジャンプ処理
+            isJumpInvoke = true;
+            rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
+            Invoke("SetResetJump", 0.3f);
+
+            //エフェクトの発生位置を求める
+            Vector3 efePos = other.contacts[0].point;
+            efePos.x = transform.position.x;
+            efePos.z = transform.position.z;
+
+            //エフェクトを衝突位置に
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
+
+            //当たったプレイヤーを取得
+            CarryToTheGoalPlayer targetPlayer = other.transform.GetComponent<CarryToTheGoalPlayer>();
+
+            //無敵ならこの先処理しない
+            if (targetPlayer.isJumpMuteki) return;
+            targetPlayer.isJumpMuteki = true;
+            targetPlayer.isStan = true;
+            targetPlayer.Invoke("SetResetStan", 3.0f);
+            targetPlayer.Invoke("SetResetMuteki", 4.0f);
+            targetPlayer.SetOhNoScale();
+        }
     }
 }
