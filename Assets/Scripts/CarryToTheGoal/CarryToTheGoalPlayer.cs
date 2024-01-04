@@ -277,7 +277,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
     }
 
     public void SetResetJump() { isJump = false; isJumpInvoke = false; }
-    public void SetResetMuteki() { isMuteki = false; }
+    public void SetResetMuteki() { isJumpMuteki = false; }
     public void SetResetStan()
     {
         isStan = false;
@@ -288,7 +288,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "CarryStage" && !isJumpInvoke && isJump)
+        if (other.transform.tag == "CarryStage" && isJump)
         {
             //エフェクトの発生位置を求める
             Vector3 efePos = other.contacts[0].point;
@@ -307,12 +307,11 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         if (other.transform.tag != "Player") return;
 
         //二段ジャンプの条件が成立しているのなら
-        if (rBody.velocity.y < 0 && other.transform.position.y < transform.position.y)
+        if (rBody.velocity.y < 0 && other.transform.position.y < transform.position.y && isJump)
         {
             //二段ジャンプ処理
             isJumpInvoke = true;
             rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
-            Invoke("SetResetJump", 0.3f);
 
             //エフェクトの発生位置を求める
             Vector3 efePos = other.contacts[0].point;
@@ -320,7 +319,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
             efePos.z = transform.position.z;
 
             //エフェクトを衝突位置に
-            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
+            //((NotFallHoleGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
 
             //当たったプレイヤーを取得
             CarryToTheGoalPlayer targetPlayer = other.transform.GetComponent<CarryToTheGoalPlayer>();

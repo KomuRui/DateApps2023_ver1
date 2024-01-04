@@ -218,7 +218,7 @@ public class NotFallHolePlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate && !isJumpInvoke && isJump)
+        if (other.transform.tag == "Floor" && !other.transform.parent.GetComponent<FallRotateFloor>().isRotate  && isJump)
         {
             //エフェクトの発生位置を求める
             Vector3 efePos = other.contacts[0].point;
@@ -245,7 +245,6 @@ public class NotFallHolePlayer : MonoBehaviour
             //二段ジャンプ処理
             isJumpInvoke = true;
             rBody.AddForce(Vector3.up * (jumpPower * 0.8f));
-            Invoke("SetResetJump", 0.3f);
 
             //エフェクトの発生位置を求める
             Vector3 efePos = other.contacts[0].point;
