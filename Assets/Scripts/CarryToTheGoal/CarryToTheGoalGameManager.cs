@@ -18,6 +18,8 @@ public class CarryToTheGoalGameManager : MiniGameManager
     public LookOnTexture cannon;
     public bool isGoal = false;
     public int kill = 0;
+    public GameObject hitEffectParent;
+    public GameObject jumpEffectParent;
 
     // Start is called before the first frame update
     public override void SceneStart()
@@ -140,6 +142,50 @@ public class CarryToTheGoalGameManager : MiniGameManager
                 if (threePlayerObj[i] == null) continue;
                 if (player == threePlayerObj[i].GetComponent<PlayerNum>().playerNum) threePlayerObj[i].GetComponent<CarryToTheGoalPlayer>().Dead();
             }
+        }
+    }
+
+    //ジャンプエフェクトを表示
+    public void JumpEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < jumpEffectParent.transform.childCount; i++)
+        {
+            if (!jumpEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = jumpEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    //プレイヤー踏んだ時のエフェクトを表示
+    public void HitEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < hitEffectParent.transform.childCount; i++)
+        {
+            if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
         }
     }
 }

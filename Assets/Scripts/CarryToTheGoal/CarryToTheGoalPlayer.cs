@@ -140,7 +140,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         efePos.y += 0.2f;
 
         //エフェクト
-        //((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
+        ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
 
         //ジャンプ状態に変更    
         rBody.AddForce(Vector3.up * jumpPower);
@@ -291,13 +291,11 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         if (other.transform.tag == "CarryStage" && isJump)
         {
             //エフェクトの発生位置を求める
-            Vector3 efePos = other.contacts[0].point;
-            efePos.x = transform.position.x;
+            Vector3 efePos = transform.position;
             efePos.y += 0.2f;
-            efePos.z = transform.position.z;
 
             //エフェクト
-           // ((NotFallHoleGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
+            ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).JumpEffect(efePos);
 
             //ジャンプのインターバル開始
             isJumpInvoke = true;
@@ -319,7 +317,7 @@ public class CarryToTheGoalPlayer : MonoBehaviour
             efePos.z = transform.position.z;
 
             //エフェクトを衝突位置に
-            //((NotFallHoleGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
+            ((CarryToTheGoalGameManager)GameManager.nowMiniGameManager).HitEffect(efePos);
 
             //当たったプレイヤーを取得
             CarryToTheGoalPlayer targetPlayer = other.transform.GetComponent<CarryToTheGoalPlayer>();
