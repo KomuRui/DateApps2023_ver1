@@ -19,7 +19,7 @@ public class MagicHand : MonoBehaviour
 
     private GameObject preArm; // ‘O‚ÉL‚Ñ‚Ä‚½ƒA[ƒ€
     private int magicHandNum = 0;
-    private int maxRefrect = 1; 
+    private int maxRefrect = 1;
 
     private Vector3 defScale;
     private float speed = 0.008f;
@@ -31,12 +31,12 @@ public class MagicHand : MonoBehaviour
     {
         defScale = transform.localScale;
     }
-    
+
     // Update is called once per frame
     void Update()
     {
         //ˆê‰ñ‘å‚«‚­‚È‚è‚«‚Á‚½‚çˆ—‚ğ‚µ‚È‚¢
-        if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
+        if (transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
             isFinish = false;
 

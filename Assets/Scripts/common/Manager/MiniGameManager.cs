@@ -127,7 +127,8 @@ public class MiniGameManager : MonoBehaviour
         }
 
         //カウントダウンとタイマーを設定する
-        this.GetComponent<CountDownAndTimer>().SetCountDownAndTimer();
+        if(this.GetComponent<CountDownAndTimer>())
+            this.GetComponent<CountDownAndTimer>().SetCountDownAndTimer();
 
         //各プレイヤー番号設定
         onePlayer = PlayerManager.GetOnePlayer();
