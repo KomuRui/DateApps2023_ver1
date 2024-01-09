@@ -5,21 +5,29 @@ using UnityEngine;
 
 public class Anchor : GimmickBase
 {
-    private float anchorRotateLimit = 89;
+    private float anchorRotateLimit = 179;
     private bool isReverse = false; //動きが反対になっているかどうか
 
     //特定のアクションを起こす
     public override void Action()
     {
+
         ReverseMovement();
     }
 
     public override void GimmickStart()
     {
+
     }
 
     public override void GimmickUpdate()
     {
+    }
+
+    //回転を元に戻す
+    public void ReturnRotate()
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, 0), 1f).SetEase(Ease.OutQuad).OnComplete(ReverseMovement);
     }
 
     //動きを反対にする
@@ -28,12 +36,12 @@ public class Anchor : GimmickBase
         //通常の動き
         if (!isReverse)
         {
-            transform.DORotate(new Vector3(0, 0, anchorRotateLimit), 2f).SetEase(Ease.OutQuint).OnComplete(ReverseMovement);
+            transform.DOLocalRotate(new Vector3(0, 0, 360), 2f).SetEase(Ease.OutQuad).OnComplete(ReverseMovement);
         }
         //逆の動き
         else
         {
-            transform.DORotate(new Vector3(0, 0, -anchorRotateLimit), 2f).SetEase(Ease.OutQuint).OnComplete(ReverseMovement);
+            transform.DOLocalRotate(new Vector3(0, 0, -anchorRotateLimit), 2f).SetEase(Ease.OutQuad).OnComplete(ReverseMovement);
         }
         isReverse = !isReverse;
     }

@@ -36,7 +36,7 @@ public class MagicHand : MonoBehaviour
     void Update()
     {
         //ˆê‰ñ‘å‚«‚­‚È‚è‚«‚Á‚½‚çˆ—‚ğ‚µ‚È‚¢
-        if (transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
+        if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
             isFinish = false;
 
