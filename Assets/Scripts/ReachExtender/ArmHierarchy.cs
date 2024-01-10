@@ -84,6 +84,10 @@ public class ArmHierarchy : MonoBehaviour
                 isHitPlayer = true;
                 break;
             }
+            else
+            {
+                magicHandList[i].GetComponent<MagicHand>().isFinish = true;
+            }
         }
     }
 
