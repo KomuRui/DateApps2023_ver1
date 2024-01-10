@@ -1041,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438227196789953436, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1438227196789953436, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_IsActive
@@ -1113,7 +1113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5577237700908730004, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5892813528008477741, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1629,8 +1629,8 @@ GameObject:
   - component: {fileID: 999736384}
   - component: {fileID: 999736383}
   - component: {fileID: 999736382}
-  m_Layer: 0
-  m_Name: Cylinder
+  m_Layer: 2
+  m_Name: Vortex
   m_TagString: Vortex
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3269,9 +3269,6 @@ PrefabInstance:
       addedObject: {fileID: 1873743741}
     - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1873743737}
-    - targetCorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1873743742}
   m_SourcePrefab: {fileID: 100100000, guid: 31b477e177276454fb155279c175a2a2, type: 3}
 --- !u!4 &1873743735 stripped
@@ -3284,33 +3281,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6705402075998324148, guid: 31b477e177276454fb155279c175a2a2, type: 3}
   m_PrefabInstance: {fileID: 1873743734}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1873743737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873743736}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1eaa7226b529714785569666d05e213, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
-  SmileBody: {fileID: 124332063}
-  currentState: 0
-  animator: {fileID: 1873743738}
-  damType: 0
-  moveSpeed: 5
-  rotationSpeed: 180
-  isHorizontalInput: 1
-  isVerticalInput: 1
-  isAnimIdle: 1
-  isAnimWalk: 0
-  isAnimJump: 0
-  isAnimAttack: 1
-  isAnimDamage: 1
-  playerNum: 1
 --- !u!95 &1873743738
 Animator:
   serializedVersion: 5
@@ -3896,7 +3866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438227196789953436, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1438227196789953436, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_IsActive
@@ -3968,7 +3938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5577237700908730004, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5892813528008477741, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
       propertyPath: m_LocalPosition.y

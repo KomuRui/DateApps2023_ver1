@@ -33,6 +33,8 @@ public class ReachExtenderOnePlayer : MonoBehaviour
 
     private bool isMoving = false;
 
+    Rigidbody rb;
+
     void Start()
     {
         //マテリアル設定
@@ -40,6 +42,8 @@ public class ReachExtenderOnePlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -66,7 +70,6 @@ public class ReachExtenderOnePlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
