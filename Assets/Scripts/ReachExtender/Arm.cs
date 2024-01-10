@@ -27,4 +27,15 @@ public class Arm : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "ThreePlayer")
+        {
+            int a = 0;
+        }
+        else
+        {
+        }
+    }
 }

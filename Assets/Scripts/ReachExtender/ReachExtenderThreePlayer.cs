@@ -17,6 +17,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
+    Rigidbody rb;
+
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
     [SerializeField] private float rotationSpeed = 180.0f;    // プレイヤーの回転速度
     [SerializeField] private bool isHorizontalInput = true;   // 横の入力許可するか
@@ -38,6 +40,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
+
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -61,7 +65,6 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     //移動
     private void Move()
     {
-
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -90,7 +93,11 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // 移動
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        //transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        //rb.velocity = -moveDirection;
+
+        //transform.position.x = Math.Clamp(transform.position.x, -3.5f, 3.5f);
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
@@ -179,5 +186,15 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     public void Action()
     {
         SetIsMoving(true);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Vortex")
+        {
+        }
+        else
+        {
+        }
     }
 }
