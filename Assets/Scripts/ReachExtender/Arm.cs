@@ -7,6 +7,7 @@ public class Arm : MonoBehaviour
     //[SerializeField] List<GameObject> magicHandTopList = new List<GameObject>();
     //[SerializeField] List<GameObject> magicHandList = new List<GameObject>();
     [SerializeField] ArmHierarchy armHierarchy;
+    [SerializeField] ThrowAnimation rootBone;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +29,12 @@ public class Arm : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "ThreePlayer")
         {
-            int a = 0;
+            //ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ÉŒÄ‚ÔŠÖ”
+            armHierarchy.HitPlayer();
         }
         else
         {
