@@ -28,7 +28,7 @@ public class Bomb : GimmickBase
     void OnTriggerStay(Collider other)
     {
         //‚à‚µ‚à”š”­‚µ‚Ä‚¢‚½‚ç
-        if (isExplode)
+        if (isExplode && other.gameObject.tag == "Player")
         {
             Destroy(other.gameObject);
         }
