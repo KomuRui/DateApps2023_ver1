@@ -67,7 +67,16 @@ public class DeathRunPlayer : MonoBehaviour
 
         //状態更新
         StateUpdata();
+
+        //重力
+        SetLocalGravity();
     }
+
+    private void SetLocalGravity()
+    {
+        rb.AddForce(new Vector3(0,-3,0), ForceMode.Acceleration);
+    }
+
 
     //移動
     private void Move()
@@ -201,27 +210,48 @@ public class DeathRunPlayer : MonoBehaviour
         }
 
         //上にいかないように
-        transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
     }
 
     void OnTriggerStay(Collider other)
     {
-        //弾に当たったら
-        if (other.gameObject.tag == "Bullet")
-        {
-            Destroy(gameObject);
-        }
-
         //ゴールに触れたら
         if (other.gameObject.tag == "Goal")
         {
             isGoal = true;
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        //弾に当たったら
+        if (collision.gameObject.tag == "Bullet")
+        {
+            FallPlayer();
+        }
 
         //アンカーに当たったら時に
-        if (other.gameObject.tag == "Anchor")
+        if (collision.gameObject.tag == "Anchor")
         {
-            isGoal = true;
+            FallPlayer();
         }
+    }
+
+    //プレイヤー落下
+    public void FallPlayer()
+    {
+        rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+        rb.useGravity = true;
+        Invoke("DestroyPlayer", 1.0f);
+    }
+
+    void DestroyPlayer()
+    {
+        // ミニゲームに死んだことを伝える
+        //GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+        //GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+
+        //オブジェクトを削除
+        Destroy(this.gameObject);
     }
 }
