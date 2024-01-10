@@ -23,6 +23,7 @@ public class Bomb : GimmickBase
 
     public override void GimmickUpdate()
     {
+
     }
 
     void OnTriggerStay(Collider other)
@@ -30,16 +31,16 @@ public class Bomb : GimmickBase
         //‚à‚µ‚à”š”­‚µ‚Ä‚¢‚½‚ç
         if (isExplode && other.gameObject.tag == "Player")
         {
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<DeathRunPlayer>().FallPlayer();
         }
-        //Debug.Log(other.gameObject.name); // ‚Ô‚Â‚©‚Á‚½‘Šè‚Ì–¼‘O‚ğæ“¾
     }
 
     //”š”­ˆ—
     public void Explode()
     {
         isExplode = true;
-        Instantiate(explodeParticle, this.gameObject.transform);
+        explodeParticle.transform.position = transform.position;
+        Instantiate(explodeParticle, explodeParticle.transform);
         Invoke("ExplodeEnd", explodeTime);
     }
 
