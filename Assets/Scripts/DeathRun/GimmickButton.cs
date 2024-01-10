@@ -41,11 +41,13 @@ public class GimmickButton : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        isHit = true;
+        if(other.gameObject.tag == "OnePlayer")
+            isHit = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        isHit = false;
+        if (other.gameObject.tag == "OnePlayer")
+            isHit = false;
     }
 }
