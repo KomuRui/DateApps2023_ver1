@@ -11,6 +11,7 @@ public class ArmHierarchy : MonoBehaviour
 
     private bool isReverse = false;
     private bool isReverseHit = false;
+    private bool isHitPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,16 +22,18 @@ public class ArmHierarchy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(magicHandList.First().GetComponent<MagicHand>().bigMax && !isReverseHit)
+        if ((magicHandList.First().GetComponent<MagicHand>().bigMax && !isReverseHit) || isHitPlayer)
         {
             Invoke("SetReverseTrue", 3.0f);
             isReverseHit = true;
+            isHitPlayer = false;
         }
 
-        if(isReverse)
+        if (isReverse)
             Return();
     }
 
+    //マジックハンドを戻す処理
     public void Return()
     {
         bool allFinish = true;
@@ -66,6 +69,21 @@ public class ArmHierarchy : MonoBehaviour
         for (int i = 0; i < magicHandList.Count; i++)
         {
             magicHandList[i].GetComponent<MagicHand>().bigMax = false;
+        }
+    }
+
+    //プレイヤーに当たった時に呼ばれる処理
+    public void HitPlayer()
+    {
+        for (int i = 0; i < magicHandList.Count; i++)
+        {
+            //マジックハンドを戻す処理
+            if (magicHandList[i].activeSelf)
+            {
+                magicHandList[i].GetComponent<MagicHand>().bigMax = true;
+                isHitPlayer = true;
+                break;
+            }
         }
     }
 

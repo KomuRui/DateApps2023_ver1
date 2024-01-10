@@ -19,6 +19,8 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (other.tag == "Arm") return;
+
         if (other.tag == "Stage")
         {
             isHit = true;
