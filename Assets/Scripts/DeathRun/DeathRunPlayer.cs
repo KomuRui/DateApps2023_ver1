@@ -209,8 +209,9 @@ public class DeathRunPlayer : MonoBehaviour
             transform.position = new Vector3( vec.x, vec.y, vec.z);
         }
 
-        //è„Ç…Ç¢Ç©Ç»Ç¢ÇÊÇ§Ç…
-        //transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
+        //Ç‡ÇµèdóÕÇ™ìKópÇ≥ÇÍÇƒÇ¢Ç»Ç¢ÇÃÇ»ÇÁè„Ç…Ç¢Ç©Ç»Ç¢ÇÊÇ§Ç…
+        if(!rb.useGravity)
+            transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
     }
 
     void OnTriggerStay(Collider other)
