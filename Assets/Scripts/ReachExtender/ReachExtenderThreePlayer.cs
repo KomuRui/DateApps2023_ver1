@@ -17,6 +17,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
+    public Vector3 move;
+
     //Rigidbody rb;
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
@@ -97,6 +99,9 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+
+        if(move.x != 0 && move.y != 0 && move.z != 0)
+            transform.position += move;
     }
 
     //ジャンプ
@@ -192,5 +197,10 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         else
         {
         }
+    }
+
+    public void SetMove(Vector3 dir)
+    {
+        move = dir;
     }
 }
