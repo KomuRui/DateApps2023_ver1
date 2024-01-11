@@ -16,6 +16,8 @@ public class MagicHand : MonoBehaviour
     [SerializeField] private GameObject nextArmParentTop;
     [SerializeField] private GameObject myArmParentTop;
     [SerializeField] ArmHierarchy armHierarchy;
+    [SerializeField] Arm arm;
+    [SerializeField] private ThrowAnimation bone;
 
     private GameObject preArm; // 前に伸びてたアーム
     private int magicHandNum = 0;
@@ -38,6 +40,9 @@ public class MagicHand : MonoBehaviour
         //一回大きくなりきったら処理をしない
         if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
+            //アームがプレイヤーを捕まえないようにする
+            arm.SetIsActive(false);
+
             isFinish = false;
 
             //伸びる
@@ -94,12 +99,19 @@ public class MagicHand : MonoBehaviour
     //伸びる処理
     public void Extend()
     {
+        //アームがプレイヤーを捕まえるようにする
+        arm.SetIsActive(true);
+
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed);
     }
 
     //戻る処理
     public void Return()
     {
+        //アームがプレイヤーを捕まえないようにする
+        arm.SetIsActive(false);
+
+
         myArmParentTop.GetComponent<MagicHandIsHit>().isHit = false;
 
         bigMax = true;
@@ -115,6 +127,7 @@ public class MagicHand : MonoBehaviour
             {
                 transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().SetIsMoving(false);
                 isFinish = true;
+                if (bone != null)  bone.Throw();
             }
             else
             {
