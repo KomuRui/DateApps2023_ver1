@@ -57,4 +57,9 @@ public class Arm : MonoBehaviour
         isActive = a;
     }
 
+    public GameObject GetHitPlayer()
+    {
+        return hitPlayer;
+    }
+
 }

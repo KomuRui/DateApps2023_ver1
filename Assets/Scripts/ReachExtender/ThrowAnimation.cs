@@ -23,7 +23,6 @@ public class ThrowAnimation : MonoBehaviour
 
     public void Throw()
     {
-        arm.hitPlayer = null;
         transform.DOLocalRotate(new Vector3( 30, 180, 0), 0.5f).SetEase(Ease.OutQuad).OnComplete(TurnBack);
     }
 
@@ -31,5 +30,6 @@ public class ThrowAnimation : MonoBehaviour
     {
         transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f).SetEase(Ease.OutQuad);
         armChild.PlayerMove();
+        arm.hitPlayer = null;
     }
 }
