@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ArmChild : MonoBehaviour
 {
+    [SerializeField] private Arm arm;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,9 @@ public class ArmChild : MonoBehaviour
 
         if (UnityEngine.Physics.Raycast(ray, out rayHit, 9999))
         {
-            transform.parent.GetComponent<Arm>().hitPlayer.GetComponent<ReachExtenderThreePlayer>().move = rayHit.normal * 100;
+            Arm am = transform.parent.GetComponent<Arm>();
+            GameObject go = am.GetHitPlayer();
+            go.GetComponent<ReachExtenderThreePlayer>().SetMove(rayHit.normal * 100);
         }
     }
 }

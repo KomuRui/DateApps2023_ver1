@@ -198,4 +198,9 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         {
         }
     }
+
+    public void SetMove(Vector3 dir)
+    {
+        move = dir;
+    }
 }
