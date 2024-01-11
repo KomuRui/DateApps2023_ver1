@@ -55,10 +55,10 @@ public class Bomb : GimmickBase
     {
         isExplode = true;
         explodeParticle.transform.position = transform.position;
-        GameObject o = Instantiate(explodeParticle, this.transform);
-        o.transform.position = transform.position;
-        o.transform.localScale = transform.localScale;
-        Invoke("ExplodeEnd", explodeTime);
+        GameObject o = Instantiate(explodeParticle, this.transform.parent.transform);
+        o.transform.localScale = Vector3.one;
+        o.transform.transform.position = transform.position;
+        Destroy(gameObject);
     }
 
     //îöî≠Ç™èIÇÌÇ¡ÇΩÇÁ
