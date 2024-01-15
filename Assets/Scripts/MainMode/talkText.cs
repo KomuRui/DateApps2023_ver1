@@ -9,7 +9,8 @@ public class talkText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private List<string> talk;
-    [SerializeField] private float interval; //インターバル
+    [SerializeField] private float interval;       //インターバル
+    [SerializeField] private GameObject nextImage; //次への画像
     private int nowLookTalkNum = 0;  //現在見ている会話の要素番号
     private int nowLookTextNum = 0;  //現在見ている文字の要素番号
     private bool isTalkChangeWait = false;   //会話変更待機するか
@@ -26,7 +27,10 @@ public class talkText : MonoBehaviour
     {
         //もし会話変更待機中にAボタンが押されたのなら次の会話へ
         if (isTalkChangeWait && Input.GetButtonDown("Abutton1"))
+        {
+            nextImage.SetActive(false);
             NextTalk();
+        }
     }
     
     //次の文字表示
@@ -38,6 +42,7 @@ public class talkText : MonoBehaviour
         if (nowLookTextNum >= talk[nowLookTalkNum].Length)
         {
             nowLookTalkNum++;
+            nextImage.SetActive(true);
             isTalkChangeWait = true;
         }
         else
