@@ -116,7 +116,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0ac85d6e19b5e24419fc938040be61e1, type: 2}
+  - {fileID: 2100000, guid: 190772930060a8b408784934afe5e772, type: 2}
   - {fileID: 2100000, guid: 4d0ca150427ac2f41b5cd8b25e023e6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -317,7 +317,7 @@ Transform:
   - {fileID: 5832484587888891764}
   - {fileID: 7168985933555695228}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9041406780090006519
 Animator:
@@ -480,6 +480,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 8.754
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7f9934f54349dc2489d80b0298740ae5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9002de72ed81cf54d9d80235d938d188, type: 2}
     - target: {fileID: 919132149155446097, guid: 7f9934f54349dc2489d80b0298740ae5, type: 3}
       propertyPath: m_Name
       value: Crown
