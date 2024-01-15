@@ -100,9 +100,24 @@ public class StageSelect : MonoBehaviour
     }
 
     //ミニゲーム開始
-    private void MiniGameStart()
+    IEnumerator MiniGameStart(float delay)
     {
+        yield return new WaitForSeconds(delay);
 
+        // Materialの元の名前を取得する
+        string originalName = mainImage. material.name.Replace("(Instance)", "").Trim();
+        SceneManager.LoadScene(originalName);
+    }
+
+    //画像のアニメーション
+    IEnumerator ImageAnimation(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //サブ画像を変更
+        subImage[StageSelectManager.GetNowRound() - 1].material = mainImage.material;
+        fade.FadeIn(fadeTime);
+        StartCoroutine(MiniGameStart(fadeTime));
     }
 
     //ミニゲームをランダムにスタート
@@ -123,7 +138,7 @@ public class StageSelect : MonoBehaviour
 
         //一定の速度にきたら終わり
         if (nextImageTime >= 0.60f)
-            MiniGameStart();
+            StartCoroutine(ImageAnimation(0.5f));
         else
             StartCoroutine(MiniGameRandom(nextImageTime));
 
