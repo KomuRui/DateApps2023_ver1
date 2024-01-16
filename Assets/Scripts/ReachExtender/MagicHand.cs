@@ -41,7 +41,7 @@ public class MagicHand : MonoBehaviour
         if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
             //アームがプレイヤーを捕まえないようにする
-            arm.SetIsActive(false);
+            //arm.SetIsActive(false);
 
             isFinish = false;
 
@@ -51,7 +51,7 @@ public class MagicHand : MonoBehaviour
             MagicHandIsHit magicHandHit = myArmParentTop.GetComponent<MagicHandIsHit>();
 
             //ステージに当たったら反射の処理
-            if (!magicHandHit.isHit) return;
+            if (magicHandHit == null || !magicHandHit.isHit) return;
 
             bigMax = true;
 
