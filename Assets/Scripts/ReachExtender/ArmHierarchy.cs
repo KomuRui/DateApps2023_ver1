@@ -68,7 +68,11 @@ public class ArmHierarchy : MonoBehaviour
         isReverse = true;
         for (int i = 0; i < magicHandList.Count; i++)
         {
-            magicHandList[i].GetComponent<MagicHand>().bigMax = false;
+            if (magicHandList[i].activeSelf)
+            {
+                magicHandList[i].GetComponent<MagicHand>().bigMax = false;
+                return;
+            }
         }
     }
 
