@@ -38,6 +38,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     private bool isMoving = false;
     private bool isDead = false;
 
+    Rigidbody rb;
+
     private Transform mainCameraTransform; // メインカメラのTransform
 
     void Start()
@@ -48,7 +50,7 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
 
-        //rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -111,8 +113,6 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-
-       
     }
 
     //ジャンプ
@@ -226,5 +226,9 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         Vector3 vecUp = Vector3.up * 1f - gravity;
         transform.position += (move.normalized + vecUp) * defeatedSpeed * Time.deltaTime;
         gravity.y += 0.002f;
+
+        //Vector3 vecUp = Vector3.up * 1f - gravity;
+        //rb.AddForce((move.normalized + vecUp) * defeatedSpeed * Time.deltaTime);
+        //gravity.y += 0.002f;
     }
 }
