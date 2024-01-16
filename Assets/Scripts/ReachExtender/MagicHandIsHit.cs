@@ -19,7 +19,7 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Arm") return;
+        //if (other.tag == "Arm") return;
 
         if (other.tag == "Stage")
         {
