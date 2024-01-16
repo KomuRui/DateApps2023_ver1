@@ -60,7 +60,6 @@ public class DeathRunOnePlayer : MonoBehaviour
     //ˆÚ“®
     private void Move()
     {
-
         // “ü—Í‚ðŽæ“¾—p
         float horizontalInput = 0;
         float verticalInput = 0;

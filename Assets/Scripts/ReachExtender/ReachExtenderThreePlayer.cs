@@ -19,6 +19,10 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     private Vector3 move;
 
+    [SerializeField] float defeatedSpeed = 1f;
+
+    private Vector3 gravity = new Vector3(0f, 0f, 0f);
+
     //Rigidbody rb;
 
     [SerializeField] private float moveSpeed = 5.0f;          // プレイヤーの移動速度
@@ -32,6 +36,9 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
     private bool isMoving = false;
+    private bool isDead = false;
+
+    Rigidbody rb;
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -43,7 +50,7 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         // メインカメラを取得
         mainCameraTransform = Camera.main.transform;
 
-        //rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -54,6 +61,13 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     void Update()
     {
+        //やられていたら
+        if (isDead)
+        {
+            Defeated();
+            return;
+        }
+
         //動いていたら
         if (isMoving) return;
 
@@ -99,9 +113,6 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-
-        if(move.x != 0 || move.y != 0 ||  move.z != 0)
-            transform.position += move * Time.deltaTime;
     }
 
     //ジャンプ
@@ -202,5 +213,22 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     public void SetMove(Vector3 dir)
     {
         move = dir;
+    }
+
+    public void SetIsDead(bool a)
+    {
+        isDead = a;
+    }
+
+    //倒された時の処理
+    public void Defeated()
+    {
+        Vector3 vecUp = Vector3.up * 1f - gravity;
+        transform.position += (move.normalized + vecUp) * defeatedSpeed * Time.deltaTime;
+        gravity.y += 0.002f;
+
+        //Vector3 vecUp = Vector3.up * 1f - gravity;
+        //rb.AddForce((move.normalized + vecUp) * defeatedSpeed * Time.deltaTime);
+        //gravity.y += 0.002f;
     }
 }
