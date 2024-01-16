@@ -32,7 +32,6 @@ public class NotFallHoleGameManager : MiniGameManager
     //ƒQ[ƒ€I—¹‚ÉŒÄ‚Î‚ê‚é
     public override void MiniGameFinish()
     {
-        
         //‚Pl‘¤‚ªŸ‚Á‚½‚©‚Ç‚¤‚©
         bool isWinOnePLayer = false;
 

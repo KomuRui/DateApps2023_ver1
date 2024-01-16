@@ -16,7 +16,12 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private GameObject rankText;   
     [SerializeField] private GameObject mainModeWinPlayerCanvas;
+    [SerializeField] private MeshRenderer mainImage;
+    [SerializeField] private List<MeshRenderer> subImage;
+    [SerializeField] private List<Material> miniGameMaterial;
+    [SerializeField] private float nextImageTime;
 
+    private int nowLookMaterialNum = 0;
     private bool isResultFinish;
 
     // Start is called before the first frame update
@@ -53,16 +58,16 @@ public class StageSelect : MonoBehaviour
         fade.FadeOut(fadeTime);
         roundText.text = StageSelectManager.GetNowRound() + "/4";
 
-        //順位テキスト表示
-        for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
-        {
-            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text
-                = ScoreManager.GetRank((byte)(i + 1)).ToString() + "位 " + ScoreManager.GetScore((byte)(i + 1)).ToString() + "P";
-        }
-        Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
+        ////順位テキスト表示
+        //for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
+        //{
+        //    rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text
+        //        = ScoreManager.GetRank((byte)(i + 1)).ToString() + "位 " + ScoreManager.GetScore((byte)(i + 1)).ToString() + "P";
+        //}
+        //Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
         //4秒後に開始
-        StartCoroutine(StartSceneChange(4.0f));
+        //StartCoroutine(StartSceneChange(4.0f));
     }
 
     // Update is called once per frame
@@ -87,10 +92,56 @@ public class StageSelect : MonoBehaviour
         }
     }
 
+    //モード選択に戻す
     private void GoModeSelect()
     {
         if (Input.GetButtonDown("Abutton1")) 
             SceneManager.LoadScene("ModeSelect");
+    }
+
+    //ミニゲーム開始
+    IEnumerator MiniGameStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Materialの元の名前を取得する
+        string originalName = mainImage. material.name.Replace("(Instance)", "").Trim();
+        SceneManager.LoadScene(originalName);
+    }
+
+    //画像のアニメーション
+    IEnumerator ImageAnimation(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //サブ画像を変更
+        subImage[StageSelectManager.GetNowRound() - 1].material = mainImage.material;
+        fade.FadeIn(fadeTime);
+        StartCoroutine(MiniGameStart(fadeTime));
+    }
+
+    //ミニゲームをランダムにスタート
+    public IEnumerator MiniGameRandom(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //マテリアルを新たに変更
+        mainImage.material = miniGameMaterial[nowLookMaterialNum];
+        nowLookMaterialNum += 1;
+
+        //要素数をオーバーしているのなら0に戻す
+        if (miniGameMaterial.Count <= nowLookMaterialNum)
+            nowLookMaterialNum = 0;
+
+        //次の画像に移る秒数を増やす
+        nextImageTime += Random.Range(0.005f, 0.02f);
+
+        //一定の速度にきたら終わり
+        if (nextImageTime >= 0.60f)
+            StartCoroutine(ImageAnimation(0.5f));
+        else
+            StartCoroutine(MiniGameRandom(nextImageTime));
+
     }
 
     //結果発表終了
