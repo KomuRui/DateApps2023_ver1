@@ -308,7 +308,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
@@ -552,7 +551,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 173389783}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
@@ -1483,7 +1481,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 692005704}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
@@ -2618,7 +2615,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 1235113567}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
@@ -2721,6 +2717,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.001, y: 0.0019480684, z: 0.02000001}
   m_Center: {x: 0.0000000013969839, y: 0, z: -0.0000000018626451}
+--- !u!54 &1288733452
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288733440}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1355302769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1438227196789953436, guid: 2f10a1ef80296e44489760363aca229d, type: 3}
@@ -3465,6 +3488,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: afe939a56d1be7449aebae2ffe49f00c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288733448}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: afe939a56d1be7449aebae2ffe49f00c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288733452}
   m_SourcePrefab: {fileID: 100100000, guid: afe939a56d1be7449aebae2ffe49f00c, type: 3}
 --- !u!1001 &1873743734
 PrefabInstance:
@@ -3966,7 +3992,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
@@ -4149,7 +4174,6 @@ MonoBehaviour:
   currentState: 0
   animator: {fileID: 0}
   damType: 0
-  move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   rotationSpeed: 180
   isHorizontalInput: 1
