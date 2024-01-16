@@ -48,8 +48,10 @@ public class MagicHand : MonoBehaviour
             //伸びる
             Extend();
 
+            MagicHandIsHit magicHandHit = myArmParentTop.GetComponent<MagicHandIsHit>();
+
             //ステージに当たったら反射の処理
-            if (myArmParentTop.GetComponent<MagicHandIsHit>() == null || !myArmParentTop.GetComponent<MagicHandIsHit>().isHit) return;
+            if (!magicHandHit.isHit) return;
 
             bigMax = true;
 
