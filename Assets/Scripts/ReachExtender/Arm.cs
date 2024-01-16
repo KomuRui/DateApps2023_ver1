@@ -44,8 +44,12 @@ public class Arm : MonoBehaviour
         if (other.tag == "ThreePlayer" && isActive)
         {
             //ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ÉŒÄ‚ÔŠÖ”
-            armHierarchy.HitPlayer();
-            hitPlayer = other.gameObject;
+            //armHierarchy.HitPlayer();
+            //hitPlayer = other.gameObject;
+
+            Vector3 vector3 = other.transform.position - transform.position;
+
+            other.GetComponent<ReachExtenderThreePlayer>().SetMove(vector3.normalized);
         }
         else
         {

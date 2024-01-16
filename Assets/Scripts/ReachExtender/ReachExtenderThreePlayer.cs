@@ -17,7 +17,7 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     private Material faceMaterial;
 
-    public Vector3 move;
+    private Vector3 move;
 
     //Rigidbody rb;
 
@@ -100,8 +100,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
 
-        if(move.x != 0 && move.y != 0 && move.z != 0)
-            transform.position += move;
+        if(move.x != 0 || move.y != 0 ||  move.z != 0)
+            transform.position += move * Time.deltaTime;
     }
 
     //ƒWƒƒƒ“ƒv

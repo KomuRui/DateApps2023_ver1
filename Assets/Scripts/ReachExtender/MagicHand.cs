@@ -24,7 +24,7 @@ public class MagicHand : MonoBehaviour
     private int maxRefrect = 1;
 
     private Vector3 defScale;
-    private float speed = 0.008f;
+    private float speed = 8f;
 
     public bool isFinish = false;
 
@@ -104,7 +104,7 @@ public class MagicHand : MonoBehaviour
         //アームがプレイヤーを捕まえるようにする
         arm.SetIsActive(true);
 
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed);
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);
     }
 
     //戻る処理
@@ -117,7 +117,7 @@ public class MagicHand : MonoBehaviour
         myArmParentTop.GetComponent<MagicHandIsHit>().isHit = false;
 
         bigMax = true;
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - speed * 1.5f);
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - speed * 1.5f * Time.deltaTime);
 
         if (defScale.z >= transform.localScale.z)
         {
