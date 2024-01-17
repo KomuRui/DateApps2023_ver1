@@ -12,6 +12,7 @@ public class ThreePlayerMagicHand : MonoBehaviour
     [SerializeField] private GameObject myArmParentTop;
     [SerializeField] ThreeArm arm;
     private Vector3 defScale;
+    [SerializeField] float limitSize = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +51,18 @@ public class ThreePlayerMagicHand : MonoBehaviour
     {
         //アームがプレイヤーをスタンさせないようにする
         arm.SetIsActive(true);
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);
+        Vector3 vec = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);
+
+        //長さが限界を超えていたら
+        if (limitSize <= transform.localScale.z)
+        {
+            bigMax = true;
+            return;
+        }
+
+        transform.localScale = vec;
+
+        
     }
 
     //戻る処理

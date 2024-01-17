@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Vortex : MonoBehaviour
 {
+    [SerializeField] private bool isSpown = false;
+    [SerializeField] private float despawnTime = 3f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,14 +17,26 @@ public class Vortex : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isSpown) return;
+
+        //数秒に非アクティブになる
+        Invoke("Despawn", despawnTime);
+        isSpown = true;
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "ThreePlayer")
         {
-            other.transform.position = Vector3.Normalize(transform.position - other.transform.position) * 0.02f;
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            rb.AddForce((transform.position - other.transform.position).normalized * 6000f * Time.deltaTime);
         }
+    }
+
+    //デスポーン
+    public void Despawn()
+    {
+        this.gameObject.SetActive(false);
+        isSpown = false;
     }
 }
