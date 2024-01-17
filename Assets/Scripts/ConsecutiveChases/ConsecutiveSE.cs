@@ -29,6 +29,7 @@ public class ConsecutiveSE : MonoBehaviour
     public float MissAudio()
     {
         audioSource.PlayOneShot(miss);
+        Debug.Log("miss");
         return longTime;
     }
 

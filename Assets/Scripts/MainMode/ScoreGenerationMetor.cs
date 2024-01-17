@@ -8,7 +8,9 @@ public class ScoreGenerationMetor : MonoBehaviour
 {
     [SerializeField] private List<GameObject> metorPointObj;
     [SerializeField] private List<Transform> generationPos;
+    [SerializeField] private List<ScoreMetor> scoreMetor;
     [SerializeField] private float generationTime;
+    private List<bool> isFinish = new List<bool>();
     public List<int> generationNum;
     public int pointNum;
 
@@ -16,7 +18,8 @@ public class ScoreGenerationMetor : MonoBehaviour
     void Start()
     {
         pointNum = 1;
-        //GenerationStart();
+        for (int i = 0; i < metorPointObj.Count; i++)
+            isFinish.Add(false);
     }
 
     // Update is called once per frame
@@ -25,19 +28,28 @@ public class ScoreGenerationMetor : MonoBehaviour
     }
 
     //生成
-    IEnumerator Generation(float delay,int num,int point,Vector3 pos, GameObject metorPointObj)
+    IEnumerator Generation(float delay,int num,int point)
     {
         yield return new WaitForSeconds(delay);
 
-        if (num > 0)
+        if (generationNum[num] > 0)
         {
             //ポイント生成
-            GameObject g = Instantiate(metorPointObj, pos, Quaternion.identity);
+            GameObject g = Instantiate(metorPointObj[num], generationPos[num].position, Quaternion.identity);
             g.GetComponent<ScoreMetorPoint>().myPosNum = point;
             point++;
-            num--;
-            StartCoroutine(Generation(generationTime, num, point, pos, metorPointObj));
+            generationNum[num]--;
+            StartCoroutine(Generation(generationTime, num, point));
         }
+        else
+            StartCoroutine(finish(3, num));
+    }
+
+    //生成
+    IEnumerator finish(float delay, int num)
+    {
+        yield return new WaitForSeconds(delay);
+        isFinish[num] = true;
     }
 
     //生成開始
@@ -47,7 +59,16 @@ public class ScoreGenerationMetor : MonoBehaviour
         for(int i = 0; i < metorPointObj.Count; i++)
         {
             if (generationNum[i] > 0)
-                StartCoroutine(Generation(2,generationNum[i], pointNum, generationPos[i].position, metorPointObj[i]));
+                StartCoroutine(Generation(2,i, pointNum));
         }
+    }
+
+    //生成が終了したかどうか
+    public bool IsGeneratioonFinish()
+    {
+        for (int i = 0; i < isFinish.Count; i++)
+            if (!isFinish[i]) return false;
+
+        return true;
     }
 }
