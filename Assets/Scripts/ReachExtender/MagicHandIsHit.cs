@@ -22,10 +22,6 @@ public class MagicHandIsHit : MonoBehaviour
         {
             isHit = true;
         }
-        else
-        {
-            isHit = false;
-        }
     }
 
     void OnTriggerExit(Collider other)
