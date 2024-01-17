@@ -37,6 +37,7 @@ public class ConsecutivePlayer : MonoBehaviour
     [SerializeField] private float buttonCount = 0.0f;           // 入力を取得用
     [SerializeField] private int playerNum;                   // プレイヤー番号
     [SerializeField] private ChasesManager chasesManager;     //マネージャー
+    [SerializeField] private ConsecutiveSE se;                          //SE
 
     public int threePlayerNum = 0;
     public bool buttonFlag = true;
@@ -268,6 +269,8 @@ public class ConsecutivePlayer : MonoBehaviour
 
             isDead = true;
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+
+            se.MissAudio();
             //ゲームマネージャーに終わったことを伝える
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
@@ -321,4 +324,5 @@ public class ConsecutivePlayer : MonoBehaviour
     {
         isMiss = false;
     }
+
 }
