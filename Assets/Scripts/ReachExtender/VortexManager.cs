@@ -6,6 +6,9 @@ public class VortexManager : MonoBehaviour
 {
     [SerializeField] private float instanceTime = 5f;
     [SerializeField] private List<Vortex> vortexList;
+    [SerializeField] private GameObject stage;
+    [SerializeField] private float radius = 6f;
+    [SerializeField] private float VertexRadius = 4f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +26,50 @@ public class VortexManager : MonoBehaviour
     private IEnumerator VortexInstance()
     {
         yield return new WaitForSeconds(instanceTime);
-        foreach (var vortex in vortexList)
+
+        Vector3 prePos = Vector3.positiveInfinity;
+
+        //‰Q‚ÌˆÊ’u‚ðŒˆ‚ß‚é
+        for (int i = 0; i < vortexList.Count; i++)
         {
-            vortex.gameObject.SetActive(true);
+            //‰Q‚ðƒAƒNƒeƒBƒu‚É
+            vortexList[i].gameObject.SetActive(true);
+
+            //‰Q‚ÌˆÊ’u‚ð•ÏX
+            Vector3 tmp = VertexPositionChange();
+            vortexList[i].transform.position = new Vector3(tmp.x, vortexList[i].transform.position.y, tmp.z);
+
+            //‰Q“¯Žm‚ª‚Ô‚Â‚©‚ç‚È‚¢‚æ‚¤‚É
+            float distance = 9999;
+
+            //“ñ‰ñ–Ú‚È‚ç
+            if (prePos != Vector3.positiveInfinity)
+            {
+                //‰Q“¯Žm‚Ì‹——£‚ðŒvŽZ
+                distance = Vector3.Distance(prePos, vortexList[i].transform.position);
+            }
+
+            if (distance < VertexRadius && prePos != Vector3.positiveInfinity)
+            {
+                i--;
+                continue;
+            }
+            prePos = vortexList[i].transform.position;
         }
 
         //‚à‚¤ˆê‰ñƒRƒ‹[ƒ`ƒ“‚ðŒÄ‚Ô
         StartCoroutine(VortexInstance());
+    }
+
+    //‰Q‚ÌˆÊ’u
+    public Vector3 VertexPositionChange()
+    {
+        //ƒ‰ƒ“ƒ_ƒ€‚ÉƒxƒNƒgƒ‹‚ðì¬
+        return stage.transform.position + (RandDirection() * Random.Range(0f, radius));
+    }
+
+    public Vector3 RandDirection()
+    {
+        return new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)).normalized;
     }
 }

@@ -12,7 +12,7 @@ public class Vortex : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       // this.GetComponent<Physics>().
     }
 
     // Update is called once per frame
@@ -32,6 +32,10 @@ public class Vortex : MonoBehaviour
             Rigidbody rb = other.GetComponent<Rigidbody>();
             rb.AddForce((transform.position - other.transform.position).normalized * speed * Time.deltaTime);
         }
+        if (other.tag == "Stage")
+        {
+
+        }
     }
 
     //デスポーン
@@ -40,4 +44,6 @@ public class Vortex : MonoBehaviour
         this.gameObject.SetActive(false);
         isSpown = false;
     }
+
+    
 }
