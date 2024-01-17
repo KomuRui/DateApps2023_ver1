@@ -6,6 +6,7 @@ public class Vortex : MonoBehaviour
 {
     [SerializeField] private bool isSpown = false;
     [SerializeField] private float despawnTime = 3f;
+    [SerializeField] private float speed = 4000f;
 
 
     // Start is called before the first frame update
@@ -29,7 +30,7 @@ public class Vortex : MonoBehaviour
         if (other.tag == "ThreePlayer")
         {
             Rigidbody rb = other.GetComponent<Rigidbody>();
-            rb.AddForce((transform.position - other.transform.position).normalized * 6000f * Time.deltaTime);
+            rb.AddForce((transform.position - other.transform.position).normalized * speed * Time.deltaTime);
         }
     }
 
