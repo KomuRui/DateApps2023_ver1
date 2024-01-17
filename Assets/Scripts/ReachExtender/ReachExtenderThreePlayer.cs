@@ -19,9 +19,12 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     private Vector3 move;
 
-    [SerializeField] float defeatedSpeed = 1f;
+    [SerializeField] private float defeatedSpeed = 1f;
 
     private Vector3 gravity = new Vector3(0f, 0f, 0f);
+
+    [SerializeField] private bool isStan;
+    [SerializeField] private bool isInvincible = false;
 
     //Rigidbody rb;
 
@@ -37,6 +40,8 @@ public class ReachExtenderThreePlayer : MonoBehaviour
     [SerializeField] private int playerNum;                   // プレイヤー番号
     private bool isMoving = false;
     private bool isDead = false;
+    private float stanTime = 2f;
+    [SerializeField] private float invincibleTime = 2;
 
     Rigidbody rb;
 
@@ -68,8 +73,17 @@ public class ReachExtenderThreePlayer : MonoBehaviour
             return;
         }
 
+        if (isStan && !isInvincible)
+        {
+            Invoke("StanCancellation", stanTime);
+            isInvincible = true;
+        }
+
         //動いていたら
-        if (isMoving) return;
+        if (isMoving || isStan) return;
+
+        //ボタンを押すとパンチする
+        Action();
 
         //動き
         Move();
@@ -197,6 +211,9 @@ public class ReachExtenderThreePlayer : MonoBehaviour
 
     public void Action()
     {
+        //Aボタンが押されてないのならこの先処理しない
+        if (!Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum)) return;
+
         SetIsMoving(true);
     }
 
@@ -230,5 +247,28 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         //Vector3 vecUp = Vector3.up * 1f - gravity;
         //rb.AddForce((move.normalized + vecUp) * defeatedSpeed * Time.deltaTime);
         //gravity.y += 0.002f;
+    }
+
+    public void SetStan(bool a)
+    {
+        isStan = a;
+    }
+
+    //スタン解除
+    public void StanCancellation()
+    {
+        isStan = false;
+        Invoke("InvincibleCancellation", invincibleTime);
+    }
+
+    //無敵解除
+    public void InvincibleCancellation()
+    {
+        isInvincible = false;
+    }
+
+    public void SetInvincible(bool a)
+    {
+        isInvincible = a;
     }
 }

@@ -6,6 +6,7 @@ using DG.Tweening;
 public class HammerOnePlayer : MonoBehaviour
 {
     [SerializeField] private GameObject HammerOb;  // ÉnÉìÉ}Å[
+    [SerializeField] private HammerSE se;           //SE
     private Vector3 initializeRotate;
     private Vector3 AttackRotate;
     private bool isAttack;
@@ -31,9 +32,10 @@ public class HammerOnePlayer : MonoBehaviour
             //HammerOb.transform.DORotate(AttackRotate, 0.5f);
             HammerOb.transform.DORotate(AttackRotate, 0.5f).SetEase(Ease.InBack);
 
+            Invoke("HammerAttack", 0.3f);
             //1.5ïbå„Ç…Ç†Ç∞ÇÈ
             Invoke("HammerUp", 1.5f);
-            Invoke("HammerAttack", 2.5f);
+            Invoke("HammerReady", 2.5f);
 
         }
     }
@@ -44,9 +46,13 @@ public class HammerOnePlayer : MonoBehaviour
         HammerOb.transform.DORotate(initializeRotate, 1.0f).SetEase(Ease.InQuad);
     }
 
-    public void HammerAttack()
+    public void HammerReady()
     {
         isAttack = true;
     }
 
+    public void HammerAttack()
+    {
+        se.HammerAudio();
+    }
 }
