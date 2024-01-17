@@ -2802,6 +2802,7 @@ MonoBehaviour:
   flagState: 
   ranking: 0
   GMOb: {fileID: 0}
+  se: {fileID: 0}
 --- !u!114 &543451903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2815,6 +2816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HammerOb: {fileID: 1770408317}
+  se: {fileID: 834899575}
 --- !u!114 &543451904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4535,7 +4537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 834899574}
   - component: {fileID: 834899573}
-  - component: {fileID: 834899572}
+  - component: {fileID: 834899575}
   m_Layer: 0
   m_Name: SE
   m_TagString: Untagged
@@ -4543,20 +4545,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &834899572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834899571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5d41b62142a9040a0e5e9754fb2f93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shortFlute: {fileID: 8300000, guid: 990228c999e614d4d9f612671caff584, type: 3}
-  longFlute: {fileID: 8300000, guid: a5e2fd8272af71640bdc2d081138e55b, type: 3}
 --- !u!82 &834899573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4668,6 +4656,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834899575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834899571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28535f8819691345be5d7a47ef81387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hammer: {fileID: 8300000, guid: 79f84fb9604887249b6692c9df24d8b8, type: 3}
 --- !u!1001 &844732244
 PrefabInstance:
   m_ObjectHideFlags: 0
