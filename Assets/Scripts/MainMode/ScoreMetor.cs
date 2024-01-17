@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreMetor : MonoBehaviour
@@ -30,16 +31,17 @@ public class ScoreMetor : MonoBehaviour
             metor[nowLookNum].GetComponent<MeshRenderer>().material = metorMaterial;
 
             //前回見ていた場所が要素オーバーしていないのなら
-            if(nowLookNum + 1 < metor.Count)
+            if (nowLookNum + 1 < metor.Count)
                 metor[nowLookNum + 1].GetComponent<MeshRenderer>().material = metorMaterialAlpha;
 
             //見ている場所を減らす
             nowLookNum--;
-            nowLookNum = Mathf.Max(0,nowLookNum);
+            nowLookNum = Mathf.Max(0, nowLookNum);
 
             //次を呼ぶ
             StartCoroutine(MetorMove(0.01f, myPosNum, nowLookNum));
         }
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -51,4 +53,5 @@ public class ScoreMetor : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
 }
