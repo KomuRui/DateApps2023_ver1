@@ -31,4 +31,13 @@ public class MagicHandIsHit : MonoBehaviour
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        //ステージから離れたら
+        if (other.tag == "Stage")
+        {
+            isHit = false;
+        }
+    }
+
 }

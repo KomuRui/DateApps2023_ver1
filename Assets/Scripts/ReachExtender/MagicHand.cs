@@ -40,9 +40,6 @@ public class MagicHand : MonoBehaviour
         //一回大きくなりきったら処理をしない
         if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
-            //アームがプレイヤーを捕まえないようにする
-            //arm.SetIsActive(false);
-
             isFinish = false;
 
             //伸びる
@@ -110,7 +107,7 @@ public class MagicHand : MonoBehaviour
     //戻る処理
     public void Return()
     {
-        //アームがプレイヤーを捕まえないようにする
+        //アームがプレイヤーをスタンさせないようにする
         arm.SetIsActive(false);
 
 

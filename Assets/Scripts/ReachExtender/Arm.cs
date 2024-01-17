@@ -52,9 +52,6 @@ public class Arm : MonoBehaviour
             hitPlayer.SetIsDead(true);
             hitPlayer.SetMove(vector3.normalized);
         }
-        else
-        {
-        }
     }
 
     public void SetIsActive(bool a)
