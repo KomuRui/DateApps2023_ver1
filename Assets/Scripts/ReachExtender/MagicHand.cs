@@ -24,7 +24,7 @@ public class MagicHand : MonoBehaviour
     private int maxRefrect = 1;
 
     private Vector3 defScale;
-    private float speed = 8f;
+    private float speed = 10f;
 
     public bool isFinish = false;
 
