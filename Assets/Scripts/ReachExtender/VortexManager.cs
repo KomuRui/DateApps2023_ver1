@@ -13,8 +13,7 @@ public class VortexManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //コルーチン実行
-        StartCoroutine(VortexInstance());
+       
     }
 
     // Update is called once per frame
@@ -71,5 +70,12 @@ public class VortexManager : MonoBehaviour
     public Vector3 RandDirection()
     {
         return new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)).normalized;
+    }
+
+    //渦のコルーチン開始
+    public void StartVortexCoroutine()
+    {
+        //コルーチン実行
+        StartCoroutine(VortexInstance());
     }
 }

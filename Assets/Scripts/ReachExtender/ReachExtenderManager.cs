@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ReachExtenderManager : MiniGameManager
 {
+    [SerializeField] VortexManager vortexManager;
+
     //Start‚Æ“¯‚¶
     public override void SceneStart()
     {
@@ -13,6 +15,7 @@ public class ReachExtenderManager : MiniGameManager
     //ƒQ[ƒ€ŠJn‚ÉŒÄ‚Î‚ê‚é
     public override void MiniGameStart()
     {
+        vortexManager.StartVortexCoroutine();
     }
 
     //Update‚Æ“¯‚¶
