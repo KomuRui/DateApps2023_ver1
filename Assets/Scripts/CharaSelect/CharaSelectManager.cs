@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -139,6 +140,7 @@ public class CharaSelectManager : MonoBehaviour
 
             //フェード
             fade.FadeIn(1.0f);
+            StartCoroutine(SceneChange(1.0f));
             isSceneChange = true;
         }
     }
