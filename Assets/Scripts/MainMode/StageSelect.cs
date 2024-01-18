@@ -12,13 +12,13 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private List<Vector3> playerScale = new List<Vector3>();
     [SerializeField] private Fade fade;
     [SerializeField] private float fadeTime;
-    [SerializeField] private  List<GameObject> stageImageObj;
-    [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private GameObject rankText;   
     [SerializeField] private GameObject mainModeWinPlayerCanvas;
     [SerializeField] private MeshRenderer mainImage;
     [SerializeField] private List<MeshRenderer> subImage;
     [SerializeField] private List<Material> miniGameMaterial;
+    [SerializeField] private List<GameObject> talkText;
+    [SerializeField] private List<TextMeshProUGUI> scoreText;
     [SerializeField] private float nextImageTime;
 
     private int nowLookMaterialNum = 0;
@@ -29,34 +29,19 @@ public class StageSelect : MonoBehaviour
     {
         isResultFinish = false;
 
+        //各自必要なこと
         PlayerManager.Initializ();
-
-        //プレイヤー生成
+        ScoreManager.Initializ();
         PlayerInstantiate();
+        AllMiniGameFinish();
+        talkText[StageSelectManager.GetNowRound() - 1].SetActive(true);
 
-        //ラウンド全て終了しているのなら
-        if (StageSelectManager.isMainModeFinish)
-        {
-            roundText.text = "";
-            mainModeWinPlayerCanvas = Instantiate(mainModeWinPlayerCanvas, new Vector3(0, 0, 0), Quaternion.identity);
+        //各プレイヤーのスコアを現在のに対応させる
+        for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
+            scoreText[i].text = ScoreManager.GetScore((byte)(i + 1)).ToString();
 
-            //1位のプレイヤを取得
-            List<byte> a = ScoreManager.GetNominatePlayerRank(1);
-            string text = "Win\n";
-            for (int i = 0; i < a.Count; i++)
-                text += a[i] + "P " + ScoreManager.GetScore(a[i]) + "point\n";
-
-            //テキスト変更
-            mainModeWinPlayerCanvas.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
-
-            //2秒後に開始
-            StartCoroutine(ResultFinish(2.0f));
-
-            return;
-        }
-
+        //フェード
         fade.FadeOut(fadeTime);
-        roundText.text = StageSelectManager.GetNowRound() + "/4";
 
         ////順位テキスト表示
         //for (int i = 0; i < PlayerManager.PLAYER_MAX; i++)
@@ -97,6 +82,30 @@ public class StageSelect : MonoBehaviour
     {
         if (Input.GetButtonDown("Abutton1")) 
             SceneManager.LoadScene("ModeSelect");
+    }
+
+    //すべてのミニゲームが終了したタイミングで呼ばれる
+    private void AllMiniGameFinish()
+    {
+        //ラウンド全て終了しているのなら
+        if (StageSelectManager.isMainModeFinish)
+        {
+            mainModeWinPlayerCanvas = Instantiate(mainModeWinPlayerCanvas, new Vector3(0, 0, 0), Quaternion.identity);
+
+            //1位のプレイヤを取得
+            List<byte> a = ScoreManager.GetNominatePlayerRank(1);
+            string text = "Win\n";
+            for (int i = 0; i < a.Count; i++)
+                text += a[i] + "P " + ScoreManager.GetScore(a[i]) + "point\n";
+
+            //テキスト変更
+            mainModeWinPlayerCanvas.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
+
+            //2秒後に開始
+            StartCoroutine(ResultFinish(2.0f));
+
+            return;
+        }
     }
 
     //ミニゲーム開始
