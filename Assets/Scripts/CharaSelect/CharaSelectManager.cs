@@ -97,6 +97,8 @@ public class CharaSelectManager : MonoBehaviour
             playerInfo[(byte)(i + 1)] = info;
         }
 
+        PlayerManager.Initializ();
+
         //フェードが情報あるのなら
         if (fade)
             fade.FadeOut(1.0f);

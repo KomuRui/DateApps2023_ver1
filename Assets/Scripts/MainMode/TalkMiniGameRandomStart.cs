@@ -11,6 +11,12 @@ public class TalkMiniGameRandomStart : talkText
     [SerializeField] private GameObject mc;
     [SerializeField] private StageSelect stageSelect;
 
+    //子供用のスタート
+    public override void ChildStart()
+    {
+        StartTalk();
+    }
+
     //すべての会話終了したときの処理
     public override void AllTalkFinish() 
     {

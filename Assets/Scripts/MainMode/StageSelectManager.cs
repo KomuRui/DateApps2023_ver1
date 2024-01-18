@@ -53,10 +53,9 @@ public static class StageSelectManager
         if (nowRound >= MAX_ROUND)
         {
             isMainModeFinish = true;
-            return;
         }
 
-        nowRound++; 
+        nowRound++;
     }
 
 }
