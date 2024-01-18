@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharaSelectManager : MonoBehaviour
@@ -64,6 +66,8 @@ public class CharaSelectManager : MonoBehaviour
     private Dictionary<byte, PlayerInfo> playerInfo = new Dictionary<byte, PlayerInfo>();
     private Dictionary<byte, InputInfo> inputXY = new Dictionary<byte, InputInfo>();
 
+    private bool isSceneChange = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -124,7 +128,7 @@ public class CharaSelectManager : MonoBehaviour
         }
 
         //もし全員準備できたのならフェードイン
-        if (isAllPlayerOK())
+        if (isAllPlayerOK() && !isSceneChange)
         {
             //プレイヤーマネージャーに各プレイヤーの情報を設定
             for (byte i = 1; i < PlayerManager.PLAYER_MAX + 1; i++)
@@ -135,6 +139,7 @@ public class CharaSelectManager : MonoBehaviour
 
             //フェード
             fade.FadeIn(1.0f);
+            isSceneChange = true;
         }
     }
 
@@ -286,5 +291,12 @@ public class CharaSelectManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    //生成
+    IEnumerator SceneChange(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("MainMode");
     }
 }
