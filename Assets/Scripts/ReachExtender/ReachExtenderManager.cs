@@ -26,5 +26,6 @@ public class ReachExtenderManager : MiniGameManager
     //ミニゲームが終わったら呼ばれる
     public override void MiniGameFinish()
     {
+        vortexManager.SetIsAppearanceVotex(false);
     }
 }

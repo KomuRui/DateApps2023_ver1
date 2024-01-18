@@ -9,6 +9,7 @@ public class VortexManager : MonoBehaviour
     [SerializeField] private GameObject stage;
     [SerializeField] private float radius = 6f;
     [SerializeField] private float VertexRadius = 4f;
+    private bool isAppearanceVotex = true;
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +56,9 @@ public class VortexManager : MonoBehaviour
             }
             prePos = vortexList[i].transform.position;
         }
-
-        //もう一回コルーチンを呼ぶ
-        StartCoroutine(VortexInstance());
+        if (isAppearanceVotex) 
+            //もう一回コルーチンを呼ぶ
+            StartCoroutine(VortexInstance());
     }
 
     //渦の位置
@@ -77,5 +78,10 @@ public class VortexManager : MonoBehaviour
     {
         //コルーチン実行
         StartCoroutine(VortexInstance());
+    }
+
+    public void SetIsAppearanceVotex(bool a)
+    {
+        isAppearanceVotex = a;
     }
 }
