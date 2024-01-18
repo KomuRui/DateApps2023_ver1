@@ -30,7 +30,7 @@ public class StageSelect : MonoBehaviour
         isResultFinish = false;
 
         //ŠeŽ©•K—v‚È‚±‚Æ
-        PlayerManager.Initializ();
+        //PlayerManager.Initializ();
         ScoreManager.Initializ();
         PlayerInstantiate();
         AllMiniGameFinish();
