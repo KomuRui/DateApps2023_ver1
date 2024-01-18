@@ -38,7 +38,7 @@ public class MagicHand : MonoBehaviour
     void Update()
     {
         //ˆê‰ñ‘å‚«‚­‚È‚è‚«‚Á‚½‚çˆ—‚ğ‚µ‚È‚¢
-        if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
+        if (transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().GetIsMoving() && !bigMax)
         {
             isFinish = false;
 
@@ -124,7 +124,7 @@ public class MagicHand : MonoBehaviour
             //‚Â‚¬‚ÌƒA[ƒ€‚ª‚ ‚é‚È‚çÁ‚³‚È‚¢
             if (nextArmParent != null)
             {
-                transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().SetIsMoving(false);
+                transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderOnePlayer>().SetIsMoving(false);
                 isFinish = true;
                 if (bone != null)  bone.Throw();
             }

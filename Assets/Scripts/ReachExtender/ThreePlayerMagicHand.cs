@@ -24,7 +24,7 @@ public class ThreePlayerMagicHand : MonoBehaviour
     void Update()
     {
         //ˆê‰ñ‘å‚«‚­‚È‚è‚«‚Á‚½‚çˆ—‚ğ‚µ‚È‚¢
-        if (transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().GetIsMoving() && !bigMax)
+        if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().GetIsMoving() && !bigMax)
         {
             isFinish = false;
 
@@ -39,7 +39,7 @@ public class ThreePlayerMagicHand : MonoBehaviour
             bigMax = true;
         }
         //ˆê‰ñ‘å‚«‚­‚È‚è‚«‚Á‚½‚ç–ß‚é
-        if (transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().GetIsMoving())
+        if (transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().GetIsMoving())
         {
             //–ß‚éˆ—
             Return();
@@ -80,7 +80,7 @@ public class ThreePlayerMagicHand : MonoBehaviour
         {
             bigMax = false;
             transform.localScale = defScale;
-            transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().SetIsMoving(false);
+            transform.parent.gameObject.transform.parent.gameObject.GetComponent<ReachExtenderThreePlayer>().SetIsMoving(false);
         }
     }
 }
