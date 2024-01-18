@@ -54,9 +54,9 @@ public class ReachExtenderOnePlayer : MonoBehaviour
 
     void Update()
     {
-
+        
         //“®‚¢‚Ä‚¢‚½‚ç
-        if (isMoving) return;
+        if (isMoving || !GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         Action();
 

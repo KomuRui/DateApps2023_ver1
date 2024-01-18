@@ -51,6 +51,10 @@ public class Arm : MonoBehaviour
             ReachExtenderThreePlayer hitPlayer = other.GetComponent<ReachExtenderThreePlayer>();
             hitPlayer.SetIsDead(true);
             hitPlayer.SetMove(vector3.normalized);
+
+            // ƒ~ƒjƒQ[ƒ€‚É€‚ñ‚¾‚±‚Æ‚ğ“`‚¦‚é
+            GameManager.nowMiniGameManager.PlayerDead(other.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(other.GetComponent<PlayerNum>().playerNum);
         }
     }
 

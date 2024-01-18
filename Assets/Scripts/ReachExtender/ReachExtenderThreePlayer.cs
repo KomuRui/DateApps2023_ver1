@@ -80,7 +80,7 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         }
 
         //動いていたら
-        if (isMoving || isStan) return;
+        if (isMoving || isStan || !GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         //ボタンを押すとパンチする
         Action();
@@ -215,16 +215,6 @@ public class ReachExtenderThreePlayer : MonoBehaviour
         if (!Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum)) return;
 
         SetIsMoving(true);
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Vortex")
-        {
-        }
-        else
-        {
-        }
     }
 
     public void SetMove(Vector3 dir)
