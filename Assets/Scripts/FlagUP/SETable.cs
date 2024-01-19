@@ -9,6 +9,7 @@ public class SETable : MonoBehaviour
     [SerializeField] private AudioClip shortFlute;
     [SerializeField] private AudioClip longFlute;
     [SerializeField] private AudioClip miss;
+    [SerializeField] private AudioClip up;
 
 
     private AudioSource audioSource;
@@ -43,6 +44,14 @@ public class SETable : MonoBehaviour
     public float MissAudio()
     {
         audioSource.PlayOneShot(miss);
+        return longTime;
+    }
+
+
+    //ä¯è„Ç∞ÇÈÇ∆Ç´SE
+    public float UpAudio()
+    {
+        audioSource.PlayOneShot(up);
         return longTime;
     }
 }

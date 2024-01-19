@@ -112,6 +112,10 @@ public class PlayerHand : MonoBehaviour
         else
             flagInfo[f].flag.transform.DORotate(new Vector3(0, initializeRotate.y,1 * 90) * flagInfo[f].flagSign, 0.1f);
 
+        //SE
+        se.UpAudio();
+
+
         flagInfo[f].isUp = !(flagInfo[f].isUp);
         flagInfo[f].count++;
     }
