@@ -22,11 +22,19 @@ Shader "Lpk/LightModel/ToonLightBase"
         [Space]   
         _OutlineWidth      ("OutlineWidth", Range(0.0, 1.0))      = 0.15
         _OutlineColor      ("OutlineColor", Color)                = (0.0, 0.0, 0.0, 1)
+
+         [Space]
+        _Alpha            ("Alpha", Range(0.0, 1.0))                   = 1
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
+        Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent"}
         
+        Pass {
+            ZWrite On
+            ColorMask 0
+        }
+
         Pass
         {
             Name "UniversalForward"
@@ -34,6 +42,10 @@ Shader "Lpk/LightModel/ToonLightBase"
             {
                 "LightMode" = "UniversalForward"
             }
+            Tags{ "QUEUE" = "Transparent" "IGNOREPROJECTOR" = "true" "RenderType" = "Transparent" }
+             Blend SrcAlpha OneMinusSrcAlpha
+            ColorMask RGBA
+            ZWrite Off
             HLSLPROGRAM
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
@@ -67,6 +79,7 @@ Shader "Lpk/LightModel/ToonLightBase"
                 float _RimStepSmooth;
                 float _RimStep;
                 float4 _RimColor;
+                float _Alpha;
             CBUFFER_END
 
             struct Attributes
@@ -163,7 +176,7 @@ Shader "Lpk/LightModel/ToonLightBase"
             
                 float3 finalColor = diffuse + ambient + specular;
                 finalColor = MixFog(finalColor, input.fogCoord);
-                return float4(finalColor , 1.0);
+                return float4(finalColor , _Alpha);
             }
             ENDHLSL
         }
