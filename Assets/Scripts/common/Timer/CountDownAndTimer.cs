@@ -15,7 +15,11 @@ public class CountDownAndTimer : MonoBehaviour
     [SerializeField] private Image tutorialTimeImage;                //時間制限テキスト(チュートリアル用)
     [SerializeField] private TextMeshProUGUI tutorialCountDownText;  //カウントダウンテキスト(チュートリアル用)
     [SerializeField] public Fade fade;  //フェード
+    [SerializeField] public Sprite timeImageRed;
 
+    private Tweener bounceTween;
+    private Vector3 originalScale;
+    private int beforeTime = 0;
     private int nowCountDownTime = 3;
     private Vector3 beforeScale;
     [SerializeField] public float time = 30.0f;
@@ -25,6 +29,7 @@ public class CountDownAndTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        originalScale = timeText.transform.localScale;
     }
 
     // Update is called once per frame
@@ -44,8 +49,21 @@ public class CountDownAndTimer : MonoBehaviour
         if (time <= 1)
         {
             isfinish = true;
-            timeText.text = "";
+            timeText.text = "0";
             GameManager.nowMiniGameManager.SetMiniGameFinish();
+        }
+        if(((int)time) <= 5)
+        {
+            //赤色に変換
+            timeImage.sprite = timeImageRed;
+
+            //前回と時間が違うのなた
+            if (beforeTime != ((int)time))
+            {
+                BounceAnimation();
+                beforeTime = ((int)time);
+            }
+
         }
     }
 
@@ -104,5 +122,13 @@ public class CountDownAndTimer : MonoBehaviour
             fade.FadeOut(1.0f);
 
         StartCoroutine(CountDownText(1.0f));
+    }
+
+    private void BounceAnimation()
+    {
+        bounceTween.Kill();
+        timeText.transform.localScale = transform.localScale + new Vector3(3,3,3);
+        bounceTween = timeText.transform.DOScale(originalScale, 1)
+            .SetEase(Ease.OutBounce);
     }
 }
