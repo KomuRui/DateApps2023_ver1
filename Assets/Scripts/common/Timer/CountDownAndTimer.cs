@@ -16,8 +16,10 @@ public class CountDownAndTimer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tutorialCountDownText;  //カウントダウンテキスト(チュートリアル用)
     [SerializeField] public Fade fade;  //フェード
     [SerializeField] public Sprite timeImageRed;
+    [SerializeField] public Sprite timeImageAlpha;
 
-    private Tweener bounceTween;
+    private Tweener bounceTweenText;
+    private Tweener bounceTweenImage;
     private Vector3 originalScale;
     private int beforeTime = 0;
     private int nowCountDownTime = 3;
@@ -126,9 +128,29 @@ public class CountDownAndTimer : MonoBehaviour
 
     private void BounceAnimation()
     {
-        bounceTween.Kill();
+        //前回のアニメーション削除
+        bounceTweenText.Kill();
+        bounceTweenImage.Kill();
+
+        //テキストのアニメーション
         timeText.transform.localScale = transform.localScale + new Vector3(3,3,3);
-        bounceTween = timeText.transform.DOScale(originalScale, 1)
+        bounceTweenText = timeText.transform.DOScale(originalScale, 1)
             .SetEase(Ease.OutBounce);
+
+        //画像のアニメーション
+        GameObject newImageObject = Instantiate(timeImage.gameObject, timeImage.transform.position, timeImage.transform.rotation, timeImage.transform.parent);
+        newImageObject.transform.localScale = timeImage.transform.localScale;
+        newImageObject.GetComponent<Image>().sprite = timeImageAlpha;
+
+        //拡大
+        Vector3 afterScale = transform.localScale + new Vector3(3.5f, 3.5f, 3.5f);
+        bounceTweenImage = newImageObject.transform.DOScale(afterScale, 0.8f)
+            .SetEase(Ease.OutQuad);
+
+        //透明に
+        newImageObject.GetComponent<Image>().DOFade(0f, 0.8f)
+            .SetEase(Ease.OutQuad).OnComplete(() => Destroy(newImageObject.gameObject));
     }
+
+
 }
