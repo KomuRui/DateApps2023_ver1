@@ -54,6 +54,8 @@ public class DeathRunPlayer : MonoBehaviour
 
     void Update()
     {
+        //開始していないか終わっているのなら
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
         if (isGoal) return;
 
         //動き
@@ -250,7 +252,7 @@ public class DeathRunPlayer : MonoBehaviour
     {
         // ミニゲームに死んだことを伝える
         //GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
-        //GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+        GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
 
         //オブジェクトを削除
         Destroy(this.gameObject);

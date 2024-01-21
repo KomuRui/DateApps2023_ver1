@@ -19,7 +19,7 @@ public class GimmickButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Abutton1") && isHit)
+        if (Input.GetButtonDown("Abutton" + GameManager.nowMiniGameManager.onePlayer) && isHit)
         {
             targetGimmick.SetIsInput(true);
 

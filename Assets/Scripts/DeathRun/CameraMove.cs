@@ -14,6 +14,8 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ŠJŽn‚µ‚Ä‚¢‚È‚¢‚©I‚í‚Á‚Ä‚¢‚é‚Ì‚È‚ç
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
         if (transform.position.z > 20) return;
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime); 

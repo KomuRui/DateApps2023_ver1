@@ -31,7 +31,8 @@ public class CountDownAndTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = timeText.transform.localScale;
+        if(timeText)
+            originalScale = timeText.transform.localScale;
     }
 
     // Update is called once per frame
