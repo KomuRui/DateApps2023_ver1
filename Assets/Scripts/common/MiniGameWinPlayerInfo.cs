@@ -62,6 +62,25 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
         yield return new WaitForSeconds(delay);
         fade.FadeOut(2.0f);
         StartCoroutine(WinPlayerCanvasGeneration(2.0f));
+        StartCoroutine(RankResult(6.0f));
+    }
+
+    //ランク発表移行
+    IEnumerator RankResult(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        fade.FadeIn(2.0f);
+        GameManager.nowMiniGameManager.endText.SetActive(false);
+        StartCoroutine(RankResultPlayerGeneration(2.0f));
+
+    }
+
+    //順位発表のプレイヤー生成
+    IEnumerator RankResultPlayerGeneration(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameManager.nowMiniGameManager.ChangeRankAnnouncement();
+        fade.FadeOut(2.0f);
     }
 
     //勝利UI生成

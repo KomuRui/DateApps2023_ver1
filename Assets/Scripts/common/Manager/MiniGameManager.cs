@@ -325,20 +325,11 @@ public class MiniGameManager : MonoBehaviour
     //順位発表に変更
     public void ChangeRankAnnouncement()
     {
-        nowRankAnnouncement = true;
         var sortedDictionary = nowMiniGameRank.OrderBy((pair) => pair.Value);
         Dictionary<byte,byte> rankTable = new Dictionary<byte,byte>();
 
         foreach (var rank in sortedDictionary)
             rankTable[rank.Key] = rank.Value;
-
-        //順位テキスト表示
-        for (byte i = 0; i < rankTable.Count; i++)
-        {
-            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = rankTable.Values.ElementAt(i).ToString() + "位 " 
-            + ScoreManager.GetRankScore(rankTable.Keys.ElementAt(i), rankTable.Values.ElementAt(i)) + "P";
-        }
-        Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
 
         //新たにプレイヤー召喚
         for (byte i = 0; i < rankTable.Count; i++)
@@ -356,6 +347,9 @@ public class MiniGameManager : MonoBehaviour
 
         //プレイヤーとテキスト削除
         endText.SetActive(false);
+
+        //順位のテキスト表示
+        StartCoroutine(RankResultTextGeneration(2.0f));
     }
 
     //チュートリアル終わり
@@ -377,6 +371,29 @@ public class MiniGameManager : MonoBehaviour
 
     //シーン変更
     public void SceneChange() { SceneManager.LoadScene(miniGameName); }
+
+    //ランク発表のテキスト生成
+    IEnumerator RankResultTextGeneration(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        nowRankAnnouncement = true;
+
+        var sortedDictionary = nowMiniGameRank.OrderBy((pair) => pair.Value);
+        Dictionary<byte, byte> rankTable = new Dictionary<byte, byte>();
+
+        foreach (var rank in sortedDictionary)
+            rankTable[rank.Key] = rank.Value;
+
+        //順位テキスト表示
+        for (byte i = 0; i < rankTable.Count; i++)
+        {
+            rankText.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = rankTable.Values.ElementAt(i).ToString() + "位 "
+            + ScoreManager.GetRankScore(rankTable.Keys.ElementAt(i), rankTable.Values.ElementAt(i)) + "P";
+        }
+        Instantiate(rankText, new Vector3(0, 0, 0), Quaternion.identity);
+
+    }
 
     //シーン開始
     public virtual void SceneStart() {}
