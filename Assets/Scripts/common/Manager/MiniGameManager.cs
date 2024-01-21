@@ -43,7 +43,7 @@ public class MiniGameManager : MonoBehaviour
     public GameObject onePlayerObj;                                      //1人側プレイヤーオブジェクト
     public List<GameObject> threePlayerObj = new List<GameObject>();     //3人側プレイヤーオブジェクト
     protected bool isPlayerAllDead;                                                      //プレイヤーが全員死んでいるかどうか
-    protected byte onePlayer;                                                            //1人側プレイヤー
+    public byte onePlayer;                                                            //1人側プレイヤー
     public Dictionary<byte, bool> threePlayer = new Dictionary<byte, bool>();         //3人側プレイヤー(boolは死んだかどうか)
     public Dictionary<byte, float> lifeTime = new Dictionary<byte, float>();          //3人側プレイヤーの生きてる時間
 
@@ -66,7 +66,6 @@ public class MiniGameManager : MonoBehaviour
     protected bool isStart;             //ミニゲーム開始しているか
     protected bool isFinish;            //ミニゲームが終了しているか
     protected bool nowRankAnnouncement; //順位発表しているかどうか
-    protected bool isWinPlayerPrint;    //勝利プレイヤーを表示しているか
     public bool isTutorialUse;          //チュートリアルを使うかどうか
 
     void Start()
@@ -199,10 +198,6 @@ public class MiniGameManager : MonoBehaviour
             SceneManager.LoadScene("MainMode");
         }
 
-        //勝利側を発表しているかつBボタンが押されたのなら
-        if (isWinPlayerPrint && Input.GetButtonDown("Abutton1"))
-            ChangeRankAnnouncement();
-
         //生きている3人側の時間記録
         if (TutorialManager.isTutorialFinish)
         {
@@ -311,32 +306,26 @@ public class MiniGameManager : MonoBehaviour
         endText = Instantiate(endText, new Vector3(0, 0, 0), Quaternion.identity);
         MiniGameFinish();
 
-        Invoke("WinPlayerTextPrint", 2.0f);
+        //勝利プレイヤーの演出に移行
+        Invoke("WinPlayerDirectingChange", 2.0f);
     }
 
-    //勝利して側のテキストを表示
-    public void WinPlayerTextPrint()
+    //勝利プレイヤーの演出に移行
+    public void WinPlayerDirectingChange()
     {
+        //どっちが勝利したか求める
         bool isOnePlayerWin = false;
-        endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 25;
-
         foreach (var rank in nowMiniGameRank)
             if (rank.Key == onePlayer && rank.Value == 1) isOnePlayerWin = true;
 
-        if (isOnePlayerWin)
-            endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "WinOnePlayer";
-        else
-            endText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "WinThreePlayer";
-
-        isWinPlayerPrint = true;
+        //フェードイン
+        this.GetComponent<MiniGameWinPlayerInfo>().FadeIn(isOnePlayerWin);
     }
 
     //順位発表に変更
     public void ChangeRankAnnouncement()
     {
         nowRankAnnouncement = true;
-        isWinPlayerPrint = false;
-
         var sortedDictionary = nowMiniGameRank.OrderBy((pair) => pair.Value);
         Dictionary<byte,byte> rankTable = new Dictionary<byte,byte>();
 
@@ -366,10 +355,7 @@ public class MiniGameManager : MonoBehaviour
         Camera.main.transform.localEulerAngles = rankCameraRotate;
 
         //プレイヤーとテキスト削除
-        PlayerAllDelete();
         endText.SetActive(false);
-        foreach(var obj in killCanvas)
-            obj.SetActive(false);
     }
 
     //チュートリアル終わり
