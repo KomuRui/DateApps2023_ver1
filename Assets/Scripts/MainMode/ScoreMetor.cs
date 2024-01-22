@@ -21,6 +21,13 @@ public class ScoreMetor : MonoBehaviour
         
     }
 
+    //現在のスコアにメーターを初期化する
+    public void NowScoreMetorInitializ(int score)
+    {
+        for(int i = 0; i < score; i++)
+            metor[i].GetComponent<MeshRenderer>().material = metorMaterial;
+    }
+
     //メーター動く
     IEnumerator MetorMove(float delay,int myPosNum,int nowLookNum)
     {
