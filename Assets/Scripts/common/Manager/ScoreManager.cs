@@ -25,6 +25,7 @@ public static class ScoreManager
     public static void Initializ()
     {
         score = new Dictionary<byte, PlayerRank>();
+        beforeScore = new Dictionary<byte, PlayerRank>();
         scoreTable = new Dictionary<byte, byte>();
 
         for (byte i = 1; i < PlayerManager.PLAYER_MAX + 1; i++)
@@ -37,7 +38,7 @@ public static class ScoreManager
             PlayerRank beforeRank = new PlayerRank();
             beforeRank.rank = 1;
             beforeRank.score = 0;
-            score[i] = beforeRank;
+            beforeScore[i] = beforeRank;
         }
 
         //スコア表初期化
