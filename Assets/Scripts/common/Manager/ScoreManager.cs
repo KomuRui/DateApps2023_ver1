@@ -15,6 +15,9 @@ public static class ScoreManager
     //プレイヤースコア(key : プレイヤー番号)
     private static Dictionary<byte, PlayerRank> score;
 
+    //前回のプレイヤースコア
+    private static Dictionary<byte, PlayerRank> beforeScore;
+
     //スコア表(順位によって何ポイント取得するか)
     private static Dictionary<byte, byte> scoreTable;
 
@@ -22,6 +25,7 @@ public static class ScoreManager
     public static void Initializ()
     {
         score = new Dictionary<byte, PlayerRank>();
+        beforeScore = new Dictionary<byte, PlayerRank>();
         scoreTable = new Dictionary<byte, byte>();
 
         for (byte i = 1; i < PlayerManager.PLAYER_MAX + 1; i++)
@@ -30,6 +34,11 @@ public static class ScoreManager
             rank.rank = 1;
             rank.score = 0;
             score[i] = rank;
+
+            PlayerRank beforeRank = new PlayerRank();
+            beforeRank.rank = 1;
+            beforeRank.score = 0;
+            beforeScore[i] = beforeRank;
         }
 
         //スコア表初期化
@@ -100,6 +109,10 @@ public static class ScoreManager
     //スコア加算
     public static void AddScore(byte numPlayer,byte rank) 
     {
+        //前回のスコアを設定
+        beforeScore[numPlayer].score = score[numPlayer].score;
+
+        //今回のスコアを更新
         score[numPlayer].score += scoreTable[rank];
 
         //1人側が1位の場合は2点加算する
