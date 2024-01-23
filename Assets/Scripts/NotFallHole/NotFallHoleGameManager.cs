@@ -13,6 +13,7 @@ public class NotFallHoleGameManager : MiniGameManager
     public List<FallRotateFloor> Floor;
     public GameObject hitEffectParent;
     public GameObject jumpEffectParent;
+    public GameObject fallEffectParent;
 
     public override void SceneStart()
     {
@@ -130,6 +131,28 @@ public class NotFallHoleGameManager : MiniGameManager
             if (!hitEffectParent.transform.GetChild(i).gameObject.activeSelf)
             {
                 ef = hitEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    //海に落ちた時のエフェクト
+    public void FallEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < fallEffectParent.transform.childCount; i++)
+        {
+            if (!fallEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = fallEffectParent.transform.GetChild(i).gameObject;
                 break;
             }
         }

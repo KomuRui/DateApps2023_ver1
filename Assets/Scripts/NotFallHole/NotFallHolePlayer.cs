@@ -270,6 +270,10 @@ public class NotFallHolePlayer : MonoBehaviour
     {
         if (collision.transform.tag == "Sea")
         {
+            //海エフェクト
+            ((NotFallHoleGameManager)GameManager.nowMiniGameManager).FallEffect(transform.position);
+            Debug.Log("死");
+
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
             GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
