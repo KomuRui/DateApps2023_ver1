@@ -183,6 +183,7 @@ public class MiniGameManager : MonoBehaviour
             lookNum++;
         }
 
+        this.GetComponent<CountDownAndTimer>().CountDownStart();
         SceneStart();
     }
 

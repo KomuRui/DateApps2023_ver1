@@ -23,27 +23,26 @@ public class CountDownAndTimer : MonoBehaviour
     [SerializeField] public float time = 30.0f;
     public bool isfinish = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(timeText)
-            originalScale = timeText.transform.localScale;
-
-        //チュートリアルなら
-        if(!TutorialManager.isTutorialFinish)
-        {
-            GameManager.nowMiniGameManager.SetMiniGameStart();
-        }
-        else
-            StartCoroutine(startText.StartBackGroundAnimation(1.0f));
-
-    }
 
     // Update is called once per frame
     void Update()
     {
         //時間計算
         TimeCalc();
+    }
+
+    public void CountDownStart()
+    {
+        if (timeText)
+            originalScale = timeText.transform.localScale;
+
+        //チュートリアルなら
+        if (!TutorialManager.isTutorialFinish)
+        {
+            GameManager.nowMiniGameManager.SetMiniGameStart();
+        }
+        else
+            StartCoroutine(startText.StartBackGroundAnimation(1.0f));
     }
 
     //時間計算
