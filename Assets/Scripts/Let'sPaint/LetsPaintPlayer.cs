@@ -119,13 +119,13 @@ public class LetsPaintPlayer : MonoBehaviour
         //‰ŠúˆÊ’uŒˆ’è
         transform.position = initializPos;
 
-        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-        for (int i = 0; i < children.Length; i++)
-        {
-            Color r = children[i].material.color;
-            r.a = 0.6f;
-            children[i].material.color = r;
-        }
+        //var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        //for (int i = 0; i < children.Length; i++)
+        //{
+        //    Color r = children[i].material.color;
+        //    r.a = 0.6f;
+        //    children[i].material.color = r;
+        //}
 
         var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
         for (int i = 0; i < children2.Length; i++)
@@ -179,13 +179,13 @@ public class LetsPaintPlayer : MonoBehaviour
 
     public void ReturnAlpha()
     {
-        var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-        for (int i = 0; i < children.Length; i++)
-        {
-            Color r = children[i].material.color;
-            r.a = 1.0f;
-            children[i].material.color = r;
-        }
+        //var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        //for (int i = 0; i < children.Length; i++)
+        //{
+        //    Color r = children[i].material.color;
+        //    r.a = 1.0f;
+        //    children[i].material.color = r;
+        //}
 
         var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
         for (int i = 0; i < children2.Length; i++)

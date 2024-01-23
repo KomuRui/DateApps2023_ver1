@@ -756,7 +756,9 @@ namespace Es.InkPainter
 		/// <returns>The success or failure of the paint.</returns>
 		public bool Paint(Brush brush, Vector3 worldPos, Func<PaintSet, bool> materialSelector = null, Camera renderCamera = null)
 		{
-			Vector2 uv;
+            brush.RotateAngle = UnityEngine.Random.Range(0f, 360f);
+
+            Vector2 uv;
 
 			if(renderCamera == null)
 				renderCamera = Camera.main;
