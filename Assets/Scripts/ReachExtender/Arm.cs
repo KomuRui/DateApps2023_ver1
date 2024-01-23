@@ -39,7 +39,7 @@ public class Arm : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "ThreePlayer" && isActive)
         {
@@ -51,9 +51,10 @@ public class Arm : MonoBehaviour
             ReachExtenderThreePlayer hitPlayer = other.GetComponent<ReachExtenderThreePlayer>();
             hitPlayer.SetIsDead(true);
             hitPlayer.SetMove(vector3.normalized);
-        }
-        else
-        {
+
+            // É~ÉjÉQÅ[ÉÄÇ…éÄÇÒÇæÇ±Ç∆Çì`Ç¶ÇÈ
+            GameManager.nowMiniGameManager.PlayerDead(other.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(other.GetComponent<PlayerNum>().playerNum);
         }
     }
 

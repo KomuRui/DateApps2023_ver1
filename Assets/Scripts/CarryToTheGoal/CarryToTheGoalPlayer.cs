@@ -221,9 +221,9 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         for (int i = 0; i < children.Length; i++)
         {
-            Color r = children[i].material.color;
-            r.a = 0.6f;
-            children[i].material.color = r;
+            float f = children[i].material.GetFloat("_Alpha");
+            f = 0.6f;
+            children[i].material.SetFloat("_Alpha", f);
         }
 
         var children2 = this.GetComponentsInChildren<MeshRenderer>(true);
@@ -252,9 +252,9 @@ public class CarryToTheGoalPlayer : MonoBehaviour
         var children = this.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         for (int i = 0; i < children.Length; i++)
         {
-            Color r = children[i].material.color;
-            r.a = 1.0f;
-            children[i].material.color = r;
+            float f = children[i].material.GetFloat("_Alpha");
+            f = 1.0f;
+            children[i].material.SetFloat("_Alpha", f);
         }
 
         var children2 = this.GetComponentsInChildren<MeshRenderer>(true);

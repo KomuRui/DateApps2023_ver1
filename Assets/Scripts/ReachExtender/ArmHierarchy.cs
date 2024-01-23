@@ -12,6 +12,7 @@ public class ArmHierarchy : MonoBehaviour
     private bool isReverse = false;
     private bool isReverseHit = false;
     private bool isHitPlayer = false;
+    [SerializeField] float stopTime = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class ArmHierarchy : MonoBehaviour
     {
         if ((magicHandList.First().GetComponent<MagicHand>().bigMax && !isReverseHit) || isHitPlayer)
         {
-            Invoke("SetReverseTrue", 3.0f);
+            Invoke("SetReverseTrue", stopTime);
             isReverseHit = true;
             isHitPlayer = false;
         }

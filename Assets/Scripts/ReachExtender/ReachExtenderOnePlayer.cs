@@ -54,9 +54,9 @@ public class ReachExtenderOnePlayer : MonoBehaviour
 
     void Update()
     {
-
+        
         //“®‚¢‚Ä‚¢‚½‚ç
-        if (isMoving) return;
+        if (isMoving || !GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish()) return;
 
         Action();
 
@@ -98,7 +98,7 @@ public class ReachExtenderOnePlayer : MonoBehaviour
         Vector3 moveDirection = (forwardDirection.normalized * verticalInput + rightDirection.normalized * horizontalInput).normalized;
 
         // ˆÚ“®
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
 
         Quaternion newRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);

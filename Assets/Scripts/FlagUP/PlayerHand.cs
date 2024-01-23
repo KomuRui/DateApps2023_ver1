@@ -42,7 +42,8 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private bool isRank;    // 
     [SerializeField] public int[] flagState = new int[5];    // ä¯èÛë‘
     [SerializeField] public int ranking;    // 
-    [SerializeField] private GameObject GMOb;  // 1
+    [SerializeField] private GameObject GMOb;  // 
+    [SerializeField] private SETable se;
     private int count;  // 1
     private Dictionary<Flag, FlagUpInfo> flagInfo = new Dictionary<Flag, FlagUpInfo>();
     private Vector3 initializeRotate; 
@@ -111,6 +112,10 @@ public class PlayerHand : MonoBehaviour
         else
             flagInfo[f].flag.transform.DORotate(new Vector3(0, initializeRotate.y,1 * 90) * flagInfo[f].flagSign, 0.1f);
 
+        //SE
+        se.UpAudio();
+
+
         flagInfo[f].isUp = !(flagInfo[f].isUp);
         flagInfo[f].count++;
     }
@@ -171,6 +176,7 @@ public class PlayerHand : MonoBehaviour
                     if (flagInfo[Flag.LEFT].isUp)
                         flagState[flagTurn] += 2;
 
+                    //éÄ
                     if (((FlagUpGameManager)GameManager.nowMiniGameManager).oneFlagState[flagTurn] != flagState[flagTurn])
                     {
                         ((FlagUpGameManager)GameManager.nowMiniGameManager).rankInfo[this.transform.GetChild(2).GetComponent<PlayerNum>().playerNum] = ((FlagUpGameManager)GameManager.nowMiniGameManager).nowFlagUp;
@@ -181,7 +187,8 @@ public class PlayerHand : MonoBehaviour
                         rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
                         rb.useGravity = true;
                         isDead = true;
-
+                        se.MissAudio();
+                        Debug.Log("Miss");
                     }
 
                     flagTurn++;

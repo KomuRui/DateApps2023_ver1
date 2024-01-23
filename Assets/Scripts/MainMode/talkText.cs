@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,8 +17,7 @@ public class talkText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (talk == null || talk.Count == 0) return;
-        StartCoroutine(nextTextPrint(2));
+        ChildStart();
     }
 
     // Update is called once per frame
@@ -31,6 +29,8 @@ public class talkText : MonoBehaviour
             nextImage.SetActive(false);
             NextTalk();
         }
+
+        ChildUpdate();
     }
     
     //次の文字表示
@@ -63,6 +63,7 @@ public class talkText : MonoBehaviour
         //すべての会話終了したら
         if (nowLookTalkNum >= talk.Count)
         {
+            isTalkChangeWait = false;
             AllTalkFinish();
             return;
         }
@@ -81,7 +82,19 @@ public class talkText : MonoBehaviour
         StartCoroutine(nextTextPrint(interval));
     }
 
+    //話すのスタート
+    public void StartTalk()
+    {
+        StartCoroutine(nextTextPrint(2));
+    }
+
     //すべての会話終了したときの処理
     public virtual void AllTalkFinish() { }
+
+    //子供用のスタート
+    public virtual void ChildStart() { }
+
+    //子供用の更新
+    public virtual void ChildUpdate() { }
 
 }

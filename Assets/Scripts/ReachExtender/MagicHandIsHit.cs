@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MagicHandIsHit : MonoBehaviour
 {
-
     public bool isHit = false;
     // Start is called before the first frame update
     void Start()
@@ -19,13 +18,16 @@ public class MagicHandIsHit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //if (other.tag == "Arm") return;
-
         if (other.tag == "Stage")
         {
             isHit = true;
         }
-        else
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        //ステージから離れたら
+        if (other.tag == "Stage")
         {
             isHit = false;
         }

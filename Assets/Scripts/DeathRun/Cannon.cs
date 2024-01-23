@@ -9,6 +9,7 @@ public class Cannon : GimmickBase
     [SerializeField] private float bulletSpeed = 15f;
     [SerializeField] private GameObject shootParticle;
     [SerializeField] private GameObject shootParticlePos;
+    [SerializeField] private RunSE se;
 
     public override void Action()
     {
@@ -27,6 +28,7 @@ public class Cannon : GimmickBase
     //球を発射
     public void Shot()
     {
+        se.CanonAudio();
         //エフェクト
         Instantiate(shootParticle, shootParticlePos.transform);
 

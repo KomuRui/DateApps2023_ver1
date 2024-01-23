@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ReachExtenderManager : MiniGameManager
 {
+    [SerializeField] VortexManager vortexManager;
+
     //Startと同じ
     public override void SceneStart()
     {
@@ -13,6 +15,7 @@ public class ReachExtenderManager : MiniGameManager
     //ゲーム開始時に呼ばれる
     public override void MiniGameStart()
     {
+        vortexManager.StartVortexCoroutine();
     }
 
     //Updateと同じ
@@ -23,5 +26,6 @@ public class ReachExtenderManager : MiniGameManager
     //ミニゲームが終わったら呼ばれる
     public override void MiniGameFinish()
     {
+        vortexManager.SetIsAppearanceVotex(false);
     }
 }
