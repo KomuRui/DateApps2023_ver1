@@ -7,6 +7,7 @@ using UnityEngine;
 using static FlagUpGameManager;
 
 
+
 //ラウンド
 public enum Round
 {
@@ -20,6 +21,7 @@ public enum Round
 
 public class FlagUpGameManager : MiniGameManager
 {
+    //public GameObject fallEffectParent;
 
     //ターン
     public enum Turn
@@ -276,4 +278,26 @@ public class FlagUpGameManager : MiniGameManager
         }
 
     }
+
+    //海に落ちた時のエフェクト
+    //public void FallEffect(Vector3 pos)
+    //{
+    //    GameObject ef = null;
+
+    //    for (int i = 0; i < fallEffectParent.transform.childCount; i++)
+    //    {
+    //        if (!fallEffectParent.transform.GetChild(i).gameObject.activeSelf)
+    //        {
+    //            ef = fallEffectParent.transform.GetChild(i).gameObject;
+    //            break;
+    //        }
+    //    }
+
+    //    if (ef != null)
+    //    {
+    //        ef.transform.position = pos;
+    //        ef.SetActive(true);
+    //        ef.GetComponent<ParticleSystem>().Play();
+    //    }
+    //}
 }

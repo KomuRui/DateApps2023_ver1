@@ -188,6 +188,10 @@ public class PlayerHand : MonoBehaviour
                         rb.useGravity = true;
                         isDead = true;
                         se.MissAudio();
+
+                        //海エフェクト
+                        //((FlagUpGameManager)GameManager.nowMiniGameManager).FallEffect(transform.position);
+
                         Debug.Log("Miss");
                     }
 
