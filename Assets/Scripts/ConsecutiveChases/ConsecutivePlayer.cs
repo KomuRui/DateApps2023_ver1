@@ -44,6 +44,8 @@ public class ConsecutivePlayer : MonoBehaviour
     public bool isGoal = false; //ゴールしたか
     public bool isDead = false; //死んでいるか
     public bool isMiss = false; //直線に入力を間違えたかどうか
+    [SerializeField] private float limitAngle = 45f;
+    [SerializeField] private float rotateSpeed = 0.05f;
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
@@ -76,7 +78,7 @@ public class ConsecutivePlayer : MonoBehaviour
         if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal)
         {
             //動き
-            Move();
+            NewMove();
         }
 
         //状態更新
@@ -136,6 +138,94 @@ public class ConsecutivePlayer : MonoBehaviour
         }
 
         ImageChange();
+
+        //速度が0ならば
+        if (moveSpeed <= 0)
+        {
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+        }
+        else
+        {
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+
+            //ジャンプ状態に変更
+            //ChangeStateTo(SlimeAnimationState.Walk);
+
+            // 移動
+            //アニメーションの速度に合わせるために遅くする
+            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400, ForceMode.Force);    // 力を加える
+            //transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+            //ジャンプ
+            Jump();
+        }
+
+        //毎フレーム減速する
+        buttonCount -= deceleration;
+
+        //buttonCountが0なら
+        if (buttonCount <= 0)
+        {
+            buttonCount = 0.0f;
+        }
+
+        //もしスピードが最大になったら
+        if (SPEED_MAX <= buttonCount)
+        {
+            buttonCount = SPEED_MAX;
+        }
+
+        moveSpeed = buttonCount;
+        Quaternion newRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+
+    }
+
+    //新しい仕様の移動
+    private void NewMove()
+    {
+        // 入力を取得
+        bool isAbuttonClick = Input.GetButtonDown("Abutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
+        bool isBbuttonClick = Input.GetButtonDown("Bbutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
+
+        //移動ベクトルの一時的な入れ物
+        Vector3 tmpMoveDirection = Vector3.zero;
+
+        // Aボタンを押していたら
+        if (isAbuttonClick)
+        {
+            tmpMoveDirection = new Vector3(rotateSpeed, 0,0);
+        }
+
+        // Bボタンを押していたら
+        if (isBbuttonClick)
+        {
+            tmpMoveDirection = new Vector3(-rotateSpeed, 0, 0);
+        }
+
+        //移動方向が変わっていたら
+        if(tmpMoveDirection != Vector3.zero)
+        {
+            //移動方向
+            moveDirection += tmpMoveDirection;
+
+            if(moveDirection.normalized.x > limitAngle)
+            {
+                moveDirection = new Vector3 (limitAngle, moveDirection.normalized.y, moveDirection.normalized.z);
+            }
+            if (moveDirection.normalized.x < -limitAngle)
+            {
+                moveDirection = new Vector3(-limitAngle, moveDirection.normalized.y, moveDirection.normalized.z);
+            }
+
+            //加速
+            buttonCount += addSpeed;
+        }
+
+        //ImageChange();
 
         //速度が0ならば
         if (moveSpeed <= 0)

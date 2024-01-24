@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static DG.Tweening.DOTweenModuleUtils;
 
@@ -69,19 +70,25 @@ public class MagicHand : MonoBehaviour
             Vector3 ray = myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position;
 
             //レイを飛ばす方向
-            Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.position);
+            Ray ray2 = new Ray(transform.position, myArmParentTop.gameObject.transform.position - transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.position);
 
             //レイを飛ばす
             if (UnityEngine.Physics.Raycast(ray2, out rayHit, 9999))
             {
                 //反射ベクトルを作成
-                Vector3 refrect = Vector3.Reflect(ray, rayHit.normal);
+                Vector3 refrect = Vector3.Reflect(ray2.direction, rayHit.normal);
 
                 //位置を設定
                 nextArmParent.transform.position = rayHit.point;
 
+                //yを反転
+                Vector3 newRefrect = new Vector3(refrect.x, nextArmParent.transform.position.y, refrect.z);
+
                 //向きを設定
-                nextArmParent.transform.LookAt(refrect);
+                nextArmParent.transform.LookAt(newRefrect);
+
+                //向きを設定
+                nextArmParent.transform.LookAt(newRefrect + nextArmParent.transform.position);
             }
 
             //反射回数をカウント
