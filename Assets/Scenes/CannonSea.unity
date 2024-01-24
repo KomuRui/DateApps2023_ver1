@@ -4853,6 +4853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 471819923}
   - component: {fileID: 471819922}
+  - component: {fileID: 471819924}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -4937,6 +4938,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 123.727005, y: 0, z: 0}
+--- !u!114 &471819924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471819921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &483609943
 GameObject:
   m_ObjectHideFlags: 0
@@ -8096,7 +8120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35f29c1614e4e5046975fbf0b72ce209, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.193
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35f29c1614e4e5046975fbf0b72ce209, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8820,6 +8844,7 @@ MonoBehaviour:
   shortFlute: {fileID: 8300000, guid: 990228c999e614d4d9f612671caff584, type: 3}
   longFlute: {fileID: 8300000, guid: a5e2fd8272af71640bdc2d081138e55b, type: 3}
   miss: {fileID: 0}
+  up: {fileID: 0}
 --- !u!82 &834899573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19491,6 +19516,7 @@ MonoBehaviour:
   - {x: 0, y: 210, z: 0}
   onePlayerObj: {fileID: 0}
   threePlayerObj: []
+  onePlayer: 0
   rankCameraPos: {x: -9.8, y: -0.4, z: -6.5}
   rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
@@ -19551,11 +19577,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 0}
   timeImage: {fileID: 0}
-  countDownText: {fileID: 2032194999}
-  tutorialTimeText: {fileID: 0}
-  tutorialTimeImage: {fileID: 0}
-  tutorialCountDownText: {fileID: 0}
+  startText: {fileID: 0}
   fade: {fileID: 0}
+  timeImageRed: {fileID: 0}
+  timeImageAlpha: {fileID: 0}
   time: 30
   isfinish: 0
 --- !u!1 &1839988459 stripped
@@ -21168,11 +21193,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 1904361917}
   timeImage: {fileID: 0}
-  countDownText: {fileID: 2032194999}
-  tutorialTimeText: {fileID: 0}
-  tutorialTimeImage: {fileID: 0}
-  tutorialCountDownText: {fileID: 0}
+  startText: {fileID: 0}
   fade: {fileID: 0}
+  timeImageRed: {fileID: 0}
+  timeImageAlpha: {fileID: 0}
   time: 300
   isfinish: 0
 --- !u!114 &1952637008
@@ -21252,6 +21276,7 @@ MonoBehaviour:
   rankAnnouncementRotate: []
   onePlayerObj: {fileID: 0}
   threePlayerObj: []
+  onePlayer: 0
   rankCameraPos: {x: 0, y: 0, z: 0}
   rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
@@ -21310,6 +21335,7 @@ MonoBehaviour:
   rankAnnouncementRotate: []
   onePlayerObj: {fileID: 0}
   threePlayerObj: []
+  onePlayer: 0
   rankCameraPos: {x: 0, y: 0, z: 0}
   rankCameraRotate: {x: 0, y: 0, z: 0}
   endText: {fileID: 6366969380501950595, guid: 3ebe5db51304027458ef7cd8e3d1ad47, type: 3}
@@ -22202,17 +22228,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3399836817854742889, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
   m_PrefabInstance: {fileID: 2032194997}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2032194999 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6758455094650612603, guid: 2e1aad4aec90f3c4daea438a56e1e195, type: 3}
-  m_PrefabInstance: {fileID: 2032194997}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2041729144
 GameObject:
   m_ObjectHideFlags: 0
