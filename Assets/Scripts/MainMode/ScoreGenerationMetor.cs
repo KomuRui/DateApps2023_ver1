@@ -26,7 +26,7 @@ public class ScoreGenerationMetor : MonoBehaviour
         for (int i = 0; i < scoreMetor.Count; i++)
         {
             scoreMetor[i].NowScoreMetorInitializ(ScoreManager.GetBeforeScore((byte)(i + 1)));
-            pointNum.Add(ScoreManager.GetScore((byte)(i + 1)));
+            pointNum.Add(ScoreManager.GetBeforeScore((byte)(i + 1)));
         }
     }
 

@@ -16,7 +16,7 @@ public class ScoreMetor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nowScore = 4;
+        nowScore = 0;
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class ScoreMetor : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        if (myPosNum <= nowLookNum)
+        if (myPosNum < nowLookNum)
         {
             metor[nowLookNum].GetComponent<MeshRenderer>().material = metorMaterial;
 
