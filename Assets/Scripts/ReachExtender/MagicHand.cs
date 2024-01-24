@@ -82,10 +82,7 @@ public class MagicHand : MonoBehaviour
                 nextArmParent.transform.position = rayHit.point;
 
                 //y‚ğ”½“]
-                Vector3 newRefrect = new Vector3(refrect.x, refrect.y, refrect.z);
-
-                Debug.DrawRay(transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.position, ray2.direction * 9999, Color.red, 10, false);
-                Debug.DrawRay(rayHit.point, newRefrect * 9999, Color.green, 10, false);
+                Vector3 newRefrect = new Vector3(refrect.x, nextArmParent.transform.position.y, refrect.z);
 
                 //Œü‚«‚ğİ’è
                 nextArmParent.transform.LookAt(newRefrect + nextArmParent.transform.position);
