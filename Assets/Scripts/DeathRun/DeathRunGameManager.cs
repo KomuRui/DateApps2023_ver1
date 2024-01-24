@@ -9,6 +9,7 @@ public class DeathRunGameManager : MiniGameManager
     [SerializeField] private Vector3 start2DPos;
     [SerializeField] private Vector3 goal3DPos;
     [SerializeField] private Vector3 start3DPos;
+    [SerializeField] private GameObject startToGoalCanvas;
 
     private float startToGoalDis3D;
     private float startToGoalDis2D;
@@ -19,6 +20,10 @@ public class DeathRunGameManager : MiniGameManager
         //各距離を求める
         startToGoalDis3D = goal3DPos.z - start3DPos.z;
         startToGoalDis2D = goal2DPos.y - start2DPos.y;
+        
+        //チュートリアルが終了しているのなら
+        if(TutorialManager.isTutorialFinish)
+            startToGoalCanvas.SetActive(true);
     }
 
     //更新

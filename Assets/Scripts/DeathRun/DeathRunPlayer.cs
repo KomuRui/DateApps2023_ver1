@@ -252,7 +252,9 @@ public class DeathRunPlayer : MonoBehaviour
     void DestroyPlayer()
     {
         // ミニゲームに死んだことを伝える
-        GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+        if(TutorialManager.isTutorialFinish)
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+        
         GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
 
         //オブジェクトを削除

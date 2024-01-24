@@ -8,6 +8,7 @@ public class FishGameManager : MiniGameManager
 
     [SerializeField] private List<GameObject> image;
     [SerializeField] private List<GameObject> imageTutorial;
+    public GameObject waterEffectParent;
 
     // Start is called before the first frame update
     public override void SceneStart()
@@ -74,6 +75,50 @@ public class FishGameManager : MiniGameManager
 
             beforeValue = item.Value;
             ScoreManager.AddScore(item.Key, nowRank);
+        }
+    }
+
+
+    //イルカの水しぶきエフェクト
+    public void WaterEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < waterEffectParent.transform.childCount; i++)
+        {
+            if (!waterEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = waterEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
+        }
+    }
+
+    public void WaterUpEffect(Vector3 pos)
+    {
+        GameObject ef = null;
+
+        for (int i = 0; i < waterEffectParent.transform.childCount; i++)
+        {
+            if (!waterEffectParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ef = waterEffectParent.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+
+        if (ef != null)
+        {
+            ef.transform.position = pos;
+            ef.SetActive(true);
+            ef.GetComponent<ParticleSystem>().Play();
         }
     }
 }
