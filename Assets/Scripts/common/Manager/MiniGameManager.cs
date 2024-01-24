@@ -252,7 +252,7 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerHeal(byte player)
     {
-        if (playerImageTable == null || TutorialManager.isTutorialFinish) return;
+        if (playerImageTable == null || !TutorialManager.isTutorialFinish) return;
 
         Color c = playerImageTable[player].color;
         c.r = 1.0f;
