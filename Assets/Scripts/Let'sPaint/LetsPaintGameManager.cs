@@ -8,6 +8,7 @@ using System.Linq;
 public class LetsPaintGameManager : MiniGameManager
 {
     [SerializeField] private PaintTarget target;
+    [SerializeField] private GameObject floor;
     public GameObject splashEffectParent;
     public GameObject hitEffectParent;
     private int[] playerPercent;
@@ -22,7 +23,15 @@ public class LetsPaintGameManager : MiniGameManager
     //各プレイヤーのパーセント計算
     private void playerPercentCalc()
     {
-        playerPercent = target.GetPercent(target);
+        //テクスチャ取得
+        Material m = floor.GetComponent<Renderer>().material;
+        Texture t = m.GetTexture("BaseMap");
+
+        //ピクセルごとの色と総ピクセル数を取得
+        //Color[] pixels = t;
+        //int totalPixels = pixels.Length;
+
+        // playerPercent = target.GetPercent(target);
     }
 
     //ゲーム終了時に呼ばれる
