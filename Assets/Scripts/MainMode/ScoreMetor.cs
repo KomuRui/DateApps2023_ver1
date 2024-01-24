@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,10 +10,13 @@ public class ScoreMetor : MonoBehaviour
     [SerializeField] private List<GameObject> metor;
     [SerializeField] private Material metorMaterial;
     [SerializeField] private Material metorMaterialAlpha;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    private int nowScore = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        nowScore = 4;
     }
 
     // Update is called once per frame
@@ -46,9 +50,19 @@ public class ScoreMetor : MonoBehaviour
             nowLookNum = Mathf.Max(0, nowLookNum);
 
             //ŽŸ‚ðŒÄ‚Ô
-            StartCoroutine(MetorMove(0.01f, myPosNum, nowLookNum));
+            if (nowLookNum != 0)
+                StartCoroutine(MetorMove(0.01f, myPosNum, nowLookNum));
+            else
+            {
+                nowScore++;
+                scoreText.text = nowScore.ToString();
+            }
         }
-
+        else
+        {
+            nowScore++;
+            scoreText.text = nowScore.ToString();
+        }
     }
 
     void OnCollisionEnter(Collision collision)

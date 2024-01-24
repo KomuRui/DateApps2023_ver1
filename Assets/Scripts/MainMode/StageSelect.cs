@@ -38,7 +38,7 @@ public class StageSelect : MonoBehaviour
 
         //各プレイヤーのスコアを現在のに対応させる
         for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
-            scoreText[i].text = ScoreManager.GetScore((byte)(i + 1)).ToString();
+            scoreText[i].text = ScoreManager.GetBeforeScore((byte)(i + 1)).ToString();
 
         //フェード
         fade.FadeOut(fadeTime);
