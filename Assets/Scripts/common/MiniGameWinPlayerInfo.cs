@@ -25,6 +25,10 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
     //勝利プレイヤー用のキャンバス
     public GameObject winPlayerCanves;
 
+    //エフェクト
+    public List<GameObject> effeOne;
+    public List<GameObject> effeThree;
+
     //生成したオブジェクト保存用
     private GameObject winOneObj;
     private List<GameObject> winThreeObj = new List<GameObject>();
@@ -92,11 +96,23 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
         //1人側が勝ったのなら
         if (isWinOne)
         {
+            for(int i = 0; i < effeOne.Count; i++)
+            {
+                effeOne[i].SetActive(true);
+                effeOne[i].GetComponent<ParticleSystem>().Play();
+            }
+
             winOneObj.GetComponent<MiniGameWinPlayer>().WinAnimation();
         }
         else
         {
-            for(int i = 0; i < winThreeObj.Count; i++)
+            for (int i = 0; i < effeThree.Count; i++)
+            {
+                effeThree[i].SetActive(true);
+                effeThree[i].GetComponent<ParticleSystem>().Play();
+            }
+
+            for (int i = 0; i < winThreeObj.Count; i++)
                 winThreeObj[i].GetComponent<MiniGameWinPlayer>().WinAnimation();
         }
     }
