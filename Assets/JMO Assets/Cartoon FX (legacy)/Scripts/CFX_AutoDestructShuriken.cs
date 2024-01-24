@@ -36,8 +36,8 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 					#endif
 				}
 				else
-					GameObject.Destroy(this.gameObject);
-				break;
+                    this.gameObject.SetActive(false);
+                break;
 			}
 		}
 	}
