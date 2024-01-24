@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreMetor : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class ScoreMetor : MonoBehaviour
     [SerializeField] private Material metorMaterial;
     [SerializeField] private Material metorMaterialAlpha;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private byte playerNum;
     private int nowScore = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        nowScore = 0;
+        ScoreManager.Initializ();
+        nowScore = ScoreManager.GetBeforeScore(playerNum);
+        scoreText.text = nowScore.ToString();
     }
 
     // Update is called once per frame
