@@ -8,6 +8,7 @@ using System.Linq;
 public class LetsPaintGameManager : MiniGameManager
 {
     [SerializeField] private PaintTarget target;
+    [SerializeField] private GameObject floor;
     public GameObject splashEffectParent;
     public GameObject hitEffectParent;
     private int[] playerPercent;
@@ -22,7 +23,39 @@ public class LetsPaintGameManager : MiniGameManager
     //各プレイヤーのパーセント計算
     private void playerPercentCalc()
     {
-        playerPercent = target.GetPercent(target);
+        //テクスチャ取得
+        Material m = floor.GetComponent<Renderer>().material;
+        Texture t = m.GetTexture("_MainTex");
+        Texture2D texture2D = (Texture2D)t;
+
+        ///ピクセルごとの色と総ピクセル数を取得
+        Color[] pixels = texture2D.GetPixels();
+        int totalPixels = texture2D.width * texture2D.height;
+        int[] percent = { 0, 0, 0, 0 };
+        foreach (Color pixel in pixels)
+        {
+            Color c = pixel;
+            if (pixel.r > .5) { percent[1]++; continue; }
+            if (pixel.g > .5) { percent[0]++; continue; }
+            if (pixel.b > .5) { percent[2]++; continue; }
+            if (pixel.a > .5) { percent[3]++; continue; }
+        }
+
+        percent[0] = (int)(((float)percent[0] / totalPixels) * 100);
+        percent[1] = (int)(((float)percent[1] / totalPixels) * 100);
+        percent[2] = (int)(((float)percent[2] / totalPixels) * 100);
+        percent[3] = (int)(((float)percent[3] / totalPixels) * 100);
+
+        int sum = percent[0] + percent[1] + percent[2] + percent[3];
+        if (sum > 100)
+        {
+            sum = sum - 100;
+           percent[0] -= sum;
+        }
+
+       // return percent;
+
+        //playerPercent = target.GetPercent(target);
     }
 
     //ゲーム終了時に呼ばれる
