@@ -241,7 +241,7 @@ public class MiniGameManager : MonoBehaviour
 
     public void PlayerDead(byte player)
     {
-        if (playerImageTable == null || TutorialManager.isTutorialFinish) return;
+        if (playerImageTable == null || !TutorialManager.isTutorialFinish) return;
 
         Color c = playerImageTable[player].color;
         c.r = 0.2f;
