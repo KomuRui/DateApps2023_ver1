@@ -472,6 +472,8 @@ public class ChasesPlayer : MonoBehaviour
         {
             buttonCount = 0;
         }
+
+        
     }
 
     //ƒRƒ}ƒ“ƒh‚Ìó‘Ô‚ğˆê’è”‚É•Û‚Âˆ—

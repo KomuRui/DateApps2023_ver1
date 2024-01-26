@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -49,6 +50,8 @@ public class ConsecutivePlayer : MonoBehaviour
 
     private Transform mainCameraTransform; // メインカメラのTransform
 
+    private List<Palm> palmList = new List<Palm>();
+
     void Start()
     {
         //マテリアル設定
@@ -79,6 +82,9 @@ public class ConsecutivePlayer : MonoBehaviour
         {
             //動き
             NewMove();
+
+            //投げる
+            Throw();
         }
 
         //状態更新
@@ -340,6 +346,35 @@ public class ConsecutivePlayer : MonoBehaviour
     // 当たった時に呼ばれる関数
     void OnTriggerEnter(Collider other)
     {
+        //ヤシの実に当たったら
+        if (other.gameObject.tag == "Palm")
+        {
+            Palm palm = other.GetComponent<Palm>();
+
+            //ヤシの実が誰のものでもなかったら
+            if (palm.throwObj == null)
+            {
+                palm.throwObj = this.gameObject;
+
+                //リストに追加
+                palmList.Add(palm);
+
+                //ヤシの実を持っている状態にする
+                palm.SetisPickUp(true);
+
+                //ヤシの実を非アクティブ化
+                palm.gameObject.SetActive(false);
+            }
+            else
+            {
+                //投げた本人でなければ
+                if(this != palm.throwObj)
+                {
+                    //スタン
+                }
+            }
+        }
+
         if (other.gameObject.tag == "Goal")
         {
             //Debug.Log(playerNum + "P Goal"); // ログを表示する
@@ -413,6 +448,30 @@ public class ConsecutivePlayer : MonoBehaviour
     public void SetFalseMiss()
     {
         isMiss = false;
+    }
+
+    //ヤシの実を投げる
+    public void Throw()
+    {
+        //ボタンを押していなかったら戻る
+        if (!Input.GetButton("RBbutton" + this.gameObject.GetComponent<PlayerNum>().playerNum))
+            return;
+
+        //ヤシの実を持っていたら
+        if (palmList.Count != 0)
+        {
+            if (palmList.First() == null) return;
+
+            //ヤシの実をアクティブに
+            palmList.First().gameObject.SetActive(true);
+
+            //ヤシの実の位置と向きをセット
+            palmList.First().transform.position = transform.position;
+            palmList.First().SetDir(transform.forward);
+
+            //リストから削除
+            palmList.Remove(palmList.First());
+        }
     }
 
 }
