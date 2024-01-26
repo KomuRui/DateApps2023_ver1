@@ -9,6 +9,7 @@ public class HammerCol : MonoBehaviour
     {
     }
 
+
     void OnCollisionEnter(Collision other)
     {
         if (other.transform.tag == "Floor")

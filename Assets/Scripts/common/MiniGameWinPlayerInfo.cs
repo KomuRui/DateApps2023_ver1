@@ -76,6 +76,7 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
         yield return new WaitForSeconds(delay);
         fade.FadeIn(2.0f);
         StartCoroutine(RankResultPlayerGeneration(2.0f));
+        StartCoroutine(WinPlayerDelete(2.0f));
 
     }
 
@@ -164,5 +165,24 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
 
         //finish‚Ì•¶š‚ğíœ
         GameManager.nowMiniGameManager.endText.SetActive(false);
+    }
+
+
+    //Ÿ—˜ƒvƒŒƒCƒ„[íœ
+    IEnumerator WinPlayerDelete(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (isWinOne)
+        {
+            Destroy(winOneObj.gameObject);
+        }
+        else
+        {
+            for(int i = 0; i < winThreeObj.Count; i++)
+            {
+                Destroy(winThreeObj[i].gameObject);
+            }
+        }
     }
 }
