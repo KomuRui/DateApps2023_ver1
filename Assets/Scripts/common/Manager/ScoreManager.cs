@@ -32,12 +32,12 @@ public static class ScoreManager
         {
             PlayerRank rank = new PlayerRank();
             rank.rank = 1;
-            rank.score = 4;
+            rank.score = 0;
             score[i] = rank;
 
             PlayerRank beforeRank = new PlayerRank();
             beforeRank.rank = 1;
-            beforeRank.score = 4;
+            beforeRank.score = 0;
             beforeScore[i] = beforeRank;
         }
 

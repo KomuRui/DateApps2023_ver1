@@ -69,15 +69,15 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         }
 
         //çUåÇ
-        if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
-        {
-            isAttack = false;
-            HammerOb.transform.DORotate(new Vector3 (AttackRotate.x,-this.transform.localEulerAngles.y, -AttackRotate.z ), 0.5f).SetEase(Ease.InBack);
+        //if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
+        //{
+        //    isAttack = false;
+        //    HammerOb.transform.DORotate(new Vector3 (AttackRotate.x,-this.transform.localEulerAngles.y, -AttackRotate.z ), 0.5f).SetEase(Ease.InBack);
 
-            //1.5ïbå„Ç…Ç†Ç∞ÇÈ
-            Invoke("HammerUp", 0.5f);
-            Invoke("HammerAttack", 2.0f);
-        }
+        //    //1.5ïbå„Ç…Ç†Ç∞ÇÈ
+        //    Invoke("HammerUp", 0.5f);
+        //    Invoke("HammerAttack", 2.0f);
+        //}
     }
 
     //à⁄ìÆ
