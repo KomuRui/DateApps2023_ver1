@@ -40,6 +40,10 @@ public class StageSelect : MonoBehaviour
         for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
             scoreText[i].text = ScoreManager.GetBeforeScore((byte)(i + 1)).ToString();
 
+        //プレイしたミニゲームの画像に変更
+        for (int i = 0; i < StageSelectManager.GetNowRound() - 1; i++)
+            subImage[StageSelectManager.GetNowRound() - 1].material = StageSelectManager.playMaterial[i];
+
         //フェード
         fade.FadeOut(fadeTime);
 
@@ -125,6 +129,7 @@ public class StageSelect : MonoBehaviour
 
         //サブ画像を変更
         subImage[StageSelectManager.GetNowRound() - 1].material = mainImage.material;
+        StageSelectManager.playMaterial.Add(mainImage.material);
         fade.FadeIn(fadeTime);
         StartCoroutine(MiniGameStart(fadeTime));
     }

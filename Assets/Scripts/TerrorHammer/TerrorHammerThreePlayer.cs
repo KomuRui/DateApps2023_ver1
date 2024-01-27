@@ -64,8 +64,6 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         {
             nowPosX = startPosX;
             point++;
-            pointText.SetText(point.ToString());
-            Debug.Log(point);
         }
 
         //çUåÇ
@@ -144,12 +142,10 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "Hammer"/* && isSuper == false*/)
         {
-            Debug.Log("Ç¬Ç‘ÇÍÇΩ!");
-
             this.transform.localScale = new Vector3(1, 0.3f, 1);
             isSuper = true;
-            Invoke("MovePlayer", 2f);
-            Invoke("WeakPlayer", 3f);
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 
