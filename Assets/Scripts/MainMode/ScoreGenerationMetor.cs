@@ -12,7 +12,7 @@ public class ScoreGenerationMetor : MonoBehaviour
     [SerializeField] private float generationTime;
     private List<int> pointNum = new List<int>();
     private List<bool> isFinish = new List<bool>();
-    public List<int> generationNum;
+    public List<int> generationNum = new List<int>();
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +22,12 @@ public class ScoreGenerationMetor : MonoBehaviour
         for (int i = 0; i < metorPointObj.Count; i++)
             isFinish.Add(false);
 
-        //各プレイヤーのスコア台を持っているポイント分初期化
+        //各プレイヤーのスコアに関すること設定
         for (int i = 0; i < scoreMetor.Count; i++)
         {
             scoreMetor[i].NowScoreMetorInitializ(ScoreManager.GetBeforeScore((byte)(i + 1)));
             pointNum.Add(ScoreManager.GetBeforeScore((byte)(i + 1)));
+            generationNum[i] = ScoreManager.GetScore((byte)(i + 1)) - ScoreManager.GetBeforeScore((byte)(i + 1));
         }
     }
 

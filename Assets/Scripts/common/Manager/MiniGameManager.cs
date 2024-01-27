@@ -35,6 +35,7 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] protected List<Image> threePlayerImage = new List<Image>();                           //3人側プレイヤーの画像
     [SerializeField] protected List<Image> threePlayerImageTutorial = new List<Image>();                   //3人側プレイヤーの画像(チュートリアル用)
     [SerializeField] protected Dictionary<byte,Image> playerImageTable = new Dictionary<byte, Image>();    //プレイヤーの画像
+    [SerializeField] protected List<Image> tutorialPlayerImage = new List<Image>();
 
     [SerializeField] protected List<Vector3> rankAnnouncementPos = new List<Vector3>();     //ランク発表時のプレイヤー初期位置
     [SerializeField] protected List<Vector3> rankAnnouncementScale = new List<Vector3>();   //ランク発表時のプレイヤー拡大率
@@ -146,6 +147,7 @@ public class MiniGameManager : MonoBehaviour
         onePlayerObj.transform.localScale = onePlayerScale;
         onePlayerObj.transform.localEulerAngles = onePlayerRotate;
         onePlayerObj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
+        tutorialPlayerImage[0].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
         if (onePlayerParent != null)
             onePlayerObj.transform.parent = onePlayerParent.transform;
@@ -168,6 +170,7 @@ public class MiniGameManager : MonoBehaviour
             threePlayerObj[lookNum].transform.localScale = threePlayerScale[lookNum];
             threePlayerObj[lookNum].transform.localEulerAngles = threePlayerRotate[lookNum];
             threePlayerObj[lookNum].transform.GetComponent<PlayerNum>().playerNum = num;
+            tutorialPlayerImage[lookNum + 1].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
 
             if (lookNum < threePlayerParent.Count)
                 threePlayerObj[lookNum].transform.parent = threePlayerParent[lookNum].transform;
