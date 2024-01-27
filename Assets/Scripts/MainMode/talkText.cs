@@ -7,16 +7,21 @@ using UnityEngine.Events;
 public class talkText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private List<string> talk;
+    [SerializeField] public List<string> talk = new List<string>();
     [SerializeField] private float interval;       //インターバル
     [SerializeField] private GameObject nextImage; //次への画像
     private int nowLookTalkNum = 0;  //現在見ている会話の要素番号
     private int nowLookTextNum = 0;  //現在見ている文字の要素番号
     private bool isTalkChangeWait = false;   //会話変更待機するか
+    private Dictionary<string, bool> isNextTalk = new Dictionary<string, bool>();
 
     // Start is called before the first frame update
     void Start()
     {
+        //止まらないようにする
+        for(int i = 0; i < talk.Count; i++)
+            isNextTalk[talk[i]] = false;
+
         ChildStart();
     }
 
@@ -41,9 +46,14 @@ public class talkText : MonoBehaviour
         //会話終わったのなら
         if (nowLookTextNum >= talk[nowLookTalkNum].Length)
         {
-            nowLookTalkNum++;
-            nextImage.SetActive(true);
-            isTalkChangeWait = true;
+            if (isNextTalk[talk[nowLookTalkNum]])
+            {
+                nowLookTalkNum++;
+                nextImage.SetActive(true);
+                isTalkChangeWait = true;
+            }
+            else
+                TalkFinish();
         }
         else
             AddNextText();
@@ -90,6 +100,9 @@ public class talkText : MonoBehaviour
 
     //すべての会話終了したときの処理
     public virtual void AllTalkFinish() { }
+
+    //各トークが終了したときに呼ばれる関数(次の会話にいかないと設定している場合だけ)
+    public virtual void TalkFinish() { }
 
     //子供用のスタート
     public virtual void ChildStart() { }
