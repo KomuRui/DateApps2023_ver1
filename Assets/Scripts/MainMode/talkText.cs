@@ -13,14 +13,14 @@ public class talkText : MonoBehaviour
     private int nowLookTalkNum = 0;  //現在見ている会話の要素番号
     private int nowLookTextNum = 0;  //現在見ている文字の要素番号
     private bool isTalkChangeWait = false;   //会話変更待機するか
-    private Dictionary<string, bool> isNextTalk = new Dictionary<string, bool>();
+    protected Dictionary<string, bool> isNextTalk = new Dictionary<string, bool>();
 
     // Start is called before the first frame update
     void Start()
     {
         //止まらないようにする
         for(int i = 0; i < talk.Count; i++)
-            isNextTalk[talk[i]] = false;
+            isNextTalk[talk[i]] = true;
 
         ChildStart();
     }
@@ -48,9 +48,7 @@ public class talkText : MonoBehaviour
         {
             if (isNextTalk[talk[nowLookTalkNum]])
             {
-                nowLookTalkNum++;
-                nextImage.SetActive(true);
-                isTalkChangeWait = true;
+                NextImageActive();
             }
             else
                 TalkFinish();
@@ -90,6 +88,14 @@ public class talkText : MonoBehaviour
         text.text += talk[nowLookTalkNum][nowLookTextNum];
         nowLookTextNum++;
         StartCoroutine(nextTextPrint(interval));
+    }
+
+    //次への画像をアクティブに
+    public void NextImageActive()
+    {
+        nowLookTalkNum++;
+        nextImage.SetActive(true);
+        isTalkChangeWait = true;
     }
 
     //話すのスタート
