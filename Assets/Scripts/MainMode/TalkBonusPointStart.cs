@@ -7,9 +7,12 @@ public class TalkBonusPointStart : talkText
 {
 
     [SerializeField] private Vector3 bonusGenerationPos; //ボーナス生成位置
-    [SerializeField] private List<Vector3> bonusMovePos; //ボーナス移動位置
+    [SerializeField] private Vector3 bonusMoveInitializPos;  //ボーナス移動先初期位置
+    [SerializeField] private List<Vector3> bonusPlayerMovePos; //ボーナス移動位置
+    [SerializeField] private List<Vector3> playerPos;          //プレイヤー位置
     [SerializeField] private GameObject bonusPoint;      //ボーナスポイント
     [SerializeField] private GameObject mc;              //司会
+    private GameObject generatipnBonusObj; //生成したボーナスオブジェ
 
     //子供用のスタート
     public override void ChildStart() 
@@ -36,27 +39,49 @@ public class TalkBonusPointStart : talkText
 
         //トークが終わったタイミングで演出を挟みたい時をfalseにする
         isNextTalk[talk[3]] = false;
+        isNextTalk[talk[4]] = false;
         isNextTalk[talk[5]] = false;
+        isNextTalk[talk[6]] = false;
         isNextTalk[talk[7]] = false;
+        isNextTalk[talk[8]] = false;
         isNextTalk[talk[9]] = false;
+        isNextTalk[talk[10]] = false;
 
         //トークスタート
         StartTalk();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //各トークが終了したときに呼ばれる関数(次の会話にいかないと設定している場合だけ)
     public override void TalkFinish() 
     {
-        //ポイント生成
-        GameObject point = Instantiate(bonusPoint, bonusGenerationPos, Quaternion.identity);
-        point.transform.localScale = Vector3.zero;
-        point.transform.DOMove(bonusMovePos[0], 1.0f).SetEase(Ease.OutCubic);
-        point.transform.DOScale(Vector3.one * 0.55f, 1.0f).SetEase(Ease.OutCubic);
+        //偶数ならプレイヤーのもとへ移動
+        if (nowLookTalkNum % 2 == 0)
+            StartCoroutine(BonusToPlayerMpve(1.0f));
+        else
+            //ポイント生成
+            StartCoroutine(BonusGeneration(1.0f));
+    }
+
+    //生成
+    IEnumerator BonusGeneration(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        generatipnBonusObj = Instantiate(bonusPoint, bonusGenerationPos, Quaternion.identity);
+        generatipnBonusObj.transform.localScale = Vector3.zero;
+        generatipnBonusObj.transform.localEulerAngles = new Vector3(-90,0,0);
+        generatipnBonusObj.transform.DOMove(bonusMoveInitializPos, 1.0f).SetEase(Ease.OutCubic);
+        generatipnBonusObj.transform.DOScale(Vector3.one * 0.55f, 1.0f).SetEase(Ease.OutCubic).OnComplete(() => NextImageActive());
+    }
+
+    //ボーナスをプレイヤーへ移動
+    IEnumerator BonusToPlayerMpve(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        var sequence = DOTween.Sequence(); 
+        sequence.Append(generatipnBonusObj.transform.DOMove(bonusPlayerMovePos[0], 1.0f).SetEase(Ease.OutCubic))
+            　　.AppendInterval(0.5f)
+            　　.Append(generatipnBonusObj.transform.DOMove(playerPos[0], 1.0f).SetEase(Ease.OutCubic).OnComplete(() => NextImageActive()))
+                .Join(generatipnBonusObj.transform.DOScale(Vector3.zero, 1.0f).SetEase(Ease.OutCubic));
     }
 }

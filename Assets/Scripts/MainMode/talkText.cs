@@ -10,9 +10,9 @@ public class talkText : MonoBehaviour
     [SerializeField] public List<string> talk = new List<string>();
     [SerializeField] private float interval;       //インターバル
     [SerializeField] private GameObject nextImage; //次への画像
-    private int nowLookTalkNum = 0;  //現在見ている会話の要素番号
-    private int nowLookTextNum = 0;  //現在見ている文字の要素番号
-    private bool isTalkChangeWait = false;   //会話変更待機するか
+    protected int nowLookTalkNum = 0;  //現在見ている会話の要素番号
+    protected int nowLookTextNum = 0;  //現在見ている文字の要素番号
+    protected bool isTalkChangeWait = false;   //会話変更待機するか
     protected Dictionary<string, bool> isNextTalk = new Dictionary<string, bool>();
 
     // Start is called before the first frame update
