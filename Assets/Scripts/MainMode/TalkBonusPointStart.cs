@@ -12,6 +12,10 @@ public class TalkBonusPointStart : talkText
     [SerializeField] private List<Vector3> playerPos;          //プレイヤー位置
     [SerializeField] private GameObject bonusPoint;      //ボーナスポイント
     [SerializeField] private GameObject mc;              //司会
+    [SerializeField] private GameObject leftMetor;
+    [SerializeField] private GameObject rightMetor;
+    [SerializeField] private GameObject talkSignBorad;
+    [SerializeField] private ScoreGenerationMetor scoreGenerationMetor;
     private GameObject generatipnBonusObj; //生成したボーナスオブジェ
 
     //子供用のスタート
@@ -46,6 +50,7 @@ public class TalkBonusPointStart : talkText
         isNextTalk[talk[8]] = false;
         isNextTalk[talk[9]] = false;
         isNextTalk[talk[10]] = false;
+        isNextTalk[talk[12]] = false;
 
         //トークスタート
         StartTalk();
@@ -55,7 +60,9 @@ public class TalkBonusPointStart : talkText
     public override void TalkFinish() 
     {
         //偶数ならプレイヤーのもとへ移動
-        if (nowLookTalkNum % 2 == 0)
+        if (nowLookTalkNum == 12)
+            StartCoroutine(AllPointAddStart(1.0f));
+        else if (nowLookTalkNum % 2 == 0)
             StartCoroutine(BonusToPlayerMpve(1.0f));
         else
             //ポイント生成
@@ -83,5 +90,24 @@ public class TalkBonusPointStart : talkText
             　　.AppendInterval(0.5f)
             　　.Append(generatipnBonusObj.transform.DOMove(playerPos[0], 1.0f).SetEase(Ease.OutCubic).OnComplete(() => NextImageActive()))
                 .Join(generatipnBonusObj.transform.DOScale(Vector3.zero, 1.0f).SetEase(Ease.OutCubic));
+    }
+
+    //ポイント加算開始
+    IEnumerator AllPointAddStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //アニメーション
+        leftMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
+        rightMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
+        talkSignBorad.transform.DOMoveY(25, 2.0f).SetEase(Ease.OutQuart);
+        mc.transform.DOMoveZ(30, 2.0f).SetEase(Ease.OutQuart);
+
+        //ポイント初期化
+        for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
+            scoreGenerationMetor.ScoreMetorSet(i, 0, ScoreManager.GetScore((byte)(i + 1)));
+
+        //ポイント加算スタート
+        scoreGenerationMetor.GenerationStart();
     }
 }
