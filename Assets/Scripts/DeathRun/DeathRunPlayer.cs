@@ -223,6 +223,7 @@ public class DeathRunPlayer : MonoBehaviour
         {
             isGoal = true;
             GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
+            ((DeathRunGameManager)GameManager.nowMiniGameManager).goalPlayer.Add(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 

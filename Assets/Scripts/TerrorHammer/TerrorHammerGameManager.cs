@@ -21,7 +21,7 @@ public class TerrorHammerGameManager : MiniGameManager
         //１人側が勝ったかどうか
         bool isWinOnePLayer = false;
 
-        //プレイヤーがすべて死んでいるのなら
+        //ゴールしたプレイヤーがいないのなら
         if (goalPlayer.Count <= 0)
         {
             ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 1);
@@ -41,7 +41,6 @@ public class TerrorHammerGameManager : MiniGameManager
         }
 
         //3人側の得点をソートで並び変える
-        var sortedDictionary = lifeTime.OrderByDescending(pair => pair.Value);
         foreach (var item in threePlayer)
         {
             //ゴールしているのならこの先処理しない
