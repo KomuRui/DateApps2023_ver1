@@ -26,8 +26,12 @@ public class ModeSelectPlayer : MonoBehaviour
     [SerializeField] private bool isAnimAttack = true;
     [SerializeField] private bool isAnimDamage = true;
     [SerializeField] private int playerNum;                   // プレイヤー番号
-
+    
+    public ModeSelectManager modeSelect;   
     private Transform mainCameraTransform; // メインカメラのTransform
+    private Mode mode;
+    private bool isTalkOK = false;
+    private bool isTalkNow = false;
 
     void Start()
     {
@@ -46,6 +50,22 @@ public class ModeSelectPlayer : MonoBehaviour
 
     void Update()
     {
+
+        if (isTalkOK && Input.GetButtonDown("Abutton1"))
+        {
+            mode.StartTalk();
+            isTalkNow = true;
+        }
+        else if (isTalkNow && Input.GetButtonDown("Bbutton1"))
+        {
+            mode.FinishTalk();
+            isTalkNow = false;
+        }
+
+
+        //もし会話中ならこの先を処理しない
+        if (isTalkNow) return;
+
         //動き
         Move();
 
@@ -149,5 +169,24 @@ public class ModeSelectPlayer : MonoBehaviour
         if (state == this.currentState) return;
 
         this.currentState = state;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "talkCol")
+        {
+            isTalkOK = true;
+            mode = other.transform.GetComponent<Mode>();
+            modeSelect.talkImage.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "talkCol")
+        {
+            isTalkOK = false;
+            modeSelect.talkImage.SetActive(false);
+        }
     }
 }
