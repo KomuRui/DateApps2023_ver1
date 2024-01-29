@@ -173,7 +173,7 @@ public class ModeSelectPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "talkCol")
+        if (other.transform.tag == "TalkCol")
         {
             isTalkOK = true;
             mode = other.transform.GetComponent<Mode>();
@@ -183,7 +183,7 @@ public class ModeSelectPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.tag == "talkCol")
+        if (other.transform.tag == "TalkCol")
         {
             isTalkOK = false;
             modeSelect.talkImage.SetActive(false);
