@@ -51,6 +51,11 @@ public class ConsecutivePlayer : MonoBehaviour
     private Transform mainCameraTransform; // メインカメラのTransform
 
     private List<Palm> palmList = new List<Palm>();
+    Rigidbody rb;
+    private float grassSpeed = 1.0f;
+    [SerializeField] private bool isStan;
+    [SerializeField] private float stanTime = 0.5f;
+    [SerializeField] private float stanSpeed = 0.5f;
 
     void Start()
     {
@@ -67,6 +72,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
         nextCommandImage[threePlayerNum].sprite = commandImageList[1];
         int a = 0;
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -78,7 +84,7 @@ public class ConsecutivePlayer : MonoBehaviour
     void Update()
     {
         //もしもゲームが始まっていて、終わっていく、ゴールしていなかったら
-        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal)
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal && !isStan)
         {
             //動き
             NewMove();
@@ -164,9 +170,6 @@ public class ConsecutivePlayer : MonoBehaviour
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
             rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400, ForceMode.Force);    // 力を加える
             //transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
-            //ジャンプ
-            Jump();
         }
 
         //毎フレーム減速する
@@ -250,7 +253,7 @@ public class ConsecutivePlayer : MonoBehaviour
             // 移動
             //アニメーションの速度に合わせるために遅くする
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
-            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400, ForceMode.Force);    // 力を加える
+            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400 * grassSpeed, ForceMode.Force);    // 力を加える
             //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             //ジャンプ
@@ -368,9 +371,16 @@ public class ConsecutivePlayer : MonoBehaviour
             else
             {
                 //投げた本人でなければ
-                if(this != palm.throwObj)
+                if (this.gameObject != palm.throwObj)
                 {
                     //スタン
+                    SetStan(true);
+
+                    //スタンしたときに減速する
+                    addSpeed *= stanSpeed;
+
+                    //ヤシの実を非アクティブ化
+                    palm.gameObject.SetActive(false);
                 }
             }
         }
@@ -401,6 +411,15 @@ public class ConsecutivePlayer : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        //草に当たったら
+        if (other.gameObject.tag == "Grass")
+        {
+            grassSpeed = 0.5f;
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Goal")
@@ -410,6 +429,11 @@ public class ConsecutivePlayer : MonoBehaviour
 
             ChasesManager a = GameManager.nowMiniGameManager.gameObject.GetComponent<ChasesManager>();
             a.goalPlayer.Add(gameObject.GetComponent<PlayerNum>().playerNum);
+        }
+
+        if (other.gameObject.tag == "Grass")
+        {
+            grassSpeed = 1.0f;
         }
     }
 
@@ -472,6 +496,18 @@ public class ConsecutivePlayer : MonoBehaviour
             //リストから削除
             palmList.Remove(palmList.First());
         }
+    }
+
+    public void SetStan(bool a)
+    {
+        isStan = a;
+        Invoke("StanCancellation", stanTime);
+    }
+
+    //スタン解除
+    public void StanCancellation()
+    {
+        isStan = false;
     }
 
 }
