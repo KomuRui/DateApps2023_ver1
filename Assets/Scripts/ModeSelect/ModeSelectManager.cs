@@ -9,6 +9,8 @@ public class ModeSelectManager : MonoBehaviour
     [SerializeField] private List<Vector3> rotate;
     [SerializeField] private List<Vector3> scale;
     [SerializeField] private List<GameObject> child;
+    [SerializeField] private List<GameObject> mc;
+    public GameObject talkImage;
 
     private List<GameObject> gameObjects = new List<GameObject>();
 
@@ -22,6 +24,7 @@ public class ModeSelectManager : MonoBehaviour
         gameObjects[0].transform.localScale = scale[0];
         gameObjects[0].transform.localEulerAngles = rotate[0];
         child[0].transform.parent = gameObjects[0].transform;
+        gameObjects[0].GetComponent<ModeSelectPlayer>().modeSelect = this;
         for (byte i = 1; i < PlayerManager.PLAYER_MAX; i++)
         {
             gameObjects.Add((GameObject)Resources.Load("Prefabs/ModeSelect/Other/" + PlayerManager.GetPlayerVisual((byte)(i + 1))));
@@ -37,6 +40,14 @@ public class ModeSelectManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for(int i = 0; i < mc.Count; i++)
+        {
+            // Y軸だけを向くように設定
+            Vector3 targetPosition = gameObjects[0].transform.position;
+            targetPosition.y = mc[i].transform.position.y;
+
+            // ターゲットを向く
+            mc[i].transform.LookAt(targetPosition);
+        }
     }
 }

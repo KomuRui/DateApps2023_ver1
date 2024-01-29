@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 5035404060135638515}
   - component: {fileID: 3073889884250448178}
   - component: {fileID: 4883866888519546175}
-  - component: {fileID: 6758216524033119067}
+  - component: {fileID: 4335172067003892054}
   m_Layer: 0
   m_Name: Slime_03
   m_TagString: Untagged
@@ -133,7 +133,7 @@ Transform:
   - {fileID: 6437887244252990557}
   - {fileID: 8808580428500941130}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6318298380838801832
 Animator:
@@ -217,9 +217,9 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &6758216524033119067
+--- !u!114 &4335172067003892054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3393700849204304691}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23932609d4b669743a33f1dd4132ebca, type: 3}
+  m_Script: {fileID: 11500000, guid: 2949225fcff8ccb409b255cf933ee3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   faces: {fileID: 11400000, guid: 8b8a7554fceb39841840f45a2d8da540, type: 2}
