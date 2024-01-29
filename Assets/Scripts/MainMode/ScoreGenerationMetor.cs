@@ -84,7 +84,7 @@ public class ScoreGenerationMetor : MonoBehaviour
     //スコアメーターを初期化
     public void ScoreMetorSet(int playerNum,int metorInitializPoint,int nowScore)
     {
-        scoreMetor[playerNum].NowScoreMetorInitializ(metorInitializPoint);
+        scoreMetor[playerNum].AllScoreMetorAndScoreTextInitializ();
         pointNum[playerNum] = metorInitializPoint;
         generationNum[playerNum] = nowScore;
     }

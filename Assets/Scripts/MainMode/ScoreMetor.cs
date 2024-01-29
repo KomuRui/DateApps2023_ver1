@@ -36,6 +36,16 @@ public class ScoreMetor : MonoBehaviour
             metor[i].GetComponent<MeshRenderer>().material = metorMaterial;
     }
 
+    //すべてのスコアメーターとスコアテキストを初期化
+    public void AllScoreMetorAndScoreTextInitializ()
+    {
+        for(int i = 0; i < metor.Count; i++)
+            metor[i].GetComponent<MeshRenderer>().material = metorMaterialAlpha;
+
+        nowScore = 0;
+        scoreText.text = nowScore.ToString();
+    }
+
     //メーター動く
     IEnumerator MetorMove(float delay,int myPosNum,int nowLookNum)
     {
