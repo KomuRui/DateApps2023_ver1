@@ -54,11 +54,15 @@ public class ModeSelectPlayer : MonoBehaviour
         if (isTalkOK && Input.GetButtonDown("Abutton1"))
         {
             mode.StartTalk();
+            modeSelect.talkImageCanvas.SetActive(false);
+            modeSelect.nowTalkImageCanvas.SetActive(true);
             isTalkNow = true;
         }
         else if (isTalkNow && Input.GetButtonDown("Bbutton1"))
         {
             mode.FinishTalk();
+            modeSelect.talkImageCanvas.SetActive(true);
+            modeSelect.nowTalkImageCanvas.SetActive(false);
             isTalkNow = false;
         }
 
@@ -177,7 +181,7 @@ public class ModeSelectPlayer : MonoBehaviour
         {
             isTalkOK = true;
             mode = other.transform.GetComponent<Mode>();
-            modeSelect.talkImage.SetActive(true);
+            modeSelect.talkImageCanvas.SetActive(true);
         }
     }
 
@@ -186,7 +190,7 @@ public class ModeSelectPlayer : MonoBehaviour
         if (other.transform.tag == "TalkCol")
         {
             isTalkOK = false;
-            modeSelect.talkImage.SetActive(false);
+            modeSelect.talkImageCanvas.SetActive(false);
         }
     }
 }

@@ -10,7 +10,8 @@ public class ModeSelectManager : MonoBehaviour
     [SerializeField] private List<Vector3> scale;
     [SerializeField] private List<GameObject> child;
     [SerializeField] private List<GameObject> mc;
-    public GameObject talkImage;
+    public GameObject talkImageCanvas;
+    public GameObject nowTalkImageCanvas;
 
     private List<GameObject> gameObjects = new List<GameObject>();
 
