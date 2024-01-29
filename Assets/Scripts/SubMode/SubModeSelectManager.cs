@@ -53,6 +53,8 @@ public class SubModeSelectManager : MonoBehaviour
 
     void Start()
     {
+        TutorialManager.isInitializOK = false;
+
         //‰Šú‰»
         for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
         {
