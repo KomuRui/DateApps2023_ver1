@@ -48,10 +48,6 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1 && this.transform.localScale.y > 0.5f)
-            //動き
-            Move();
-
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.0f, 1.0f));//1.7f
 
         //チェック
@@ -64,7 +60,14 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         {
             nowPosX = startPosX;
             point++;
+            ((TerrorHammerGameManager)GameManager.nowMiniGameManager).goalPlayer.Add(this.GetComponent<PlayerNum>().playerNum);
         }
+
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || point >= 1 || this.transform.localScale.y <= 0.5f)
+            return;
+        
+        //動き
+        Move();
 
         //攻撃
         if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && !HammerOb.GetComponent<ThreePlayerHammer>().isAttack)

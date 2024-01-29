@@ -147,7 +147,9 @@ public class MiniGameManager : MonoBehaviour
         onePlayerObj.transform.localScale = onePlayerScale;
         onePlayerObj.transform.localEulerAngles = onePlayerRotate;
         onePlayerObj.transform.GetComponent<PlayerNum>().playerNum = onePlayer;
-        tutorialPlayerImage[0].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
+
+        if(!TutorialManager.isTutorialFinish)
+        Å@tutorialPlayerImage[0].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(onePlayer));
 
         if (onePlayerParent != null)
             onePlayerObj.transform.parent = onePlayerParent.transform;
@@ -170,7 +172,9 @@ public class MiniGameManager : MonoBehaviour
             threePlayerObj[lookNum].transform.localScale = threePlayerScale[lookNum];
             threePlayerObj[lookNum].transform.localEulerAngles = threePlayerRotate[lookNum];
             threePlayerObj[lookNum].transform.GetComponent<PlayerNum>().playerNum = num;
-            tutorialPlayerImage[lookNum + 1].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
+
+            if (!TutorialManager.isTutorialFinish)
+                tutorialPlayerImage[lookNum + 1].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage(num));
 
             if (lookNum < threePlayerParent.Count)
                 threePlayerObj[lookNum].transform.parent = threePlayerParent[lookNum].transform;

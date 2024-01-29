@@ -1,10 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class TerrorHammerGameManager : MiniGameManager
 {
+    [NonSerialized] public List<byte> goalPlayer = new List<byte>();
     public GameObject hitEffectParent;
 
     /// Start is called before the first frame update
@@ -21,7 +22,7 @@ public class TerrorHammerGameManager : MiniGameManager
         bool isWinOnePLayer = false;
 
         //プレイヤーがすべて死んでいるのなら
-        if (isPlayerAllDead)
+        if (goalPlayer.Count <= 0)
         {
             ScoreManager.AddScore(onePlayerObj.GetComponent<PlayerNum>().playerNum, 1);
             isWinOnePLayer = true;
@@ -31,37 +32,22 @@ public class TerrorHammerGameManager : MiniGameManager
 
         //順位を確認
         byte nowRank = (isWinOnePLayer ? (byte)2 : (byte)1);
-        byte sameRank = 0;
 
         //生き残っている人に順位をつける
-        foreach (var player in threePlayer)
+        foreach (var player in goalPlayer)
         {
-            //生きているのなら
-            if (!player.Value)
-            {
-                ScoreManager.AddScore(player.Key, nowRank);
-                sameRank++;
-            }
+            ScoreManager.AddScore(player, nowRank);
+            nowRank++;
         }
 
         //3人側の得点をソートで並び変える
         var sortedDictionary = lifeTime.OrderByDescending(pair => pair.Value);
-        float beforeValue = -1;
-        foreach (var item in sortedDictionary)
+        foreach (var item in threePlayer)
         {
-            //生きているのならこの先処理しない
-            if (!threePlayer[item.Key]) continue;
+            //ゴールしているのならこの先処理しない
+            if (goalPlayer.Contains(item.Key)) continue;
 
-            //前回の値と違うのならば
-            if (beforeValue != item.Value)
-            {
-                nowRank += sameRank;
-                sameRank = 1;
-            }
-            else
-                sameRank++;
-
-            beforeValue = item.Value;
+            //スコア加算
             ScoreManager.AddScore(item.Key, nowRank);
         }
     }
