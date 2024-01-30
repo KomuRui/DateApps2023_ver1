@@ -299,6 +299,6 @@ public class CharaSelectManager : MonoBehaviour
     IEnumerator SceneChange(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("MainMode");
+        SceneManager.LoadScene("ModeSelect");
     }
 }
