@@ -16,6 +16,7 @@ public class TalkBonusPointStart : talkText
     [SerializeField] private GameObject rightMetor;
     [SerializeField] private GameObject talkSignBorad;
     [SerializeField] private ScoreGenerationMetor scoreGenerationMetor;
+    [SerializeField] private StageSelect stageSelectInfo;
     private GameObject generatipnBonusObj; //生成したボーナスオブジェ
 
     //子供用のスタート
@@ -42,14 +43,14 @@ public class TalkBonusPointStart : talkText
             isNextTalk[talk[i]] = true;
 
         //トークが終わったタイミングで演出を挟みたい時をfalseにする
-        isNextTalk[talk[3]] = false;
-        isNextTalk[talk[4]] = false;
-        isNextTalk[talk[5]] = false;
-        isNextTalk[talk[6]] = false;
-        isNextTalk[talk[7]] = false;
-        isNextTalk[talk[8]] = false;
-        isNextTalk[talk[9]] = false;
-        isNextTalk[talk[10]] = false;
+        isNextTalk[talk[3]] = true;
+        isNextTalk[talk[4]] = true;
+        isNextTalk[talk[5]] = true;
+        isNextTalk[talk[6]] = true;
+        isNextTalk[talk[7]] = true;
+        isNextTalk[talk[8]] = true;
+        isNextTalk[talk[9]] = true;
+        isNextTalk[talk[10]] = true;
         isNextTalk[talk[12]] = false;
 
         //トークスタート
@@ -97,17 +98,46 @@ public class TalkBonusPointStart : talkText
     {
         yield return new WaitForSeconds(delay);
 
+        ////アニメーション
+        //leftMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
+        //rightMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
+        //talkSignBorad.transform.DOMoveY(25, 2.0f).SetEase(Ease.OutQuart);
+        //mc.transform.DOMoveZ(30, 2.0f).SetEase(Ease.OutQuart);
+
+        ////ポイント初期化
+        //for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
+        //    scoreGenerationMetor.ScoreMetorSet(i, 0, ScoreManager.GetScore((byte)(i + 1)));
+
+        ////ポイント加算スタート
+        //scoreGenerationMetor.GenerationStart();
+
+        //最終発表のアニメーション
+        ResultAnimation();
+    }
+
+    //最終発表のアニメーション
+    void ResultAnimation()
+    {
+        //順位再計算
+        ScoreManager.ReCalcRank();
+
+        //1位のプレイヤーを取得
+        List<byte> topPlayerList = ScoreManager.GetNominatePlayerRank(1);
+
         //アニメーション
-        leftMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
-        rightMetor.transform.DOLocalMoveX(2, 2.0f).SetEase(Ease.OutQuart);
-        talkSignBorad.transform.DOMoveY(25, 2.0f).SetEase(Ease.OutQuart);
-        mc.transform.DOMoveZ(30, 2.0f).SetEase(Ease.OutQuart);
+        foreach(byte playerNum in topPlayerList)
+        {
+            //移動アニメーション
+            stageSelectInfo.playerList[playerNum - 1].transform.DOMove(new Vector3(0f, 0.25f, 5.28f), 2.0f).SetEase(Ease.OutCubic).OnComplete(() => ResultAnimationRotate(topPlayerList));
+        }
+    }
 
-        //ポイント初期化
-        for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
-            scoreGenerationMetor.ScoreMetorSet(i, 0, ScoreManager.GetScore((byte)(i + 1)));
-
-        //ポイント加算スタート
-        scoreGenerationMetor.GenerationStart();
+    //結果発表の回転アニメーション
+    void ResultAnimationRotate(List<byte> tpl)
+    {
+        foreach (byte playerNum in tpl)
+        {
+            stageSelectInfo.playerList[playerNum - 1].transform.DOLocalRotate(new Vector3(0, 180, 0), 1f).SetEase(Ease.OutQuad);
+        }
     }
 }
