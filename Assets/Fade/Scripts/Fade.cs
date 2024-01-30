@@ -5,22 +5,16 @@ using UnityEngine.Assertions;
 public class Fade : MonoBehaviour
 {
     IFade fade;
-    [SerializeField] bool startFade;
 
     void Start()
     {
-        Init();
-        fade.Range = cutoutRange;
+        
     }
 
     float cutoutRange;
 
     void Init()
     {
-        if (startFade)
-        {
-            cutoutRange = 1;
-        }
         fade = GetComponent<IFade>();
     }
 
@@ -74,12 +68,16 @@ public class Fade : MonoBehaviour
 
     public Coroutine FadeOut(float time, System.Action action)
     {
+
         StopAllCoroutines();
         return StartCoroutine(FadeoutCoroutine(time, action));
     }
 
     public Coroutine FadeOut(float time)
     {
+        Init();
+        cutoutRange = 1;
+        fade.Range = cutoutRange;
         return FadeOut(time, null);
     }
 
@@ -91,6 +89,8 @@ public class Fade : MonoBehaviour
 
     public Coroutine FadeIn(float time)
     {
+        Init();
+        fade.Range = cutoutRange;
         return FadeIn(time, null);
     }
 }
