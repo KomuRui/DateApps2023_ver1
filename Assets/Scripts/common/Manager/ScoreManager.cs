@@ -41,7 +41,10 @@ public static class ScoreManager
             beforeScore[i] = beforeRank;
         }
 
-        score[1].score = 1;
+        //score[1].score = 1;
+        //score[2].score = 1;
+        //score[3].score = 1;
+        //score[4].score = 1;
 
         //スコア表初期化
         scoreTable[1] = 4;
