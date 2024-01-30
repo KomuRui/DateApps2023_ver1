@@ -22,6 +22,7 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private List<GameObject> talkText;
     [SerializeField] private List<TextMeshProUGUI> scoreText;
     [SerializeField] private float nextImageTime;
+    [SerializeField] public List<GameObject> playerList = new List<GameObject>();
 
     private int nowLookMaterialNum = 0;
     private bool isResultFinish;
@@ -101,6 +102,9 @@ public class StageSelect : MonoBehaviour
            player.transform.position = playerPosition[i - 1];
            player.transform.localScale = playerScale[i - 1];
            player.transform.localEulerAngles = playerRotation[i - 1];
+
+           //プレイヤーをリストに追加
+           playerList.Add(player);
         }
     }
 
