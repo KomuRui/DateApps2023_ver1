@@ -194,7 +194,7 @@ public class DeathRunPlayer : MonoBehaviour
     //強制スクロール
     public void ForcedScrolling()
     {
-        Debug.Log("Cube Screen" + Camera.main.WorldToScreenPoint(this.transform.position));
+        //Debug.Log("Cube Screen" + Camera.main.WorldToScreenPoint(this.transform.position));
 
         //スクリーン座標に変換
         Vector3 screenPoint = Camera.main.WorldToScreenPoint(this.transform.position);
