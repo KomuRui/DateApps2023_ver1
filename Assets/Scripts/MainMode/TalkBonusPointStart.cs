@@ -1,7 +1,9 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TalkBonusPointStart : talkText
 {
@@ -17,7 +19,15 @@ public class TalkBonusPointStart : talkText
     [SerializeField] private GameObject talkSignBorad;
     [SerializeField] private ScoreGenerationMetor scoreGenerationMetor;
     [SerializeField] private StageSelect stageSelectInfo;
+
+    [SerializeField] private List<Transform> resultTrans = new List<Transform>();
+    [SerializeField] private List<Transform> resultTransTwoWin;
+    [SerializeField] private List<Transform> resultTransThereeWin;
+    [SerializeField] private List<Transform> resultTransAllWin;
+
+
     private GameObject generatipnBonusObj; //生成したボーナスオブジェ
+
 
     //子供用のスタート
     public override void ChildStart() 
@@ -124,20 +134,54 @@ public class TalkBonusPointStart : talkText
         //1位のプレイヤーを取得
         List<byte> topPlayerList = ScoreManager.GetNominatePlayerRank(1);
 
+        int val = Factorial(topPlayerList.Count) - topPlayerList.Count;
+
+        int kaisu = 0;
         //アニメーション
-        foreach(byte playerNum in topPlayerList)
+        foreach (byte playerNum in topPlayerList)
         {
-            //移動アニメーション
-            stageSelectInfo.playerList[playerNum - 1].transform.DOMove(new Vector3(0f, 0.25f, 5.28f), 2.0f).SetEase(Ease.OutCubic).OnComplete(() => ResultAnimationRotate(topPlayerList));
+            //現在の角度を保存
+            Vector3 tmp = stageSelectInfo.playerList[playerNum - 1].transform.localEulerAngles;
+
+            //リザルトの位置を向く
+            stageSelectInfo.playerList[playerNum - 1].transform.LookAt(
+                new Vector3 (resultTrans[val + kaisu].position.x, stageSelectInfo.playerList[playerNum - 1].transform.position.y, resultTrans[val + kaisu].position.x));
+
+            //角度を保存
+            Vector3 goalTrans = stageSelectInfo.playerList[playerNum - 1].transform.localEulerAngles;
+
+            //最初の角度に戻す
+            stageSelectInfo.playerList[playerNum - 1].transform.localEulerAngles = tmp;
+
+            //回転した後に移動する
+            stageSelectInfo.playerList[playerNum - 1].transform.DOLocalRotate(new Vector3(goalTrans.x, goalTrans.y, goalTrans.z), 1f).SetEase(Ease.OutQuad);
+            StartCoroutine(ResultAnimationMove((byte)(playerNum - 1), resultTrans[val + kaisu].position, 1f));
+
+            kaisu++;
         }
     }
 
     //結果発表の回転アニメーション
-    void ResultAnimationRotate(List<byte> tpl)
+    void ResultAnimationRotate(byte num)
     {
-        foreach (byte playerNum in tpl)
-        {
-            stageSelectInfo.playerList[playerNum - 1].transform.DOLocalRotate(new Vector3(0, 180, 0), 1f).SetEase(Ease.OutQuad);
-        }
+            stageSelectInfo.playerList[num].transform.DOLocalRotate(new Vector3(0, 180, 0), 1f).SetEase(Ease.OutQuad);
     }
+
+    //結果発表の移動アニメーション
+    IEnumerator ResultAnimationMove(byte num, Vector3 targetPos, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        //移動アニメーションの後に回転
+        stageSelectInfo.playerList[num].transform.DOMove(targetPos, 2.0f).SetEase(Ease.OutCubic).OnComplete(() => ResultAnimationRotate(num));
+
+    }
+
+    
+    public int Factorial(int n)
+    {
+        if (n == 0)
+            return 0;
+        return n + Factorial(n - 1);
+    }
+
 }
