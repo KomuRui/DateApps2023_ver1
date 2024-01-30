@@ -10,6 +10,7 @@ public class ModeSelectManager : MonoBehaviour
     [SerializeField] private List<Vector3> scale;
     [SerializeField] private List<GameObject> child;
     [SerializeField] private List<GameObject> mc;
+    [SerializeField] private Fade fade;
     public GameObject talkImageCanvas;
     public GameObject nowTalkImageCanvas;
 
@@ -36,6 +37,10 @@ public class ModeSelectManager : MonoBehaviour
             child[i].transform.parent = gameObjects[i].transform;
             gameObjects[i].GetComponent<ModeSelectPlayerNavMesh>().target = gameObjects[i - 1].transform;
         }
+
+        //フェードが情報あるのなら
+        if (fade)
+            fade.FadeOut(1.0f);
     }
 
     // Update is called once per frame
