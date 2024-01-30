@@ -399,6 +399,7 @@ public class ConsecutivePlayer : MonoBehaviour
             Debug.Log("Hit"); // ƒƒO‚ğ•\¦‚·‚é
 
             Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();  // rigidbody‚ğæ“¾
+            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
             Vector3 force = new Vector3(0.0f, 15000.0f, 0.0f);  // —Í‚ğİ’è
             rb.AddForce(force * Time.deltaTime, ForceMode.Force);          // —Í‚ğ‰Á‚¦‚é
 
