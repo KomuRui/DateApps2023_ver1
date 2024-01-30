@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -44,8 +45,17 @@ public class ConsecutivePlayer : MonoBehaviour
     public bool isGoal = false; //ゴールしたか
     public bool isDead = false; //死んでいるか
     public bool isMiss = false; //直線に入力を間違えたかどうか
+    [SerializeField] private float limitAngle = 45f;
+    [SerializeField] private float rotateSpeed = 0.05f;
 
     private Transform mainCameraTransform; // メインカメラのTransform
+
+    private List<Palm> palmList = new List<Palm>();
+    Rigidbody rb;
+    private float grassSpeed = 1.0f;
+    [SerializeField] private bool isStan;
+    [SerializeField] private float stanTime = 0.5f;
+    [SerializeField] private float stanSpeed = 0.5f;
 
     void Start()
     {
@@ -62,6 +72,7 @@ public class ConsecutivePlayer : MonoBehaviour
 
         nextCommandImage[threePlayerNum].sprite = commandImageList[1];
         int a = 0;
+        rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
     }
 
     //顔のテクスチャ設定
@@ -73,10 +84,13 @@ public class ConsecutivePlayer : MonoBehaviour
     void Update()
     {
         //もしもゲームが始まっていて、終わっていく、ゴールしていなかったら
-        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal)
+        if (GameManager.nowMiniGameManager.IsStart() && !GameManager.nowMiniGameManager.IsFinish() && !isGoal && !isStan)
         {
             //動き
-            Move();
+            NewMove();
+
+            //投げる
+            Throw();
         }
 
         //状態更新
@@ -155,6 +169,91 @@ public class ConsecutivePlayer : MonoBehaviour
             //アニメーションの速度に合わせるために遅くする
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
             rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400, ForceMode.Force);    // 力を加える
+            //transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+
+        //毎フレーム減速する
+        buttonCount -= deceleration;
+
+        //buttonCountが0なら
+        if (buttonCount <= 0)
+        {
+            buttonCount = 0.0f;
+        }
+
+        //もしスピードが最大になったら
+        if (SPEED_MAX <= buttonCount)
+        {
+            buttonCount = SPEED_MAX;
+        }
+
+        moveSpeed = buttonCount;
+        Quaternion newRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+
+    }
+
+    //新しい仕様の移動
+    private void NewMove()
+    {
+        // 入力を取得
+        bool isAbuttonClick = Input.GetButtonDown("Abutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
+        bool isBbuttonClick = Input.GetButtonDown("Bbutton" + this.gameObject.GetComponent<PlayerNum>().playerNum);
+
+        //移動ベクトルの一時的な入れ物
+        Vector3 tmpMoveDirection = Vector3.zero;
+
+        // Aボタンを押していたら
+        if (isAbuttonClick)
+        {
+            tmpMoveDirection = new Vector3(rotateSpeed, 0,0);
+        }
+
+        // Bボタンを押していたら
+        if (isBbuttonClick)
+        {
+            tmpMoveDirection = new Vector3(-rotateSpeed, 0, 0);
+        }
+
+        //移動方向が変わっていたら
+        if(tmpMoveDirection != Vector3.zero)
+        {
+            //移動方向
+            moveDirection += tmpMoveDirection;
+
+            if(moveDirection.normalized.x > limitAngle)
+            {
+                moveDirection = new Vector3 (limitAngle, moveDirection.normalized.y, moveDirection.normalized.z);
+            }
+            if (moveDirection.normalized.x < -limitAngle)
+            {
+                moveDirection = new Vector3(-limitAngle, moveDirection.normalized.y, moveDirection.normalized.z);
+            }
+
+            //加速
+            buttonCount += addSpeed;
+        }
+
+        //ImageChange();
+
+        //速度が0ならば
+        if (moveSpeed <= 0)
+        {
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+        }
+        else
+        {
+            //通常状態に変更
+            ChangeStateTo(SlimeAnimationState.Idle);
+
+            //ジャンプ状態に変更
+            //ChangeStateTo(SlimeAnimationState.Walk);
+
+            // 移動
+            //アニメーションの速度に合わせるために遅くする
+            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
+            rb.AddForce(moveDirection * moveSpeed * Time.deltaTime * 400 * grassSpeed, ForceMode.Force);    // 力を加える
             //transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             //ジャンプ
@@ -250,6 +349,42 @@ public class ConsecutivePlayer : MonoBehaviour
     // 当たった時に呼ばれる関数
     void OnTriggerEnter(Collider other)
     {
+        //ヤシの実に当たったら
+        if (other.gameObject.tag == "Palm")
+        {
+            Palm palm = other.GetComponent<Palm>();
+
+            //ヤシの実が誰のものでもなかったら
+            if (palm.throwObj == null)
+            {
+                palm.throwObj = this.gameObject;
+
+                //リストに追加
+                palmList.Add(palm);
+
+                //ヤシの実を持っている状態にする
+                palm.SetisPickUp(true);
+
+                //ヤシの実を非アクティブ化
+                palm.gameObject.SetActive(false);
+            }
+            else
+            {
+                //投げた本人でなければ
+                if (this.gameObject != palm.throwObj)
+                {
+                    //スタン
+                    SetStan(true);
+
+                    //スタンしたときに減速する
+                    addSpeed *= stanSpeed;
+
+                    //ヤシの実を非アクティブ化
+                    palm.gameObject.SetActive(false);
+                }
+            }
+        }
+
         if (other.gameObject.tag == "Goal")
         {
             //Debug.Log(playerNum + "P Goal"); // ログを表示する
@@ -276,6 +411,15 @@ public class ConsecutivePlayer : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        //草に当たったら
+        if (other.gameObject.tag == "Grass")
+        {
+            grassSpeed = 0.5f;
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Goal")
@@ -285,6 +429,11 @@ public class ConsecutivePlayer : MonoBehaviour
 
             ChasesManager a = GameManager.nowMiniGameManager.gameObject.GetComponent<ChasesManager>();
             a.goalPlayer.Add(gameObject.GetComponent<PlayerNum>().playerNum);
+        }
+
+        if (other.gameObject.tag == "Grass")
+        {
+            grassSpeed = 1.0f;
         }
     }
 
@@ -323,6 +472,42 @@ public class ConsecutivePlayer : MonoBehaviour
     public void SetFalseMiss()
     {
         isMiss = false;
+    }
+
+    //ヤシの実を投げる
+    public void Throw()
+    {
+        //ボタンを押していなかったら戻る
+        if (!Input.GetButton("RBbutton" + this.gameObject.GetComponent<PlayerNum>().playerNum))
+            return;
+
+        //ヤシの実を持っていたら
+        if (palmList.Count != 0)
+        {
+            if (palmList.First() == null) return;
+
+            //ヤシの実をアクティブに
+            palmList.First().gameObject.SetActive(true);
+
+            //ヤシの実の位置と向きをセット
+            palmList.First().transform.position = transform.position;
+            palmList.First().SetDir(transform.forward);
+
+            //リストから削除
+            palmList.Remove(palmList.First());
+        }
+    }
+
+    public void SetStan(bool a)
+    {
+        isStan = a;
+        Invoke("StanCancellation", stanTime);
+    }
+
+    //スタン解除
+    public void StanCancellation()
+    {
+        isStan = false;
     }
 
 }

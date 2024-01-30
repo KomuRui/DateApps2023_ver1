@@ -10,6 +10,8 @@ public class StageSelect : MonoBehaviour
     [SerializeField] private List<Vector3> playerPosition = new List<Vector3>();
     [SerializeField] private List<Vector3> playerRotation = new List<Vector3>();
     [SerializeField] private List<Vector3> playerScale = new List<Vector3>();
+    [SerializeField] private List<Vector3> numberOnePlayerEffePos = new List<Vector3>();
+    [SerializeField] private List<GameObject> numberOnePlayerEffe;
     [SerializeField] private Fade fade;
     [SerializeField] private float fadeTime;
     [SerializeField] private GameObject rankText;   
@@ -32,6 +34,7 @@ public class StageSelect : MonoBehaviour
         //各自必要なこと
         PlayerManager.Initializ();
         ScoreManager.Initializ();
+        TutorialManager.isInitializOK = false;
         PlayerInstantiate();
         AllMiniGameFinish();
         talkText[StageSelectManager.GetNowRound() - 1].SetActive(true);
@@ -39,6 +42,10 @@ public class StageSelect : MonoBehaviour
         //各プレイヤーのスコアを現在のに対応させる
         for(int i = 0; i < PlayerManager.PLAYER_MAX; i++)
             scoreText[i].text = ScoreManager.GetBeforeScore((byte)(i + 1)).ToString();
+
+        //プレイしたミニゲームの画像に変更
+        for (int i = 0; i < StageSelectManager.GetNowRound() - 1; i++)
+            subImage[StageSelectManager.GetNowRound() - 1].material = StageSelectManager.playMaterial[i];
 
         //フェード
         fade.FadeOut(fadeTime);
@@ -59,8 +66,28 @@ public class StageSelect : MonoBehaviour
     void Update()
     {
         //結果発表が終わったのなら
-        if (isResultFinish) 
+        if (isResultFinish)
             GoModeSelect();
+
+        //各プレイヤーのスコアを降順で保存
+        Dictionary<int, int> score = new Dictionary<int, int>();
+        for (int i = 0; i < scoreText.Count; i++)
+            score[i] = int.Parse(scoreText[i].text);
+
+        //ソート
+        var sortedDictionary = score.OrderByDescending(pair => pair.Value);
+        int scoreMax = score[0];
+        int effectNum = 0;
+        foreach (var item in sortedDictionary)
+        {
+            if (scoreMax == item.Value)
+            {
+                numberOnePlayerEffe[effectNum].SetActive(true);
+                numberOnePlayerEffe[effectNum].transform.localPosition = numberOnePlayerEffePos[effectNum];
+                effectNum++;
+            }
+        }
+
     }
 
     //プレイヤー生成
@@ -125,6 +152,7 @@ public class StageSelect : MonoBehaviour
 
         //サブ画像を変更
         subImage[StageSelectManager.GetNowRound() - 1].material = mainImage.material;
+        StageSelectManager.playMaterial.Add(mainImage.material);
         fade.FadeIn(fadeTime);
         StartCoroutine(MiniGameStart(fadeTime));
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Drawing;
 
 public class HammerOnePlayer : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class HammerOnePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish())
+            return;
+
         if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
         {
             isAttack = false;

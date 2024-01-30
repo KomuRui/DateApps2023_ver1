@@ -18,7 +18,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     [SerializeField] public TextMeshProUGUI pointText;       //点数テキスト
     [SerializeField] private GameObject HammerOb;  // ハンマー
     
-    private Vector3 initializeRotate;
+    private Quaternion initializeRotate;
     private Vector3 AttackRotate;
     private bool isAttack;
     private bool isSuper;
@@ -39,19 +39,15 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         rBody = this.GetComponent<Rigidbody>();
 
         //初期
-        initializeRotate = new Vector3(90, 0, 180);
+        initializeRotate = HammerOb.transform.rotation;
         AttackRotate = new Vector3(0, 0, 180);
-        isAttack = true;
+        isAttack = false;
         isSuper = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.nowMiniGameManager.IsFinish() && point < 1 && this.transform.localScale.y > 0.5f)
-            //動き
-            Move();
-
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.7f, 4.7f),transform.position.y, Mathf.Clamp(transform.position.z, -1.0f, 1.0f));//1.7f
 
         //チェック
@@ -64,25 +60,30 @@ public class TerrorHammerThreePlayer : MonoBehaviour
         {
             nowPosX = startPosX;
             point++;
-            pointText.SetText(point.ToString());
-            Debug.Log(point);
+            ((TerrorHammerGameManager)GameManager.nowMiniGameManager).goalPlayer.Add(this.GetComponent<PlayerNum>().playerNum);
         }
 
-        //攻撃
-        if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && isAttack)
-        {
-            isAttack = false;
-            HammerOb.transform.DORotate(new Vector3 (AttackRotate.x,-this.transform.localEulerAngles.y, -AttackRotate.z ), 0.5f).SetEase(Ease.InBack);
+        if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || point >= 1 || this.transform.localScale.y <= 0.5f)
+            return;
+        
+        //動き
+        Move();
 
+        //攻撃
+        if (Input.GetButtonDown("Abutton" + this.GetComponent<PlayerNum>().playerNum) && !HammerOb.GetComponent<ThreePlayerHammer>().isAttack)
+        {
+            HammerOb.GetComponent<ThreePlayerHammer>().Attack();
             //1.5秒後にあげる
             Invoke("HammerUp", 0.5f);
-            Invoke("HammerAttack", 2.0f);
         }
     }
 
     //移動
     private void Move()
     {
+        //攻撃中ならこの先処理しない
+        if (HammerOb.GetComponent<ThreePlayerHammer>().isAttack) return;
+
         // 入力を取得用
         float horizontalInput = 0;
         float verticalInput = 0;
@@ -116,24 +117,38 @@ public class TerrorHammerThreePlayer : MonoBehaviour
 
     public void HammerUp()
     {
-        HammerOb.transform.DORotate(new Vector3 (initializeRotate.x,-this.transform.localEulerAngles.y, initializeRotate.z/* + this.transform.rotation.z*/), 0.5f).SetEase(Ease.InQuad);
+        HammerOb.GetComponent<ThreePlayerHammer>().Return();
+        //HammerOb.transform.DORotateQuaternion(initializeRotate, 0.5f).SetEase(Ease.InQuad).OnComplete(() => isAttack = false) ;
     }
 
-    public void HammerAttack()
+
+    //プレイヤーのハンマーにヒット
+    public void HitPlayerHammer()
     {
-        isAttack = true;
+        Debug.Log("つぶれた!");
+
+        this.transform.localScale = new Vector3(1, 0.3f, 1);
+        isSuper = true;
+        Invoke("MovePlayer", 2f);
+        Invoke("WeakPlayer", 3f);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "PlayerHammer"/* && isSuper == false*/)
+        //if (collision.gameObject.tag == "PlayerHammer" && collision.gameObject.GetComponent<TerrorHammerThreePlayer>().isAttack)
         {
-            Debug.Log("つぶれた!");
+           
+        }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Hammer"/* && isSuper == false*/)
+        {
             this.transform.localScale = new Vector3(1, 0.3f, 1);
             isSuper = true;
-            Invoke("MovePlayer", 2f);
-            Invoke("WeakPlayer", 3f);
+            GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 

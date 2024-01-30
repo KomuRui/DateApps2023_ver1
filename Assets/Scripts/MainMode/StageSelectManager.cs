@@ -13,6 +13,7 @@ public static class StageSelectManager
     private const int MAX_ROUND = 4;                                   　     //最大ラウンド数
     public static List<string> notPlayminiGameSceneName = new List<string>(); //プレイしていないミニゲームの名前
     public static List<string> playMiniGameSceneName = new List<string>();    //すでにプレイしているミニゲームの名前
+    public static List<Material> playMaterial = new List<Material>();
     public static string nowMiniGameName;
     public static bool isMainModeFinish;
 

@@ -193,6 +193,7 @@ public class FlagUpGameManager : MiniGameManager
 
         if (turn == Turn.ONE_PLAYER)
         {
+            Debug.Log("3êl");
             turn = Turn.THREE_PLAYER;
             mainCamera.position = threePlayerTurnCameraPos;
             mainCamera.localEulerAngles = threePlayerTurnCameraRotate;
