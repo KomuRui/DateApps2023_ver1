@@ -6,6 +6,7 @@ using UnityEngine;
 public class Mode : MonoBehaviour
 {
     [SerializeField] private Vector3 camMovePos;
+    [SerializeField] private Fade fade;
     private Vector3 initialPos;
     private Vector3 initialRotate;
 
