@@ -61,6 +61,9 @@ public class TerrorHammerThreePlayer : MonoBehaviour
             nowPosX = startPosX;
             point++;
             ((TerrorHammerGameManager)GameManager.nowMiniGameManager).goalPlayer.Add(this.GetComponent<PlayerNum>().playerNum);
+
+            if (((TerrorHammerGameManager)GameManager.nowMiniGameManager).goalPlayer.Count >= 3)
+                ((TerrorHammerGameManager)GameManager.nowMiniGameManager).SetMiniGameFinish();
         }
 
         if (!GameManager.nowMiniGameManager.IsStart() || GameManager.nowMiniGameManager.IsFinish() || point >= 1 || this.transform.localScale.y <= 0.5f)
