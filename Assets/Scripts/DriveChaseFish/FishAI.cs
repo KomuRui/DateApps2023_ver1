@@ -83,7 +83,7 @@ public class FishAI : MonoBehaviour
     //ƒS[ƒ‹æ•ÏX
     private void GoalChange()
     {
-        if (!agent.enabled || !this.gameObject.active) return;
+        if (!agent.enabled || !this.gameObject.activeSelf) return;
 
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         time = 0.0f;
