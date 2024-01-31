@@ -103,6 +103,7 @@ public class CharaSelectManager : MonoBehaviour
         }
 
         PlayerManager.Initializ();
+        StageSelectManager.Initializ();
 
         //フェードが情報あるのなら
         if (fade)

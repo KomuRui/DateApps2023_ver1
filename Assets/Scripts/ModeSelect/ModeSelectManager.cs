@@ -19,7 +19,7 @@ public class ModeSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerManager.Initializ();
+        ScoreManager.Initializ();
         gameObjects.Add((GameObject)Resources.Load("Prefabs/ModeSelect/1P/" + PlayerManager.GetPlayerVisual(1)));
         gameObjects[0] = Instantiate(gameObjects[0], this.transform.position, Quaternion.identity);
         gameObjects[0].transform.position = pos[0];

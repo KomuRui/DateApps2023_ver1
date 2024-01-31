@@ -74,13 +74,13 @@ public class MiniGameManager : MonoBehaviour
         /////////////////////////////////ƒ¿”Å‚¾‚¯
         if (!GameManager.isTitleStart)
         {
-            PlayerManager.Initializ();
-            ScoreManager.Initializ();
-            TutorialManager.Initializ();
+            //PlayerManager.Initializ();
+            //ScoreManager.Initializ();
         }
 
         /////‰Šú‰»
         GameManager.nowMiniGameManager = this;
+        TutorialManager.Initializ();
         nowRankAnnouncement = false;@
         isPlayerAllDead = false;
         isStart = false;
