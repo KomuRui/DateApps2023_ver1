@@ -36,8 +36,8 @@ public class StageSelect : MonoBehaviour
         //PlayerManager.Initializ();
         //ScoreManager.Initializ();
         TutorialManager.isInitializOK = false;
+        TutorialManager.isTutorialFinish = false;
         PlayerInstantiate();
-        AllMiniGameFinish();
         talkText[StageSelectManager.GetNowRound() - 1].SetActive(true);
 
         //各プレイヤーのスコアを現在のに対応させる
@@ -46,7 +46,19 @@ public class StageSelect : MonoBehaviour
 
         //プレイしたミニゲームの画像に変更
         for (int i = 0; i < StageSelectManager.GetNowRound() - 1; i++)
-            subImage[i - 1].material = StageSelectManager.playMaterial[i];
+            subImage[i].material = StageSelectManager.playMaterial[i];
+
+        //すでにプレイしたミニゲームをのぞく
+        for(int i = 0; i < subImage.Count; i++)
+        {
+            for(int j = 0; j < miniGameMaterial.Count; j++)
+            {
+                if (subImage[i].material.mainTexture == miniGameMaterial[j].mainTexture)
+                {
+                    miniGameMaterial.RemoveAt(j);
+                }
+            }
+        }
 
         //フェード
         fade.FadeOut(fadeTime);
@@ -66,9 +78,6 @@ public class StageSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //結果発表が終わったのなら
-        if (isResultFinish)
-            GoModeSelect();
 
         //各プレイヤーのスコアを降順で保存
         Dictionary<int, int> score = new Dictionary<int, int>();
@@ -178,7 +187,7 @@ public class StageSelect : MonoBehaviour
         nextImageTime += Random.Range(0.005f, 0.02f);
 
         //一定の速度にきたら終わり
-        if (nextImageTime >= 0.60f)
+        if (nextImageTime >= 0.5f)
             StartCoroutine(ImageAnimation(0.5f));
         else
             StartCoroutine(MiniGameRandom(nextImageTime));

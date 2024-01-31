@@ -216,14 +216,14 @@ public class DeathRunPlayer : MonoBehaviour
             transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         //ÉSÅ[ÉãÇ…êGÇÍÇΩÇÁ
         if (other.gameObject.tag == "Goal")
         {
             isGoal = true;
-            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
             ((DeathRunGameManager)GameManager.nowMiniGameManager).goalPlayer.Add(this.GetComponent<PlayerNum>().playerNum);
+            GameManager.nowMiniGameManager.PlayerFinish(this.GetComponent<PlayerNum>().playerNum);
         }
     }
 
