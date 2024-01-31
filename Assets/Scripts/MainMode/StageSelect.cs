@@ -53,7 +53,7 @@ public class StageSelect : MonoBehaviour
         {
             for(int j = 0; j < miniGameMaterial.Count; j++)
             {
-                if (subImage[i] == miniGameMaterial[j])
+                if (subImage[i].material.mainTexture == miniGameMaterial[j].mainTexture)
                 {
                     miniGameMaterial.RemoveAt(j);
                 }
@@ -187,7 +187,7 @@ public class StageSelect : MonoBehaviour
         nextImageTime += Random.Range(0.005f, 0.02f);
 
         //ˆê’è‚Ì‘¬“x‚É‚«‚½‚çI‚í‚è
-        if (nextImageTime >= 0.60f)
+        if (nextImageTime >= 0.5f)
             StartCoroutine(ImageAnimation(0.5f));
         else
             StartCoroutine(MiniGameRandom(nextImageTime));
