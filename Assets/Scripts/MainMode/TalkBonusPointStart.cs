@@ -80,7 +80,7 @@ public class TalkBonusPointStart : talkText
 
             //フェードが情報あるのなら
             if (stageSelectInfo.GetFade())
-            stageSelectInfo.GetFade().FadeOut(1.0f);
+            stageSelectInfo.GetFade().FadeIn(1.0f);
 
         //シーン変更
         StartCoroutine(ChangeScene("ModeSelect", 1f));
@@ -222,7 +222,7 @@ public class TalkBonusPointStart : talkText
 
         //拡大
         Vector3 afterScale = transform.localScale + new Vector3(0.45f, 0.45f, 0.45f);
-        resultTextList[1].transform.DOScale(afterScale, 1f).SetEase(Ease.OutBounce).OnComplete(() => SetIsTalkFinish(true, 2f));
+        resultTextList[1].transform.DOScale(afterScale, 1f).SetEase(Ease.OutBounce).OnComplete(() => SetIsTalkFinish(true));
     }
 
     //シーン変更
@@ -232,9 +232,8 @@ public class TalkBonusPointStart : talkText
         SceneManager.LoadScene(scene);
     }
 
-    public IEnumerator SetIsTalkFinish(bool a, float delay)
+    public void SetIsTalkFinish(bool a)
     {
-        yield return new WaitForSeconds(delay);
         isTalkFinish = a;
     }
 }
