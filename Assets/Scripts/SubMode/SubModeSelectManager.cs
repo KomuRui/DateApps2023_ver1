@@ -36,6 +36,7 @@ public class SubModeSelectManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI whoText;                            //誰のテキスト
     [SerializeField] private GameObject bigSelectEdge;                           //大きい選択画像の枠
     [SerializeField] private Fade fade;                                          //フェード用           
+    [SerializeField] private List<GameObject> backGroundImage;                  
 
     //情報保管しているところ
     private Dictionary<byte, SubModeImageInfo> playerSelectImage = new Dictionary<byte, SubModeImageInfo>();
@@ -55,6 +56,8 @@ public class SubModeSelectManager : MonoBehaviour
     {
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
+        PlayerManager.Initializ();
+        GameManager.isSubMode = true;
 
         //初期化
         for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
@@ -73,6 +76,9 @@ public class SubModeSelectManager : MonoBehaviour
             playerSelectImage[(byte)(i + 1)].ImageColorChange();
             playerSelectImageBig[i].sprite = playerInitializSelectImafe[i].GetComponent<Image>().sprite;
             isPlayerSelect[(byte)(i + 1)] = false;
+
+            //プレイヤー本体の画像を変更
+            playerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage((byte)(i + 1)));
         }
 
         isAllPlayerOk = false;
@@ -87,17 +93,17 @@ public class SubModeSelectManager : MonoBehaviour
 
         /////////////////////////////////////Test////////////////////////////////////////////
 
-        isPlayerSelect[2] = true;
-        isPlayerSelect[3] = true;
-        isPlayerSelect[4] = true;
+        //isPlayerSelect[2] = true;
+        //isPlayerSelect[3] = true;
+        //isPlayerSelect[4] = true;
 
-        //OK画像を表示
-        playerSelectImageBig[1].transform.GetChild(0).gameObject.SetActive(true);
-        playerSelectImageBig[1].transform.GetChild(1).gameObject.SetActive(true);
-        playerSelectImageBig[2].transform.GetChild(0).gameObject.SetActive(true);
-        playerSelectImageBig[2].transform.GetChild(1).gameObject.SetActive(true);
-        playerSelectImageBig[3].transform.GetChild(0).gameObject.SetActive(true);
-        playerSelectImageBig[3].transform.GetChild(1).gameObject.SetActive(true);
+        ////OK画像を表示
+        //playerSelectImageBig[1].transform.GetChild(0).gameObject.SetActive(true);
+        //playerSelectImageBig[1].transform.GetChild(1).gameObject.SetActive(true);
+        //playerSelectImageBig[2].transform.GetChild(0).gameObject.SetActive(true);
+        //playerSelectImageBig[2].transform.GetChild(1).gameObject.SetActive(true);
+        //playerSelectImageBig[3].transform.GetChild(0).gameObject.SetActive(true);
+        //playerSelectImageBig[3].transform.GetChild(1).gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -160,6 +166,9 @@ public class SubModeSelectManager : MonoBehaviour
             {
                 isAllPlayerOk = true;
 
+                for(int i = 0; i < backGroundImage.Count; i++)
+                    backGroundImage[i].SetActive(false);
+
                 //各自アニメーションする
                 ImageAnimation();
             }
@@ -184,7 +193,7 @@ public class SubModeSelectManager : MonoBehaviour
     //全員準備できたか確認
     private bool isAllPlayerOK()
     {
-        for (byte i = 1; i < PlayerManager.PLAYER_MAX; i++)
+        for (byte i = 1; i < PlayerManager.PLAYER_MAX + 1; i++)
         {
             //選択していないかアニメーションの最中ならfalseを返す
             if (!isPlayerSelect[i]) return false;

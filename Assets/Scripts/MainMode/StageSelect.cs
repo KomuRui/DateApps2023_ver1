@@ -32,9 +32,11 @@ public class StageSelect : MonoBehaviour
     {
         isResultFinish = false;
 
+
         //ŠeŽ©•K—v‚È‚±‚Æ
         //PlayerManager.Initializ();
         //ScoreManager.Initializ();
+        GameManager.isSubMode = false;
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
         PlayerInstantiate();
