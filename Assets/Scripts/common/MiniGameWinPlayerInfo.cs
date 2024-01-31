@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MiniGameWinPlayerInfo : MonoBehaviour
 {
@@ -67,7 +68,11 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
         GameManager.nowMiniGameManager.endText.SetActive(false);
         fade.FadeOut(2.0f);
         StartCoroutine(WinPlayerCanvasGeneration(2.0f));
-        StartCoroutine(RankResult(6.0f));
+
+        if (GameManager.isSubMode)
+            StartCoroutine(SubModeLoad(6.0f));
+        else
+            StartCoroutine(RankResult(6.0f));
     }
 
     //ÉâÉìÉNî≠ï\à⁄çs
@@ -184,5 +189,11 @@ public class MiniGameWinPlayerInfo : MonoBehaviour
                 Destroy(winThreeObj[i].gameObject);
             }
         }
+    }
+
+    IEnumerator SubModeLoad(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("SubMode");
     }
 }
