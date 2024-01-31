@@ -201,4 +201,9 @@ public class StageSelect : MonoBehaviour
 
         StageSelectManager.ChangeMiniGameScene();
     }
+
+    public Fade GetFade()
+    {
+        return fade;
+    }
 }
