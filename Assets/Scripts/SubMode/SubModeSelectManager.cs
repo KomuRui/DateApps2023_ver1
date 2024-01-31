@@ -56,7 +56,6 @@ public class SubModeSelectManager : MonoBehaviour
     {
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
-        PlayerManager.Initializ();
         GameManager.isSubMode = true;
 
         //èâä˙âª
@@ -124,6 +123,9 @@ public class SubModeSelectManager : MonoBehaviour
             inputXY[i].beforeInputX = inputXY[i].nowInputX;
             inputXY[i].beforeInputY = inputXY[i].nowInputY;
         }
+
+        if (Input.GetButtonDown("Bbutton1"))
+            SceneManager.LoadScene("ModeSelect");
 
     }
 
