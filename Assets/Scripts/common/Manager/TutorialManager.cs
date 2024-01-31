@@ -42,8 +42,21 @@ public static class TutorialManager
 
         //€”õOK‚µ‚Ä‚¢‚é‚Ì‚È‚ç‰æ‘œ‚ğ•\¦
         MiniGameManager mana = GameManager.nowMiniGameManager;
+        int num = 0;
+        byte[] three = { 0, 0, 0 };
+        byte one = mana.onePlayer;
+        foreach (var threePlayer in mana.threePlayer)
+        {
+            three[num] = threePlayer.Key;
+            num++;
+        }
         for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
-            if (playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
+        {
+            if (one == (byte)(i + 1) && playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
+            if (three[0] == (byte)(i + 1) && playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
+            if (three[1] == (byte)(i + 1) && playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
+            if (three[2] == (byte)(i + 1) && playerReadyOK[(byte)(i + 1)]) mana.okImage[i].SetActive(true);
+        }
     }
 
 

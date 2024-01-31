@@ -74,8 +74,8 @@ public class MiniGameManager : MonoBehaviour
         /////////////////////////////////ƒ¿”Å‚¾‚¯
         if (!GameManager.isTitleStart)
         {
-           // PlayerManager.Initializ();
-           // ScoreManager.Initializ();
+           PlayerManager.Initializ();
+           ScoreManager.Initializ();
         }
 
         /////‰Šú‰»
