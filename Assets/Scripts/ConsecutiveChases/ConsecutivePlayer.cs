@@ -406,7 +406,7 @@ public class ConsecutivePlayer : MonoBehaviour
             isDead = true;
             GameManager.nowMiniGameManager.PlayerDead(this.GetComponent<PlayerNum>().playerNum);
 
-            se.MissAudio();
+            //se.MissAudio();
             //ゲームマネージャーに終わったことを伝える
             //GameManager.nowMiniGameManager.PlayerFinish(this.gameObject.GetComponent<PlayerNum>().playerNum);
         }
