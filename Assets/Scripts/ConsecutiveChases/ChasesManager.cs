@@ -18,6 +18,10 @@ public class ChasesManager : MiniGameManager
     public List<Image> threePlayerNextCommandImageList = new List<Image>();
     [SerializeField] private GameObject camera;
 
+    [SerializeField] private OneSide_UI oneUI;
+
+
+
     //Start‚Æ“¯‚¶
     public override void SceneStart()
     {
@@ -47,6 +51,8 @@ public class ChasesManager : MiniGameManager
         {
             camera.GetComponent<CameraController>().playerList.Add(player);
         }
+
+        oneUI.player = onePlayerObj;
     }
 
     //ƒQ[ƒ€ŠJn‚ÉŒÄ‚Î‚ê‚é
