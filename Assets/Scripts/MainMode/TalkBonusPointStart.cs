@@ -55,14 +55,14 @@ public class TalkBonusPointStart : talkText
             isNextTalk[talk[i]] = true;
 
         //トークが終わったタイミングで演出を挟みたい時をfalseにする
-        isNextTalk[talk[3]] = true;
-        isNextTalk[talk[4]] = true;
-        isNextTalk[talk[5]] = true;
-        isNextTalk[talk[6]] = true;
-        isNextTalk[talk[7]] = true;
-        isNextTalk[talk[8]] = true;
-        isNextTalk[talk[9]] = true;
-        isNextTalk[talk[10]] = true;
+        isNextTalk[talk[3]] = false;
+        isNextTalk[talk[4]] = false;
+        isNextTalk[talk[5]] = false;
+        isNextTalk[talk[6]] = false;
+        isNextTalk[talk[7]] = false;
+        isNextTalk[talk[8]] = false;
+        isNextTalk[talk[9]] = false;
+        isNextTalk[talk[10]] = false;
         isNextTalk[talk[12]] = false;
 
         //トークスタート
