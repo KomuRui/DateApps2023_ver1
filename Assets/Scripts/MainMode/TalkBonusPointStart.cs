@@ -223,8 +223,6 @@ public class TalkBonusPointStart : talkText
         //Šg‘å
         Vector3 afterScale = transform.localScale + new Vector3(0.45f, 0.45f, 0.45f);
         resultTextList[1].transform.DOScale(afterScale, 1f).SetEase(Ease.OutBounce).OnComplete(() => SetIsTalkFinish(true, 2f));
-
-        isTalkFinish = true;
     }
 
     //ƒV[ƒ“•ÏX
