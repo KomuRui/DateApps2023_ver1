@@ -1,8 +1,10 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 //using System.Numerics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class TalkBonusPointStart : talkText
@@ -21,12 +23,12 @@ public class TalkBonusPointStart : talkText
     [SerializeField] private StageSelect stageSelectInfo;
 
     [SerializeField] private List<Transform> resultTrans = new List<Transform>();
-    [SerializeField] private List<Transform> resultTransTwoWin;
-    [SerializeField] private List<Transform> resultTransThereeWin;
-    [SerializeField] private List<Transform> resultTransAllWin;
+
+    [SerializeField] private List<TextMeshProUGUI> resultTextList = new List<TextMeshProUGUI>();
 
 
     private GameObject generatipnBonusObj; //生成したボーナスオブジェ
+    private bool isTalkFinish = false;
 
 
     //子供用のスタート
@@ -53,18 +55,35 @@ public class TalkBonusPointStart : talkText
             isNextTalk[talk[i]] = true;
 
         //トークが終わったタイミングで演出を挟みたい時をfalseにする
-        isNextTalk[talk[3]] = true;
-        isNextTalk[talk[4]] = true;
-        isNextTalk[talk[5]] = true;
-        isNextTalk[talk[6]] = true;
-        isNextTalk[talk[7]] = true;
-        isNextTalk[talk[8]] = true;
-        isNextTalk[talk[9]] = true;
-        isNextTalk[talk[10]] = true;
+        isNextTalk[talk[3]] = false;
+        isNextTalk[talk[4]] = false;
+        isNextTalk[talk[5]] = false;
+        isNextTalk[talk[6]] = false;
+        isNextTalk[talk[7]] = false;
+        isNextTalk[talk[8]] = false;
+        isNextTalk[talk[9]] = false;
+        isNextTalk[talk[10]] = false;
         isNextTalk[talk[12]] = false;
 
         //トークスタート
         StartTalk();
+    }
+
+    //子供用のUpdate
+    public override void ChildUpdate()
+    {
+        //会話が終了してなければ終わる
+        if (!isTalkFinish) return;
+
+        //ボタンを押していなかったら終わる
+        if (!Input.GetButtonDown("Abutton1")) return;
+
+            //フェードが情報あるのなら
+            if (stageSelectInfo.GetFade())
+            stageSelectInfo.GetFade().FadeIn(1.0f);
+
+        //シーン変更
+        StartCoroutine(ChangeScene("ModeSelect", 1f));
     }
 
     //各トークが終了したときに呼ばれる関数(次の会話にいかないと設定している場合だけ)
@@ -164,7 +183,7 @@ public class TalkBonusPointStart : talkText
     //結果発表の回転アニメーション
     void ResultAnimationRotate(byte num)
     {
-            stageSelectInfo.playerList[num].transform.DOLocalRotate(new Vector3(0, 180, 0), 1f).SetEase(Ease.OutQuad);
+            stageSelectInfo.playerList[num].transform.DOLocalRotate(new Vector3(0, 180, 0), 1f).SetEase(Ease.OutQuad).OnComplete(() => ResultAnimationText());
     }
 
     //結果発表の移動アニメーション
@@ -173,9 +192,7 @@ public class TalkBonusPointStart : talkText
         yield return new WaitForSeconds(delay);
         //移動アニメーションの後に回転
         stageSelectInfo.playerList[num].transform.DOMove(targetPos, 2.0f).SetEase(Ease.OutCubic).OnComplete(() => ResultAnimationRotate(num));
-
     }
-
     
     public int Factorial(int n)
     {
@@ -184,4 +201,39 @@ public class TalkBonusPointStart : talkText
         return n + Factorial(n - 1);
     }
 
+    //結果発表のテキストアニメーション
+    void ResultAnimationText()
+    {
+        //1位のプレイヤーを取得
+        List<byte> topPlayerList = ScoreManager.GetNominatePlayerRank(1);
+
+        //勝ったプレイヤーを表示
+        string winPlayerText = "";
+        for (int i = 0; i < topPlayerList.Count; i++)
+        {
+            //勝ったプレイヤーが1人じゃなかったら
+            if (i != 0)
+                winPlayerText += "&";
+
+            winPlayerText += topPlayerList[i] + "P";
+        }
+        resultTextList[0].SetText(winPlayerText);
+        resultTextList[1].SetText("Win!");
+
+        //拡大
+        Vector3 afterScale = transform.localScale + new Vector3(0.45f, 0.45f, 0.45f);
+        resultTextList[1].transform.DOScale(afterScale, 1f).SetEase(Ease.OutBounce).OnComplete(() => SetIsTalkFinish(true));
+    }
+
+    //シーン変更
+    public IEnumerator ChangeScene(string scene, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
+    }
+
+    public void SetIsTalkFinish(bool a)
+    {
+        isTalkFinish = a;
+    }
 }

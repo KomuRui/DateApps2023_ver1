@@ -17,7 +17,7 @@ public class ScoreGenerationMetor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ScoreManager.Initializ();
+       // ScoreManager.Initializ();
         //メーター生成終わっていないに設定
         for (int i = 0; i < metorPointObj.Count; i++)
             isFinish.Add(false);

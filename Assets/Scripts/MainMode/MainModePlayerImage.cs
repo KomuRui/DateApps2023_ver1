@@ -11,7 +11,7 @@ public class MainModePlayerImage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerManager.Initializ();
+        //PlayerManager.Initializ();
         for(int i = 0; i < playerImage.Count; i++)
         {
             playerImage[i].sprite = Resources.Load<Sprite>(PlayerManager.GetPlayerVisualImage((byte)(i + 1)));

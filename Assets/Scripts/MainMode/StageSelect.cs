@@ -33,8 +33,8 @@ public class StageSelect : MonoBehaviour
         isResultFinish = false;
 
         //各自必要なこと
-        PlayerManager.Initializ();
-        ScoreManager.Initializ();
+        //PlayerManager.Initializ();
+        //ScoreManager.Initializ();
         TutorialManager.isInitializOK = false;
         PlayerInstantiate();
         AllMiniGameFinish();
@@ -46,7 +46,7 @@ public class StageSelect : MonoBehaviour
 
         //プレイしたミニゲームの画像に変更
         for (int i = 0; i < StageSelectManager.GetNowRound() - 1; i++)
-            subImage[StageSelectManager.GetNowRound() - 1].material = StageSelectManager.playMaterial[i];
+            subImage[i - 1].material = StageSelectManager.playMaterial[i];
 
         //フェード
         fade.FadeOut(fadeTime);
@@ -200,5 +200,10 @@ public class StageSelect : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         StageSelectManager.ChangeMiniGameScene();
+    }
+
+    public Fade GetFade()
+    {
+        return fade;
     }
 }

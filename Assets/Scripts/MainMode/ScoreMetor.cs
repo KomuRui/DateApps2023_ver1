@@ -18,7 +18,7 @@ public class ScoreMetor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ScoreManager.Initializ();
+       // ScoreManager.Initializ();
         nowScore = ScoreManager.GetBeforeScore(playerNum);
         scoreText.text = nowScore.ToString();
     }
