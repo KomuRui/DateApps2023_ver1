@@ -57,6 +57,7 @@ public class SubModeSelectManager : MonoBehaviour
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
         GameManager.isSubMode = true;
+        PlayerManager.Initializ();
 
         //‰Šú‰»
         for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
