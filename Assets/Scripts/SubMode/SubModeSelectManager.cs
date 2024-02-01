@@ -125,7 +125,7 @@ public class SubModeSelectManager : MonoBehaviour
             inputXY[i].beforeInputY = inputXY[i].nowInputY;
         }
 
-        if (Input.GetButtonDown("Bbutton1"))
+        if (Input.GetButtonDown("Backbutton1") && !isAllPlayerOK())
             SceneManager.LoadScene("ModeSelect");
 
     }
