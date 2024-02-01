@@ -32,7 +32,7 @@ public class SubModeSelectManager : MonoBehaviour
     [SerializeField] public List<Image> playerSelectImageBig;                    //プレイヤーが選択している画像を大きく表示するやつ   
     [SerializeField] public List<Vector3> imageBigAnimationPos;                  //ビッグ画像のアニメーション先の位置   
     [SerializeField] public List<Image> playerImage;                             //プレイヤー画像  
-    [SerializeField] private TextMeshProUGUI text;                               //操作説明の文字
+    [SerializeField] private GameObject sousa;                                   //操作説明の文字
     [SerializeField] private TextMeshProUGUI whoText;                            //誰のテキスト
     [SerializeField] private GameObject bigSelectEdge;                           //大きい選択画像の枠
     [SerializeField] private Fade fade;                                          //フェード用           
@@ -57,7 +57,6 @@ public class SubModeSelectManager : MonoBehaviour
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
         GameManager.isSubMode = true;
-        PlayerManager.Initializ();
 
         //初期化
         for (byte i = 0; i < PlayerManager.PLAYER_MAX; i++)
@@ -224,7 +223,7 @@ public class SubModeSelectManager : MonoBehaviour
         }
 
         //テキスト
-        text.gameObject.SetActive(false);
+        sousa.SetActive(false);
         whoText.transform.DOLocalMoveY(300, 1.0f);
 
         //1秒後にOK画像を非表示に
