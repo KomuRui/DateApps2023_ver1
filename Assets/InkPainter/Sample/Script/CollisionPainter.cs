@@ -11,6 +11,9 @@ namespace Es.InkPainter.Sample
 		[SerializeField]
 		private int wait = 3;
 
+		[SerializeField]
+		private LetsPaintPlayer player;
+
 		private int waitCount;
 
 		public void Awake()
@@ -25,6 +28,9 @@ namespace Es.InkPainter.Sample
 
 		public void OnCollisionStay(Collision collision)
 		{
+			//無敵ならこの先処理しない
+			if (player.col.isMuteki) return;
+
 			if(waitCount < wait)
 				return;
 			waitCount = 0;
