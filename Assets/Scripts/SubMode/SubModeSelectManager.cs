@@ -277,7 +277,7 @@ public class SubModeSelectManager : MonoBehaviour
         if (nowRouletteCount == 0)
         {
             nowRouletteCount = Random.Range(6, 12);
-            nextImageTime += Random.Range(0.15f, 0.25f);
+            nextImageTime += Random.Range(0.10f, 0.25f);
 
             //‘¬“x‚ª—Ž‚¿‚Ä‚«‚½‚çI‚í‚è‚Ì‰ñ”‚ðŒˆ‚ß‚é
             if (nextImageTime >= 0.65f)
@@ -311,6 +311,10 @@ public class SubModeSelectManager : MonoBehaviour
     IEnumerator SceneChange(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(playerSelectImage[(byte)(lookNum + 1)].miniGameName);
+
+        if(playerSelectImage[(byte)(lookNum + 1)].miniGameName == "Random")
+            SceneManager.LoadScene(StageSelectManager.notPlayminiGameSceneName[Random.Range(0,StageSelectManager.notPlayminiGameSceneName.Count)]);
+        else
+            SceneManager.LoadScene(playerSelectImage[(byte)(lookNum + 1)].miniGameName);
     }
 }

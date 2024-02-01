@@ -33,6 +33,10 @@ public static class StageSelectManager
         notPlayminiGameSceneName.Add("NotFallHole");
         notPlayminiGameSceneName.Add("NotHitStick");
         notPlayminiGameSceneName.Add("Surfboard");
+        notPlayminiGameSceneName.Add("DeathRun");
+        notPlayminiGameSceneName.Add("DriveChaseFish");
+        notPlayminiGameSceneName.Add("ReachExtender");
+        notPlayminiGameSceneName.Add("TerrorHammer");
     }
 
     //ミニゲームシーンに変更
