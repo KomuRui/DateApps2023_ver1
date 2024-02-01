@@ -128,7 +128,7 @@ public class TerrorHammerThreePlayer : MonoBehaviour
     //プレイヤーのハンマーにヒット
     public void HitPlayerHammer()
     {
-        Debug.Log("つぶれた!");
+        if (isSuper) return;
 
         this.transform.localScale = new Vector3(1, 0.3f, 1);
         isSuper = true;
