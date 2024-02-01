@@ -65,7 +65,7 @@ public class FlagUpGameManager : MiniGameManager
     {
         //初期化
         turn = Turn.ONE_PLAYER;
-        nowRound = Round.ONE;
+        nowRound = Round.FIVE;
         isFlagUpPermit = false;
         nowFlagUpCount = 0;
         oneFlagState = new int[5];
@@ -113,14 +113,18 @@ public class FlagUpGameManager : MiniGameManager
     {
         yield return new WaitForSeconds(delay);
 
-        //全て下げる
-        AllFlagDown();
+        if (nowRound <= Round.FIVE)
+        {
 
-        TurnReset();
+            //全て下げる
+            AllFlagDown();
 
-        //長い笛
-        se.PlayLongFlute();
-        StartCoroutine(FlagUpStart(2.0f));
+            TurnReset();
+
+            //長い笛
+            se.PlayLongFlute();
+            StartCoroutine(FlagUpStart(2.0f));
+        }
     }
 
     //旗上げ開始
@@ -209,6 +213,7 @@ public class FlagUpGameManager : MiniGameManager
             }
             else
             {
+                nowRound++;
                 SetMiniGameFinish();
             }
 

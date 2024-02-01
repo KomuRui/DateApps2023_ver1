@@ -54,6 +54,7 @@ public class SubModeSelectManager : MonoBehaviour
 
     void Start()
     {
+        StageSelectManager.Initializ();
         TutorialManager.isInitializOK = false;
         TutorialManager.isTutorialFinish = false;
         GameManager.isSubMode = true;
