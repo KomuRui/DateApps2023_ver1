@@ -17,7 +17,6 @@ public class ChasesManager : MiniGameManager
     public List<Image> onePlayerNextCommandImageList = new List<Image>();
     public List<Image> threePlayerNextCommandImageList = new List<Image>();
     [SerializeField] private GameObject camera;
-
     [SerializeField] private OneSide_UI oneUI;
 
 
